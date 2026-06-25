@@ -352,26 +352,15 @@ datetime,open,high,low,close
 <!-- Kütüphaneler güvenli yükleyici (cdnjs → unpkg → jsdelivr) -->
 <script>
 function loadScript(urls){return new Promise((res,rej)=>{let i=0;function tryNext(){if(i>=urls.length)return rej(new Error('yüklenemedi: '+urls[0]));const s=document.createElement('script');s.src=urls[i++];s.onload=res;s.onerror=tryNext;document.head.appendChild(s);}tryNext();});}
-Promise.all([
-  loadScript([
-    'https://cdnjs.cloudflare.com/ajax/libs/lightweight-charts/4.1.3/lightweight-charts.standalone.production.js',
-    'https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js',
-    'https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js'
-  ]),
-  loadScript([
-    'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js',
-    'https://unpkg.com/chart.js@4.4.1/dist/chart.umd.js'
-  ]),
-  loadScript([
-    'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js',
-    'https://unpkg.com/codemirror@5.65.16/lib/codemirror.js'
-  ]).then(()=>loadScript([
-    'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js',
-    'https://unpkg.com/codemirror@5.65.16/mode/javascript/javascript.js'
-  ]))
-]).then(initApp).catch(e=>{
-  document.getElementById('resultsHost').innerHTML='<div class="empty"><b>Kütüphaneler yüklenemedi.</b><br>İnternet bağlantısını kontrol edip sayfayı yenileyin.<br><span style="font-size:11px;color:var(--faint)">'+e.message+'</span></div>';
-});
+// Kütüphaneler ARKA PLANDA yüklenir; arayüzün başlatılması bunlara bağlı DEĞİL.
+window.__libs={lwc:false,chart:false,cm:false};
+loadScript(['https://cdnjs.cloudflare.com/ajax/libs/lightweight-charts/4.1.3/lightweight-charts.standalone.production.js','https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js','https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js'])
+  .then(()=>{window.__libs.lwc=true;if(window.__redraw)window.__redraw();}).catch(()=>{});
+loadScript(['https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js','https://unpkg.com/chart.js@4.4.1/dist/chart.umd.js','https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js'])
+  .then(()=>{window.__libs.chart=true;if(window.__redraw)window.__redraw();}).catch(()=>{});
+loadScript(['https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js','https://unpkg.com/codemirror@5.65.16/lib/codemirror.js'])
+  .then(()=>loadScript(['https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js','https://unpkg.com/codemirror@5.65.16/mode/javascript/javascript.js']))
+  .then(()=>{window.__libs.cm=true;if(window.__enhanceEditor)window.__enhanceEditor();}).catch(()=>{});
 </script>
 
 <!-- Varsayılan strateji şablonu -->
@@ -737,6 +726,21 @@ function fmt(x,d=2){return (x==null||!isFinite(x))?'—':(+x).toLocaleString('tr
 function fmtPF(x){return x===Infinity?'∞':fmt(x,2);}
 function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2200);}
 
+// Editör soyutlaması — CodeMirror varsa onu, yoksa textarea'yı kullanır
+function enhanceEditor(){
+  if(editor||!window.CodeMirror)return;
+  const ta=$('stratCode'); if(!ta)return;
+  try{
+    editor=CodeMirror.fromTextArea(ta,{mode:'javascript',theme:'material-darker',lineNumbers:true,lineWrapping:false,tabSize:2,indentUnit:2});
+    editor.on('change',()=>Store.set(STRAT_KEY,editor.getValue()));
+    setTimeout(()=>editor.refresh(),30);
+  }catch(e){}
+}
+function getEditorValue(){return editor?editor.getValue():($('stratCode')?$('stratCode').value:'');}
+function setEditorValue(v){ if(editor)editor.setValue(v); else {const ta=$('stratCode');if(ta)ta.value=v;} Store.set(STRAT_KEY,v); }
+// Kütüphane geç yüklenirse mevcut sonucu yeniden çiz
+window.__redraw=function(){ if(lastResult){renderChart(lastResult);renderEquity(lastResult.res.equityCurve,lastResult.params.capital);} };
+
 const RESULTS_HTML=`
   <div id="verdict" class="verdict idle"><div class="icon">•</div><div><div class="v-title">Backtest bekleniyor</div><div class="v-body">Veri yükleyip parametreleri ayarlayın, ardından <b>Backtest çalıştır</b>'a basın.</div></div></div>
   <div class="chart-wrap">
@@ -800,12 +804,14 @@ function initApp(){
 
   $('resultsHost').innerHTML=RESULTS_HTML;
 
-  // Editör
+  // Editör (CodeMirror varsa zenginleştir; yoksa düz textarea ile çalışır)
   const defCode=$('defaultStrategy').textContent.trim();
   const saved=Store.get(STRAT_KEY);
-  $('stratCode').value=saved||defCode;
-  editor=CodeMirror.fromTextArea($('stratCode'),{mode:'javascript',theme:'material-darker',lineNumbers:true,lineWrapping:false,tabSize:2,indentUnit:2});
-  editor.on('change',()=>{Store.set(STRAT_KEY,editor.getValue());});
+  const ta=$('stratCode'); ta.value=saved||defCode;
+  ta.style.cssText='display:block;width:100%;min-height:340px;background:var(--bg);color:var(--text);font-family:var(--mono);font-size:12.5px;border:none;padding:10px;resize:vertical;outline:none';
+  ta.oninput=()=>Store.set(STRAT_KEY,ta.value);
+  window.__enhanceEditor=enhanceEditor;
+  enhanceEditor();
 
   loadDB();
   restoreParams();
@@ -845,7 +851,7 @@ function wireEvents(){
   $('resultsHost').addEventListener('click',e=>{
     const tab=e.target.closest('.tab'); if(tab){switchTab(tab.dataset.tab);return;}
     if(e.target.id==='btnApplyCode'){runBacktest();}
-    if(e.target.id==='btnResetCode'){editor.setValue($('defaultStrategy').textContent.trim());setEditorStatus('Şablon yüklendi.','');}
+    if(e.target.id==='btnResetCode'){setEditorValue($('defaultStrategy').textContent.trim());setEditorStatus('Şablon yüklendi.','');}
     if(e.target.id==='btnCmpRun'){runAllSymbols();}
     const th=e.target.closest('th[data-sort]'); if(th){sortTrades(th.dataset.sort);}
   });
@@ -925,7 +931,7 @@ function resetParams(){
 function setEditorStatus(msg,cls){const e=$('editorStatus');e.textContent=msg;e.className='editor-status '+(cls||'');}
 function runBacktest(){
   const ds=datasets[activeId]; if(!ds){toast('Önce veri yükleyin');openModal();return;}
-  let strat; try{strat=compileStrategy(editor.getValue());}catch(e){setEditorStatus('Derleme hatası: '+e.message,'err');switchTab('kod');return;}
+  let strat; try{strat=compileStrategy(getEditorValue());}catch(e){setEditorStatus('Derleme hatası: '+e.message,'err');switchTab('kod');return;}
   const params=gatherParams(); saveParams();
   const range=currentRange(ds.candles);
   let res; try{res=backtest(ds.candles,params,strat,range);}catch(e){setEditorStatus(e.message,'err');switchTab('kod');toast(e.message);return;}
@@ -990,6 +996,7 @@ function renderChart(R){
   $('chSym').textContent=ds.symbol;
   $('chMeta').textContent=`${ds.interval||''} · ${candles[range.lo].datetime.slice(0,10)} → ${candles[range.hi].datetime.slice(0,10)} · ${range.hi-range.lo+1} mum`;
 
+  if(!window.LightweightCharts){ el.innerHTML='<div class="empty" style="padding:34px">Grafik kütüphanesi yüklenemedi (CDN / Brave Shields engeli olabilir). İstatistikler, equity ve tablolar aşağıda çalışmaya devam ediyor.</div>'; return; }
   chart=LightweightCharts.createChart(el,{
     width:el.clientWidth,height:380,
     layout:{background:{type:'solid',color:'transparent'},textColor:'#8b97a6',fontFamily:'JetBrains Mono'},
@@ -1021,6 +1028,7 @@ function renderChart(R){
 
 /* ---- Equity (Chart.js) ---- */
 function renderEquity(curve,capital){
+  if(!window.Chart){return;}
   if(equityChart){equityChart.destroy();equityChart=null;}
   const ctx=$('equityCanvas').getContext('2d');
   const data=curve.filter((_,i)=>i%Math.max(1,Math.floor(curve.length/600))===0);
@@ -1113,7 +1121,7 @@ function renderSplit(ds,params,strat){
 /* ---- Çoklu sembol ---- */
 function runAllSymbols(){
   const ids=Object.keys(datasets); if(!ids.length){toast('Veri yok');return;}
-  let strat; try{strat=compileStrategy(editor.getValue());}catch(e){setEditorStatus('Derleme hatası: '+e.message,'err');switchTab('kod');return;}
+  let strat; try{strat=compileStrategy(getEditorValue());}catch(e){setEditorStatus('Derleme hatası: '+e.message,'err');switchTab('kod');return;}
   const params=gatherParams();
   const rows=ids.map(id=>{
     const ds=datasets[id];
@@ -1154,6 +1162,10 @@ function exportJson(){
   const o={sembol:lastResult.ds.symbol,interval:lastResult.ds.interval,parametreler:lastResult.params,istatistik:lastResult.stats,rastgele_kontrol:lastResult.control,islemler:lastResult.res.trades};
   download((lastResult.ds.symbol||'backtest')+'_sonuc.json',JSON.stringify(o,null,2),'application/json');
 }
+
+// Arayüzü kütüphanelerden BAĞIMSIZ başlat
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initApp);
+else initApp();
 </script>
 </body>
 </html>
