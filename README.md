@@ -1,5 +1,10 @@
 # sweeplab# SweepLab — Likidite Süpürme Backtest Terminali
 
+> **Canlı trading botu:** Bu repo aynı zamanda bağımsız bir Python trading
+> botu içerir — Binance WebSocket veri akışı, aynı likidite süpürme
+> stratejisi, Telegram bildirimi ve otomatik emir. Detaylar için
+> [`bot/README.md`](bot/README.md).
+
 Tek dosyalık, sunucusuz, tamamen tarayıcıda çalışan bir forex/emtia backtest aracı. TradingView'ın görsel deneyimine yakın bir arayüzde **kendi OHLC verinizi** yükleyip, **kendi strateji kodunuzu** yazıp, sonuçları **istatistiksel dürüstlük** süzgecinden geçirerek test edersiniz.
 
 **Canlı demo:** https://samiboran.github.io/sweeplab/
