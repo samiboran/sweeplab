@@ -59,10 +59,11 @@ return {
       const zone = (g.top + g.bot) / 2;
       if (bar.low <= zone && zone <= bar.high) {
         s.pendingGaps.splice(k, 1); // bu gap kullanildi, listeden cikar
+        const fvgYas = i - g.createdAt; // gap kac bar once olustu (log icin, filtre degil)
         if (g.dir === 1) {
-          return { yon: 'long', stop: g.bot, sebep: 'Bullish FVG retest (EMA' + emaPeriyot + ' ustunde)' };
+          return { yon: 'long', stop: g.bot, sebep: 'Bullish FVG retest (EMA' + emaPeriyot + ' ustunde)', fvgYas };
         } else {
-          return { yon: 'short', stop: g.top, sebep: 'Bearish FVG retest (EMA' + emaPeriyot + ' altinda)' };
+          return { yon: 'short', stop: g.top, sebep: 'Bearish FVG retest (EMA' + emaPeriyot + ' altinda)', fvgYas };
         }
       }
     }
