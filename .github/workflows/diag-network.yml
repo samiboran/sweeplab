@@ -7,24 +7,46 @@ jobs:
   diag:
     runs-on: ubuntu-latest
     steps:
-      - name: Probe candidate hosts
+      - name: Inspect polymarket dataset schema
         run: |
-          check () {
-            code=$(curl -sS -m 15 -o /dev/null -w "%{http_code}" "$1" || echo "ERR")
-            echo "$code  $1"
-          }
-          echo "=== Hugging Face ==="
-          check "https://huggingface.co"
-          check "https://huggingface.co/api/datasets/kachoio/polymarket-5-minute-crypto-up-down-markets"
-          check "https://datasets-server.huggingface.co/is-valid?dataset=kachoio/polymarket-5-minute-crypto-up-down-markets"
-          echo "=== Binance bulk data mirror ==="
-          check "https://data.binance.vision"
-          check "https://data.binance.vision/data/spot/monthly/klines/BTCUSDT/1m/"
-          echo "=== Binance API (expected 451, sanity check) ==="
-          check "https://api.binance.com/api/v3/time"
-          echo "=== Alt exchanges ==="
-          check "https://api.kraken.com/0/public/Time"
-          check "https://api.exchange.coinbase.com/time"
-          check "https://api.bybit.com/v5/market/time"
-          echo "=== pip/pypi (should already work via allowlist, sanity check) ==="
-          check "https://pypi.org"
+          cat <<'PY' > inspect.py.raw
+          import subprocess
+          import sys
+
+          subprocess.run([sys.executable, "-m", "pip", "install", "-q", "datasets", "pandas", "pyarrow"], check=True)
+
+          from datasets import get_dataset_config_names, load_dataset_builder, load_dataset
+
+          repo = "kachoio/polymarket-5-minute-crypto-up-down-markets"
+
+          print("=== configs ===")
+          try:
+              print(get_dataset_config_names(repo))
+          except Exception as e:
+              print("get_dataset_config_names failed:", e)
+
+          for config in ["ticks", "markets"]:
+              print(f"\n=== builder info: {config} ===")
+              try:
+                  b = load_dataset_builder(repo, config)
+                  print("splits:", list(b.info.splits.keys()) if b.info.splits else None)
+                  print("features:", b.info.features)
+                  if b.info.splits:
+                      for name, sp in b.info.splits.items():
+                          print(f"  split={name} num_examples={sp.num_examples} num_bytes={sp.num_bytes}")
+              except Exception as e:
+                  print("load_dataset_builder failed:", e)
+
+          for config, split in [("ticks", "btc"), ("markets", "btc")]:
+              print(f"\n=== streaming sample: {config}/{split} ===")
+              try:
+                  ds = load_dataset(repo, config, split=split, streaming=True)
+                  for i, row in enumerate(ds):
+                      print(row)
+                      if i >= 4:
+                          break
+              except Exception as e:
+                  print("streaming sample failed:", e)
+          PY
+          python3 -c "import textwrap,pathlib; pathlib.Path('inspect.py').write_text(textwrap.dedent(pathlib.Path('inspect.py.raw').read_text()))"
+          python3 inspect.py
