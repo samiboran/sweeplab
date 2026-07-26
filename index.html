@@ -325,16 +325,16 @@ tbody tr:hover{background:var(--panel)}
 <div class="modal-bg" id="dataModal">
   <div class="modal">
     <h2>Veri yönetimi</h2>
-    <p class="sub">Twelve Data formatında JSON veya OHLC CSV. Birden fazla sembol saklanabilir.</p>
+    <p class="sub">Twelve Data formatında JSON veya OHLC CSV. Birden fazla sembol saklanabilir. Varsayılan strateji Mod B (FVG) 1H barlar için tasarlandı — interval=1h veri önerilir.</p>
     <div class="drop" id="dropZone">Dosyayı buraya sürükleyin <span style="color:var(--gold)">veya tıklayın</span><br><span style="font-size:11px">.json / .csv</span>
       <input type="file" id="fileInput" accept=".json,.csv,.txt" style="display:none">
     </div>
     <label class="lab">…veya yapıştırın</label>
-    <textarea id="pasteArea" placeholder='{"meta":{"symbol":"XAU/USD","interval":"15min"},"values":[{"datetime":"2025-03-19 15:45:00","open":"3036.4","high":"3036.8","low":"3034.9","close":"3036.4"}]}
+    <textarea id="pasteArea" placeholder='{"meta":{"symbol":"XAU/USD","interval":"1h"},"values":[{"datetime":"2025-03-19 15:00:00","open":"3036.4","high":"3036.8","low":"3034.9","close":"3036.4"}]}
 
 — ya da CSV —
 datetime,open,high,low,close
-2025-03-19 15:45:00,3036.4,3036.8,3034.9,3036.4'></textarea>
+2025-03-19 15:00:00,3036.4,3036.8,3034.9,3036.4'></textarea>
     <div class="fld" style="margin-top:10px">
       <label class="lab">Sembol etiketi (boşsa metadata'dan alınır)</label>
       <input type="text" id="symLabel" placeholder="XAUUSD">
@@ -466,21 +466,21 @@ function parseData(raw){
     const j=JSON.parse(raw);
     const vals=Array.isArray(j)?j:(j.values||j.data||[]);
     if(j.meta){ symbol=j.meta.symbol||''; interval=j.meta.interval||''; }
-    rows=vals.map(v=>({dt:v.datetime||v.date||v.time,o:+v.open,h:+v.high,l:+v.low,c:+v.close}));
+    rows=vals.map(v=>({dt:v.datetime||v.date||v.time,o:+v.open,h:+v.high,l:+v.low,c:+v.close,vol:v.volume!=null?+v.volume:null}));
   } else {
     // CSV
     const lines=raw.split(/\r?\n/).filter(x=>x.trim());
-    let start=0, idx={dt:0,o:1,h:2,l:3,c:4};
+    let start=0, idx={dt:0,o:1,h:2,l:3,c:4,v:-1};
     const head=lines[0].toLowerCase();
     if(/date|time|open|high|low|close/.test(head)){
       const cols=lines[0].split(/[,;\t]/).map(x=>x.trim().toLowerCase());
       const find=(...names)=>{for(const n of names){const k=cols.findIndex(c=>c.includes(n));if(k>=0)return k;}return -1;};
-      idx={dt:find('datetime','date','time'),o:find('open'),h:find('high'),l:find('low'),c:find('close')};
+      idx={dt:find('datetime','date','time'),o:find('open'),h:find('high'),l:find('low'),c:find('close'),v:find('volume','vol')};
       start=1;
     }
     for(let i=start;i<lines.length;i++){
       const f=lines[i].split(/[,;\t]/);
-      rows.push({dt:f[idx.dt],o:+f[idx.o],h:+f[idx.h],l:+f[idx.l],c:+f[idx.c]});
+      rows.push({dt:f[idx.dt],o:+f[idx.o],h:+f[idx.h],l:+f[idx.l],c:+f[idx.c],vol:idx.v>=0&&f[idx.v]!=null?+f[idx.v]:null});
     }
   }
   // normalize + sort kronolojik + tekilleştir
@@ -488,7 +488,7 @@ function parseData(raw){
   for(const r of rows){
     const ms=parseDatetimeUTC(r.dt);
     if(ms==null||!isFinite(r.o)||!isFinite(r.h)||!isFinite(r.l)||!isFinite(r.c))continue;
-    candles.push({time:Math.floor(ms/1000),datetime:new Date(ms).toISOString().slice(0,19).replace('T',' '),open:r.o,high:r.h,low:r.l,close:r.c});
+    candles.push({time:Math.floor(ms/1000),datetime:new Date(ms).toISOString().slice(0,19).replace('T',' '),open:r.o,high:r.h,low:r.l,close:r.c,volume:(r.vol!=null&&isFinite(r.vol))?r.vol:null});
   }
   candles.sort((a,b)=>a.time-b.time);
   const dedup=[]; let last=-1;
@@ -547,6 +547,68 @@ function gatherParams(){
   };
 }
 
+// ---- Sinyal özellik loglaması (YALNIZCA GÖZLEM — hiçbiri filtre/eşik olarak
+// KULLANILMAZ. Tek istisna: iki strateji aynı barda çakışırsa `kalite`
+// skoruna göre biri seçilir (bkz. runDualCompare). Tüm pencereler SABİTTİR,
+// UI'dan değiştirilemez — 2-3 aylık gözlem sonunda taze veride tek tek
+// (rastgele kontrolle) test edilecekler, bkz. sohbet geçmişindeki metodoloji.
+const QUALITY_LOOKBACK=8;      // giriş kalitesi (dip/tepe konumu) penceresi
+const SWEEP_LOOKBACK=20;       // "önceki swing" ölçüm penceresi (sweep_present)
+const HTF_EMA_PERIOD=200;      // üst zaman dilimi proxy'si — GERÇEK 4H verisi
+                                // yok (tek zaman dilimi yükleniyor); aynı seri
+                                // üzerinde uzun periyotlu EMA ile yaklaşıklanır
+const ATR_PCT_PERIOD=14;       // atr_pct için sabit ATR periyodu
+const VOLUME_AVG_WINDOW=20;    // volume_relative için ortalama pencere
+
+function rangePositionAt(h,i,entry,lookback){
+  const recentHi=h.enYuksek(i,lookback), recentLo=h.enDusuk(i,lookback);
+  const span=recentHi-recentLo;
+  if(!(span>0))return null;
+  return (entry-recentLo)/span;
+}
+function computeEntryQuality(h,i,entry,yon){
+  const position=rangePositionAt(h,i,entry,QUALITY_LOOKBACK);
+  if(position==null)return null;
+  return yon==='long' ? (1-position) : position;
+}
+// Tüm sinyal özelliklerini tek yerde hesaplar (LOOKAHEAD YOK — hepsi i'ye kadar
+// olan barları kullanır). `sinyal` stratejinin döndürdüğü nesnedir; strateji
+// isteğe bağlı `fvgYas` alanı döndürürse (bkz. mod-b-fvg-1h.js) fvg_fresh
+// olarak geçer, döndürmezse null kalır.
+function computeSignalFeatures(candles,h,i,bar,yon,sinyal){
+  const position=rangePositionAt(h,i,bar.close,QUALITY_LOOKBACK);
+  const kalite = position==null ? null : (yon==='long' ? (1-position) : position);
+  const premiumDiscount = position==null ? null : (position>=0.5?'premium':'discount');
+
+  let sweepPresent=0;
+  if(i>=1){
+    const priorHi=h.enYuksek(i-1,SWEEP_LOOKBACK), priorLo=h.enDusuk(i-1,SWEEP_LOOKBACK);
+    if(yon==='long' && bar.low<priorLo) sweepPresent=1;
+    if(yon==='short'&& bar.high>priorHi) sweepPresent=1;
+  }
+
+  const htfEma=h.ema(HTF_EMA_PERIOD,i);
+  const htfTrendMatch = htfEma==null ? null :
+    (((yon==='long'&&bar.close>htfEma)||(yon==='short'&&bar.close<htfEma)) ? 1 : 0);
+
+  const atrVal=h.atr(ATR_PCT_PERIOD,i);
+  const atrPct = (atrVal!=null && bar.close>0) ? atrVal/bar.close : null;
+
+  const hourUTC=new Date(bar.time*1000).getUTCHours();
+  const session = (hourUTC>=0&&hourUTC<8) ? 'Asya' : (hourUTC>=8&&hourUTC<13) ? 'Londra' : (hourUTC>=13&&hourUTC<21) ? 'NY' : 'Off-seans';
+
+  let volumeRelative=null;
+  if(bar.volume!=null && i>=VOLUME_AVG_WINDOW-1){
+    let sum=0, ok=true;
+    for(let k=i-VOLUME_AVG_WINDOW+1;k<=i;k++){ const v=candles[k].volume; if(v==null){ok=false;break;} sum+=v; }
+    if(ok){ const avg=sum/VOLUME_AVG_WINDOW; volumeRelative = avg>0 ? bar.volume/avg : null; }
+  }
+
+  const fvgFresh = (sinyal && sinyal.fvgYas!=null && isFinite(sinyal.fvgYas)) ? sinyal.fvgYas : null;
+
+  return {kalite, premiumDiscount, sweepPresent, htfTrendMatch, atrPct, session, volumeRelative, fvgFresh};
+}
+
 // ---- Backtest motoru (lookahead-bias YOK) ----
 function compileStrategy(code){
   const fn=new Function('"use strict";'+code);
@@ -576,7 +638,13 @@ function backtest(candles, params, strat, range){
       cikisIdx:j, cikisTime:candles[j].time, cikisTarih:candles[j].datetime,
       entry:+entry.toFixed(6), exit:+exit.toFixed(6), stop:+poz.stop.toFixed(6), tp:+poz.tp.toFixed(6),
       tip, pnlPct:+pnlPct.toFixed(4), r:+r.toFixed(4), pnlDolar:+pnlDolar.toFixed(2),
-      sebep:poz.sebep, sure:j-poz.idx, equity:+equity.toFixed(2)
+      sebep:poz.sebep, sure:j-poz.idx, equity:+equity.toFixed(2),
+      etiket:poz.etiket||null, hacim:(poz.hacim!=null&&isFinite(poz.hacim))?poz.hacim:null,
+      kalite:(poz.kalite!=null&&isFinite(poz.kalite))?+poz.kalite.toFixed(4):null,
+      premiumDiscount:poz.premiumDiscount||null, sweepPresent:poz.sweepPresent,
+      htfTrendMatch:poz.htfTrendMatch, atrPct:(poz.atrPct!=null&&isFinite(poz.atrPct))?+poz.atrPct.toFixed(6):null,
+      session:poz.session||null, volumeRelative:(poz.volumeRelative!=null&&isFinite(poz.volumeRelative))?+poz.volumeRelative.toFixed(3):null,
+      fvgFresh:poz.fvgFresh
     });
   }
 
@@ -620,7 +688,12 @@ function backtest(candles, params, strat, range){
           if(yon==='long' && stop<liqPrice){effStop=liqPrice;liq=true;}
           if(yon==='short'&& stop>liqPrice){effStop=liqPrice;liq=true;}
         }
-        pozisyon={yon,entry,stop:effStop,tp,idx:i,time:bar.time,sebep:sinyal.sebep||'',liq};
+        const feat=computeSignalFeatures(candles,h,i,bar,yon,sinyal);
+        pozisyon={yon,entry,stop:effStop,tp,idx:i,time:bar.time,sebep:sinyal.sebep||'',liq,
+          etiket:sinyal.etiket||null, hacim:(bar.volume!=null&&isFinite(bar.volume))?bar.volume:null,
+          kalite:feat.kalite, premiumDiscount:feat.premiumDiscount, sweepPresent:feat.sweepPresent,
+          htfTrendMatch:feat.htfTrendMatch, atrPct:feat.atrPct, session:feat.session,
+          volumeRelative:feat.volumeRelative, fvgFresh:feat.fvgFresh};
       }
     }
     equityCurve.push({time:bar.time, value:+equity.toFixed(2)});
@@ -714,7 +787,7 @@ function bucketByPeriod(trades, months){
   });
 }
 
-window.__SweepLab={parseData,backtest,computeStats,randomControl,bucketByPeriod,makeHelpers,compileStrategy,gatherParams,tStat};
+window.__SweepLab={parseData,backtest,computeStats,randomControl,bucketByPeriod,makeHelpers,compileStrategy,gatherParams,tStat,computeEntryQuality,computeSignalFeatures,QUALITY_LOOKBACK};
 
 /* ========================================================================
    ARAYÜZ KATMANI
@@ -748,9 +821,12 @@ function setEditorValueSilent(v){ if(editor)editor.setValue(v); else {const ta=$
 const DEFAULT_STRATEGY_ID='mod-b-fvg-1h';
 const STRATEGY_PRESETS=[
   {id:'mod-b-fvg-1h', name:'Mod B (FVG, 1H) — Varsayılan', file:'strategies/mod-b-fvg-1h.js'},
+  {id:'sweep5-confirm15', name:'5dk Sweep + 15dk Teyit (DENEYSEL — doğrulanmamış)', file:'strategies/sweep5-confirm15-deneysel.js'},
   {id:'liquidity-sweep-reversal', name:'Liquidity Sweep Reversal', file:'strategies/liquidity-sweep-reversal.js'},
   {id:'judas-swing', name:'Mekanik Judas Swing', file:null}
 ];
+// A/B çakışma testi ve sinyal log'unda kullanılan sabit strateji çifti.
+const AB_COMPARE_IDS=['mod-b-fvg-1h','sweep5-confirm15'];
 function populateStrategyPresets(){
   const sel=$('stratPreset'); if(!sel)return;
   sel.innerHTML=STRATEGY_PRESETS.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
@@ -790,6 +866,7 @@ const RESULTS_HTML=`
     <button class="tab" data-tab="islemler">İşlemler</button>
     <button class="tab" data-tab="donemler">Dönemler</button>
     <button class="tab" data-tab="karsilastir">Semboller</button>
+    <button class="tab" data-tab="sinyallog">Sinyal Log</button>
     <button class="tab" data-tab="kod">Strateji Kodu</button>
   </div>
   <div class="pane active" data-pane="ozet">
@@ -804,6 +881,15 @@ const RESULTS_HTML=`
     <p style="color:var(--muted);margin:0 0 12px">Aynı strateji ve parametrelerle tüm yüklü veri setlerini çalıştırır.</p>
     <button class="btn primary sm" id="btnCmpRun">Tüm sembollerde çalıştır</button>
     <div id="cmpHost" style="margin-top:14px"></div>
+  </div>
+  <div class="pane" data-pane="sinyallog">
+    <p style="color:var(--muted);margin:0 0 12px">Her backtest çalıştırmasında üretilen TÜM sinyaller (filtre yok) kalıcı olarak burada birikir — tarayıcının localStorage'ında saklanır, CSV ile dışa aktarılıp taşınabilir/arşivlenebilir. Kalite skoru yalnızca gözlem amaçlıdır, hiçbir sinyali elemez (tek istisna: A/B çakışma testinde aynı barda çakışan iki sinyalden biri).</p>
+    <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+      <button class="btn sm" id="btnExportSignalLog">CSV indir</button>
+      <button class="btn sm ghost" id="btnClearSignalLog">Log'u temizle</button>
+      <button class="btn sm primary" id="btnRunAbCompare">A/B çakışma testi çalıştır (Mod B + 5dk/15dk)</button>
+    </div>
+    <div id="signalLogHost"><div class="empty">Henüz sinyal kaydı yok. Bir backtest çalıştırın.</div></div>
   </div>
   <div class="pane" data-pane="kod">
     <div class="editor-bar">
@@ -858,6 +944,7 @@ function initApp(){
   restoreParams();
   renderDatasetSelect();
   if(activeId) populateDateRange();
+  renderSignalLogTab();
 
   wireEvents();
 }
@@ -897,6 +984,9 @@ function wireEvents(){
     if(e.target.id==='btnResetCode'){loadStrategyPreset(DEFAULT_STRATEGY_ID);}
     if(e.target.id==='btnClearCode'){setEditorValue('');setEditorStatus('Temizlendi.','');}
     if(e.target.id==='btnCmpRun'){runAllSymbols();}
+    if(e.target.id==='btnExportSignalLog'){exportSignalLogCsv();}
+    if(e.target.id==='btnClearSignalLog'){clearSignalLog();}
+    if(e.target.id==='btnRunAbCompare'){runDualCompare();}
     const th=e.target.closest('th[data-sort]'); if(th){sortTrades(th.dataset.sort);}
   });
 
@@ -986,6 +1076,8 @@ function runBacktest(){
   renderAll(lastResult);
   document.getElementById('splitOn').checked?renderSplit(ds,params,strat):($('splitHost').innerHTML='');
   $('btnExportCsv').disabled=false;$('btnExportJson').disabled=false;
+  appendSignalLog(res.trades,currentStrategyLabel(),ds.symbol);
+  renderSignalLogTab();
 }
 
 function renderAll(R){
@@ -1191,6 +1283,217 @@ function runAllSymbols(){
     <p class="hint" style="margin-top:8px">Her sembol kendi tüm verisinde, aynı parametre ve strateji ile test edildi. Tarih aralığı seçici yalnızca aktif sembolü etkiler.</p>`;
   switchTab('karsilastir');
   toast(ids.length+' sembol test edildi');
+}
+
+/* ---- Kalıcı sinyal/sonuç log'u ----
+   localStorage'da, backtest çalıştırmaları arasında birikir (Store anahtarı).
+   Aynı strateji+sembol+giriş anı+fiyat+tip kombinasyonu yeniden çalıştırıldığında
+   üzerine yazılır (dedupe) — tekrar tekrar biriktirmeyi önler ama TÜM sinyalleri
+   tutar, hiçbirini eleme filtresi uygulamaz. */
+const SIGNAL_LOG_KEY='sweeplab_signal_log_v1';
+function loadSignalLog(){ try{return JSON.parse(Store.get(SIGNAL_LOG_KEY)||'{}');}catch(e){return {};} }
+function saveSignalLog(log){ Store.set(SIGNAL_LOG_KEY,JSON.stringify(log)); }
+function sonucFromTrade(t){
+  if(t.sonucOverride) return t.sonucOverride;
+  if(t.tip==='TP') return 'WIN';
+  if(t.tip==='SL'||t.tip==='LIQ') return 'LOSS';
+  if(t.pnlDolar>0) return 'WIN'; if(t.pnlDolar<0) return 'LOSS'; return 'BE';
+}
+function currentStrategyLabel(){
+  const id=$('stratPreset')?$('stratPreset').value:''; const p=STRATEGY_PRESETS.find(x=>x.id===id);
+  return p?p.name:'Özel kod';
+}
+function appendSignalLog(trades,stratName,sembol){
+  if(!trades||!trades.length)return;
+  const log=loadSignalLog();
+  for(const t of trades){
+    const key=[stratName,sembol,t.girisTime,t.entry,t.tip].join('|');
+    log[key]={
+      strateji:stratName, sembol, zaman:t.girisTarih, yon:t.yon,
+      entry:t.entry, stop:t.stop, etiket:t.etiket||'', hacim:t.hacim,
+      kalite:t.kalite, sonuc:sonucFromTrade(t), pnlR:t.r, pnlDolar:t.pnlDolar,
+      cikisZaman:t.cikisTarih, tip:t.tip, cakisma:t.cakisma||'',
+      premiumDiscount:t.premiumDiscount||'', sweepPresent:t.sweepPresent,
+      htfTrendMatch:t.htfTrendMatch, atrPct:t.atrPct, session:t.session||'',
+      volumeRelative:t.volumeRelative, fvgFresh:t.fvgFresh
+    };
+  }
+  saveSignalLog(log);
+}
+function signalLogEntries(){ return Object.values(loadSignalLog()).sort((a,b)=>(a.zaman<b.zaman?1:(a.zaman>b.zaman?-1:0))); }
+function clearSignalLog(){
+  if(!confirm('Sinyal log tamamen silinsin mi? Bu işlem geri alınamaz.'))return;
+  Store.set(SIGNAL_LOG_KEY,'{}'); renderSignalLogTab(); toast('Sinyal log temizlendi');
+}
+function exportSignalLogCsv(){
+  const rows=signalLogEntries(); if(!rows.length){toast('Log boş');return;}
+  const head=['strateji','sembol','zaman','yon','entry','stop','etiket','hacim','kalite','sonuc','pnlR','pnlDolar','cikisZaman','tip','cakisma',
+    'premiumDiscount','sweepPresent','htfTrendMatch','atrPct','session','volumeRelative','fvgFresh'];
+  const esc=v=>{ if(v==null)v=''; v=String(v).replace(/"/g,'""'); return /[,"\n]/.test(v)?`"${v}"`:v; };
+  const body=rows.map(r=>head.map(k=>esc(r[k])).join(',')).join('\n');
+  download('sweeplab_sinyal_log.csv','﻿'+head.join(',')+'\n'+body,'text/csv');
+}
+function renderSignalLogTab(){
+  const host=$('signalLogHost'); if(!host)return;
+  const rows=signalLogEntries();
+  if(!rows.length){host.innerHTML='<div class="empty">Henüz sinyal kaydı yok. Bir backtest çalıştırın.</div>';return;}
+  const trHtml=rows.map(r=>`<tr>
+    <td class="txt">${r.strateji}</td><td class="txt">${r.sembol}</td>
+    <td class="txt">${(r.zaman||'').slice(0,16)}</td>
+    <td><span class="pill ${r.yon}">${r.yon==='long'?'LONG':'SHORT'}</span></td>
+    <td>${fmt(r.entry,4)}</td><td>${fmt(r.stop,4)}</td>
+    <td class="txt">${r.etiket||'—'}</td>
+    <td>${r.hacim!=null?fmt(r.hacim,2):'—'}</td>
+    <td>${r.kalite!=null?fmt(r.kalite,3):'—'}</td>
+    <td class="txt">${r.premiumDiscount||'—'}</td>
+    <td>${r.sweepPresent!=null?r.sweepPresent:'—'}</td>
+    <td>${r.htfTrendMatch!=null?r.htfTrendMatch:'—'}</td>
+    <td>${r.atrPct!=null?fmt(r.atrPct*100,2)+'%':'—'}</td>
+    <td class="txt">${r.session||'—'}</td>
+    <td>${r.volumeRelative!=null?fmt(r.volumeRelative,2)+'×':'—'}</td>
+    <td>${r.fvgFresh!=null?r.fvgFresh:'—'}</td>
+    <td class="${r.sonuc==='WIN'?'pos':(r.sonuc==='LOSS'?'neg':'')}">${r.sonuc}</td>
+    <td class="${r.pnlR>=0?'pos':'neg'}">${fmt(r.pnlR,2)}</td>
+    <td class="txt">${r.cakisma||'—'}</td>
+  </tr>`).join('');
+  host.innerHTML=`<div class="tbl-wrap" style="max-height:520px"><table><thead><tr>
+    <th>Strateji</th><th>Sembol</th><th>Zaman</th><th>Yön</th><th>Entry</th><th>Stop</th>
+    <th>Etiket</th><th>Hacim</th><th>Kalite</th><th>Prim/İskonto</th><th>Sweep</th><th>HTF Uyum</th>
+    <th>ATR%</th><th>Seans</th><th>Hacim Oranı</th><th>FVG Yaş</th><th>Sonuç</th><th>R</th><th>Çakışma</th>
+  </tr></thead><tbody>${trHtml}</tbody></table></div>
+  <p class="hint" style="margin-top:8px">${rows.length} kayıtlı sinyal. Kalite/premium-iskonto/sweep/HTF-uyum/ATR%/seans/hacim-oranı/FVG-yaş sütunları YALNIZCA gözlem içindir, hiçbiri sinyalleri filtrelemez (istisna: A/B çakışmasında kalite skoru). Bu log tarayıcı localStorage'ında tutulur — farklı bir tarayıcı/cihazda görmek için CSV indirip taşıyın.</p>`;
+}
+
+/* ---- A/B çakışma testi: iki stratejiyi TEK ortak pozisyon slotuyla eşzamanlı
+   çalıştırır. Her strateji kendi 'pozisyon' kontrolüyle (if(pozisyon)return null)
+   zaten tek pozisyona uyar; burada paylaşılan pozisyon nesnesi geçilerek bu kural
+   iki strateji arasında da uygulanır. Aynı barda İKİSİ de sinyal üretirse
+   (gerçek çakışma), yalnızca bu durumda kalite skoruna göre biri seçilir —
+   diğeri "elendi" olarak loglanır, sessizce atılmaz. ---- */
+function dualBacktest(candles, params, defA, defB, range){
+  const h=makeHelpers(candles); h.setTz(params.tz);
+  const n=candles.length;
+  const sA={}, sB={};
+  let pozisyon=null;
+  const tradesA=[], tradesB=[];
+  let equity=params.capital;
+  const lo=range?range.lo:0, hi=range?range.hi:n-1;
+
+  function kapat(exit,tip,j){
+    const poz=pozisyon, yon=poz.yon, entry=poz.entry, risk=Math.abs(entry-poz.stop);
+    const move = yon==='long' ? (exit-entry) : (entry-exit);
+    const pnlPct=move/entry*100;
+    const r=risk>0 ? move/risk : 0;
+    const notional=params.marjin*params.kaldirac, qty=notional/entry;
+    const pnlDolar=qty*move;
+    equity+=pnlDolar;
+    const rec={
+      yon, girisIdx:poz.idx, girisTime:poz.time, girisTarih:candles[poz.idx].datetime,
+      cikisIdx:j, cikisTime:candles[j].time, cikisTarih:candles[j].datetime,
+      entry:+entry.toFixed(6), exit:+exit.toFixed(6), stop:+poz.stop.toFixed(6), tp:+poz.tp.toFixed(6),
+      tip, pnlPct:+pnlPct.toFixed(4), r:+r.toFixed(4), pnlDolar:+pnlDolar.toFixed(2),
+      sebep:poz.sebep, sure:j-poz.idx, equity:+equity.toFixed(2),
+      etiket:poz.etiket||null, hacim:poz.hacim, kalite:poz.kalite,
+      premiumDiscount:poz.premiumDiscount||null, sweepPresent:poz.sweepPresent,
+      htfTrendMatch:poz.htfTrendMatch, atrPct:poz.atrPct, session:poz.session||null,
+      volumeRelative:poz.volumeRelative, fvgFresh:poz.fvgFresh,
+      cakisma:poz.collision?'seçildi (çakışma)':''
+    };
+    (poz.owner==='A'?tradesA:tradesB).push(rec);
+  }
+
+  for(let i=0;i<n;i++){
+    const bar=candles[i];
+    const inRange=i>=lo && i<=hi;
+
+    if(pozisyon && i>pozisyon.idx){
+      const {yon,stop,tp}=pozisyon;
+      let exit=null,tip=null;
+      if(yon==='long'){ if(bar.low<=stop){exit=stop;tip=pozisyon.liq?'LIQ':'SL';} else if(bar.high>=tp){exit=tp;tip='TP';} }
+      else { if(bar.high>=stop){exit=stop;tip=pozisyon.liq?'LIQ':'SL';} else if(bar.low<=tp){exit=tp;tip='TP';} }
+      if(exit==null && (i-pozisyon.idx)>=params.maxBekleme){exit=bar.close;tip='Timeout';}
+      if(exit!=null){ kapat(exit,tip,i); pozisyon=null; }
+    }
+
+    let sigA=null, sigB=null;
+    try{ sigA=defA.strat.uret({bar,i,c:candles,p:params,h,s:sA,pozisyon}); }
+    catch(e){ throw new Error(defA.name+' hatası (mum '+i+'): '+e.message); }
+    try{ sigB=defB.strat.uret({bar,i,c:candles,p:params,h,s:sB,pozisyon}); }
+    catch(e){ throw new Error(defB.name+' hatası (mum '+i+'): '+e.message); }
+
+    if(!pozisyon && inRange && (sigA||sigB)){
+      const cands=[];
+      if(sigA) cands.push({owner:'A',name:defA.name,sig:sigA});
+      if(sigB) cands.push({owner:'B',name:defB.name,sig:sigB});
+      const collision=cands.length>1;
+      // Her adayın özelliklerini BİR KEZ hesapla (kalite karşılaştırması +
+      // kazanan/kaybeden kaydı için aynı sonucu tekrar kullan)
+      for(const c of cands) c.feat=computeSignalFeatures(candles,h,i,bar,c.sig.yon,c.sig);
+      let winner=cands[0];
+      if(collision){
+        winner=((cands[0].feat.kalite||0)>=(cands[1].feat.kalite||0))?cands[0]:cands[1];
+      }
+      for(const c of cands){
+        const entry=bar.close, stop=c.sig.stop, yon=c.sig.yon, feat=c.feat;
+        const risk=Math.abs(entry-stop);
+        if(c===winner && risk>0){
+          let tp = yon==='long' ? entry+risk*params.rr : entry-risk*params.rr;
+          let effStop=stop, liq=false;
+          if(params.kross){
+            const liqPct=equity/(params.marjin*params.kaldirac);
+            const liqPrice = yon==='long' ? entry*(1-liqPct) : entry*(1+liqPct);
+            if(yon==='long' && stop<liqPrice){effStop=liqPrice;liq=true;}
+            if(yon==='short'&& stop>liqPrice){effStop=liqPrice;liq=true;}
+          }
+          pozisyon={owner:c.owner,yon,entry,stop:effStop,tp,idx:i,time:bar.time,sebep:c.sig.sebep||'',liq,
+            etiket:c.sig.etiket||null, hacim:(bar.volume!=null&&isFinite(bar.volume))?bar.volume:null,
+            kalite:feat.kalite, premiumDiscount:feat.premiumDiscount, sweepPresent:feat.sweepPresent,
+            htfTrendMatch:feat.htfTrendMatch, atrPct:feat.atrPct, session:feat.session,
+            volumeRelative:feat.volumeRelative, fvgFresh:feat.fvgFresh, collision};
+        } else if(collision){
+          const rec={
+            yon, girisIdx:i, girisTime:bar.time, girisTarih:candles[i].datetime,
+            cikisIdx:i, cikisTime:bar.time, cikisTarih:candles[i].datetime,
+            entry:+entry.toFixed(6), exit:+entry.toFixed(6), stop:+stop.toFixed(6), tp:null,
+            tip:'ELENDI', pnlPct:0, r:0, pnlDolar:0,
+            sebep:c.sig.sebep||'', sure:0, equity:+equity.toFixed(2),
+            etiket:c.sig.etiket||null, hacim:(bar.volume!=null&&isFinite(bar.volume))?bar.volume:null,
+            kalite:(feat.kalite!=null?+feat.kalite.toFixed(4):null),
+            premiumDiscount:feat.premiumDiscount||null, sweepPresent:feat.sweepPresent,
+            htfTrendMatch:feat.htfTrendMatch, atrPct:feat.atrPct, session:feat.session||null,
+            volumeRelative:feat.volumeRelative, fvgFresh:feat.fvgFresh,
+            sonucOverride:'ELENMEDİ (çakışma, kalite düşük)', cakisma:'elendi (çakışma, kalite düşük)'
+          };
+          (c.owner==='A'?tradesA:tradesB).push(rec);
+        }
+      }
+    }
+  }
+  if(pozisyon){ kapat(candles[n-1].close,'AcikSonu',n-1); }
+  return {tradesA,tradesB};
+}
+
+function runDualCompare(){
+  const ds=datasets[activeId]; if(!ds){toast('Önce veri yükleyin');openModal();return;}
+  const presetA=STRATEGY_PRESETS.find(s=>s.id===AB_COMPARE_IDS[0]);
+  const presetB=STRATEGY_PRESETS.find(s=>s.id===AB_COMPARE_IDS[1]);
+  if(!presetA||!presetB){toast('A/B strateji tanımları bulunamadı');return;}
+  const params=gatherParams();
+  toast('A/B çakışma testi çalışıyor…');
+  Promise.all([fetchPresetCode(presetA),fetchPresetCode(presetB)]).then(([codeA,codeB])=>{
+    let stratA,stratB;
+    try{ stratA=compileStrategy(codeA); stratB=compileStrategy(codeB); }
+    catch(e){ toast('Derleme hatası: '+e.message); return; }
+    const range=currentRange(ds.candles);
+    let out;
+    try{ out=dualBacktest(ds.candles,params,{name:presetA.name,strat:stratA},{name:presetB.name,strat:stratB},range); }
+    catch(e){ toast('Hata: '+e.message); return; }
+    appendSignalLog(out.tradesA,presetA.name,ds.symbol);
+    appendSignalLog(out.tradesB,presetB.name,ds.symbol);
+    renderSignalLogTab();
+    switchTab('sinyallog');
+    toast('A/B testi tamamlandı — '+(out.tradesA.length+out.tradesB.length)+' kayıt loglandı');
+  }).catch(e=>toast('Hata: '+e.message));
 }
 
 /* ---- Dışa aktarma ---- */
