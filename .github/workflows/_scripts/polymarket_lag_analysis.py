@@ -65,9 +65,19 @@ def load_btc_price():
             skiprows=skiprows, usecols=["open_time", "close"],
             dtype={"open_time": "int64", "close": "float64"},
         )
+        # Binance switched some kline files from millisecond to microsecond
+        # timestamps; detect the unit per-file from magnitude, don't assume.
+        sample = int(df["open_time"].iloc[0])
+        if sample > 10**14:
+            divisor = 1_000_000  # microseconds
+        elif sample > 10**11:
+            divisor = 1000  # milliseconds
+        else:
+            divisor = 1  # already seconds
+        log(f"  {f.name}: open_time sample={sample} -> divisor={divisor}")
+        df["t"] = (df["open_time"] // divisor).astype("int64")
         frames.append(df)
     btc = pd.concat(frames, ignore_index=True)
-    btc["t"] = (btc["open_time"] // 1000).astype("int64")
     btc = btc.drop_duplicates("t").sort_values("t")
     price = pd.Series(btc["close"].values, index=btc["t"].values, name="price")
     log(f"btc price series: {len(price)} seconds, {price.index.min()} .. {price.index.max()}")
