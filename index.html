@@ -738,24 +738,32 @@ function enhanceEditor(){
 }
 function getEditorValue(){return editor?editor.getValue():($('stratCode')?$('stratCode').value:'');}
 function setEditorValue(v){ if(editor)editor.setValue(v); else {const ta=$('stratCode');if(ta)ta.value=v;} Store.set(STRAT_KEY,v); }
+// Kaydetmeden (localStorage'a yazmadan) editör içeriğini değiştirir — sadece açılışta
+// varsayılanı sessizce göstermek için; kullanıcının henüz kaydetmediği bir "seçim" gibi görünmesin.
+function setEditorValueSilent(v){ if(editor)editor.setValue(v); else {const ta=$('stratCode');if(ta)ta.value=v;} }
 
 // Repo içindeki strategies/ klasöründen yüklenebilen hazır stratejiler.
 // Böylece stratejiler tek bir tarayıcının localStorage'ına bağımlı kalmaz —
 // herkes GitHub Pages üzerinden aynı listeyi görür.
+const DEFAULT_STRATEGY_ID='mod-b-fvg-1h';
 const STRATEGY_PRESETS=[
-  {id:'judas-swing', name:'Mekanik Judas Swing (Varsayılan)', file:null},
-  {id:'liquidity-sweep-reversal', name:'Liquidity Sweep Reversal', file:'strategies/liquidity-sweep-reversal.js'}
+  {id:'mod-b-fvg-1h', name:'Mod B (FVG, 1H) — Varsayılan', file:'strategies/mod-b-fvg-1h.js'},
+  {id:'liquidity-sweep-reversal', name:'Liquidity Sweep Reversal', file:'strategies/liquidity-sweep-reversal.js'},
+  {id:'judas-swing', name:'Mekanik Judas Swing', file:null}
 ];
 function populateStrategyPresets(){
   const sel=$('stratPreset'); if(!sel)return;
   sel.innerHTML=STRATEGY_PRESETS.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
 }
+function fetchPresetCode(preset){
+  if(!preset.file) return Promise.resolve($('defaultStrategy').textContent.trim());
+  return fetch(preset.file).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.text(); });
+}
 function loadStrategyPreset(id){
   const preset=STRATEGY_PRESETS.find(s=>s.id===id); if(!preset)return;
-  if(!preset.file){ setEditorValue($('defaultStrategy').textContent.trim()); setEditorStatus(preset.name+' yüklendi.',''); return; }
   setEditorStatus('Yükleniyor…','');
-  fetch(preset.file).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.text(); })
-    .then(code=>{ setEditorValue(code); setEditorStatus(preset.name+' yüklendi.',''); })
+  fetchPresetCode(preset)
+    .then(code=>{ setEditorValue(code); $('stratPreset').value=preset.id; setEditorStatus(preset.name+' yüklendi.',''); })
     .catch(e=>{ setEditorStatus('Strateji dosyası yüklenemedi ('+e.message+') — GitHub Pages üzerinden açtığınızdan emin olun.','err'); });
 }
 // Kütüphane geç yüklenirse mevcut sonucu yeniden çiz
@@ -801,7 +809,8 @@ const RESULTS_HTML=`
     <div class="editor-bar">
       <select id="stratPreset" title="Repo'daki hazır stratejilerden yükle" style="max-width:220px"></select>
       <button class="btn primary sm" id="btnApplyCode">Kodu uygula & çalıştır</button>
-      <button class="btn sm" id="btnResetCode">Varsayılan şablon</button>
+      <button class="btn sm" id="btnResetCode">Varsayılanı Dön</button>
+      <button class="btn sm" id="btnClearCode">Temizle</button>
       <span class="editor-status" id="editorStatus">Hazır.</span>
     </div>
     <div class="cm-scroll-wrap"><textarea id="stratCode"></textarea></div>
@@ -827,13 +836,23 @@ function initApp(){
 
   // Editör (CodeMirror varsa zenginleştir; yoksa düz textarea ile çalışır)
   const defCode=$('defaultStrategy').textContent.trim();
-  const saved=Store.get(STRAT_KEY);
-  const ta=$('stratCode'); ta.value=saved||defCode;
+  const saved=Store.get(STRAT_KEY); // null = hiç kaydedilmemiş; '' = kullanıcı "Temizle" ile bilerek boşalttı
+  const ta=$('stratCode'); ta.value=(saved!=null)?saved:defCode;
   ta.style.cssText='display:block;width:100%;min-height:340px;background:var(--bg);color:var(--text);font-family:var(--mono);font-size:12.5px;border:none;padding:10px;resize:vertical;outline:none';
   ta.oninput=()=>Store.set(STRAT_KEY,ta.value);
   window.__enhanceEditor=enhanceEditor;
   enhanceEditor();
   populateStrategyPresets();
+  if(saved==null){
+    // İlk ziyaret / hiç kayıt yok: repo'daki varsayılan (Mod B FVG) sessizce yüklenir.
+    // Kısa fetch süresince gömülü şablon görünür kalır; başarısız olursa (ör. file:// ile açma) o şablonda kalınır.
+    const def=STRATEGY_PRESETS.find(s=>s.id===DEFAULT_STRATEGY_ID);
+    if(def) fetchPresetCode(def).then(code=>{
+      if(Store.get(STRAT_KEY)!=null)return; // bu sırada kullanıcı bir şey kaydettiyse üzerine yazma
+      setEditorValueSilent(code);
+      $('stratPreset').value=def.id;
+    }).catch(()=>{});
+  }
 
   loadDB();
   restoreParams();
@@ -875,7 +894,8 @@ function wireEvents(){
   $('resultsHost').addEventListener('click',e=>{
     const tab=e.target.closest('.tab'); if(tab){switchTab(tab.dataset.tab);return;}
     if(e.target.id==='btnApplyCode'){runBacktest();}
-    if(e.target.id==='btnResetCode'){setEditorValue($('defaultStrategy').textContent.trim());setEditorStatus('Şablon yüklendi.','');$('stratPreset').value='judas-swing';}
+    if(e.target.id==='btnResetCode'){loadStrategyPreset(DEFAULT_STRATEGY_ID);}
+    if(e.target.id==='btnClearCode'){setEditorValue('');setEditorStatus('Temizlendi.','');}
     if(e.target.id==='btnCmpRun'){runAllSymbols();}
     const th=e.target.closest('th[data-sort]'); if(th){sortTrades(th.dataset.sort);}
   });
