@@ -1,0 +1,25 @@
+{
+  "n_ticks": 4704518,
+  "n_markets": 15682,
+  "date_range": [
+    "1774390200",
+    "1779100200"
+  ],
+  "peak_lag_seconds": 2,
+  "peak_corr": 0.2197731426147504,
+  "peak_pvalue": 0.0,
+  "peak_n": 4688835,
+  "control_mean_at_peak_lag": 4.942874179695503e-05,
+  "control_std_at_peak_lag": 0.0018138755912742107,
+  "walk_forward": {
+    "first_half_peak_lag": 2,
+    "first_half_peak_corr": 0.29242365407970555,
+    "second_half_peak_lag": 2,
+    "second_half_peak_corr": 0.16776566509357063
+  },
+  "spread": {
+    "mean_spread": 0.012082090875196993,
+    "mean_abs_capturable_move_at_peak_lag_top_decile_btc_moves": 0.023956940919703584,
+    "spread_exceeds_capturable_move": false
+  }
+}
