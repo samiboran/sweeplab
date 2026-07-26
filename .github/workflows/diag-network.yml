@@ -15,7 +15,7 @@ jobs:
 
       - name: Inspect polymarket dataset schema
         run: |
-          cat <<'PY' > inspect.py.raw
+          cat <<'PY' > schema_probe.py.raw
           from datasets import get_dataset_config_names, load_dataset_builder, load_dataset
 
           repo = "kachoio/polymarket-5-minute-crypto-up-down-markets"
@@ -49,5 +49,5 @@ jobs:
               except Exception as e:
                   print("streaming sample failed:", e)
           PY
-          python3 -c "import textwrap,pathlib; pathlib.Path('inspect.py').write_text(textwrap.dedent(pathlib.Path('inspect.py.raw').read_text()))"
-          .venv/bin/python3 inspect.py
+          python3 -c "import textwrap,pathlib; pathlib.Path('schema_probe.py').write_text(textwrap.dedent(pathlib.Path('schema_probe.py.raw').read_text()))"
+          .venv/bin/python3 schema_probe.py
