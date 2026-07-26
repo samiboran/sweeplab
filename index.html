@@ -738,6 +738,26 @@ function enhanceEditor(){
 }
 function getEditorValue(){return editor?editor.getValue():($('stratCode')?$('stratCode').value:'');}
 function setEditorValue(v){ if(editor)editor.setValue(v); else {const ta=$('stratCode');if(ta)ta.value=v;} Store.set(STRAT_KEY,v); }
+
+// Repo içindeki strategies/ klasöründen yüklenebilen hazır stratejiler.
+// Böylece stratejiler tek bir tarayıcının localStorage'ına bağımlı kalmaz —
+// herkes GitHub Pages üzerinden aynı listeyi görür.
+const STRATEGY_PRESETS=[
+  {id:'judas-swing', name:'Mekanik Judas Swing (Varsayılan)', file:null},
+  {id:'liquidity-sweep-reversal', name:'Liquidity Sweep Reversal', file:'strategies/liquidity-sweep-reversal.js'}
+];
+function populateStrategyPresets(){
+  const sel=$('stratPreset'); if(!sel)return;
+  sel.innerHTML=STRATEGY_PRESETS.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+}
+function loadStrategyPreset(id){
+  const preset=STRATEGY_PRESETS.find(s=>s.id===id); if(!preset)return;
+  if(!preset.file){ setEditorValue($('defaultStrategy').textContent.trim()); setEditorStatus(preset.name+' yüklendi.',''); return; }
+  setEditorStatus('Yükleniyor…','');
+  fetch(preset.file).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.text(); })
+    .then(code=>{ setEditorValue(code); setEditorStatus(preset.name+' yüklendi.',''); })
+    .catch(e=>{ setEditorStatus('Strateji dosyası yüklenemedi ('+e.message+') — GitHub Pages üzerinden açtığınızdan emin olun.','err'); });
+}
 // Kütüphane geç yüklenirse mevcut sonucu yeniden çiz
 window.__redraw=function(){ if(lastResult){renderChart(lastResult);renderEquity(lastResult.res.equityCurve,lastResult.params.capital);} };
 
@@ -779,6 +799,7 @@ const RESULTS_HTML=`
   </div>
   <div class="pane" data-pane="kod">
     <div class="editor-bar">
+      <select id="stratPreset" title="Repo'daki hazır stratejilerden yükle" style="max-width:220px"></select>
       <button class="btn primary sm" id="btnApplyCode">Kodu uygula & çalıştır</button>
       <button class="btn sm" id="btnResetCode">Varsayılan şablon</button>
       <span class="editor-status" id="editorStatus">Hazır.</span>
@@ -812,6 +833,7 @@ function initApp(){
   ta.oninput=()=>Store.set(STRAT_KEY,ta.value);
   window.__enhanceEditor=enhanceEditor;
   enhanceEditor();
+  populateStrategyPresets();
 
   loadDB();
   restoreParams();
@@ -847,11 +869,13 @@ function wireEvents(){
 
   $('btnExportCsv').onclick=exportCsv; $('btnExportJson').onclick=exportJson;
 
+  $('stratPreset').onchange=e=>loadStrategyPreset(e.target.value);
+
   // Sekmeler (delegasyon)
   $('resultsHost').addEventListener('click',e=>{
     const tab=e.target.closest('.tab'); if(tab){switchTab(tab.dataset.tab);return;}
     if(e.target.id==='btnApplyCode'){runBacktest();}
-    if(e.target.id==='btnResetCode'){setEditorValue($('defaultStrategy').textContent.trim());setEditorStatus('Şablon yüklendi.','');}
+    if(e.target.id==='btnResetCode'){setEditorValue($('defaultStrategy').textContent.trim());setEditorStatus('Şablon yüklendi.','');$('stratPreset').value='judas-swing';}
     if(e.target.id==='btnCmpRun'){runAllSymbols();}
     const th=e.target.closest('th[data-sort]'); if(th){sortTrades(th.dataset.sort);}
   });
