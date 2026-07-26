@@ -7,14 +7,15 @@ jobs:
   diag:
     runs-on: ubuntu-latest
     steps:
+      - name: Set up venv and deps
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q -U pip
+          .venv/bin/pip install -q datasets pandas pyarrow
+
       - name: Inspect polymarket dataset schema
         run: |
           cat <<'PY' > inspect.py.raw
-          import subprocess
-          import sys
-
-          subprocess.run([sys.executable, "-m", "pip", "install", "-q", "datasets", "pandas", "pyarrow"], check=True)
-
           from datasets import get_dataset_config_names, load_dataset_builder, load_dataset
 
           repo = "kachoio/polymarket-5-minute-crypto-up-down-markets"
@@ -49,4 +50,4 @@ jobs:
                   print("streaming sample failed:", e)
           PY
           python3 -c "import textwrap,pathlib; pathlib.Path('inspect.py').write_text(textwrap.dedent(pathlib.Path('inspect.py.raw').read_text()))"
-          python3 inspect.py
+          .venv/bin/python3 inspect.py
