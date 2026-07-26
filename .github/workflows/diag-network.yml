@@ -7,21 +7,14 @@ jobs:
   diag:
     runs-on: ubuntu-latest
     steps:
-      - name: Probe Binance bulk-data file paths
+      - name: Inspect raw Binance kline CSV format
         run: |
-          check () {
-            code=$(curl -sS -m 15 -o /dev/null -w "%{http_code}" "$1" || echo "ERR")
-            echo "$code  $1"
-          }
-          echo "=== monthly 1s klines ==="
-          check "https://data.binance.vision/data/spot/monthly/klines/BTCUSDT/1s/BTCUSDT-1s-2026-03.zip"
-          check "https://data.binance.vision/data/spot/monthly/klines/BTCUSDT/1s/BTCUSDT-1s-2026-04.zip"
-          check "https://data.binance.vision/data/spot/monthly/klines/BTCUSDT/1s/BTCUSDT-1s-2026-05.zip"
-          echo "=== daily 1s klines (May, partial month) ==="
-          check "https://data.binance.vision/data/spot/daily/klines/BTCUSDT/1s/BTCUSDT-1s-2026-05-01.zip"
-          check "https://data.binance.vision/data/spot/daily/klines/BTCUSDT/1s/BTCUSDT-1s-2026-05-18.zip"
-          check "https://data.binance.vision/data/spot/daily/klines/BTCUSDT/1s/BTCUSDT-1s-2026-05-19.zip"
-          echo "=== fallback: 1m klines (monthly) ==="
-          check "https://data.binance.vision/data/spot/monthly/klines/BTCUSDT/1m/BTCUSDT-1m-2026-03.zip"
-          echo "=== aggTrades (monthly) - richest resolution, fallback if 1s missing ==="
-          check "https://data.binance.vision/data/spot/monthly/aggTrades/BTCUSDT/BTCUSDT-aggTrades-2026-03.zip"
+          curl -sS -o btc.zip "https://data.binance.vision/data/spot/monthly/klines/BTCUSDT/1s/BTCUSDT-1s-2026-03.zip"
+          unzip -o btc.zip
+          f=$(ls BTCUSDT-1s-2026-03*.csv)
+          echo "=== file: $f ==="
+          head -n 3 "$f"
+          echo "=== line count ==="
+          wc -l "$f"
+          echo "=== checksum file if any ==="
+          curl -sS "https://data.binance.vision/data/spot/monthly/klines/BTCUSDT/1s/BTCUSDT-1s-2026-03.zip.CHECKSUM" || true
