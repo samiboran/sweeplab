@@ -325,16 +325,16 @@ tbody tr:hover{background:var(--panel)}
 <div class="modal-bg" id="dataModal">
   <div class="modal">
     <h2>Veri yönetimi</h2>
-    <p class="sub">Twelve Data formatında JSON veya OHLC CSV. Birden fazla sembol saklanabilir.</p>
+    <p class="sub">Twelve Data formatında JSON veya OHLC CSV. Birden fazla sembol saklanabilir. Varsayılan strateji Mod B (FVG) 1H barlar için tasarlandı — interval=1h veri önerilir.</p>
     <div class="drop" id="dropZone">Dosyayı buraya sürükleyin <span style="color:var(--gold)">veya tıklayın</span><br><span style="font-size:11px">.json / .csv</span>
       <input type="file" id="fileInput" accept=".json,.csv,.txt" style="display:none">
     </div>
     <label class="lab">…veya yapıştırın</label>
-    <textarea id="pasteArea" placeholder='{"meta":{"symbol":"XAU/USD","interval":"15min"},"values":[{"datetime":"2025-03-19 15:45:00","open":"3036.4","high":"3036.8","low":"3034.9","close":"3036.4"}]}
+    <textarea id="pasteArea" placeholder='{"meta":{"symbol":"XAU/USD","interval":"1h"},"values":[{"datetime":"2025-03-19 15:00:00","open":"3036.4","high":"3036.8","low":"3034.9","close":"3036.4"}]}
 
 — ya da CSV —
 datetime,open,high,low,close
-2025-03-19 15:45:00,3036.4,3036.8,3034.9,3036.4'></textarea>
+2025-03-19 15:00:00,3036.4,3036.8,3034.9,3036.4'></textarea>
     <div class="fld" style="margin-top:10px">
       <label class="lab">Sembol etiketi (boşsa metadata'dan alınır)</label>
       <input type="text" id="symLabel" placeholder="XAUUSD">
