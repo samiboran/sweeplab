@@ -1,0 +1,30 @@
+name: Network diagnostic (one-off)
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  diag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe candidate hosts
+        run: |
+          check () {
+            code=$(curl -sS -m 15 -o /dev/null -w "%{http_code}" "$1" || echo "ERR")
+            echo "$code  $1"
+          }
+          echo "=== Hugging Face ==="
+          check "https://huggingface.co"
+          check "https://huggingface.co/api/datasets/kachoio/polymarket-5-minute-crypto-up-down-markets"
+          check "https://datasets-server.huggingface.co/is-valid?dataset=kachoio/polymarket-5-minute-crypto-up-down-markets"
+          echo "=== Binance bulk data mirror ==="
+          check "https://data.binance.vision"
+          check "https://data.binance.vision/data/spot/monthly/klines/BTCUSDT/1m/"
+          echo "=== Binance API (expected 451, sanity check) ==="
+          check "https://api.binance.com/api/v3/time"
+          echo "=== Alt exchanges ==="
+          check "https://api.kraken.com/0/public/Time"
+          check "https://api.exchange.coinbase.com/time"
+          check "https://api.bybit.com/v5/market/time"
+          echo "=== pip/pypi (should already work via allowlist, sanity check) ==="
+          check "https://pypi.org"
