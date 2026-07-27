@@ -326,6 +326,13 @@ tbody tr:hover{background:var(--panel)}
   <div class="modal">
     <h2>Veri yönetimi</h2>
     <p class="sub">Twelve Data formatında JSON veya OHLC CSV. Birden fazla sembol saklanabilir. Varsayılan strateji Mod B (FVG) 1H barlar için tasarlandı — interval=1h veri önerilir.</p>
+
+    <label class="lab">Yerleşik veri kütüphanesi (geçmiş veri — API'den tekrar çekmeye gerek yok)</label>
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <select id="marketLibSelect" style="flex:1"></select>
+      <button class="btn sm primary" id="btnLoadMarketLib">Kütüphaneden yükle</button>
+    </div>
+
     <div class="drop" id="dropZone">Dosyayı buraya sürükleyin <span style="color:var(--gold)">veya tıklayın</span><br><span style="font-size:11px">.json / .csv</span>
       <input type="file" id="fileInput" accept=".json,.csv,.txt" style="display:none">
     </div>
@@ -929,6 +936,7 @@ function initApp(){
   window.__enhanceEditor=enhanceEditor;
   enhanceEditor();
   populateStrategyPresets();
+  populateMarketLibrary();
   if(saved==null){
     // İlk ziyaret / hiç kayıt yok: repo'daki varsayılan (Mod B FVG) sessizce yüklenir.
     // Kısa fetch süresince gömülü şablon görünür kalır; başarısız olursa (ör. file:// ile açma) o şablonda kalınır.
@@ -964,6 +972,7 @@ function wireEvents(){
   ['dragleave','drop'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove('hover');}));
   dz.addEventListener('drop',e=>{const f=e.dataTransfer.files[0];if(f)readFile(f);});
   $('btnAddData').onclick=addFromPaste;
+  $('btnLoadMarketLib').onclick=loadMarketLibraryEntry;
   $('dsSelect').onchange=e=>{activeId=e.target.value;populateDateRange();};
 
   $('btnRun').onclick=()=>runBacktest();
@@ -998,6 +1007,39 @@ function switchTab(name){
   document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('active',p.dataset.pane===name));
   if(name==='kod'&&editor)setTimeout(()=>editor.refresh(),30);
   if(name==='ozet'&&equityChart)setTimeout(()=>equityChart.resize(),30);
+}
+
+/* ---- Yerleşik veri kütüphanesi (repo'daki data/market/ altındaki statik
+   geçmiş CSV'ler — canlı değil, backtest/görsel inceleme için). Sadece
+   seçilince fetch edilir, sayfa açılışında hiçbiri önceden yüklenmez. */
+const MARKET_DATA_LIBRARY=(()=>{
+  const symbols=['BTC','AVAX','SOL','ETH','LINK'];
+  const intervals=[{key:'4H',label:'4H'},{key:'1H',label:'1H'},{key:'5dk',label:'5dk'}];
+  const out=[];
+  for(const sym of symbols) for(const iv of intervals){
+    out.push({id:sym+'_'+iv.key, symbol:sym, interval:iv.label, file:`data/market/${sym}_${iv.key}.csv`});
+  }
+  return out;
+})();
+function populateMarketLibrary(){
+  const sel=$('marketLibSelect'); if(!sel)return;
+  sel.innerHTML=MARKET_DATA_LIBRARY.map(m=>`<option value="${m.id}">${m.symbol} · ${m.interval}</option>`).join('');
+}
+function loadMarketLibraryEntry(){
+  const id=$('marketLibSelect').value;
+  const entry=MARKET_DATA_LIBRARY.find(m=>m.id===id); if(!entry)return;
+  toast('Yükleniyor…');
+  fetch(entry.file).then(r=>{ if(!r.ok)throw new Error('HTTP '+r.status); return r.text(); })
+    .then(raw=>{
+      const d=parseData(raw);
+      const label=entry.symbol+' · '+entry.interval;
+      const dsId='ds_'+Date.now();
+      datasets[dsId]={id:dsId,symbol:label,interval:entry.interval,candles:d.candles};
+      saveDB(); activeId=dsId;
+      renderDatasetSelect(); populateDateRange(); renderDsList();
+      toast(label+' yüklendi · '+d.candles.length+' mum');
+    })
+    .catch(e=>toast('Kütüphane yükleme hatası: '+e.message+' — GitHub Pages üzerinden açtığınızdan emin olun.'));
 }
 
 /* ---- Veri yönetimi ---- */
