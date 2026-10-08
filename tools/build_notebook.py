@@ -16,7 +16,7 @@ Run fetch_okx_history.py (DAYS>=90) first.
 """
 import csv, datetime as dt, io, json, math, os, time, urllib.parse, urllib.request
 
-OUT = "data/derivs"
+OUT = os.environ.get("OUT_DIR", "data/derivs")
 SHOW_DAYS = int(os.environ.get("SHOW_DAYS", "30"))
 LOOKBACK = 140  # history fetched, enough for 30d correlations and weekly series
 UA = {"User-Agent": "Mozilla/5.0 (derivs-notebook; github actions)"}
@@ -131,9 +131,9 @@ def pct(a, b):
     return (a / b - 1) * 100 if a is not None and b else None
 
 
-def corr(xs, ys):
+def corr(xs, ys, min_n=10):
     n = len(xs)
-    if n < 10:
+    if n < min_n:
         return None
     mx, my = sum(xs) / n, sum(ys) / n
     sxy = sum((x - mx) * (y - my) for x, y in zip(xs, ys))
@@ -142,7 +142,7 @@ def corr(xs, ys):
     return sxy / math.sqrt(sxx * syy) if sxx and syy else None
 
 
-def window_corr(a, b, end, days=30):
+def window_corr(a, b, end, days=30, min_n=10):
     """Correlation of returns between consecutive dates both series share, within
     the trailing `days` calendar days ending at `end` (S&P has no weekends, so BTC
     is sampled on S&P's trading dates)."""
@@ -153,7 +153,7 @@ def window_corr(a, b, end, days=30):
              if d1 >= (dt.date.fromisoformat(end) - dt.timedelta(days=days)).isoformat()]
     if not pairs:
         return None, 0
-    c = corr([p[0] for p in pairs], [p[1] for p in pairs])
+    c = corr([p[0] for p in pairs], [p[1] for p in pairs], min_n)
     return c, len(pairs)
 
 
@@ -238,6 +238,8 @@ def main():
             cval, npairs = window_corr(btc_close, other, day)
             corrs[k] = cval
             corrs[k + "_n"] = npairs
+            c7, n7 = window_corr(btc_close, other, day, days=7, min_n=4)
+            corrs[k + "_7d"] = c7
 
         rows.append({
             "date": day,
@@ -270,8 +272,13 @@ def main():
         return o
 
     rows = clean(rows)
+    weekly = clean({
+        "netliq_musd": sorted(netliq.items()),
+        "cot_btc_lev_net": sorted((d, v["lev_net"]) for d, v in cot_btc.items()),
+        "cot_eth_lev_net": sorted((d, v["lev_net"]) for d, v in cot_eth.items()),
+    })
     json.dump({"built_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
-               "status": status, "rows": rows}, open(f"{OUT}/notebook_daily.json", "w"), indent=1)
+               "status": status, "calendar": CALENDAR, "weekly": weekly, "rows": rows}, open(f"{OUT}/notebook_daily.json", "w"), indent=1)
 
     def flat(prefix, o, out):
         for k, v in o.items():

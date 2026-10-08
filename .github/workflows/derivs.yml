@@ -2,7 +2,7 @@ name: derivs-snapshot
 on:
   push:
     branches: [data-feed]
-    paths: [tools/fetch_derivs.py, tools/fetch_okx_history.py, tools/build_notebook.py, .github/workflows/derivs.yml, data/derivs/.trigger]
+    paths: [tools/fetch_derivs.py, tools/fetch_okx_history.py, tools/build_notebook.py, tools/daily_brief.py, .github/workflows/derivs.yml, data/derivs/.trigger]
   workflow_dispatch:
 permissions:
   contents: write
@@ -17,6 +17,8 @@ jobs:
         run: python3 tools/fetch_okx_history.py
       - name: Four-layer notebook dataset (macro + positioning + correlations + calendar)
         run: python3 tools/build_notebook.py
+      - name: Brief (test run on this branch, no Telegram)
+        run: SEND_TELEGRAM=0 python3 tools/daily_brief.py
       - run: |
           git config user.name "derivs-bot"
           git config user.email "derivs-bot@users.noreply.github.com"

@@ -40,9 +40,10 @@ if hl["ok"]:
         hl = {"ok": False, "error": "parse " + str(e)}
 S["hyperliquid"] = hl
 
-os.makedirs("data/derivs", exist_ok=True)
+OUT_DIR = os.environ.get("OUT_DIR", "data/derivs")
+os.makedirs(OUT_DIR, exist_ok=True)
 day = out["fetched_utc"][:13].replace("T", "_")
-for p in (f"data/derivs/{day}.json", "data/derivs/latest.json"):
+for p in (f"{OUT_DIR}/{day}.json", f"{OUT_DIR}/latest.json"):
     json.dump(out, open(p, "w"), indent=1)
 for k, v in S.items():
     items = v.items() if "ok" not in v else [("all", v)]

@@ -12,7 +12,7 @@ import csv, datetime as dt, json, os, time, urllib.request
 DAYS = int(os.environ.get("DAYS", "30"))
 COINS = ["BTC", "ETH"]
 BASE = "https://www.okx.com"
-OUT_DIR = "data/derivs"
+OUT_DIR = os.environ.get("OUT_DIR", "data/derivs")
 
 
 def get(path):
