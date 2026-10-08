@@ -1,7 +1,7 @@
 """Last N days of daily BTC/ETH derivatives history from OKX public APIs.
 
-Per UTC day and coin: price OHLC, open interest (USD, end of day), long/short
-account ratio, taker buy/sell volume (USD) and funding (sum of the day's 8h
+Per UTC day and coin: price OHLC, open interest (USD, at the day's close),
+long/short account ratio (at the day's close), taker buy/sell volume (USD) and funding (sum of the day's 8h
 payments). Output: data/derivs/okx_history_30d.csv, one row per date, BTC and
 ETH side by side. Raw responses are kept in data/derivs/okx_history_raw.json.
 
@@ -33,6 +33,12 @@ def get(path):
 
 def utc_day(ms):
     return dt.datetime.fromtimestamp(int(ms) / 1000, dt.timezone.utc).strftime("%Y-%m-%d")
+
+
+def closing_day(ms):
+    """Snapshots (OI, L/S ratio) and funding settlements are stamped at the
+    moment they are taken; the 00:00 UTC one closes the previous day."""
+    return utc_day(int(ms) - 1)
 
 
 def fetch(coin):
@@ -72,11 +78,11 @@ def build(raw, coin):
     # open interest: prefer per-contract USD OI, fall back to coin-level
     if r["oi"]["ok"] and r["oi"]["data"]:
         for x in r["oi"]["data"]:
-            row(utc_day(x[0]))["oi_usd"] = float(x[3])
+            row(closing_day(x[0]))["oi_usd"] = float(x[3])
         rows_src_oi = "BTC/ETH-USDT perp"
     elif r["oi_ccy"]["ok"]:
         for x in r["oi_ccy"]["data"]:
-            row(utc_day(x[0]))["oi_usd"] = float(x[1])
+            row(closing_day(x[0]))["oi_usd"] = float(x[1])
         rows_src_oi = "all OKX contracts"
     else:
         rows_src_oi = "missing"
@@ -84,7 +90,7 @@ def build(raw, coin):
     src = r["ls"] if (r["ls"]["ok"] and r["ls"]["data"]) else r["ls_ccy"]
     if src["ok"]:
         for x in src["data"]:
-            row(utc_day(x[0]))["ls_ratio"] = float(x[1])
+            row(closing_day(x[0]))["ls_ratio"] = float(x[1])
 
     src = r["taker"] if (r["taker"]["ok"] and r["taker"]["data"]) else r["taker_ccy"]
     if src["ok"]:
@@ -94,7 +100,7 @@ def build(raw, coin):
 
     if r["funding"]["ok"]:
         for f in r["funding"]["data"]:
-            d = row(utc_day(f["fundingTime"]))
+            d = row(closing_day(f["fundingTime"]))
             d["funding_sum_pct"] = d.get("funding_sum_pct", 0.0) + float(f["fundingRate"]) * 100
             d["funding_n"] = d.get("funding_n", 0) + 1
     return rows, rows_src_oi
