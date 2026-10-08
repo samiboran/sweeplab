@@ -13,6 +13,9 @@ Alarm rules
      (normal is about 0.01% per 8h, i.e. ~0.03% a day)
   5. 7-day correlation more than 0.5 away from the 30-day correlation
   6. Weekly net-liquidity change flipped direction versus the prior week
+Positioning is read against the trend: a crowded long book in a bull trend is
+"düzeltme riski", in a bear trend "çöküş riski". Each coin also gets the day's
+price-vs-OI label (kaldıraçlı yükseliş / short squeeze / yeni short / temizlik).
 Layer status: red = any alarm in the layer; yellow = any |z| > 1.5; else green.
 """
 import datetime as dt, html, json, math, os, urllib.request
@@ -159,6 +162,28 @@ def build():
             yön = "artışa" if d1 > 0 else "düşüşe"
             out["alarms"].append({"layer": "regime", "rule": "netliq_flip", "text": f"Net likidite yön değiştirdi: bu hafta {yön} geçti ({d1 / 1e3:+.0f} B$, {nl[-1][0]})"})
 
+    # Trend (regime) and a positioning read that depends on it
+    out["coins"] = {}
+    for c in ("btc", "eth"):
+        tr = last["regime"].get("trend_" + c) or {}
+        p = pos.get(c) or {}
+        ls, f = p.get("ls_ratio"), p.get("funding_sum_pct")
+        ls_z = out["indicators"][c + "_ls"]["z"]
+        crowded_long = (ls is not None and ls > LS_MAX) or (ls_z is not None and ls_z > Z_ALARM) or (f is not None and f > FUND_HI)
+        crowded_short = f is not None and f < FUND_LO
+        st = tr.get("state")
+        if crowded_long:
+            risk = {"boga": "long kalabalığı → düzeltme riski", "ayi": "long kalabalığı → çöküş riski"}.get(
+                st, "long kalabalığı → kırılgan zemin, sert hareket riski")
+        elif crowded_short:
+            risk = "short kalabalığı → squeeze riski"
+        else:
+            risk = "pozisyonlanma dengeli"
+        out["coins"][c] = {"trend": st, "trend_text": TREND[st], "dist200_pct": tr.get("dist200_pct"),
+                           "ma50": tr.get("ma50"), "ma200": tr.get("ma200"), "close": tr.get("close"),
+                           "flow": p.get("flow"), "flow_text": FLOW.get(p.get("flow"), "–"),
+                           "crowded_long": crowded_long, "crowded_short": crowded_short, "reading": risk}
+
     for layer, name in LAYERS.items():
         zs = [i["z"] for i in out["indicators"].values() if i["layer"] == layer and i["z"] is not None]
         al = [a for a in out["alarms"] if a["layer"] == layer]
@@ -178,6 +203,9 @@ def build():
 
 
 DOT = {"green": "🟢", "yellow": "🟡", "red": "🔴"}
+TREND = {"boga": "Boğa", "ayi": "Ayı", "gecis": "Geçiş", None: "–"}
+FLOW = {"kaldiracli_yukselis": "Kaldıraçlı yükseliş (fiyat↑ OI↑)", "short_squeeze": "Short squeeze (fiyat↑ OI↓)",
+        "yeni_short": "Yeni short (fiyat↓ OI↑)", "temizlik": "Temizlik (fiyat↓ OI↓)", "yatay": "Yatay / sakin", None: "–"}
 
 
 def message(b):
@@ -187,8 +215,18 @@ def message(b):
     if b["today_events"]:
         lines.append("📅 Bugün: <b>" + ", ".join(b["today_events"]) + "</b> (15:30 İstanbul)")
     lines.append("")
+    co = b["coins"]
     for layer, info in b["layers"].items():
         lines.append(f"{DOT[info['status']]} <b>{info['name']}</b>")
+        if layer == "regime":
+            for c in ("btc", "eth"):
+                x = co[c]
+                d = "" if x["dist200_pct"] is None else f", 200g ort. {x['dist200_pct']:+.1f}%"
+                lines.append(f"   {c.upper()} trend: {x['trend_text']}{d}")
+        if layer == "pos":
+            for c in ("btc", "eth"):
+                x = co[c]
+                lines.append(f"   {c.upper()}: {x['flow_text']} · {x['reading']}")
     lines.append("")
     lines.append(f"BTC OI {ind['btc_oi']['display']} ({_s(ind['btc_oi'].get('chg24'))}) · L/S {ind['btc_ls']['display']} · funding {ind['btc_fund']['display']}")
     lines.append(f"ETH OI {ind['eth_oi']['display']} ({_s(ind['eth_oi'].get('chg24'))}) · L/S {ind['eth_ls']['display']} · funding {ind['eth_fund']['display']}")

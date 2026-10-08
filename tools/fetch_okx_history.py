@@ -59,11 +59,27 @@ def get_funding(inst, pages=4):
     return first
 
 
+def get_candles(inst, pages=4):
+    """~400 daily candles (4 pages of 100) for 50/200-day trend averages."""
+    first = get(f"/api/v5/market/history-candles?instId={inst}&bar=1Dutc&limit=100")
+    if not first["ok"]:
+        return first
+    data = list(first["data"])
+    for _ in range(pages - 1):
+        oldest = min(int(x[0]) for x in data)
+        nxt = get(f"/api/v5/market/history-candles?instId={inst}&bar=1Dutc&limit=100&after={oldest}")
+        if not nxt["ok"] or not nxt["data"]:
+            break
+        data += nxt["data"]
+    first["data"] = data
+    return first
+
+
 def fetch(coin):
     inst = f"{coin}-USDT-SWAP"
     return {
         # [ts, o, h, l, c, vol, volCcy, volCcyQuote, confirm]; 1Dutc = UTC-midnight candles
-        "candles": get(f"/api/v5/market/history-candles?instId={inst}&bar=1Dutc&limit=100"),
+        "candles": get_candles(inst),
         # [ts, oi(contracts), oiCcy, oiUsd]
         "oi": get(f"/api/v5/rubik/stat/contracts/open-interest-history?instId={inst}&period=1Dutc&limit=100"),
         # [ts, ratio] — share of accounts net long vs net short on this contract

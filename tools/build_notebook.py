@@ -1,10 +1,12 @@
 """Builds the daily dataset behind the Kaldıraç Gözlem Defteri, in four layers.
 
-  Rejim        net liquidity (WALCL − WTREGEN − RRPONTSYD, weekly), 10y real yield
+  Rejim        BTC/ETH trend vs 50/200-day averages (1y of OKX daily closes),
+               net liquidity (WALCL − WTREGEN − RRPONTSYD, weekly), 10y real yield
                (DFII10), DXY (Yahoo DX-Y.NYB; FRED broad dollar DTWEXBGS as fallback),
                stablecoin supply (DefiLlama)
   Risk iştahı  S&P 500, Nasdaq Composite, VIX, US high-yield OAS (BAMLH0A0HYM2)
-  Pozisyon     OKX BTC/ETH perp: OI, funding, L/S ratio, taker flow, price
+  Pozisyon     OKX BTC/ETH perp: OI, funding, L/S ratio, taker flow, price, and a
+               daily "what happened" label from price vs OI direction
                (from okx_history_raw.json) + CFTC COT for CME Bitcoin/Ether futures
   Korelasyon   30-day correlation of daily returns: BTC vs S&P, Nasdaq, DXY, ETH
   Takvim       FOMC decision days, CPI and NFP release days
@@ -157,6 +159,45 @@ def window_corr(a, b, end, days=30, min_n=10):
     return c, len(pairs)
 
 
+def sma(closes, day, n):
+    """Simple moving average of the n daily closes ending on `day` (None if short)."""
+    ds = sorted(d for d in closes if d <= day)[-n:]
+    if len(ds) < n:
+        return None
+    return sum(closes[d] for d in ds) / n
+
+
+def trend(closes, day):
+    """Boğa: close > MA200 and MA50 > MA200. Ayı: close < MA200 and MA50 < MA200.
+    Otherwise Geçiş (mixed signals)."""
+    c = closes.get(day)
+    m50, m200 = sma(closes, day, 50), sma(closes, day, 200)
+    if c is None or m50 is None or m200 is None:
+        return {"state": None, "close": c, "ma50": m50, "ma200": m200}
+    if c > m200 and m50 > m200:
+        st = "boga"
+    elif c < m200 and m50 < m200:
+        st = "ayi"
+    else:
+        st = "gecis"
+    return {"state": st, "close": c, "ma50": round(m50, 2), "ma200": round(m200, 2),
+            "dist200_pct": round((c / m200 - 1) * 100, 2), "dist50_pct": round((c / m50 - 1) * 100, 2)}
+
+
+PRICE_DEAD, OI_DEAD = 0.5, 1.0  # % moves smaller than this count as flat
+
+
+def flow_label(price_chg, oi_chg):
+    """What price and open interest did together on the day."""
+    if price_chg is None or oi_chg is None:
+        return None
+    if abs(price_chg) < PRICE_DEAD or abs(oi_chg) < OI_DEAD:
+        return "yatay"
+    if price_chg > 0:
+        return "kaldiracli_yukselis" if oi_chg > 0 else "short_squeeze"
+    return "yeni_short" if oi_chg > 0 else "temizlik"
+
+
 def okx_rows():
     import importlib.util
     spec = importlib.util.spec_from_file_location("h", os.path.join(os.path.dirname(__file__), "fetch_okx_history.py"))
@@ -225,6 +266,7 @@ def main():
                 r["oi_chg_pct"] = pct(r["oi_usd"], prev["oi_usd"])
             if prev.get("close") and r.get("close"):
                 r["chg_pct"] = pct(r["close"], prev["close"])
+            r["flow"] = flow_label(r.get("chg_pct"), r.get("oi_chg_pct"))
             tb, ts = r.get("taker_buy_usd"), r.get("taker_sell_usd")
             if tb is not None and ts:
                 r["taker_buy_share"] = tb / (tb + ts)
@@ -249,6 +291,8 @@ def main():
                 "real10y": r10, "real10y_asof": r10_d, "real10y_wk_chg_bp": (r10 - r10_prev) * 100 if r10 is not None and r10_prev is not None else None,
                 "dxy": dx, "dxy_asof": dx_d, "dxy_src": dxy_src, "dxy_7d_pct": change(dxy, day, 7),
                 "stables_usd": st, "stables_asof": st_d, "stables_7d_pct": change(stables, day, 7),
+                "trend_btc": trend(btc_close, day),
+                "trend_eth": trend(eth_close, day),
             },
             "risk": {
                 "spx": s, "spx_asof": s_d, "spx_1d_pct": change(spx, day, 1),
