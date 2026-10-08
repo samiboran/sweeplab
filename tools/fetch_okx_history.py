@@ -1,6 +1,6 @@
 """Last N days of daily BTC/ETH derivatives history from OKX public APIs.
 
-Per UTC day and coin: price OHLC, open interest at the day's close in USD and in
+Per UTC day and coin: price OHLC, open interest at the day's close (UTC) in USD and in
 coins (OKX oiCcy; a falling price alone shrinks USD OI, coin OI does not),
 long/short account ratio (at the day's close), taker buy/sell volume (USD) and funding (sum of the day's 8h
 payments). Output: data/derivs/okx_history_30d.csv, one row per date, BTC and
@@ -37,9 +37,14 @@ def utc_day(ms):
 
 
 def closing_day(ms):
-    """Snapshots (OI, L/S ratio) and funding settlements are stamped at the
-    moment they are taken; the 00:00 UTC one closes the previous day."""
+    """Funding settlements are stamped when paid; the 00:00 UTC payment covers
+    the last 8h of the previous day."""
     return utc_day(int(ms) - 1)
+
+
+# OKX rubik daily bars (OI, L/S ratio) stamped D 00:00 UTC hold the value at the END
+# of day D (they equal the hourly bar for D 23:00); today's bar is the live value.
+# So they map to utc_day(ts) without a shift, and today's partial bar is never shown.
 
 
 def get_funding(inst, pages=4):
@@ -113,12 +118,12 @@ def build(raw, coin):
     # open interest: prefer per-contract USD OI, fall back to coin-level
     if r["oi"]["ok"] and r["oi"]["data"]:
         for x in r["oi"]["data"]:
-            d = row(closing_day(x[0]))
+            d = row(utc_day(x[0]))
             d["oi_usd"], d["oi_coin"] = float(x[3]), float(x[2])
         rows_src_oi = "BTC/ETH-USDT perp"
     elif r["oi_ccy"]["ok"]:
         for x in r["oi_ccy"]["data"]:
-            row(closing_day(x[0]))["oi_usd"] = float(x[1])
+            row(utc_day(x[0]))["oi_usd"] = float(x[1])
         rows_src_oi = "all OKX contracts"
     else:
         rows_src_oi = "missing"
@@ -126,7 +131,7 @@ def build(raw, coin):
     src = r["ls"] if (r["ls"]["ok"] and r["ls"]["data"]) else r["ls_ccy"]
     if src["ok"]:
         for x in src["data"]:
-            row(closing_day(x[0]))["ls_ratio"] = float(x[1])
+            row(utc_day(x[0]))["ls_ratio"] = float(x[1])
 
     src = r["taker"] if (r["taker"]["ok"] and r["taker"]["data"]) else r["taker_ccy"]
     if src["ok"]:
