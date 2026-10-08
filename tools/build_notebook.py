@@ -40,13 +40,13 @@ CALENDAR = {
 status = {}
 
 
-def fetch(url, kind="json", tries=3):
+def fetch(url, kind="json", tries=3, encoding="utf-8"):
     err = None
     for a in range(tries):
         try:
             with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30) as r:
                 body = r.read()
-            return json.loads(body) if kind == "json" else body.decode()
+            return json.loads(body) if kind == "json" else body.decode(encoding, errors="replace")
         except Exception as e:
             err = str(e)[:200]
             time.sleep(2 * (a + 1))
@@ -160,7 +160,7 @@ def okx_spot_daily(inst):
 def gld_tonnes():
     """SPDR Gold Shares (GLD) daily holdings in tonnes, from SPDR's public archive CSV."""
     try:
-        txt = fetch("https://www.spdrgoldshares.com/assets/dynamic/GLD/GLD_US_archive_EN.csv", "text")
+        txt = fetch("https://www.spdrgoldshares.com/assets/dynamic/GLD/GLD_US_archive_EN.csv", "text", encoding="latin-1")
         rows = list(csv.reader(io.StringIO(txt)))
         hi = next(i for i, r in enumerate(rows) if any("Tonnes" in c for c in r))
         head = [c.strip() for c in rows[hi]]
