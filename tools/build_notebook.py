@@ -162,7 +162,9 @@ def gld_tonnes():
     try:
         txt = fetch("https://www.spdrgoldshares.com/assets/dynamic/GLD/GLD_US_archive_EN.csv", "text", encoding="latin-1")
         rows = list(csv.reader(txt.replace("\r", "\n").splitlines()))
-        hi = next(i for i, r in enumerate(rows) if any("Tonnes" in c for c in r))
+        hi = next((i for i, r in enumerate(rows) if any("tonnes" in c.lower() for c in r)), None)
+        if hi is None:
+            raise RuntimeError("no 'Tonnes' column; file starts: " + txt[:160].replace("\n", " | "))
         head = [c.strip() for c in rows[hi]]
         col = next(i for i, c in enumerate(head) if "Tonnes" in c)
         out = {}
@@ -177,7 +179,7 @@ def gld_tonnes():
         status["gld_tonnes"] = f"OK {len(out)} ({min(out)}..{max(out)})" if out else "EMPTY"
         return out
     except Exception as e:
-        status["gld_tonnes"] = "ERR " + str(e)
+        status["gld_tonnes"] = f"ERR {type(e).__name__}: {e}"
         return {}
 
 
