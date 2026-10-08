@@ -161,7 +161,7 @@ def gld_tonnes():
     """SPDR Gold Shares (GLD) daily holdings in tonnes, from SPDR's public archive CSV."""
     try:
         txt = fetch("https://www.spdrgoldshares.com/assets/dynamic/GLD/GLD_US_archive_EN.csv", "text", encoding="latin-1")
-        rows = list(csv.reader(io.StringIO(txt)))
+        rows = list(csv.reader(txt.replace("\r", "\n").splitlines()))
         hi = next(i for i, r in enumerate(rows) if any("Tonnes" in c for c in r))
         head = [c.strip() for c in rows[hi]]
         col = next(i for i, c in enumerate(head) if "Tonnes" in c)
