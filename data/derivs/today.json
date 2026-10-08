@@ -1,6 +1,6 @@
 {
  "date": "2026-10-07",
- "built_utc": "2026-10-08T18:44:48+00:00",
+ "built_utc": "2026-10-08T18:47:15+00:00",
  "layers": {
   "regime": {
    "name": "Rejim",
@@ -15,7 +15,7 @@
   "pos": {
    "name": "Pozisyon",
    "status": "red",
-   "alarms": 1
+   "alarms": 2
   },
   "macro": {
    "name": "Altın & Makro",
@@ -32,7 +32,12 @@
   {
    "layer": "pos",
    "rule": "z",
-   "text": "ETH L/S 30 günlük ortalamasından 2.7 std yüksek (2.48)"
+   "text": "ETH açık poz. (coin) 30 günlük ortalamasından 2.7 std yüksek (668.6K)"
+  },
+  {
+   "layer": "pos",
+   "rule": "z",
+   "text": "ETH L/S 30 günlük ortalamasından 2.6 std yüksek (2.30)"
   },
   {
    "layer": "regime",
@@ -149,24 +154,24 @@
   "btc_oi": {
    "layer": "pos",
    "label": "BTC açık poz. (coin)",
-   "value": 30290.9298,
-   "display": "30.3K",
-   "z": 1.37,
+   "value": 30662.6644,
+   "display": "30.7K",
+   "z": 1.8,
    "asof": "2026-10-07",
-   "chg24": -0.14,
-   "chg24_usd": -2.4,
-   "usd": 2468065581.895272
+   "chg24": -0.1,
+   "chg24_usd": -2.35,
+   "usd": 2554285799.98033
   },
   "eth_oi": {
    "layer": "pos",
    "label": "ETH açık poz. (coin)",
-   "value": 650304.166,
-   "display": "650.3K",
-   "z": 1.79,
+   "value": 668581.387,
+   "display": "668.6K",
+   "z": 2.73,
    "asof": "2026-10-07",
-   "chg24": -3.76,
-   "chg24_usd": -8.05,
-   "usd": 1591495888.493465
+   "chg24": -3.7,
+   "chg24_usd": -7.95,
+   "usd": 1720259908.751005
   },
   "btc_fund": {
    "layer": "pos",
@@ -187,17 +192,17 @@
   "btc_ls": {
    "layer": "pos",
    "label": "BTC L/S",
-   "value": 1.730764,
-   "display": "1.73",
-   "z": 1.17,
+   "value": 1.775204,
+   "display": "1.78",
+   "z": 1.4,
    "asof": "2026-10-07"
   },
   "eth_ls": {
    "layer": "pos",
    "label": "ETH L/S",
-   "value": 2.47638,
-   "display": "2.48",
-   "z": 2.67,
+   "value": 2.296315,
+   "display": "2.30",
+   "z": 2.64,
    "asof": "2026-10-07"
   },
   "btc_cot": {
@@ -278,8 +283,8 @@
    "ma50": 80262.71,
    "ma200": 71732.45,
    "close": 83283.9,
-   "flow": "temizlik",
-   "flow_text": "Temizlik (fiyat↓ OI↓)",
+   "flow": "yeni_short",
+   "flow_text": "Yeni short (fiyat↓ OI↑)",
    "crowded_long": false,
    "crowded_short": false,
    "reading": "pozisyonlanma dengeli"
@@ -291,8 +296,8 @@
    "ma50": 2545.92,
    "ma200": 2126.58,
    "close": 2572.82,
-   "flow": "temizlik",
-   "flow_text": "Temizlik (fiyat↓ OI↓)",
+   "flow": "yeni_short",
+   "flow_text": "Yeni short (fiyat↓ OI↑)",
    "crowded_long": true,
    "crowded_short": false,
    "reading": "long kalabalığı → düzeltme riski"
@@ -306,5 +311,5 @@
  ],
  "today_events": [],
  "report_day": "2026-10-08",
- "message": "<b>Kaldıraç Gözlem Defteri · 08.10.2026</b>\n\n🔴 <b>Rejim</b>\n   BTC trend: Boğa, 200g ort. +16.1%\n   ETH trend: Boğa, 200g ort. +21.0%\n🟡 <b>Risk iştahı</b>\n🔴 <b>Pozisyon</b>\n   BTC: Temizlik (fiyat↓ OI↓) · pozisyonlanma dengeli\n   ETH: Temizlik (fiyat↓ OI↓) · long kalabalığı → düzeltme riski\n🟡 <b>Altın & Makro</b>\n🟡 <b>Korelasyonlar</b>\n\nBTC OI 30.3K BTC (24s coin -0.1%, $ -2.4%) · L/S 1.73 · funding %0.011\nETH OI 650.3K ETH (24s coin -3.8%, $ -8.1%) · L/S 2.48 · funding %0.004\nAltın 4,141 (120g zirveden -11.9%) · WTI 88.28 · Brent 100.20\nVIX 15.08 · HY %3.09 · DXY 102.24 · Reel faiz %2.91\n\n<b>Alarmlar</b>\n• ETH L/S 30 günlük ortalamasından 2.7 std yüksek (2.48)\n• Net likidite yön değiştirdi: bu hafta artışa geçti (+13 B$, 2026-09-30)\n\nYaklaşan: CPI 14.10"
+ "message": "<b>Kaldıraç Gözlem Defteri · 08.10.2026</b>\n\n🔴 <b>Rejim</b>\n   BTC trend: Boğa, 200g ort. +16.1%\n   ETH trend: Boğa, 200g ort. +21.0%\n🟡 <b>Risk iştahı</b>\n🔴 <b>Pozisyon</b>\n   BTC: Yeni short (fiyat↓ OI↑) · pozisyonlanma dengeli\n   ETH: Yeni short (fiyat↓ OI↑) · long kalabalığı → düzeltme riski\n🟡 <b>Altın & Makro</b>\n🟡 <b>Korelasyonlar</b>\n\nBTC OI 30.7K BTC (24s coin -0.1%, $ -2.4%) · L/S 1.78 · funding %0.011\nETH OI 668.6K ETH (24s coin -3.7%, $ -8.0%) · L/S 2.30 · funding %0.004\nAltın 4,141 (120g zirveden -11.9%) · WTI 88.28 · Brent 100.20\nVIX 15.08 · HY %3.09 · DXY 102.24 · Reel faiz %2.91\n\n<b>Alarmlar</b>\n• ETH açık poz. (coin) 30 günlük ortalamasından 2.7 std yüksek (668.6K)\n• ETH L/S 30 günlük ortalamasından 2.6 std yüksek (2.30)\n• Net likidite yön değiştirdi: bu hafta artışa geçti (+13 B$, 2026-09-30)\n\nYaklaşan: CPI 14.10"
 }
