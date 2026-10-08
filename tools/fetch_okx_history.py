@@ -41,6 +41,24 @@ def closing_day(ms):
     return utc_day(int(ms) - 1)
 
 
+def get_funding(inst, pages=4):
+    """Funding history is capped at 100 rows per call; page back with `after`."""
+    first = get(f"/api/v5/public/funding-rate-history?instId={inst}&limit=100")
+    if not first["ok"]:
+        return first
+    data = list(first["data"])
+    for _ in range(pages - 1):
+        if not data:
+            break
+        oldest = min(int(x["fundingTime"]) for x in data)
+        nxt = get(f"/api/v5/public/funding-rate-history?instId={inst}&limit=100&after={oldest}")
+        if not nxt["ok"] or not nxt["data"]:
+            break
+        data += nxt["data"]
+    first["data"] = data
+    return first
+
+
 def fetch(coin):
     inst = f"{coin}-USDT-SWAP"
     return {
@@ -52,8 +70,8 @@ def fetch(coin):
         "ls": get(f"/api/v5/rubik/stat/contracts/long-short-account-ratio-contract?instId={inst}&period=1Dutc&limit=100"),
         # [ts, sellVol, buyVol]; unit=2 -> USD(T)
         "taker": get(f"/api/v5/rubik/stat/taker-volume-contract?instId={inst}&period=1Dutc&unit=2&limit=100"),
-        # 8-hourly funding; 100 entries ≈ 33 days
-        "funding": get(f"/api/v5/public/funding-rate-history?instId={inst}&limit=100"),
+        # 8-hourly funding; 100 entries ≈ 33 days, paged further back below
+        "funding": get_funding(inst),
         # coin-level fallbacks (all OKX contracts of that coin)
         "oi_ccy": get(f"/api/v5/rubik/stat/contracts/open-interest-volume?ccy={coin}&period=1D"),
         "ls_ccy": get(f"/api/v5/rubik/stat/contracts/long-short-account-ratio?ccy={coin}&period=1D"),
