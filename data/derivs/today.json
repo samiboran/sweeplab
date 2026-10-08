@@ -1,6 +1,6 @@
 {
  "date": "2026-10-07",
- "built_utc": "2026-10-08T18:20:20+00:00",
+ "built_utc": "2026-10-08T18:22:53+00:00",
  "layers": {
   "regime": {
    "name": "Rejim",
@@ -27,7 +27,7 @@
   {
    "layer": "pos",
    "rule": "z",
-   "text": "ETH L/S 30 günlük ortalamasından 2.5 std yüksek (2.37)"
+   "text": "ETH L/S 30 günlük ortalamasından 2.6 std yüksek (2.43)"
   },
   {
    "layer": "pos",
@@ -109,7 +109,7 @@
   "btc_oi": {
    "layer": "pos",
    "label": "BTC açık poz.",
-   "value": 2472747096.660491,
+   "value": 2472043039.554011,
    "display": "2.5 B$",
    "z": 0.74,
    "asof": "2026-10-07",
@@ -118,9 +118,9 @@
   "eth_oi": {
    "layer": "pos",
    "label": "ETH açık poz.",
-   "value": 1616415222.889205,
+   "value": 1616135583.544025,
    "display": "1.6 B$",
-   "z": 0.56,
+   "z": 0.55,
    "asof": "2026-10-07",
    "chg24": -5.48
   },
@@ -143,17 +143,17 @@
   "btc_ls": {
    "layer": "pos",
    "label": "BTC L/S",
-   "value": 1.711744,
-   "display": "1.71",
-   "z": 1.11,
+   "value": 1.73767,
+   "display": "1.74",
+   "z": 1.19,
    "asof": "2026-10-07"
   },
   "eth_ls": {
    "layer": "pos",
    "label": "ETH L/S",
-   "value": 2.367434,
-   "display": "2.37",
-   "z": 2.45,
+   "value": 2.434675,
+   "display": "2.43",
+   "z": 2.59,
    "asof": "2026-10-07"
   },
   "btc_cot": {
@@ -201,6 +201,34 @@
    "corr7": 0.92
   }
  },
+ "coins": {
+  "btc": {
+   "trend": "boga",
+   "trend_text": "Boğa",
+   "dist200_pct": 16.1,
+   "ma50": 80262.71,
+   "ma200": 71732.45,
+   "close": 83283.9,
+   "flow": "temizlik",
+   "flow_text": "Temizlik (fiyat↓ OI↓)",
+   "crowded_long": false,
+   "crowded_short": false,
+   "reading": "pozisyonlanma dengeli"
+  },
+  "eth": {
+   "trend": "boga",
+   "trend_text": "Boğa",
+   "dist200_pct": 20.98,
+   "ma50": 2545.92,
+   "ma200": 2126.58,
+   "close": 2572.82,
+   "flow": "temizlik",
+   "flow_text": "Temizlik (fiyat↓ OI↓)",
+   "crowded_long": true,
+   "crowded_short": false,
+   "reading": "long kalabalığı → düzeltme riski"
+  }
+ },
  "upcoming": [
   {
    "date": "2026-10-14",
@@ -209,5 +237,5 @@
  ],
  "today_events": [],
  "report_day": "2026-10-08",
- "message": "<b>Kaldıraç Gözlem Defteri · 08.10.2026</b>\n\n🔴 <b>Rejim</b>\n🟡 <b>Risk iştahı</b>\n🔴 <b>Pozisyon</b>\n🟡 <b>Korelasyonlar</b>\n\nBTC OI 2.5 B$ (-1.2%) · L/S 1.71 · funding %0.011\nETH OI 1.6 B$ (-5.5%) · L/S 2.37 · funding %0.004\nVIX 15.08 · HY %3.09 · DXY 102.24 · Reel faiz %2.91\n\n<b>Alarmlar</b>\n• ETH L/S 30 günlük ortalamasından 2.5 std yüksek (2.37)\n• ETH açık pozisyon son 24 saat %5.5 düştü\n• Net likidite yön değiştirdi: bu hafta artışa geçti (+13 B$, 2026-09-30)\n\nYaklaşan: CPI 14.10"
+ "message": "<b>Kaldıraç Gözlem Defteri · 08.10.2026</b>\n\n🔴 <b>Rejim</b>\n   BTC trend: Boğa, 200g ort. +16.1%\n   ETH trend: Boğa, 200g ort. +21.0%\n🟡 <b>Risk iştahı</b>\n🔴 <b>Pozisyon</b>\n   BTC: Temizlik (fiyat↓ OI↓) · pozisyonlanma dengeli\n   ETH: Temizlik (fiyat↓ OI↓) · long kalabalığı → düzeltme riski\n🟡 <b>Korelasyonlar</b>\n\nBTC OI 2.5 B$ (-1.2%) · L/S 1.74 · funding %0.011\nETH OI 1.6 B$ (-5.5%) · L/S 2.43 · funding %0.004\nVIX 15.08 · HY %3.09 · DXY 102.24 · Reel faiz %2.91\n\n<b>Alarmlar</b>\n• ETH L/S 30 günlük ortalamasından 2.6 std yüksek (2.43)\n• ETH açık pozisyon son 24 saat %5.5 düştü\n• Net likidite yön değiştirdi: bu hafta artışa geçti (+13 B$, 2026-09-30)\n\nYaklaşan: CPI 14.10"
 }

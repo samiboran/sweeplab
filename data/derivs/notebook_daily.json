@@ -1,5 +1,5 @@
 {
- "built_utc": "2026-10-08T18:20:20+00:00",
+ "built_utc": "2026-10-08T18:22:53+00:00",
  "status": {
   "WALCL": "OK 19 (2026-05-27..2026-09-30)",
   "WTREGEN": "OK 19 (2026-05-27..2026-09-30)",
@@ -392,7 +392,23 @@
     "dxy_7d_pct": -0.83275,
     "stables_usd": 308818960271.0,
     "stables_asof": "2026-09-08",
-    "stables_7d_pct": 0.496626
+    "stables_7d_pct": 0.496626,
+    "trend_btc": {
+     "state": "boga",
+     "close": 78420.7,
+     "ma50": 69965.17,
+     "ma200": 69868.65,
+     "dist200_pct": 12.24,
+     "dist50_pct": 12.09
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2484.11,
+     "ma50": 2127.13,
+     "ma200": 2044.21,
+     "dist200_pct": 21.52,
+     "dist50_pct": 16.78
+    }
    },
    "risk": {
     "spx": 7673.52,
@@ -421,6 +437,7 @@
      "funding_n": 3,
      "oi_chg_pct": -4.219129,
      "chg_pct": -0.826815,
+     "flow": "temizlik",
      "taker_buy_share": 0.48468
     },
     "eth": {
@@ -436,6 +453,7 @@
      "funding_n": 3,
      "oi_chg_pct": -2.060826,
      "chg_pct": -0.196063,
+     "flow": "yatay",
      "taker_buy_share": 0.488867
     },
     "cot_btc": {
@@ -484,7 +502,23 @@
     "dxy_7d_pct": -0.793492,
     "stables_usd": 309057822174.0,
     "stables_asof": "2026-09-09",
-    "stables_7d_pct": 0.583385
+    "stables_7d_pct": 0.583385,
+    "trend_btc": {
+     "state": "boga",
+     "close": 78265.0,
+     "ma50": 70200.08,
+     "ma200": 69920.26,
+     "dist200_pct": 11.93,
+     "dist50_pct": 11.49
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2467.02,
+     "ma50": 2137.89,
+     "ma200": 2046.69,
+     "dist200_pct": 20.54,
+     "dist50_pct": 15.4
+    }
    },
    "risk": {
     "spx": 7636.36,
@@ -513,6 +547,7 @@
      "funding_n": 3,
      "oi_chg_pct": 7.372691,
      "chg_pct": -0.198545,
+     "flow": "yatay",
      "taker_buy_share": 0.503278
     },
     "eth": {
@@ -528,6 +563,7 @@
      "funding_n": 3,
      "oi_chg_pct": -1.920646,
      "chg_pct": -0.687973,
+     "flow": "temizlik",
      "taker_buy_share": 0.495712
     },
     "cot_btc": {
@@ -576,7 +612,23 @@
     "dxy_7d_pct": 0.090905,
     "stables_usd": 308905223490.0,
     "stables_asof": "2026-09-10",
-    "stables_7d_pct": 0.41446
+    "stables_7d_pct": 0.41446,
+    "trend_btc": {
+     "state": "boga",
+     "close": 76540.0,
+     "ma50": 70409.26,
+     "ma200": 69964.86,
+     "dist200_pct": 9.4,
+     "dist50_pct": 8.71
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2437.25,
+     "ma50": 2147.97,
+     "ma200": 2049.09,
+     "dist200_pct": 18.94,
+     "dist50_pct": 13.47
+    }
    },
    "risk": {
     "spx": 7591.7,
@@ -605,6 +657,7 @@
      "funding_n": 3,
      "oi_chg_pct": -6.253167,
      "chg_pct": -2.20405,
+     "flow": "temizlik",
      "taker_buy_share": 0.482464
     },
     "eth": {
@@ -620,6 +673,7 @@
      "funding_n": 3,
      "oi_chg_pct": 8.490772,
      "chg_pct": -1.206719,
+     "flow": "yeni_short",
      "taker_buy_share": 0.48642
     },
     "cot_btc": {
@@ -670,7 +724,23 @@
     "dxy_7d_pct": -0.04034,
     "stables_usd": 308547158774.0,
     "stables_asof": "2026-09-11",
-    "stables_7d_pct": -0.041849
+    "stables_7d_pct": -0.041849,
+    "trend_btc": {
+     "state": "boga",
+     "close": 77184.7,
+     "ma50": 70651.63,
+     "ma200": 70027.66,
+     "dist200_pct": 10.22,
+     "dist50_pct": 9.25
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2515.45,
+     "ma50": 2160.73,
+     "ma200": 2052.39,
+     "dist200_pct": 22.56,
+     "dist50_pct": 16.42
+    }
    },
    "risk": {
     "spx": 7656.98,
@@ -699,6 +769,7 @@
      "funding_n": 3,
      "oi_chg_pct": 1.448922,
      "chg_pct": 0.842305,
+     "flow": "kaldiracli_yukselis",
      "taker_buy_share": 0.501405
     },
     "eth": {
@@ -714,6 +785,7 @@
      "funding_n": 3,
      "oi_chg_pct": 3.146555,
      "chg_pct": 3.208534,
+     "flow": "kaldiracli_yukselis",
      "taker_buy_share": 0.512624
     },
     "cot_btc": {
@@ -762,7 +834,23 @@
     "dxy_7d_pct": -0.04034,
     "stables_usd": 308735800482.0,
     "stables_asof": "2026-09-12",
-    "stables_7d_pct": -0.042031
+    "stables_7d_pct": -0.042031,
+    "trend_btc": {
+     "state": "boga",
+     "close": 77247.0,
+     "ma50": 70914.18,
+     "ma200": 70093.76,
+     "dist200_pct": 10.21,
+     "dist50_pct": 8.93
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2524.86,
+     "ma50": 2174.01,
+     "ma200": 2055.75,
+     "dist200_pct": 22.82,
+     "dist50_pct": 16.14
+    }
    },
    "risk": {
     "spx": 7656.98,
@@ -791,6 +879,7 @@
      "funding_n": 3,
      "oi_chg_pct": 0.80221,
      "chg_pct": 0.080715,
+     "flow": "yatay",
      "taker_buy_share": 0.515155
     },
     "eth": {
@@ -806,6 +895,7 @@
      "funding_n": 3,
      "oi_chg_pct": -1.546511,
      "chg_pct": 0.374088,
+     "flow": "yatay",
      "taker_buy_share": 0.505016
     },
     "cot_btc": {
@@ -854,7 +944,23 @@
     "dxy_7d_pct": -0.04034,
     "stables_usd": 308713430563.0,
     "stables_asof": "2026-09-13",
-    "stables_7d_pct": -0.069373
+    "stables_7d_pct": -0.069373,
+    "trend_btc": {
+     "state": "boga",
+     "close": 76793.5,
+     "ma50": 71163.16,
+     "ma200": 70137.89,
+     "dist200_pct": 9.49,
+     "dist50_pct": 7.91
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2475.66,
+     "ma50": 2186.05,
+     "ma200": 2057.85,
+     "dist200_pct": 20.3,
+     "dist50_pct": 13.25
+    }
    },
    "risk": {
     "spx": 7656.98,
@@ -883,6 +989,7 @@
      "funding_n": 3,
      "oi_chg_pct": -3.99636,
      "chg_pct": -0.587078,
+     "flow": "temizlik",
      "taker_buy_share": 0.483473
     },
     "eth": {
@@ -898,6 +1005,7 @@
      "funding_n": 3,
      "oi_chg_pct": -5.769565,
      "chg_pct": -1.948623,
+     "flow": "temizlik",
      "taker_buy_share": 0.486092
     },
     "cot_btc": {
@@ -946,7 +1054,23 @@
     "dxy_7d_pct": 0.302537,
     "stables_usd": 308599085653.0,
     "stables_asof": "2026-09-14",
-    "stables_7d_pct": -0.115276
+    "stables_7d_pct": -0.115276,
+    "trend_btc": {
+     "state": "boga",
+     "close": 78158.4,
+     "ma50": 71418.75,
+     "ma200": 70191.44,
+     "dist200_pct": 11.35,
+     "dist50_pct": 9.44
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2514.19,
+     "ma50": 2197.25,
+     "ma200": 2060.29,
+     "dist200_pct": 22.03,
+     "dist50_pct": 14.42
+    }
    },
    "risk": {
     "spx": 7619.98,
@@ -975,6 +1099,7 @@
      "funding_n": 3,
      "oi_chg_pct": 2.433155,
      "chg_pct": 1.777364,
+     "flow": "kaldiracli_yukselis",
      "taker_buy_share": 0.503807
     },
     "eth": {
@@ -990,6 +1115,7 @@
      "funding_n": 3,
      "oi_chg_pct": -1.263549,
      "chg_pct": 1.556353,
+     "flow": "short_squeeze",
      "taker_buy_share": 0.506013
     },
     "cot_btc": {
@@ -1038,7 +1164,23 @@
     "dxy_7d_pct": 0.819512,
     "stables_usd": 308786489508.0,
     "stables_asof": "2026-09-15",
-    "stables_7d_pct": -0.010514
+    "stables_7d_pct": -0.010514,
+    "trend_btc": {
+     "state": "boga",
+     "close": 75611.2,
+     "ma50": 71656.42,
+     "ma200": 70240.29,
+     "dist200_pct": 7.65,
+     "dist50_pct": 5.52
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2397.08,
+     "ma50": 2207.36,
+     "ma200": 2062.63,
+     "dist200_pct": 16.21,
+     "dist50_pct": 8.59
+    }
    },
    "risk": {
     "spx": 7585.73,
@@ -1067,6 +1209,7 @@
      "funding_n": 3,
      "oi_chg_pct": 2.310355,
      "chg_pct": -3.259023,
+     "flow": "yeni_short",
      "taker_buy_share": 0.485894
     },
     "eth": {
@@ -1082,6 +1225,7 @@
      "funding_n": 3,
      "oi_chg_pct": 1.224514,
      "chg_pct": -4.657961,
+     "flow": "yeni_short",
      "taker_buy_share": 0.486719
     },
     "cot_btc": {
@@ -1132,7 +1276,23 @@
     "dxy_7d_pct": 1.559179,
     "stables_usd": 308019810194.0,
     "stables_asof": "2026-09-16",
-    "stables_7d_pct": -0.335863
+    "stables_7d_pct": -0.335863,
+    "trend_btc": {
+     "state": "boga",
+     "close": 76168.1,
+     "ma50": 71901.78,
+     "ma200": 70286.44,
+     "dist200_pct": 8.37,
+     "dist50_pct": 5.93
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2417.38,
+     "ma50": 2217.29,
+     "ma200": 2064.9,
+     "dist200_pct": 17.07,
+     "dist50_pct": 9.02
+    }
    },
    "risk": {
     "spx": 7551.81,
@@ -1161,6 +1321,7 @@
      "funding_n": 3,
      "oi_chg_pct": 1.621887,
      "chg_pct": 0.736531,
+     "flow": "kaldiracli_yukselis",
      "taker_buy_share": 0.496256
     },
     "eth": {
@@ -1176,6 +1337,7 @@
      "funding_n": 3,
      "oi_chg_pct": 0.090865,
      "chg_pct": 0.846864,
+     "flow": "yatay",
      "taker_buy_share": 0.502691
     },
     "cot_btc": {
@@ -1224,7 +1386,23 @@
     "dxy_7d_pct": 1.140382,
     "stables_usd": 308007819544.0,
     "stables_asof": "2026-09-17",
-    "stables_7d_pct": -0.290511
+    "stables_7d_pct": -0.290511,
+    "trend_btc": {
+     "state": "boga",
+     "close": 76390.1,
+     "ma50": 72150.48,
+     "ma200": 70339.69,
+     "dist200_pct": 8.6,
+     "dist50_pct": 5.88
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2446.27,
+     "ma50": 2228.02,
+     "ma200": 2067.44,
+     "dist200_pct": 18.32,
+     "dist50_pct": 9.8
+    }
    },
    "risk": {
     "spx": 7637.76,
@@ -1253,6 +1431,7 @@
      "funding_n": 3,
      "oi_chg_pct": 10.964376,
      "chg_pct": 0.291461,
+     "flow": "yatay",
      "taker_buy_share": 0.501948
     },
     "eth": {
@@ -1268,6 +1447,7 @@
      "funding_n": 3,
      "oi_chg_pct": 7.796244,
      "chg_pct": 1.195096,
+     "flow": "kaldiracli_yukselis",
      "taker_buy_share": 0.507323
     },
     "cot_btc": {
@@ -1316,7 +1496,23 @@
     "dxy_7d_pct": 1.109764,
     "stables_usd": 308019607521.0,
     "stables_asof": "2026-09-18",
-    "stables_7d_pct": -0.170979
+    "stables_7d_pct": -0.170979,
+    "trend_btc": {
+     "state": "boga",
+     "close": 80876.6,
+     "ma50": 72472.86,
+     "ma200": 70400.07,
+     "dist200_pct": 14.88,
+     "dist50_pct": 11.6
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2611.05,
+     "ma50": 2241.89,
+     "ma200": 2070.36,
+     "dist200_pct": 26.12,
+     "dist50_pct": 16.47
+    }
    },
    "risk": {
     "spx": 7650.5,
@@ -1345,6 +1541,7 @@
      "funding_n": 3,
      "oi_chg_pct": 2.229884,
      "chg_pct": 5.873143,
+     "flow": "kaldiracli_yukselis",
      "taker_buy_share": 0.530429
     },
     "eth": {
@@ -1360,6 +1557,7 @@
      "funding_n": 3,
      "oi_chg_pct": 0.476851,
      "chg_pct": 6.735969,
+     "flow": "yatay",
      "taker_buy_share": 0.508278
     },
     "cot_btc": {
@@ -1408,7 +1606,23 @@
     "dxy_7d_pct": 1.109764,
     "stables_usd": 308517994740.0,
     "stables_asof": "2026-09-19",
-    "stables_7d_pct": -0.070548
+    "stables_7d_pct": -0.070548,
+    "trend_btc": {
+     "state": "boga",
+     "close": 81231.2,
+     "ma50": 72840.32,
+     "ma200": 70464.76,
+     "dist200_pct": 15.28,
+     "dist50_pct": 11.52
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2631.46,
+     "ma50": 2257.29,
+     "ma200": 2073.61,
+     "dist200_pct": 26.9,
+     "dist50_pct": 16.58
+    }
    },
    "risk": {
     "spx": 7650.5,
@@ -1437,6 +1651,7 @@
      "funding_n": 3,
      "oi_chg_pct": -1.133645,
      "chg_pct": 0.438446,
+     "flow": "yatay",
      "taker_buy_share": 0.521165
     },
     "eth": {
@@ -1452,6 +1667,7 @@
      "funding_n": 3,
      "oi_chg_pct": -4.729118,
      "chg_pct": 0.781678,
+     "flow": "short_squeeze",
      "taker_buy_share": 0.508761
     },
     "cot_btc": {
@@ -1500,7 +1716,23 @@
     "dxy_7d_pct": 1.109764,
     "stables_usd": 308494066876.0,
     "stables_asof": "2026-09-20",
-    "stables_7d_pct": -0.071057
+    "stables_7d_pct": -0.071057,
+    "trend_btc": {
+     "state": "boga",
+     "close": 81144.3,
+     "ma50": 73207.43,
+     "ma200": 70507.26,
+     "dist200_pct": 15.09,
+     "dist50_pct": 10.84
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2643.36,
+     "ma50": 2273.27,
+     "ma200": 2076.19,
+     "dist200_pct": 27.32,
+     "dist50_pct": 16.28
+    }
    },
    "risk": {
     "spx": 7650.5,
@@ -1529,6 +1761,7 @@
      "funding_n": 3,
      "oi_chg_pct": 3.98869,
      "chg_pct": -0.106979,
+     "flow": "yatay",
      "taker_buy_share": 0.494971
     },
     "eth": {
@@ -1544,6 +1777,7 @@
      "funding_n": 3,
      "oi_chg_pct": 10.603776,
      "chg_pct": 0.45222,
+     "flow": "yatay",
      "taker_buy_share": 0.491375
     },
     "cot_btc": {
@@ -1592,7 +1826,23 @@
     "dxy_7d_pct": 0.975268,
     "stables_usd": 308676709792.0,
     "stables_asof": "2026-09-21",
-    "stables_7d_pct": 0.025154
+    "stables_7d_pct": 0.025154,
+    "trend_btc": {
+     "state": "boga",
+     "close": 86589.1,
+     "ma50": 73668.3,
+     "ma200": 70585.94,
+     "dist200_pct": 22.67,
+     "dist50_pct": 17.54
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2774.62,
+     "ma50": 2291.08,
+     "ma200": 2079.71,
+     "dist200_pct": 33.41,
+     "dist50_pct": 21.11
+    }
    },
    "risk": {
     "spx": 7764.7,
@@ -1621,6 +1871,7 @@
      "funding_n": 3,
      "oi_chg_pct": 2.744413,
      "chg_pct": 6.710022,
+     "flow": "kaldiracli_yukselis",
      "taker_buy_share": 0.532244
     },
     "eth": {
@@ -1636,6 +1887,7 @@
      "funding_n": 3,
      "oi_chg_pct": -4.381763,
      "chg_pct": 4.96565,
+     "flow": "short_squeeze",
      "taker_buy_share": 0.521686
     },
     "cot_btc": {
@@ -1684,7 +1936,23 @@
     "dxy_7d_pct": 0.953334,
     "stables_usd": 310349625823.0,
     "stables_asof": "2026-09-22",
-    "stables_7d_pct": 0.506219
+    "stables_7d_pct": 0.506219,
+    "trend_btc": {
+     "state": "boga",
+     "close": 86167.5,
+     "ma50": 74121.58,
+     "ma200": 70676.4,
+     "dist200_pct": 21.92,
+     "dist50_pct": 16.25
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2752.68,
+     "ma50": 2308.94,
+     "ma200": 2083.58,
+     "dist200_pct": 32.11,
+     "dist50_pct": 19.22
+    }
    },
    "risk": {
     "spx": 7764.64,
@@ -1713,6 +1981,7 @@
      "funding_n": 3,
      "oi_chg_pct": -5.690216,
      "chg_pct": -0.486897,
+     "flow": "yatay",
      "taker_buy_share": 0.501286
     },
     "eth": {
@@ -1728,6 +1997,7 @@
      "funding_n": 3,
      "oi_chg_pct": 0.7814,
      "chg_pct": -0.790739,
+     "flow": "yatay",
      "taker_buy_share": 0.491302
     },
     "cot_btc": {
@@ -1776,7 +2046,23 @@
     "dxy_7d_pct": 0.78756,
     "stables_usd": 307918173387.0,
     "stables_asof": "2026-09-23",
-    "stables_7d_pct": -0.032997
+    "stables_7d_pct": -0.032997,
+    "trend_btc": {
+     "state": "boga",
+     "close": 84366.1,
+     "ma50": 74527.34,
+     "ma200": 70762.09,
+     "dist200_pct": 19.22,
+     "dist50_pct": 13.2
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2683.52,
+     "ma50": 2325.23,
+     "ma200": 2087.16,
+     "dist200_pct": 28.57,
+     "dist50_pct": 15.41
+    }
    },
    "risk": {
     "spx": 7706.03,
@@ -1805,6 +2091,7 @@
      "funding_n": 3,
      "oi_chg_pct": -2.991319,
      "chg_pct": -2.090579,
+     "flow": "temizlik",
      "taker_buy_share": 0.487268
     },
     "eth": {
@@ -1820,6 +2107,7 @@
      "funding_n": 3,
      "oi_chg_pct": -3.324369,
      "chg_pct": -2.512461,
+     "flow": "temizlik",
      "taker_buy_share": 0.481806
     },
     "cot_btc": {
@@ -1868,7 +2156,23 @@
     "dxy_7d_pct": 1.067651,
     "stables_usd": 307161812723.0,
     "stables_asof": "2026-09-24",
-    "stables_7d_pct": -0.274671
+    "stables_7d_pct": -0.274671,
+    "trend_btc": {
+     "state": "boga",
+     "close": 84369.4,
+     "ma50": 74922.19,
+     "ma200": 70854.22,
+     "dist200_pct": 19.07,
+     "dist50_pct": 12.61
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2686.69,
+     "ma50": 2340.81,
+     "ma200": 2090.91,
+     "dist200_pct": 28.49,
+     "dist50_pct": 14.78
+    }
    },
    "risk": {
     "spx": 7704.13,
@@ -1897,6 +2201,7 @@
      "funding_n": 3,
      "oi_chg_pct": -0.742374,
      "chg_pct": 0.003912,
+     "flow": "yatay",
      "taker_buy_share": 0.484461
     },
     "eth": {
@@ -1912,6 +2217,7 @@
      "funding_n": 3,
      "oi_chg_pct": -0.622339,
      "chg_pct": 0.118128,
+     "flow": "yatay",
      "taker_buy_share": 0.495926
     },
     "cot_btc": {
@@ -1960,7 +2266,23 @@
     "dxy_7d_pct": 0.748354,
     "stables_usd": 308512905448.0,
     "stables_asof": "2026-09-25",
-    "stables_7d_pct": 0.160151
+    "stables_7d_pct": 0.160151,
+    "trend_btc": {
+     "state": "boga",
+     "close": 84059.9,
+     "ma50": 75317.44,
+     "ma200": 70932.59,
+     "dist200_pct": 18.51,
+     "dist50_pct": 11.61
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2690.29,
+     "ma50": 2356.55,
+     "ma200": 2094.4,
+     "dist200_pct": 28.45,
+     "dist50_pct": 14.16
+    }
    },
    "risk": {
     "spx": 7743.41,
@@ -1989,6 +2311,7 @@
      "funding_n": 3,
      "oi_chg_pct": -0.067948,
      "chg_pct": -0.366839,
+     "flow": "yatay",
      "taker_buy_share": 0.497365
     },
     "eth": {
@@ -2004,6 +2327,7 @@
      "funding_n": 3,
      "oi_chg_pct": 0.324806,
      "chg_pct": 0.133994,
+     "flow": "yatay",
      "taker_buy_share": 0.502796
     },
     "cot_btc": {
@@ -2052,7 +2376,23 @@
     "dxy_7d_pct": 0.748354,
     "stables_usd": 307796037980.0,
     "stables_asof": "2026-09-26",
-    "stables_7d_pct": -0.234008
+    "stables_7d_pct": -0.234008,
+    "trend_btc": {
+     "state": "boga",
+     "close": 84394.1,
+     "ma50": 75707.6,
+     "ma200": 71004.99,
+     "dist200_pct": 18.86,
+     "dist50_pct": 11.47
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2694.85,
+     "ma50": 2372.18,
+     "ma200": 2097.7,
+     "dist200_pct": 28.47,
+     "dist50_pct": 13.6
+    }
    },
    "risk": {
     "spx": 7743.41,
@@ -2081,6 +2421,7 @@
      "funding_n": 3,
      "oi_chg_pct": -0.505821,
      "chg_pct": 0.397574,
+     "flow": "yatay",
      "taker_buy_share": 0.511124
     },
     "eth": {
@@ -2096,6 +2437,7 @@
      "funding_n": 3,
      "oi_chg_pct": 1.549099,
      "chg_pct": 0.169498,
+     "flow": "yatay",
      "taker_buy_share": 0.502913
     },
     "cot_btc": {
@@ -2144,7 +2486,23 @@
     "dxy_7d_pct": 0.748354,
     "stables_usd": 310086306934.0,
     "stables_asof": "2026-09-27",
-    "stables_7d_pct": 0.516133
+    "stables_7d_pct": 0.516133,
+    "trend_btc": {
+     "state": "boga",
+     "close": 84440.9,
+     "ma50": 76097.85,
+     "ma200": 71076.44,
+     "dist200_pct": 18.8,
+     "dist50_pct": 10.96
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2687.29,
+     "ma50": 2387.6,
+     "ma200": 2100.88,
+     "dist200_pct": 27.91,
+     "dist50_pct": 12.55
+    }
    },
    "risk": {
     "spx": 7743.41,
@@ -2173,6 +2531,7 @@
      "funding_n": 3,
      "oi_chg_pct": -0.655572,
      "chg_pct": 0.055454,
+     "flow": "yatay",
      "taker_buy_share": 0.494301
     },
     "eth": {
@@ -2188,6 +2547,7 @@
      "funding_n": 3,
      "oi_chg_pct": -5.703302,
      "chg_pct": -0.280535,
+     "flow": "yatay",
      "taker_buy_share": 0.500538
     },
     "cot_btc": {
@@ -2236,7 +2596,23 @@
     "dxy_7d_pct": 0.7667,
     "stables_usd": 311470047825.0,
     "stables_asof": "2026-09-28",
-    "stables_7d_pct": 0.90494
+    "stables_7d_pct": 0.90494,
+    "trend_btc": {
+     "state": "boga",
+     "close": 83461.0,
+     "ma50": 76469.67,
+     "ma200": 71141.35,
+     "dist200_pct": 17.32,
+     "dist50_pct": 9.14
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2687.78,
+     "ma50": 2403.16,
+     "ma200": 2103.95,
+     "dist200_pct": 27.75,
+     "dist50_pct": 11.84
+    }
    },
    "risk": {
     "spx": 7683.69,
@@ -2265,6 +2641,7 @@
      "funding_n": 3,
      "oi_chg_pct": -1.048496,
      "chg_pct": -1.160457,
+     "flow": "temizlik",
      "taker_buy_share": 0.489467
     },
     "eth": {
@@ -2280,6 +2657,7 @@
      "funding_n": 3,
      "oi_chg_pct": -3.046306,
      "chg_pct": 0.018234,
+     "flow": "yatay",
      "taker_buy_share": 0.493558
     },
     "cot_btc": {
@@ -2328,7 +2706,23 @@
     "dxy_7d_pct": 0.765412,
     "stables_usd": 311261810601.0,
     "stables_asof": "2026-09-29",
-    "stables_7d_pct": 0.293922
+    "stables_7d_pct": 0.293922,
+    "trend_btc": {
+     "state": "boga",
+     "close": 83627.0,
+     "ma50": 76863.26,
+     "ma200": 71205.0,
+     "dist200_pct": 17.45,
+     "dist50_pct": 8.8
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2676.8,
+     "ma50": 2419.25,
+     "ma200": 2106.88,
+     "dist200_pct": 27.05,
+     "dist50_pct": 10.65
+    }
    },
    "risk": {
     "spx": 7670.84,
@@ -2357,6 +2751,7 @@
      "funding_n": 3,
      "oi_chg_pct": -1.375578,
      "chg_pct": 0.198895,
+     "flow": "yatay",
      "taker_buy_share": 0.501003
     },
     "eth": {
@@ -2372,6 +2767,7 @@
      "funding_n": 3,
      "oi_chg_pct": 3.178845,
      "chg_pct": -0.408516,
+     "flow": "yatay",
      "taker_buy_share": 0.509106
     },
     "cot_btc": {
@@ -2420,7 +2816,23 @@
     "dxy_7d_pct": 0.34619,
     "stables_usd": 311200297805.0,
     "stables_asof": "2026-09-30",
-    "stables_7d_pct": 1.065908
+    "stables_7d_pct": 1.065908,
+    "trend_btc": {
+     "state": "boga",
+     "close": 83579.9,
+     "ma50": 77263.53,
+     "ma200": 71267.03,
+     "dist200_pct": 17.28,
+     "dist50_pct": 8.18
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2684.73,
+     "ma50": 2435.31,
+     "ma200": 2109.83,
+     "dist200_pct": 27.25,
+     "dist50_pct": 10.24
+    }
    },
    "risk": {
     "spx": 7651.54,
@@ -2449,6 +2861,7 @@
      "funding_n": 3,
      "oi_chg_pct": 5.854023,
      "chg_pct": -0.056322,
+     "flow": "yatay",
      "taker_buy_share": 0.49887
     },
     "eth": {
@@ -2464,6 +2877,7 @@
      "funding_n": 3,
      "oi_chg_pct": 0.908505,
      "chg_pct": 0.296249,
+     "flow": "yatay",
      "taker_buy_share": 0.504784
     },
     "cot_btc": {
@@ -2512,7 +2926,23 @@
     "dxy_7d_pct": 0.799682,
     "stables_usd": 310711423887.0,
     "stables_asof": "2026-10-01",
-    "stables_7d_pct": 1.155616
+    "stables_7d_pct": 1.155616,
+    "trend_btc": {
+     "state": "boga",
+     "close": 84837.7,
+     "ma50": 77691.06,
+     "ma200": 71327.35,
+     "dist200_pct": 18.94,
+     "dist50_pct": 9.2
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2705.0,
+     "ma50": 2451.83,
+     "ma200": 2112.47,
+     "dist200_pct": 28.05,
+     "dist50_pct": 10.33
+    }
    },
    "risk": {
     "spx": 7666.45,
@@ -2541,6 +2971,7 @@
      "funding_n": 3,
      "oi_chg_pct": -0.63029,
      "chg_pct": 1.504907,
+     "flow": "yatay",
      "taker_buy_share": 0.499711
     },
     "eth": {
@@ -2556,6 +2987,7 @@
      "funding_n": 3,
      "oi_chg_pct": 3.49451,
      "chg_pct": 0.755011,
+     "flow": "kaldiracli_yukselis",
      "taker_buy_share": 0.498087
     },
     "cot_btc": {
@@ -2606,7 +3038,23 @@
     "dxy_7d_pct": 0.950777,
     "stables_usd": 311516937639.0,
     "stables_asof": "2026-10-02",
-    "stables_7d_pct": 0.973714
+    "stables_7d_pct": 0.973714,
+    "trend_btc": {
+     "state": "boga",
+     "close": 84480.0,
+     "ma50": 78111.52,
+     "ma200": 71375.54,
+     "dist200_pct": 18.36,
+     "dist50_pct": 8.15
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2667.55,
+     "ma50": 2467.47,
+     "ma200": 2114.05,
+     "dist200_pct": 26.18,
+     "dist50_pct": 8.11
+    }
    },
    "risk": {
     "spx": 7722.72,
@@ -2635,6 +3083,7 @@
      "funding_n": 3,
      "oi_chg_pct": -0.435895,
      "chg_pct": -0.421629,
+     "flow": "yatay",
      "taker_buy_share": 0.504944
     },
     "eth": {
@@ -2650,6 +3099,7 @@
      "funding_n": 3,
      "oi_chg_pct": 0.711793,
      "chg_pct": -1.384473,
+     "flow": "yatay",
      "taker_buy_share": 0.513306
     },
     "cot_btc": {
@@ -2698,7 +3148,23 @@
     "dxy_7d_pct": 0.950777,
     "stables_usd": 311894350575.0,
     "stables_asof": "2026-10-03",
-    "stables_7d_pct": 1.331503
+    "stables_7d_pct": 1.331503,
+    "trend_btc": {
+     "state": "boga",
+     "close": 84719.9,
+     "ma50": 78545.53,
+     "ma200": 71429.78,
+     "dist200_pct": 18.61,
+     "dist50_pct": 7.86
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2686.14,
+     "ma50": 2483.57,
+     "ma200": 2115.9,
+     "dist200_pct": 26.95,
+     "dist50_pct": 8.16
+    }
    },
    "risk": {
     "spx": 7722.72,
@@ -2727,6 +3193,7 @@
      "funding_n": 3,
      "oi_chg_pct": 3.634076,
      "chg_pct": 0.283973,
+     "flow": "yatay",
      "taker_buy_share": 0.509068
     },
     "eth": {
@@ -2742,6 +3209,7 @@
      "funding_n": 3,
      "oi_chg_pct": 3.6957,
      "chg_pct": 0.696894,
+     "flow": "kaldiracli_yukselis",
      "taker_buy_share": 0.513055
     },
     "cot_btc": {
@@ -2790,7 +3258,23 @@
     "dxy_7d_pct": 0.950777,
     "stables_usd": 311974411500.0,
     "stables_asof": "2026-10-04",
-    "stables_7d_pct": 0.608896
+    "stables_7d_pct": 0.608896,
+    "trend_btc": {
+     "state": "boga",
+     "close": 86484.8,
+     "ma50": 79014.07,
+     "ma200": 71506.15,
+     "dist200_pct": 20.95,
+     "dist50_pct": 9.45
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2725.97,
+     "ma50": 2500.45,
+     "ma200": 2118.52,
+     "dist200_pct": 28.67,
+     "dist50_pct": 9.02
+    }
    },
    "risk": {
     "spx": 7722.72,
@@ -2819,6 +3303,7 @@
      "funding_n": 3,
      "oi_chg_pct": -1.75385,
      "chg_pct": 2.083218,
+     "flow": "short_squeeze",
      "taker_buy_share": 0.531312
     },
     "eth": {
@@ -2834,6 +3319,7 @@
      "funding_n": 3,
      "oi_chg_pct": -3.278127,
      "chg_pct": 1.482797,
+     "flow": "short_squeeze",
      "taker_buy_share": 0.522198
     },
     "cot_btc": {
@@ -2882,7 +3368,23 @@
     "dxy_7d_pct": 0.958499,
     "stables_usd": 312216069375.0,
     "stables_asof": "2026-10-05",
-    "stables_7d_pct": 0.239516
+    "stables_7d_pct": 0.239516,
+    "trend_btc": {
+     "state": "boga",
+     "close": 85715.0,
+     "ma50": 79470.8,
+     "ma200": 71585.3,
+     "dist200_pct": 19.74,
+     "dist50_pct": 7.86
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2708.96,
+     "ma50": 2517.12,
+     "ma200": 2121.38,
+     "dist200_pct": 27.7,
+     "dist50_pct": 7.62
+    }
    },
    "risk": {
     "spx": 7773.95,
@@ -2911,6 +3413,7 @@
      "funding_n": 3,
      "oi_chg_pct": 6.069117,
      "chg_pct": -0.890099,
+     "flow": "yeni_short",
      "taker_buy_share": 0.501066
     },
     "eth": {
@@ -2926,6 +3429,7 @@
      "funding_n": 3,
      "oi_chg_pct": 2.50575,
      "chg_pct": -0.623998,
+     "flow": "yeni_short",
      "taker_buy_share": 0.491959
     },
     "cot_btc": {
@@ -2974,7 +3478,23 @@
     "dxy_7d_pct": 0.453782,
     "stables_usd": 312670377396.0,
     "stables_asof": "2026-10-06",
-    "stables_7d_pct": 0.452534
+    "stables_7d_pct": 0.452534,
+    "trend_btc": {
+     "state": "boga",
+     "close": 85512.1,
+     "ma50": 79891.04,
+     "ma200": 71660.48,
+     "dist200_pct": 19.33,
+     "dist50_pct": 7.04
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2696.67,
+     "ma50": 2532.8,
+     "ma200": 2124.14,
+     "dist200_pct": 26.95,
+     "dist50_pct": 6.47
+    }
    },
    "risk": {
     "spx": 7818.93,
@@ -3003,6 +3523,7 @@
      "funding_n": 3,
      "oi_chg_pct": -1.615854,
      "chg_pct": -0.236715,
+     "flow": "yatay",
      "taker_buy_share": 0.484495
     },
     "eth": {
@@ -3018,6 +3539,7 @@
      "funding_n": 3,
      "oi_chg_pct": 4.533479,
      "chg_pct": -0.45368,
+     "flow": "yatay",
      "taker_buy_share": 0.494616
     },
     "cot_btc": {
@@ -3066,7 +3588,23 @@
     "dxy_7d_pct": 0.77871,
     "stables_usd": 312806553537.0,
     "stables_asof": "2026-10-07",
-    "stables_7d_pct": 0.516149
+    "stables_7d_pct": 0.516149,
+    "trend_btc": {
+     "state": "boga",
+     "close": 83283.9,
+     "ma50": 80262.71,
+     "ma200": 71732.45,
+     "dist200_pct": 16.1,
+     "dist50_pct": 3.76
+    },
+    "trend_eth": {
+     "state": "boga",
+     "close": 2572.82,
+     "ma50": 2545.92,
+     "ma200": 2126.58,
+     "dist200_pct": 20.98,
+     "dist50_pct": 1.06
+    }
    },
    "risk": {
     "spx": 7801.77,
@@ -3087,14 +3625,15 @@
      "high": 85564.5,
      "low": 82700.0,
      "close": 83283.9,
-     "oi_usd": 2472747096.660491,
-     "ls_ratio": 1.711744,
+     "oi_usd": 2472043039.554011,
+     "ls_ratio": 1.73767,
      "taker_sell_usd": 3685675370.28748,
      "taker_buy_usd": 3244614944.18,
      "funding_sum_pct": 0.010599,
      "funding_n": 3,
-     "oi_chg_pct": -3.192231,
+     "oi_chg_pct": -3.219795,
      "chg_pct": -2.605713,
+     "flow": "temizlik",
      "taker_buy_share": 0.468179
     },
     "eth": {
@@ -3102,14 +3641,15 @@
      "high": 2699.0,
      "low": 2532.55,
      "close": 2572.82,
-     "oi_usd": 1616415222.889205,
-     "ls_ratio": 2.367434,
+     "oi_usd": 1616135583.544025,
+     "ls_ratio": 2.434675,
      "taker_sell_usd": 4108584295.67561,
      "taker_buy_usd": 3602742221.92062,
      "funding_sum_pct": 0.004415,
      "funding_n": 3,
-     "oi_chg_pct": -6.03657,
+     "oi_chg_pct": -6.052825,
      "chg_pct": -4.592701,
+     "flow": "temizlik",
      "taker_buy_share": 0.467201
     },
     "cot_btc": {
