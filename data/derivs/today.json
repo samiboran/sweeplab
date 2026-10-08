@@ -1,6 +1,6 @@
 {
  "date": "2026-10-07",
- "built_utc": "2026-10-08T18:22:53+00:00",
+ "built_utc": "2026-10-08T18:24:24+00:00",
  "layers": {
   "regime": {
    "name": "Rejim",
@@ -118,9 +118,9 @@
   "eth_oi": {
    "layer": "pos",
    "label": "ETH açık poz.",
-   "value": 1616135583.544025,
+   "value": 1614868532.499205,
    "display": "1.6 B$",
-   "z": 0.55,
+   "z": 0.54,
    "asof": "2026-10-07",
    "chg24": -5.48
   },
@@ -143,15 +143,15 @@
   "btc_ls": {
    "layer": "pos",
    "label": "BTC L/S",
-   "value": 1.73767,
+   "value": 1.739842,
    "display": "1.74",
-   "z": 1.19,
+   "z": 1.2,
    "asof": "2026-10-07"
   },
   "eth_ls": {
    "layer": "pos",
    "label": "ETH L/S",
-   "value": 2.434675,
+   "value": 2.432686,
    "display": "2.43",
    "z": 2.59,
    "asof": "2026-10-07"
