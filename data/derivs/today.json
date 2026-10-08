@@ -1,0 +1,213 @@
+{
+ "date": "2026-10-07",
+ "built_utc": "2026-10-08T18:20:20+00:00",
+ "layers": {
+  "regime": {
+   "name": "Rejim",
+   "status": "red",
+   "alarms": 1
+  },
+  "risk": {
+   "name": "Risk iştahı",
+   "status": "yellow",
+   "alarms": 0
+  },
+  "pos": {
+   "name": "Pozisyon",
+   "status": "red",
+   "alarms": 2
+  },
+  "corr": {
+   "name": "Korelasyonlar",
+   "status": "yellow",
+   "alarms": 0
+  }
+ },
+ "alarms": [
+  {
+   "layer": "pos",
+   "rule": "z",
+   "text": "ETH L/S 30 günlük ortalamasından 2.5 std yüksek (2.37)"
+  },
+  {
+   "layer": "pos",
+   "rule": "oi24",
+   "text": "ETH açık pozisyon son 24 saat %5.5 düştü"
+  },
+  {
+   "layer": "regime",
+   "rule": "netliq_flip",
+   "text": "Net likidite yön değiştirdi: bu hafta artışa geçti (+13 B$, 2026-09-30)"
+  }
+ ],
+ "indicators": {
+  "netliq": {
+   "layer": "regime",
+   "label": "Net likidite",
+   "value": 5782818.0,
+   "display": "5.78 T$",
+   "z": -0.73,
+   "asof": "2026-09-30",
+   "wk_chg": 12.7
+  },
+  "real10y": {
+   "layer": "regime",
+   "label": "Reel faiz (10y)",
+   "value": 2.91,
+   "display": "%2.91",
+   "z": 1.07,
+   "asof": "2026-10-06"
+  },
+  "dxy": {
+   "layer": "regime",
+   "label": "DXY",
+   "value": 102.239998,
+   "display": "102.24",
+   "z": 1.46,
+   "asof": "2026-10-07"
+  },
+  "stables": {
+   "layer": "regime",
+   "label": "Stablecoin arzı",
+   "value": 312806553537.0,
+   "display": "312.8 B$",
+   "z": 1.88,
+   "asof": "2026-10-07"
+  },
+  "spx": {
+   "layer": "risk",
+   "label": "S&P 500",
+   "value": 7801.77,
+   "display": "7,802",
+   "z": 1.78,
+   "asof": "2026-10-07"
+  },
+  "ndx": {
+   "layer": "risk",
+   "label": "Nasdaq",
+   "value": 27538.69,
+   "display": "27,539",
+   "z": 1.66,
+   "asof": "2026-10-07"
+  },
+  "vix": {
+   "layer": "risk",
+   "label": "VIX",
+   "value": 15.08,
+   "display": "15.08",
+   "z": -0.66,
+   "asof": "2026-10-07"
+  },
+  "hy": {
+   "layer": "risk",
+   "label": "HY spread",
+   "value": 3.09,
+   "display": "%3.09",
+   "z": 1.21,
+   "asof": "2026-10-07"
+  },
+  "btc_oi": {
+   "layer": "pos",
+   "label": "BTC açık poz.",
+   "value": 2472747096.660491,
+   "display": "2.5 B$",
+   "z": 0.74,
+   "asof": "2026-10-07",
+   "chg24": -1.25
+  },
+  "eth_oi": {
+   "layer": "pos",
+   "label": "ETH açık poz.",
+   "value": 1616415222.889205,
+   "display": "1.6 B$",
+   "z": 0.56,
+   "asof": "2026-10-07",
+   "chg24": -5.48
+  },
+  "btc_fund": {
+   "layer": "pos",
+   "label": "BTC funding",
+   "value": 0.010599,
+   "display": "%0.011",
+   "z": -0.59,
+   "asof": "2026-10-07"
+  },
+  "eth_fund": {
+   "layer": "pos",
+   "label": "ETH funding",
+   "value": 0.004415,
+   "display": "%0.004",
+   "z": -1.25,
+   "asof": "2026-10-07"
+  },
+  "btc_ls": {
+   "layer": "pos",
+   "label": "BTC L/S",
+   "value": 1.711744,
+   "display": "1.71",
+   "z": 1.11,
+   "asof": "2026-10-07"
+  },
+  "eth_ls": {
+   "layer": "pos",
+   "label": "ETH L/S",
+   "value": 2.367434,
+   "display": "2.37",
+   "z": 2.45,
+   "asof": "2026-10-07"
+  },
+  "btc_cot": {
+   "layer": "pos",
+   "label": "CME BTC fon net",
+   "value": -6856.0,
+   "display": "-6,856",
+   "z": 1.01,
+   "asof": "2026-09-29"
+  },
+  "btc_spx": {
+   "layer": "corr",
+   "label": "BTC–S&P",
+   "value": 0.569371,
+   "display": "0.57",
+   "z": 0.33,
+   "asof": "2026-10-07",
+   "corr7": 0.45
+  },
+  "btc_ndx": {
+   "layer": "corr",
+   "label": "BTC–Nasdaq",
+   "value": 0.617035,
+   "display": "0.62",
+   "z": 0.5,
+   "asof": "2026-10-07",
+   "corr7": 0.41
+  },
+  "btc_dxy": {
+   "layer": "corr",
+   "label": "BTC–DXY",
+   "value": 0.007461,
+   "display": "0.01",
+   "z": 1.68,
+   "asof": "2026-10-07",
+   "corr7": 0.16
+  },
+  "btc_eth": {
+   "layer": "corr",
+   "label": "BTC–ETH",
+   "value": 0.910165,
+   "display": "0.91",
+   "z": 0.28,
+   "asof": "2026-10-07",
+   "corr7": 0.92
+  }
+ },
+ "upcoming": [
+  {
+   "date": "2026-10-14",
+   "event": "CPI"
+  }
+ ],
+ "today_events": [],
+ "report_day": "2026-10-08",
+ "message": "<b>Kaldıraç Gözlem Defteri · 08.10.2026</b>\n\n🔴 <b>Rejim</b>\n🟡 <b>Risk iştahı</b>\n🔴 <b>Pozisyon</b>\n🟡 <b>Korelasyonlar</b>\n\nBTC OI 2.5 B$ (-1.2%) · L/S 1.71 · funding %0.011\nETH OI 1.6 B$ (-5.5%) · L/S 2.37 · funding %0.004\nVIX 15.08 · HY %3.09 · DXY 102.24 · Reel faiz %2.91\n\n<b>Alarmlar</b>\n• ETH L/S 30 günlük ortalamasından 2.5 std yüksek (2.37)\n• ETH açık pozisyon son 24 saat %5.5 düştü\n• Net likidite yön değiştirdi: bu hafta artışa geçti (+13 B$, 2026-09-30)\n\nYaklaşan: CPI 14.10"
+}
