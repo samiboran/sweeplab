@@ -1,5 +1,5 @@
 {
- "built_utc": "2026-10-08T18:49:06+00:00",
+ "built_utc": "2026-10-08T18:50:03+00:00",
  "status": {
   "WALCL": "OK 19 (2026-05-27..2026-09-30)",
   "WTREGEN": "OK 19 (2026-05-27..2026-09-30)",
@@ -18,7 +18,7 @@
   "yahoo:CL=F": "OK 252",
   "yahoo:BZ=F": "OK 252",
   "cot_gold": "OK 30 (2026-03-10..2026-09-29)",
-  "gld_tonnes": "ERR ",
+  "gld_tonnes": "ERR RuntimeError: no 'Tonnes' column; file starts: %PDF-1.5\r | %\u00e2\u00e3\u00cf\u00d3\r | 2 0 obj\r | <<\r | /Type /XObject\r | /Subtype /Image\r | /Width 1489\r | /Height 680\r | /ColorSpace /DeviceGray\r | /BitsPerComponent 8\r | /Interpolate false\r | /Filt",
   "net_liquidity": "OK 19 weeks"
  },
  "calendar": {
