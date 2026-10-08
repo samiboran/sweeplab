@@ -2,7 +2,7 @@ name: derivs-snapshot
 on:
   push:
     branches: [data-feed]
-    paths: [tools/fetch_derivs.py, .github/workflows/derivs.yml, data/derivs/.trigger]
+    paths: [tools/fetch_derivs.py, tools/fetch_okx_history.py, .github/workflows/derivs.yml, data/derivs/.trigger]
   workflow_dispatch:
 permissions:
   contents: write
@@ -11,10 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: python3 tools/fetch_derivs.py
+      - name: Snapshot (OKX + Hyperliquid; Binance/Bybit attempted)
+        run: python3 tools/fetch_derivs.py
+      - name: 30-day daily history (OKX)
+        run: python3 tools/fetch_okx_history.py
       - run: |
           git config user.name "derivs-bot"
           git config user.email "derivs-bot@users.noreply.github.com"
-          git add data/derivs/*.json
-          git commit -m "derivs snapshot $(date -u +%F_%H)" || echo nothing
+          git add data/derivs/
+          git commit -m "derivs snapshot + 30d history $(date -u +%F_%H)" || echo nothing
           git push
