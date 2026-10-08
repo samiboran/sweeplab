@@ -111,3 +111,15 @@ Kütüphaneler (CDN üzerinden): Lightweight Charts, Chart.js, CodeMirror. Çer�
 ## Uyarı
 
 Bu bir araştırma/eğitim aracıdır, finansal tavsiye değildir. Geçmiş performans gelecek sonuçların garantisi değildir. Kaldıraçlı işlemler yüksek risk taşır.
+
+## Günlük piyasa özeti (Kaldıraç Gözlem Defteri)
+
+`.github/workflows/daily-brief.yml` her sabah ~09:00 (İstanbul) çalışır:
+
+- `tools/fetch_derivs.py`: OKX + Hyperliquid anlık türev verisi
+- `tools/fetch_okx_history.py`: BTC/ETH 1 yıllık günlük fiyat, 30 günlük OI, L/S, taker hacmi, funding
+- `tools/build_notebook.py`: 4 katman (Rejim, Risk iştahı, Pozisyon, Korelasyonlar), FOMC/CPI/NFP takvimi
+- `tools/daily_brief.py`: 30 günlük z-skorları, alarm kuralları, katman durumu, Telegram mesajı
+
+Veri dosyaları `data-feed` dalına yazılır (`data/derivs/`). Telegram için repo secret'ları:
+`TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` (bot/.env ile aynı değerler).
