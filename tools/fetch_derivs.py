@@ -27,6 +27,8 @@ for coin in ["BTC", "ETH"]:
     }
     S[f"okx_{coin}"] = {
         "oi_vol_1h": get(f"https://www.okx.com/api/v5/rubik/stat/contracts/open-interest-volume?ccy={coin}&period=1H"),
+        # [ts, oi(contracts), oiCcy, oiUsd] for the USDT perp, hourly: coin-denominated OI
+        "oi_hist_1h": get(f"https://www.okx.com/api/v5/rubik/stat/contracts/open-interest-history?instId={coin}-USDT-SWAP&period=1H&limit=48"),
         "ls_ratio_1h": get(f"https://www.okx.com/api/v5/rubik/stat/contracts/long-short-account-ratio?ccy={coin}&period=1H"),
         "funding": get(f"https://www.okx.com/api/v5/public/funding-rate-history?instId={coin}-USDT-SWAP&limit=9"),
         "liquidations": get(f"https://www.okx.com/api/v5/public/liquidation-orders?instType=SWAP&uly={coin}-USDT&state=filled&limit=100"),
