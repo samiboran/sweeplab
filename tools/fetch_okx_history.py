@@ -1,6 +1,7 @@
 """Last N days of daily BTC/ETH derivatives history from OKX public APIs.
 
-Per UTC day and coin: price OHLC, open interest (USD, at the day's close),
+Per UTC day and coin: price OHLC, open interest at the day's close in USD and in
+coins (OKX oiCcy; a falling price alone shrinks USD OI, coin OI does not),
 long/short account ratio (at the day's close), taker buy/sell volume (USD) and funding (sum of the day's 8h
 payments). Output: data/derivs/okx_history_30d.csv, one row per date, BTC and
 ETH side by side. Raw responses are kept in data/derivs/okx_history_raw.json.
@@ -112,7 +113,8 @@ def build(raw, coin):
     # open interest: prefer per-contract USD OI, fall back to coin-level
     if r["oi"]["ok"] and r["oi"]["data"]:
         for x in r["oi"]["data"]:
-            row(closing_day(x[0]))["oi_usd"] = float(x[3])
+            d = row(closing_day(x[0]))
+            d["oi_usd"], d["oi_coin"] = float(x[3]), float(x[2])
         rows_src_oi = "BTC/ETH-USDT perp"
     elif r["oi_ccy"]["ok"]:
         for x in r["oi_ccy"]["data"]:
@@ -149,7 +151,7 @@ def main():
     today = dt.datetime.now(dt.timezone.utc).date()
     days = [(today - dt.timedelta(days=i)).isoformat() for i in range(DAYS, 0, -1)]  # last N full UTC days
 
-    fields = ["open", "high", "low", "close", "oi_usd", "oi_chg_pct", "ls_ratio",
+    fields = ["open", "high", "low", "close", "oi_usd", "oi_chg_pct", "oi_coin", "oi_coin_chg_pct", "ls_ratio",
               "taker_buy_usd", "taker_sell_usd", "taker_buy_share", "funding_sum_pct", "funding_n"]
     header = ["date"] + [f"{c.lower()}_{f}" for c in COINS for f in fields]
     out_rows = []
@@ -161,6 +163,12 @@ def main():
             prev = rows.get((dt.date.fromisoformat(day) - dt.timedelta(days=1)).isoformat(), {})
             if d.get("oi_usd") and prev.get("oi_usd"):
                 d["oi_chg_pct"] = (d["oi_usd"] / prev["oi_usd"] - 1) * 100
+            # coin-denominated OI: OKX's own oiCcy, else USD OI / close
+            for x in (d, prev):
+                if not x.get("oi_coin") and x.get("oi_usd") and x.get("close"):
+                    x["oi_coin"] = x["oi_usd"] / x["close"]
+            if d.get("oi_coin") and prev.get("oi_coin"):
+                d["oi_coin_chg_pct"] = (d["oi_coin"] / prev["oi_coin"] - 1) * 100
             if d.get("taker_buy_usd") is not None and d.get("taker_sell_usd") is not None:
                 tot = d["taker_buy_usd"] + d["taker_sell_usd"]
                 if tot:

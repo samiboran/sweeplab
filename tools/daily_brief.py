@@ -8,7 +8,8 @@ green / yellow / red status, writes today.json and sends the summary to Telegram
 Alarm rules
   1. |z| > 2 on any indicator (30-day window; weekly series use the last 12 weeks)
   2. Long/short account ratio > 2.5
-  3. Open interest change over the last 24h beyond ±5%
+  3. Open interest change over the last 24h beyond ±5%, measured in coins
+     (USD OI falls with price on its own)
   4. Funding extreme: a day's funding sum > 0.09% or < -0.03%
      (normal is about 0.01% per 8h, i.e. ~0.03% a day)
   5. 7-day correlation more than 0.5 away from the 30-day correlation
@@ -51,12 +52,17 @@ INDICATORS = [
     ("regime", "real10y", "Reel faiz (10y)", "regime.real10y", "%"),
     ("regime", "dxy", "DXY", "regime.dxy", "num"),
     ("regime", "stables", "Stablecoin arzı", "regime.stables_usd", "B$"),
+    ("macro", "gold", "Altın", "macro.gold", "num"),
+    ("macro", "gold_cot", "Altın COT fon net", None, "int"),
+    ("macro", "gld", "GLD (ton)", "macro.gld_tonnes", "num"),
+    ("macro", "wti", "WTI", "macro.wti", "num2"),
+    ("macro", "brent", "Brent", "macro.brent", "num2"),
     ("risk", "spx", "S&P 500", "risk.spx", "num"),
     ("risk", "ndx", "Nasdaq", "risk.ndx", "num"),
     ("risk", "vix", "VIX", "risk.vix", "num"),
     ("risk", "hy", "HY spread", "risk.hy_oas", "%"),
-    ("pos", "btc_oi", "BTC açık poz.", "pos.btc.oi_usd", "B$"),
-    ("pos", "eth_oi", "ETH açık poz.", "pos.eth.oi_usd", "B$"),
+    ("pos", "btc_oi", "BTC açık poz. (coin)", "pos.btc.oi_coin", "coin"),
+    ("pos", "eth_oi", "ETH açık poz. (coin)", "pos.eth.oi_coin", "coin"),
     ("pos", "btc_fund", "BTC funding", "pos.btc.funding_sum_pct", "pct3"),
     ("pos", "eth_fund", "ETH funding", "pos.eth.funding_sum_pct", "pct3"),
     ("pos", "btc_ls", "BTC L/S", "pos.btc.ls_ratio", "num2"),
@@ -66,8 +72,10 @@ INDICATORS = [
     ("corr", "btc_ndx", "BTC–Nasdaq", "corr.btc_ndx", "num2"),
     ("corr", "btc_dxy", "BTC–DXY", "corr.btc_dxy", "num2"),
     ("corr", "btc_eth", "BTC–ETH", "corr.btc_eth", "num2"),
+    ("corr", "btc_gold", "BTC–Altın", "corr.btc_gold", "num2"),
+    ("corr", "eth_gold", "ETH–Altın", "corr.eth_gold", "num2"),
 ]
-LAYERS = {"regime": "Rejim", "risk": "Risk iştahı", "pos": "Pozisyon", "corr": "Korelasyonlar"}
+LAYERS = {"regime": "Rejim", "risk": "Risk iştahı", "pos": "Pozisyon", "macro": "Altın & Makro", "corr": "Korelasyonlar"}
 
 
 def fmt(v, kind):
@@ -85,21 +93,24 @@ def fmt(v, kind):
         return f"{v:.2f}"
     if kind == "int":
         return f"{v:,.0f}"
+    if kind == "coin":
+        return f"{v / 1e6:.2f}M" if v >= 1e6 else f"{v / 1e3:.1f}K"
     return f"{v:,.2f}" if v < 1000 else f"{v:,.0f}"
 
 
-def live_oi_24h(coin):
-    """OI change over the last 24 hours from the hourly OKX snapshot (coin level)."""
+def live_oi_24h(coin, col):
+    """OI change over the last 24 hours from the hourly OKX USDT-perp snapshot.
+    col 2 = OI in coins (oiCcy), col 3 = OI in USD."""
     try:
-        snap = json.load(open(f"{OUT}/latest.json"))["sources"][f"okx_{coin}"]["oi_vol_1h"]
+        snap = json.load(open(f"{OUT}/latest.json"))["sources"][f"okx_{coin}"]["oi_hist_1h"]
         data = snap["data"]["data"] if isinstance(snap["data"], dict) else snap["data"]
         data = sorted(data, key=lambda x: int(x[0]))
-        now, ts_now = float(data[-1][1]), int(data[-1][0])
+        now, ts_now = float(data[-1][col]), int(data[-1][0])
         target = ts_now - 24 * 3600 * 1000
         prev = min(data, key=lambda x: abs(int(x[0]) - target))
         if abs(int(prev[0]) - target) > 2 * 3600 * 1000:
             return None
-        return (now / float(prev[1]) - 1) * 100
+        return (now / float(prev[col]) - 1) * 100
     except Exception:
         return None
 
@@ -115,12 +126,15 @@ def build():
         if key == "netliq":
             series = [v for _, v in weekly["netliq_musd"]][-12:]
             asof = weekly["netliq_musd"][-1][0] if weekly["netliq_musd"] else None
+        elif key == "gold_cot":
+            series = [v for _, v in weekly.get("cot_gold_mm_net", [])][-12:]
+            asof = weekly["cot_gold_mm_net"][-1][0] if weekly.get("cot_gold_mm_net") else None
         elif key == "btc_cot":
             series = [v for _, v in weekly["cot_btc_lev_net"]][-12:]
             asof = weekly["cot_btc_lev_net"][-1][0] if weekly["cot_btc_lev_net"] else None
         else:
             series = [get(r, path) for r in rows]
-            asof = get(last, path.rsplit(".", 1)[0] + "." + path.rsplit(".", 1)[1].split("_")[0] + "_asof") if layer in ("regime", "risk") else last["date"]
+            asof = get(last, path.rsplit(".", 1)[0] + "." + path.rsplit(".", 1)[1].split("_")[0] + "_asof") if layer in ("regime", "risk", "macro") else last["date"]
         val = series[-1] if series else None
         z = zscore(series)
         out["indicators"][key] = {"layer": layer, "label": label, "value": val, "display": fmt(val, kind),
@@ -135,20 +149,26 @@ def build():
         ls = (pos.get(c) or {}).get("ls_ratio")
         if ls is not None and ls > LS_MAX:
             out["alarms"].append({"layer": "pos", "rule": "ls", "text": f"{C} long/short hesap oranı {ls:.2f} (>{LS_MAX}): kalabalık long'da"})
-        oi24 = live_oi_24h(C)
-        src = "son 24 saat"
+        # Alarm on coin-denominated OI: USD OI drops by itself when price drops.
+        oi24, src = live_oi_24h(C, 2), "son 24 saat"
+        oi24_usd = live_oi_24h(C, 3)
         if oi24 is None:
-            oi24, src = (pos.get(c) or {}).get("oi_chg_pct"), "dünkü gün"
-        out["indicators"][c + "_oi"]["chg24"] = None if oi24 is None else round(oi24, 2)
+            oi24, src = (pos.get(c) or {}).get("oi_coin_chg_pct"), "dünkü gün"
+            oi24_usd = (pos.get(c) or {}).get("oi_chg_pct")
+        ind = out["indicators"][c + "_oi"]
+        ind["chg24"] = None if oi24 is None else round(oi24, 2)
+        ind["chg24_usd"] = None if oi24_usd is None else round(oi24_usd, 2)
+        ind["usd"] = (pos.get(c) or {}).get("oi_usd")
         if oi24 is not None and abs(oi24) > OI_24H_MAX:
             yön = "arttı" if oi24 > 0 else "düştü"
-            out["alarms"].append({"layer": "pos", "rule": "oi24", "text": f"{C} açık pozisyon {src} %{abs(oi24):.1f} {yön}"})
+            out["alarms"].append({"layer": "pos", "rule": "oi24", "text": f"{C} açık pozisyon {src} coin bazında %{abs(oi24):.1f} {yön}"})
         f = (pos.get(c) or {}).get("funding_sum_pct")
         if f is not None and (f > FUND_HI or f < FUND_LO):
             yön = "aşırı pozitif (long'lar pahalı ödüyor)" if f > 0 else "negatif (short'lar ödüyor)"
             out["alarms"].append({"layer": "pos", "rule": "funding", "text": f"{C} funding uç değerde: günlük %{f:.3f}, {yön}"})
 
-    for k, label in (("btc_spx", "BTC–S&P"), ("btc_ndx", "BTC–Nasdaq"), ("btc_dxy", "BTC–DXY"), ("btc_eth", "BTC–ETH")):
+    for k, label in (("btc_spx", "BTC–S&P"), ("btc_ndx", "BTC–Nasdaq"), ("btc_dxy", "BTC–DXY"), ("btc_eth", "BTC–ETH"),
+                     ("btc_gold", "BTC–Altın"), ("eth_gold", "ETH–Altın")):
         c30, c7 = last["corr"].get(k), last["corr"].get(k + "_7d")
         out["indicators"][k]["corr7"] = None if c7 is None else round(c7, 2)
         if c30 is not None and c7 is not None and abs(c7 - c30) > CORR_GAP:
@@ -161,6 +181,8 @@ def build():
         if d1 * d0 < 0:
             yön = "artışa" if d1 > 0 else "düşüşe"
             out["alarms"].append({"layer": "regime", "rule": "netliq_flip", "text": f"Net likidite yön değiştirdi: bu hafta {yön} geçti ({d1 / 1e3:+.0f} B$, {nl[-1][0]})"})
+
+    out["macro_ctx"] = {k: last.get("macro", {}).get(k) for k in ("gold_from_high_pct", "gold_high120_date", "gold_src", "cot_gold_mm_net_wk_chg", "gld_7d_chg_t")}
 
     # Trend (regime) and a positioning read that depends on it
     out["coins"] = {}
@@ -205,7 +227,8 @@ def build():
 DOT = {"green": "🟢", "yellow": "🟡", "red": "🔴"}
 TREND = {"boga": "Boğa", "ayi": "Ayı", "gecis": "Geçiş", None: "–"}
 FLOW = {"kaldiracli_yukselis": "Kaldıraçlı yükseliş (fiyat↑ OI↑)", "short_squeeze": "Short squeeze (fiyat↑ OI↓)",
-        "yeni_short": "Yeni short (fiyat↓ OI↑)", "temizlik": "Temizlik (fiyat↓ OI↓)", "yatay": "Yatay / sakin", None: "–"}
+        "yeni_short": "Yeni short (fiyat↓ OI↑)", "temizlik": "Temizlik (fiyat↓ OI↓)", "yatay": "Yatay / sakin",
+        "oi_sabit": "OI sabit (fiyat oynadı, pozisyon değişmedi)", None: "–"}
 
 
 def message(b):
@@ -228,8 +251,12 @@ def message(b):
                 x = co[c]
                 lines.append(f"   {c.upper()}: {x['flow_text']} · {x['reading']}")
     lines.append("")
-    lines.append(f"BTC OI {ind['btc_oi']['display']} ({_s(ind['btc_oi'].get('chg24'))}) · L/S {ind['btc_ls']['display']} · funding {ind['btc_fund']['display']}")
-    lines.append(f"ETH OI {ind['eth_oi']['display']} ({_s(ind['eth_oi'].get('chg24'))}) · L/S {ind['eth_ls']['display']} · funding {ind['eth_fund']['display']}")
+    for c in ("btc", "eth"):
+        o = ind[c + "_oi"]
+        lines.append(f"{c.upper()} OI {o['display']} {c.upper()} (24s coin {_s(o.get('chg24'))}, $ {_s(o.get('chg24_usd'))}) · L/S {ind[c + '_ls']['display']} · funding {ind[c + '_fund']['display']}")
+    m = b.get("macro_ctx") or {}
+    lines.append(f"Altın {ind['gold']['display']}" + (f" (120g zirveden {m['gold_from_high_pct']:+.1f}%)" if m.get("gold_from_high_pct") is not None else "")
+                 + f" · WTI {ind['wti']['display']} · Brent {ind['brent']['display']}")
     lines.append(f"VIX {ind['vix']['display']} · HY {ind['hy']['display']} · DXY {ind['dxy']['display']} · Reel faiz {ind['real10y']['display']}")
     if b["alarms"]:
         lines.append("")

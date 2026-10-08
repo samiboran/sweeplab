@@ -8,7 +8,10 @@
   Pozisyon     OKX BTC/ETH perp: OI, funding, L/S ratio, taker flow, price, and a
                daily "what happened" label from price vs OI direction
                (from okx_history_raw.json) + CFTC COT for CME Bitcoin/Ether futures
-  Korelasyon   30-day correlation of daily returns: BTC vs S&P, Nasdaq, DXY, ETH
+  Altın & Makro gold (COMEX futures; XAUT/PAXG fallback), CFTC managed-money net in
+               gold (weekly), GLD holdings (tonnes), WTI and Brent
+  Korelasyon   30/7-day correlation of daily returns: BTC vs S&P, Nasdaq, DXY, ETH,
+               gold; ETH vs gold
   Takvim       FOMC decision days, CPI and NFP release days
 
 Weekly or market-day series are carried forward to calendar days; each carried
@@ -120,6 +123,64 @@ def cot(code, label):
         return {}
 
 
+def cot_gold():
+    """CFTC disaggregated futures-only report, COMEX gold (088691): managed money."""
+    q = urllib.parse.urlencode({"$where": "cftc_contract_market_code='088691'",
+                                "$order": "report_date_as_yyyy_mm_dd DESC", "$limit": "30"})
+    try:
+        rows = fetch("https://publicreporting.cftc.gov/resource/72hh-3qpy.json?" + q)
+        out = {}
+        for r in rows:
+            f = lambda k: float(r.get(k) or 0)
+            out[r["report_date_as_yyyy_mm_dd"][:10]] = {
+                "mm_long": f("m_money_positions_long_all"), "mm_short": f("m_money_positions_short_all"),
+                "mm_net": f("m_money_positions_long_all") - f("m_money_positions_short_all"),
+                "oi": f("open_interest_all"),
+            }
+        status["cot_gold"] = f"OK {len(out)} ({min(out) if out else ''}..{max(out) if out else ''})"
+        return out
+    except Exception as e:
+        status["cot_gold"] = "ERR " + str(e)
+        return {}
+
+
+def okx_spot_daily(inst):
+    """Daily closes of an OKX spot pair (gold-backed tokens as a gold fallback)."""
+    try:
+        j = fetch(f"https://www.okx.com/api/v5/market/history-candles?instId={inst}&bar=1Dutc&limit=100")
+        out = {dt.datetime.fromtimestamp(int(c[0]) / 1000, dt.timezone.utc).strftime("%Y-%m-%d"): float(c[4])
+               for c in j["data"] if len(c) < 9 or c[8] == "1"}
+        status["okx:" + inst] = f"OK {len(out)}"
+        return out
+    except Exception as e:
+        status["okx:" + inst] = "ERR " + str(e)
+        return {}
+
+
+def gld_tonnes():
+    """SPDR Gold Shares (GLD) daily holdings in tonnes, from SPDR's public archive CSV."""
+    try:
+        txt = fetch("https://www.spdrgoldshares.com/assets/dynamic/GLD/GLD_US_archive_EN.csv", "text")
+        rows = list(csv.reader(io.StringIO(txt)))
+        hi = next(i for i, r in enumerate(rows) if any("Tonnes" in c for c in r))
+        head = [c.strip() for c in rows[hi]]
+        col = next(i for i, c in enumerate(head) if "Tonnes" in c)
+        out = {}
+        for r in rows[hi + 1:]:
+            if len(r) <= col:
+                continue
+            try:
+                d = dt.datetime.strptime(r[0].strip(), "%d-%b-%Y").strftime("%Y-%m-%d")
+                out[d] = float(r[col].replace(",", ""))
+            except ValueError:
+                continue
+        status["gld_tonnes"] = f"OK {len(out)} ({min(out)}..{max(out)})" if out else "EMPTY"
+        return out
+    except Exception as e:
+        status["gld_tonnes"] = "ERR " + str(e)
+        return {}
+
+
 def asof(series, day):
     """Latest observation on or before `day` -> (value, date) or (None, None)."""
     best = None
@@ -188,11 +249,15 @@ PRICE_DEAD, OI_DEAD = 0.5, 1.0  # % moves smaller than this count as flat
 
 
 def flow_label(price_chg, oi_chg):
-    """What price and open interest did together on the day."""
+    """What price and open interest did together on the day. `oi_chg` is the
+    change in coin-denominated OI: USD OI falls with price on its own and would
+    make every red day look like a long washout."""
     if price_chg is None or oi_chg is None:
         return None
-    if abs(price_chg) < PRICE_DEAD or abs(oi_chg) < OI_DEAD:
+    if abs(price_chg) < PRICE_DEAD:
         return "yatay"
+    if abs(oi_chg) < OI_DEAD:
+        return "oi_sabit"  # price moved, positions did not: no new leverage, none flushed
     if price_chg > 0:
         return "kaldiracli_yukselis" if oi_chg > 0 else "short_squeeze"
     return "yeni_short" if oi_chg > 0 else "temizlik"
@@ -221,6 +286,17 @@ def main():
         dxy = dxy_broad
     stables = stablecoins(start)
     cot_btc, cot_eth = cot("133741", "btc"), cot("146021", "eth")
+    gold, gold_src = yahoo("GC=F"), "Altın vadeli (COMEX, GC=F)"
+    if not gold:
+        gold, gold_src = okx_spot_daily("XAUT-USDT"), "XAUT (OKX)"
+    if not gold:
+        gold, gold_src = okx_spot_daily("PAXG-USDT"), "PAXG (OKX)"
+    wti, brent = yahoo("CL=F"), yahoo("BZ=F")
+    if not wti:
+        wti = fred("DCOILWTICO", start)
+    if not brent:
+        brent = fred("DCOILBRENTEU", start)
+    cotg, gld = cot_gold(), gld_tonnes()
 
     # Net liquidity, weekly on the Fed balance-sheet Wednesday, USD millions.
     # WALCL and WTREGEN are in millions, RRPONTSYD in billions.
@@ -264,9 +340,14 @@ def main():
             prev = okx[c].get((dt.date.fromisoformat(day) - dt.timedelta(days=1)).isoformat(), {})
             if r.get("oi_usd") and prev.get("oi_usd"):
                 r["oi_chg_pct"] = pct(r["oi_usd"], prev["oi_usd"])
+            for x in (r, prev):
+                if not x.get("oi_coin") and x.get("oi_usd") and x.get("close"):
+                    x["oi_coin"] = x["oi_usd"] / x["close"]
+            if r.get("oi_coin") and prev.get("oi_coin"):
+                r["oi_coin_chg_pct"] = pct(r["oi_coin"], prev["oi_coin"])
             if prev.get("close") and r.get("close"):
                 r["chg_pct"] = pct(r["close"], prev["close"])
-            r["flow"] = flow_label(r.get("chg_pct"), r.get("oi_chg_pct"))
+            r["flow"] = flow_label(r.get("chg_pct"), r.get("oi_coin_chg_pct"))
             tb, ts = r.get("taker_buy_usd"), r.get("taker_sell_usd")
             if tb is not None and ts:
                 r["taker_buy_share"] = tb / (tb + ts)
@@ -282,6 +363,31 @@ def main():
             corrs[k + "_n"] = npairs
             c7, n7 = window_corr(btc_close, other, day, days=7, min_n=4)
             corrs[k + "_7d"] = c7
+        for k, a in (("btc_gold", btc_close), ("eth_gold", eth_close)):
+            corrs[k], corrs[k + "_n"] = window_corr(a, gold, day)
+            corrs[k + "_7d"], _ = window_corr(a, gold, day, days=7, min_n=4)
+
+        gd, gd_d = asof(gold, day)
+        g_hist = {d: v for d, v in gold.items() if d <= day and d >= (dt.date.fromisoformat(day) - dt.timedelta(days=120)).isoformat()}
+        g_hi_d = max(g_hist, key=g_hist.get) if g_hist else None
+        cg, cg_d = asof(cotg, day)
+        cg_prev, _ = asof(cotg, (dt.date.fromisoformat(cg_d) - dt.timedelta(days=7)).isoformat()) if cg_d else (None, None)
+        gt, gt_d = asof(gld, day)
+        gt_prev, _ = asof(gld, (dt.date.fromisoformat(gt_d) - dt.timedelta(days=7)).isoformat()) if gt_d else (None, None)
+        w, w_d = asof(wti, day)
+        b, b_d = asof(brent, day)
+        macro = {
+            "gold": gd, "gold_asof": gd_d, "gold_src": gold_src, "gold_1d_pct": change(gold, day, 1),
+            "gold_7d_pct": change(gold, day, 7),
+            "gold_high120": g_hist.get(g_hi_d) if g_hi_d else None, "gold_high120_date": g_hi_d,
+            "gold_from_high_pct": pct(gd, g_hist[g_hi_d]) if g_hi_d and gd else None,
+            "cot_gold_mm_net": cg["mm_net"] if cg else None, "cot_gold_mm_long": cg["mm_long"] if cg else None,
+            "cot_gold_mm_short": cg["mm_short"] if cg else None, "cot_gold_asof": cg_d,
+            "cot_gold_mm_net_wk_chg": cg["mm_net"] - cg_prev["mm_net"] if cg and cg_prev else None,
+            "gld_tonnes": gt, "gld_asof": gt_d, "gld_7d_chg_t": gt - gt_prev if gt is not None and gt_prev is not None else None,
+            "wti": w, "wti_asof": w_d, "wti_1d_pct": change(wti, day, 1),
+            "brent": b, "brent_asof": b_d, "brent_1d_pct": change(brent, day, 1),
+        }
 
         rows.append({
             "date": day,
@@ -301,6 +407,7 @@ def main():
                 "hy_oas": h, "hy_asof": h_d, "hy_wk_chg_bp": (h - h_prev) * 100 if h is not None and h_prev is not None else None,
             },
             "pos": pos,
+            "macro": macro,
             "corr": corrs,
         })
 
@@ -320,6 +427,7 @@ def main():
         "netliq_musd": sorted(netliq.items()),
         "cot_btc_lev_net": sorted((d, v["lev_net"]) for d, v in cot_btc.items()),
         "cot_eth_lev_net": sorted((d, v["lev_net"]) for d, v in cot_eth.items()),
+        "cot_gold_mm_net": sorted((d, v["mm_net"]) for d, v in cotg.items()),
     })
     json.dump({"built_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
                "status": status, "calendar": CALENDAR, "weekly": weekly, "rows": rows}, open(f"{OUT}/notebook_daily.json", "w"), indent=1)
