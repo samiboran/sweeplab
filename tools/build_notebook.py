@@ -5,7 +5,8 @@
                (DFII10), DXY (Yahoo DX-Y.NYB; FRED broad dollar DTWEXBGS as fallback),
                stablecoin supply (DefiLlama)
   Risk iştahı  S&P 500, Nasdaq Composite, VIX, US high-yield OAS (BAMLH0A0HYM2)
-  Pozisyon     OKX BTC/ETH perp: OI, funding, L/S ratio, taker flow, price, and a
+  Pozisyon     OKX BTC/ETH perp (+ SOL, XRP, DOGE, PUMP watch list): OI, funding, L/S
+               ratio, taker flow, price, and a
                daily "what happened" label from price vs OI direction
                (from okx_history_raw.json) + CFTC COT for CME Bitcoin/Ether futures
   Altın & Makro gold (COMEX futures; XAUT/PAXG fallback), CFTC managed-money net in
@@ -271,7 +272,7 @@ def okx_rows():
     h = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(h)
     raw = json.load(open(f"{OUT}/okx_history_raw.json"))
-    return {c.lower(): h.build(raw, c)[0] for c in ("BTC", "ETH")}
+    return {c.lower(): h.build(raw, c)[0] for c in raw}  # BTC, ETH + watch list
 
 
 def main():
@@ -337,7 +338,7 @@ def main():
         h_prev, _ = asof(hy, (dt.date.fromisoformat(h_d) - dt.timedelta(days=7)).isoformat()) if h_d else (None, None)
 
         pos = {}
-        for c in ("btc", "eth"):
+        for c in [k for k in ("btc", "eth", "sol", "xrp", "doge", "pump") if k in okx]:
             r = dict(okx[c].get(day, {}))
             prev = okx[c].get((dt.date.fromisoformat(day) - dt.timedelta(days=1)).isoformat(), {})
             if r.get("oi_usd") and prev.get("oi_usd"):

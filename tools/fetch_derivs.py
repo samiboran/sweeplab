@@ -33,6 +33,24 @@ for coin in ["BTC", "ETH"]:
         "funding": get(f"https://www.okx.com/api/v5/public/funding-rate-history?instId={coin}-USDT-SWAP&limit=9"),
         "liquidations": get(f"https://www.okx.com/api/v5/public/liquidation-orders?instType=SWAP&uly={coin}-USDT&state=filled&limit=100"),
     }
+# Watch list: hourly coin-denominated OI and recent liquidations only (kept small)
+for coin in ["SOL", "XRP", "DOGE", "PUMP"]:
+    S[f"okx_{coin}"] = {
+        "oi_hist_1h": get(f"https://www.okx.com/api/v5/rubik/stat/contracts/open-interest-history?instId={coin}-USDT-SWAP&period=1H&limit=48"),
+        "liquidations": get(f"https://www.okx.com/api/v5/public/liquidation-orders?instType=SWAP&uly={coin}-USDT&state=filled&limit=100"),
+    }
+
+# Market caps (for OI / market cap); CoinGecko public API, symbol lookup keeps the largest match
+cg = get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&symbols=btc,eth,sol,xrp,doge,pump&include_tokens=top&per_page=50")
+if cg["ok"]:
+    caps = {}
+    for x in cg["data"]:
+        sym = (x.get("symbol") or "").upper()
+        if x.get("market_cap") and x["market_cap"] > caps.get(sym, {}).get("market_cap", 0):
+            caps[sym] = {"id": x.get("id"), "market_cap": x["market_cap"], "price": x.get("current_price")}
+    cg["data"] = caps
+S["coingecko"] = cg
+
 hl = get("https://api.hyperliquid.xyz/info", data=json.dumps({"type": "metaAndAssetCtxs"}).encode())
 if hl["ok"]:
     try:

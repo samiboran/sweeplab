@@ -11,7 +11,9 @@ Runs on GitHub Actions (OKX is reachable from there; Binance/Bybit block US IPs)
 import csv, datetime as dt, json, os, time, urllib.request
 
 DAYS = int(os.environ.get("DAYS", "30"))
-COINS = ["BTC", "ETH"]
+MAIN_COINS = ["BTC", "ETH"]
+WATCH_COINS = ["SOL", "XRP", "DOGE", "PUMP"]  # small watch list: squeeze-prone positioning
+COINS = MAIN_COINS + WATCH_COINS
 BASE = "https://www.okx.com"
 OUT_DIR = os.environ.get("OUT_DIR", "data/derivs")
 
@@ -148,7 +150,10 @@ def build(raw, coin):
 
 
 def main():
-    raw = {c: fetch(c) for c in COINS}
+    raw = {}
+    for c in COINS:
+        raw[c] = fetch(c)
+        time.sleep(1)  # stay under OKX's public rate limits
     os.makedirs(OUT_DIR, exist_ok=True)
     json.dump(raw, open(f"{OUT_DIR}/okx_history_raw.json", "w"), indent=1)
 

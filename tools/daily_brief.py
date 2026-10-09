@@ -116,6 +116,19 @@ def live_oi_24h(coin, col):
         return None
 
 
+WATCH = ("sol", "xrp", "doge", "pump")
+WATCH_OI_24H = 10.0  # alts move more; a wider band than BTC/ETH's 5%
+
+
+def latest_oi_usd(coin):
+    try:
+        snap = json.load(open(f"{OUT}/latest.json"))["sources"][f"okx_{coin}"]["oi_hist_1h"]
+        data = snap["data"]["data"] if isinstance(snap["data"], dict) else snap["data"]
+        return float(max(data, key=lambda x: int(x[0]))[3])
+    except Exception:
+        return None
+
+
 def build():
     nb = json.load(open(f"{OUT}/notebook_daily.json"))
     rows, weekly = nb["rows"], nb["weekly"]
@@ -218,6 +231,46 @@ def build():
                            "flow": p.get("flow"), "flow_text": FLOW.get(p.get("flow"), "–"),
                            "crowded_long": crowded_long, "crowded_short": crowded_short, "reading": risk}
 
+    # Watch list (SOL, XRP, DOGE, PUMP): kept small. Only alarms reach the message;
+    # they do not change the four layer colours.
+    out["watch"], out["watch_alarms"] = {}, []
+    caps = {}
+    try:
+        cg = json.load(open(f"{OUT}/latest.json"))["sources"].get("coingecko", {})
+        caps = cg.get("data", {}) if cg.get("ok") else {}
+    except Exception:
+        pass
+    for c in WATCH:
+        C = c.upper()
+        rows_c = [r["pos"].get(c) for r in rows[-30:] if r.get("pos", {}).get(c)]
+        if not rows_c:
+            continue
+        p = rows_c[-1]
+        z = zscore([r.get("oi_coin") for r in rows_c])
+        oi24, oi24_usd = live_oi_24h(C, 2), live_oi_24h(C, 3)
+        if oi24 is None:
+            oi24, oi24_usd = p.get("oi_coin_chg_pct"), p.get("oi_chg_pct")
+        oi_usd = latest_oi_usd(C) or p.get("oi_usd")
+        mcap = (caps.get(C) or {}).get("market_cap")
+        f, ls = p.get("funding_sum_pct"), p.get("ls_ratio")
+        w = {"close": p.get("close"), "chg_pct": p.get("chg_pct"), "oi_coin": p.get("oi_coin"), "oi_usd": oi_usd,
+             "oi_z": None if z is None else round(z, 2), "oi24": None if oi24 is None else round(oi24, 2),
+             "oi24_usd": None if oi24_usd is None else round(oi24_usd, 2),
+             "oi_mcap_pct": round(oi_usd / mcap * 100, 2) if oi_usd and mcap else None,
+             "funding": f, "ls": ls, "flow": p.get("flow"), "flow_text": FLOW.get(p.get("flow"), "–"), "alarms": []}
+        if z is not None and z > Z_ALARM:
+            side = (" Funding yüksek: long tarafı kırılgan." if f is not None and f > 0.03 else
+                    " Funding negatif: short tarafı kırılgan." if f is not None and f < 0 else "")
+            w["alarms"].append(f"{C} squeeze riski: açık pozisyon şişkin (z {z:.1f}).{side}")
+        if oi24 is not None and abs(oi24) > WATCH_OI_24H:
+            w["alarms"].append(f"{C} açık pozisyon 24 saatte coin bazında %{abs(oi24):.0f} {'arttı' if oi24 > 0 else 'düştü'}")
+        if ls is not None and ls > LS_MAX:
+            w["alarms"].append(f"{C} long/short hesap oranı {ls:.2f}")
+        if f is not None and (f > FUND_HI or f < FUND_LO):
+            w["alarms"].append(f"{C} funding uç değerde: günlük %{f:.3f}")
+        out["watch"][c] = w
+        out["watch_alarms"] += w["alarms"]
+
     for layer, name in LAYERS.items():
         zs = [i["z"] for i in out["indicators"].values() if i["layer"] == layer and i["z"] is not None]
         al = [a for a in out["alarms"] if a["layer"] == layer]
@@ -278,6 +331,15 @@ def message(b):
     else:
         lines.append("")
         lines.append("Alarm yok.")
+    wa = b.get("watch_alarms") or []
+    if b.get("watch"):
+        lines.append("")
+        if wa:
+            lines.append("<b>Altcoin izleme</b>")
+            for a in wa:
+                lines.append("• " + html.escape(a))
+        else:
+            lines.append("Altcoin izleme (" + ", ".join(k.upper() for k in b["watch"]) + "): sakin.")
     if b["upcoming"]:
         lines.append("")
         lines.append("Yaklaşan: " + ", ".join(f"{x['event']} {dt.date.fromisoformat(x['date']).strftime('%d.%m')}" for x in b["upcoming"]))
