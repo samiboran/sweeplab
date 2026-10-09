@@ -1,0 +1,20 @@
+# Research datasets, run only from the `research` branch (never touches main or data-feed).
+name: research-data
+on:
+  push:
+    branches: [research]
+    paths: [tools/fetch_cycle_windows.py, .github/workflows/research.yml]
+permissions:
+  contents: write
+jobs:
+  cycles:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/fetch_cycle_windows.py
+      - run: |
+          git config user.name "research-bot"
+          git config user.email "research-bot@users.noreply.github.com"
+          git add data/cycles/
+          git commit -m "Bull-start windows dataset $(date -u +%F)" || echo nothing
+          git push
