@@ -14,6 +14,7 @@ Alarm rules
      (normal is about 0.01% per 8h, i.e. ~0.03% a day)
   5. 7-day correlation more than 0.5 away from the 30-day correlation
   6. Weekly net-liquidity change flipped direction versus the prior week
+  7. Squeeze warning: coin OI z > 2 (side read from funding)
 Positioning is read against the trend: a crowded long book in a bull trend is
 "düzeltme riski", in a bear trend "çöküş riski". Each coin also gets the day's
 price-vs-OI label (kaldıraçlı yükseliş / short squeeze / yeni short / temizlik).
@@ -139,11 +140,22 @@ def build():
         z = zscore(series)
         out["indicators"][key] = {"layer": layer, "label": label, "value": val, "display": fmt(val, kind),
                                   "z": None if z is None else round(z, 2), "asof": asof}
-        if z is not None and abs(z) > Z_ALARM:
+        if z is not None and abs(z) > Z_ALARM and not (key in ("btc_oi", "eth_oi") and z > 0):  # high OI -> squeeze warning below
             yön = "yüksek" if z > 0 else "düşük"
             out["alarms"].append({"layer": layer, "rule": "z", "text": f"{label} 30 günlük ortalamasından {abs(z):.1f} std {yön} ({fmt(val, kind)})"})
 
     pos = last["pos"]
+    # Squeeze warning: swollen coin OI preceded bigger 7-day moves in 2022-23 (median 11.4%
+    # vs 7.2%), direction a coin flip; with high funding as well, 5 of 8 cases fell.
+    # A caution flag, not a trade signal (the effect faded in 2024-26).
+    for c in ("btc", "eth"):
+        z = out["indicators"][c + "_oi"]["z"]
+        f = (pos.get(c) or {}).get("funding_sum_pct")
+        if z is not None and z > Z_ALARM:
+            side = (" Funding de yüksek: long tarafı kırılgan." if f is not None and f > 0.03 else
+                    " Funding negatif: short tarafı kırılgan." if f is not None and f < 0 else " Yön belirsiz.")
+            out["alarms"].append({"layer": "pos", "rule": "squeeze",
+                                  "text": f"{c.upper()} squeeze riski: açık pozisyon şişkin (z {z:.1f}), sert hareket ihtimali yüksek.{side} Dar stop ve ek kaldıraçtan kaçın."})
     for c in ("btc", "eth"):
         C = c.upper()
         ls = (pos.get(c) or {}).get("ls_ratio")
