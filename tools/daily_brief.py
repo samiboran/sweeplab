@@ -133,7 +133,7 @@ def build():
             series = [v for _, v in weekly["cot_btc_lev_net"]][-12:]
             asof = weekly["cot_btc_lev_net"][-1][0] if weekly["cot_btc_lev_net"] else None
         else:
-            series = [get(r, path) for r in rows]
+            series = [get(r, path) for r in rows[-30:]]  # z-score window stays 30 days
             asof = get(last, path.rsplit(".", 1)[0] + "." + path.rsplit(".", 1)[1].split("_")[0] + "_asof") if layer in ("regime", "risk", "macro") else last["date"]
         val = series[-1] if series else None
         z = zscore(series)
