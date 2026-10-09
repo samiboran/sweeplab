@@ -175,6 +175,9 @@ def main():
         pad = a - dt.timedelta(days=14)  # for weekly / as-of values at the window's first days
         btc, eth = yahoo("BTC-USD", a, b), yahoo("ETH-USD", a, b)
         dxy, gold, spx, ndx, vix = (yahoo(x, pad, b) for x in ("DX-Y.NYB", "GC=F", "^GSPC", "^IXIC", "^VIX"))
+        if not vix:
+            vix = fred("VIXCLS", pad, b)
+        # FRED only serves the last ~3 years of ICE BofA spreads, so early windows stay empty.
         hy, real10, wti = fred("BAMLH0A0HYM2", pad, b), fred("DFII10", pad, b), fred("DCOILWTICO", pad, b)
         walcl, tga, rrp = fred("WALCL", pad, b), fred("WTREGEN", pad, b), fred("RRPONTSYD", pad, b)
         fund_b = binance_funding("BTCUSDT", a, b) if s0 >= dt.date(2019, 10, 1) else {}
