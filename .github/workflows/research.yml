@@ -3,18 +3,19 @@ name: research-data
 on:
   push:
     branches: [research]
-    paths: [tools/fetch_cycle_windows.py, .github/workflows/research.yml]
+    paths: [tools/fetch_cycle_windows.py, tools/fetch_funding_history.py, .github/workflows/research.yml]
 permissions:
   contents: write
 jobs:
   cycles:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
-      - run: python3 tools/fetch_cycle_windows.py
+      - run: python3 tools/fetch_funding_history.py
       - run: |
           git config user.name "research-bot"
           git config user.email "research-bot@users.noreply.github.com"
-          git add data/cycles/
+          git add data/cycles/ data/research/
           git commit -m "Bull-start windows dataset $(date -u +%F)" || echo nothing
           git push
