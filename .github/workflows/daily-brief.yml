@@ -30,7 +30,9 @@ jobs:
         run: python3 tools/fetch_derivs.py
       - name: OKX daily history (1y price, 30d positioning)
         run: python3 tools/fetch_okx_history.py
-      - name: Four-layer dataset
+      - name: Four-layer dataset (60 days shown; z-scores still use 30)
+        env:
+          SHOW_DAYS: "60"
         run: python3 tools/build_notebook.py
       - name: Z-scores, alarms, Telegram
         env:
