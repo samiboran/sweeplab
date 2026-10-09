@@ -1,6 +1,6 @@
 {
  "date": "2026-10-08",
- "built_utc": "2026-10-09T13:57:12+00:00",
+ "built_utc": "2026-10-09T23:21:43+00:00",
  "layers": {
   "regime": {
    "name": "Rejim",
@@ -15,11 +15,11 @@
   "pos": {
    "name": "Pozisyon",
    "status": "red",
-   "alarms": 2
+   "alarms": 1
   },
   "macro": {
    "name": "Altın & Makro",
-   "status": "green",
+   "status": "yellow",
    "alarms": 0
   },
   "corr": {
@@ -33,11 +33,6 @@
    "layer": "pos",
    "rule": "z",
    "text": "ETH L/S 30 günlük ortalamasından 2.3 std yüksek (2.28)"
-  },
-  {
-   "layer": "pos",
-   "rule": "oi24",
-   "text": "ETH açık pozisyon son 24 saat coin bazında %10.7 düştü"
   }
  ],
  "indicators": {
@@ -53,10 +48,10 @@
   "real10y": {
    "layer": "regime",
    "label": "Reel faiz (10y)",
-   "value": 2.92,
-   "display": "%2.92",
-   "z": 1.08,
-   "asof": "2026-10-07"
+   "value": 2.87,
+   "display": "%2.87",
+   "z": 0.76,
+   "asof": "2026-10-08"
   },
   "dxy": {
    "layer": "regime",
@@ -85,10 +80,10 @@
   "gold_cot": {
    "layer": "macro",
    "label": "Altın COT fon net",
-   "value": 120318.0,
-   "display": "120,318",
-   "z": -1.26,
-   "asof": "2026-09-29"
+   "value": 110987.0,
+   "display": "110,987",
+   "z": -1.94,
+   "asof": "2026-10-06"
   },
   "gld": {
    "layer": "macro",
@@ -153,8 +148,8 @@
    "display": "29.8K",
    "z": 1.0,
    "asof": "2026-10-08",
-   "chg24": -3.67,
-   "chg24_usd": -3.11,
+   "chg24": -0.15,
+   "chg24_usd": 0.95,
    "usd": 2436149725.970013
   },
   "eth_oi": {
@@ -164,8 +159,8 @@
    "display": "628.8K",
    "z": 1.03,
    "asof": "2026-10-08",
-   "chg24": -10.71,
-   "chg24_usd": -11.95,
+   "chg24": -4.74,
+   "chg24_usd": -4.17,
    "usd": 1554806463.924064
   },
   "btc_fund": {
@@ -203,10 +198,10 @@
   "btc_cot": {
    "layer": "pos",
    "label": "CME BTC fon net",
-   "value": -6856.0,
-   "display": "-6,856",
-   "z": 1.01,
-   "asof": "2026-09-29"
+   "value": -6852.0,
+   "display": "-6,852",
+   "z": 0.88,
+   "asof": "2026-10-06"
   },
   "btc_spx": {
    "layer": "corr",
@@ -267,7 +262,7 @@
   "gold_from_high_pct": -11.511768,
   "gold_high120_date": "2026-08-24",
   "gold_src": "Altın vadeli (COMEX, GC=F)",
-  "cot_gold_mm_net_wk_chg": -7071.0,
+  "cot_gold_mm_net_wk_chg": -9331.0,
   "gld_7d_chg_t": null
  },
  "coins": {
@@ -298,6 +293,76 @@
    "reading": "long kalabalığı → düzeltme riski"
   }
  },
+ "watch": {
+  "sol": {
+   "close": 109.55,
+   "chg_pct": -5.747225,
+   "oi_coin": 3077343.91,
+   "oi_usd": 334291680.4528002,
+   "oi_z": 0.89,
+   "oi24": -0.39,
+   "oi24_usd": -0.81,
+   "oi_mcap_pct": 0.52,
+   "funding": -0.012012,
+   "ls": 2.289179,
+   "flow": "temizlik",
+   "flow_text": "Temizlik (fiyat↓ OI↓)",
+   "alarms": []
+  },
+  "xrp": {
+   "close": 1.3797,
+   "chg_pct": -2.872228,
+   "oi_coin": 67138102.0,
+   "oi_usd": 90941788.808,
+   "oi_z": -1.88,
+   "oi24": -2.89,
+   "oi24_usd": -1.78,
+   "oi_mcap_pct": 0.1,
+   "funding": -0.008074,
+   "ls": 2.790405,
+   "flow": "temizlik",
+   "flow_text": "Temizlik (fiyat↓ OI↓)",
+   "alarms": [
+    "XRP long/short hesap oranı 2.79"
+   ]
+  },
+  "doge": {
+   "close": 0.08401,
+   "chg_pct": -5.606742,
+   "oi_coin": 1049939099.999999,
+   "oi_usd": 91862974.32299995,
+   "oi_z": 0.27,
+   "oi24": 2.57,
+   "oi24_usd": 4.18,
+   "oi_mcap_pct": 0.69,
+   "funding": 0.00142,
+   "ls": 4.349363,
+   "flow": "temizlik",
+   "flow_text": "Temizlik (fiyat↓ OI↓)",
+   "alarms": [
+    "DOGE long/short hesap oranı 4.35"
+   ]
+  },
+  "pump": {
+   "close": 0.005537,
+   "chg_pct": -11.180622,
+   "oi_coin": 6245807000.0,
+   "oi_usd": 34915403.2,
+   "oi_z": 0.23,
+   "oi24": 2.57,
+   "oi24_usd": 0.83,
+   "oi_mcap_pct": 1.38,
+   "funding": 0.019707,
+   "ls": 1.263485,
+   "flow": "temizlik",
+   "flow_text": "Temizlik (fiyat↓ OI↓)",
+   "alarms": []
+  }
+ },
+ "watch_alarms": [
+  "XRP long/short hesap oranı 2.79",
+  "DOGE long/short hesap oranı 4.35"
+ ],
  "upcoming": [
   {
    "date": "2026-10-14",
@@ -306,5 +371,5 @@
  ],
  "today_events": [],
  "report_day": "2026-10-09",
- "message": "<b>Kaldıraç Gözlem Defteri · 09.10.2026</b>\n\n🟢 <b>Rejim</b>\n   BTC trend: Boğa, 200g ort. +13.8%\n   ETH trend: Boğa, 200g ort. +16.2%\n🟢 <b>Risk iştahı</b>\n🔴 <b>Pozisyon</b>\n   BTC: Temizlik (fiyat↓ OI↓) · pozisyonlanma dengeli\n   ETH: Temizlik (fiyat↓ OI↓) · long kalabalığı → düzeltme riski\n🟢 <b>Altın & Makro</b>\n🟡 <b>Korelasyonlar</b>\n\nBTC OI 29.8K BTC (24s coin -3.7%, $ -3.1%) · L/S 1.70 · funding %0.009\nETH OI 628.8K ETH (24s coin -10.7%, $ -11.9%) · L/S 2.28 · funding %-0.001\nAltın 4,157 (120g zirveden -11.5%) · WTI 91.49 · Brent 104.28\nVIX 15.41 · HY %3.15 · DXY 102.14 · Reel faiz %2.92\n\n<b>Alarmlar</b>\n• ETH L/S 30 günlük ortalamasından 2.3 std yüksek (2.28)\n• ETH açık pozisyon son 24 saat coin bazında %10.7 düştü\n\nYaklaşan: CPI 14.10"
+ "message": "<b>Kaldıraç Gözlem Defteri · 09.10.2026</b>\n\n🟢 <b>Rejim</b>\n   BTC trend: Boğa, 200g ort. +13.8%\n   ETH trend: Boğa, 200g ort. +16.2%\n🟢 <b>Risk iştahı</b>\n🔴 <b>Pozisyon</b>\n   BTC: Temizlik (fiyat↓ OI↓) · pozisyonlanma dengeli\n   ETH: Temizlik (fiyat↓ OI↓) · long kalabalığı → düzeltme riski\n🟡 <b>Altın & Makro</b>\n🟡 <b>Korelasyonlar</b>\n\nBTC OI 29.8K BTC (24s coin -0.1%, $ +0.9%) · L/S 1.70 · funding %0.009\nETH OI 628.8K ETH (24s coin -4.7%, $ -4.2%) · L/S 2.28 · funding %-0.001\nAltın 4,157 (120g zirveden -11.5%) · WTI 91.49 · Brent 104.28\nVIX 15.41 · HY %3.15 · DXY 102.14 · Reel faiz %2.87\n\n<b>Alarmlar</b>\n• ETH L/S 30 günlük ortalamasından 2.3 std yüksek (2.28)\n\n<b>Altcoin izleme</b>\n• XRP long/short hesap oranı 2.79\n• DOGE long/short hesap oranı 4.35\n\nYaklaşan: CPI 14.10"
 }
