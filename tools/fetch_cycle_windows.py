@@ -122,6 +122,25 @@ def bitmex_funding(start, end):
         return {}
 
 
+def bitmex_oi(start, end):
+    """BitMEX XBTUSD daily open interest (USD contracts) — the only free OI history
+    before Binance's archive starts in Dec 2021. One exchange, so read direction only."""
+    q = urllib.parse.urlencode({"symbol": "XBTUSD", "binSize": "1d", "startTime": d2s(start), "endTime": d2s(end + dt.timedelta(days=1)), "count": 500})
+    try:
+        rows = fetch("https://www.bitmex.com/api/v1/trade/bucketed?" + q)
+        out = {}
+        for r in rows:
+            if r.get("openInterest") is None:
+                continue
+            t = dt.datetime.fromisoformat(r["timestamp"].replace("Z", "+00:00")) - dt.timedelta(milliseconds=1)
+            out[d2s(t)] = float(r["openInterest"])
+        status.setdefault("bitmex_oi", []).append(len(out))
+        return out
+    except Exception as e:
+        status.setdefault("bitmex_oi", []).append("ERR " + str(e))
+        return {}
+
+
 def binance_metrics(sym, start, end):
     """Daily metrics archive (from 2021-12): OI in coins/USD and L/S ratios, end of day."""
     out = {}
@@ -166,12 +185,36 @@ def asof(series, day):
     return series[k], k
 
 
+# Price peaks before a 15%+ drawdown (Bitstamp closes). "tepe" = became a bear market
+# (50%+ fall, no new high for months); "duzeltme" = 15-35% pullback inside a bull,
+# followed by a new high. Used to ask whether the first month after a top looks
+# different from the first month after a mere correction.
+PEAKS = {
+    "2017-12 tepe": ("2017-12-16", "tepe"),
+    "2019-06 tepe": ("2019-06-26", "tepe"),
+    "2021-04 tepe": ("2021-04-13", "tepe"),
+    "2021-11 tepe": ("2021-11-08", "tepe"),
+    "2025-10 tepe": ("2025-10-06", "tepe"),
+    "2017-09 duzeltme": ("2017-09-01", "duzeltme"),
+    "2021-01 duzeltme": ("2021-01-08", "duzeltme"),
+    "2021-02 duzeltme": ("2021-02-21", "duzeltme"),
+    "2021-03 duzeltme": ("2021-03-13", "duzeltme"),
+    "2024-03 duzeltme": ("2024-03-13", "duzeltme"),
+    "2024-12 duzeltme": ("2024-12-17", "duzeltme"),
+}
+
+
 def main():
+    build({k: (v, "boga_baslangici") for k, v in STARTS.items()}, BEFORE, AFTER, "bull_start_windows.csv", "bull_start")
+    build(PEAKS, 30, 30, "peak_windows.csv", "peak")
+
+
+def build(events, before, after, outfile, anchor_name):
     os.makedirs(OUT, exist_ok=True)
     rows = []
-    for name, s in STARTS.items():
+    for name, (s, kind) in events.items():
         s0 = dt.date.fromisoformat(s)
-        a, b = s0 - dt.timedelta(days=BEFORE), s0 + dt.timedelta(days=AFTER)
+        a, b = s0 - dt.timedelta(days=before), s0 + dt.timedelta(days=after)
         pad = a - dt.timedelta(days=14)  # for weekly / as-of values at the window's first days
         btc, eth = yahoo("BTC-USD", a, b), yahoo("ETH-USD", a, b)
         dxy, gold, spx, ndx, vix = (yahoo(x, pad, b) for x in ("DX-Y.NYB", "GC=F", "^GSPC", "^IXIC", "^VIX"))
@@ -183,6 +226,7 @@ def main():
         fund_b = binance_funding("BTCUSDT", a, b) if s0 >= dt.date(2019, 10, 1) else {}
         fund_e = binance_funding("ETHUSDT", a, b) if s0 >= dt.date(2019, 12, 1) else {}
         fund_x = bitmex_funding(a, b) if not fund_b else {}
+        btc_oi_x = bitmex_oi(a, b) if s0 < dt.date(2021, 12, 1) else {}
         met_b = binance_metrics("BTCUSDT", a, b) if a >= dt.date(2021, 12, 1) else {}
         met_e = binance_metrics("ETHUSDT", a, b) if a >= dt.date(2021, 12, 1) else {}
         cot_btc = cot("gpe5-46if", "133741", ("lev_money_positions_long", "lev_money_positions_short"), pad, b) if s0 >= dt.date(2018, 1, 1) else {}
@@ -200,13 +244,14 @@ def main():
                     netliq = (w - t - (r or 0) * 1000) / 1e6  # USD trillions
             mb, me = met_b.get(ds, {}), met_e.get(ds, {})
             rows.append({
-                "window": name, "bull_start": s, "date": ds, "day_offset": (d - s0).days,
-                "phase": "once" if d < s0 else ("baslangic" if d == s0 else "sonra"),
+                "window": name, "event_type": kind, anchor_name: s, "date": ds, "day_offset": (d - s0).days,
+                "phase": "once" if d < s0 else ("olay_gunu" if d == s0 else "sonra"),
                 "btc_close": btc.get(ds), "eth_close": eth.get(ds),
                 "btc_funding_day_pct": fund_b.get(ds, fund_x.get(ds)),
                 "btc_funding_src": "Binance" if ds in fund_b else ("BitMEX" if ds in fund_x else ""),
                 "eth_funding_day_pct": fund_e.get(ds),
                 "btc_oi_coin": mb.get("oi_coin"), "btc_oi_usd": mb.get("oi_usd"),
+                "bitmex_xbt_oi_usd": btc_oi_x.get(ds),
                 "btc_ls_accounts": mb.get("ls_accounts"), "btc_ls_top_positions": mb.get("ls_top_positions"),
                 "eth_oi_coin": me.get("oi_coin"), "eth_oi_usd": me.get("oi_usd"),
                 "eth_ls_accounts": me.get("ls_accounts"), "eth_ls_top_positions": me.get("ls_top_positions"),
@@ -219,12 +264,12 @@ def main():
                 "market_open": ds in spx,
             })
     header = list(rows[0].keys())
-    with open(f"{OUT}/bull_start_windows.csv", "w", newline="") as fh:
+    with open(f"{OUT}/{outfile}", "w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=header)
         w.writeheader()
         for r in rows:
             w.writerow({k: ("" if v is None else (round(v, 6) if isinstance(v, float) else v)) for k, v in r.items()})
-    json.dump(status, open(f"{OUT}/status.json", "w"), indent=1)
+    json.dump(status, open(f"{OUT}/status_{anchor_name}.json", "w"), indent=1)
     for k, v in status.items():
         print(f"{k:28} {v}")
     print("rows", len(rows))
