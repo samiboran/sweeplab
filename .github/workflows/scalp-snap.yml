@@ -1,0 +1,12 @@
+# On-demand 5-minute snapshot (BTC/ETH, OKX). Output is in the run log; nothing is committed.
+name: scalp-snap
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  snap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/scalp_snap.py
