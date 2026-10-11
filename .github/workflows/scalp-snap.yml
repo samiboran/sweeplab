@@ -1,12 +1,27 @@
-# On-demand 5-minute snapshot (BTC/ETH, OKX). Output is in the run log; nothing is committed.
+# On-demand 5-minute snapshot (BTC/ETH, OKX). Written to data-feed:data/scalp/latest.txt.
 name: scalp-snap
 on:
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
+concurrency:
+  group: data-feed-push
+  cancel-in-progress: false
 jobs:
   snap:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: python3 tools/scalp_snap.py
+      - uses: actions/checkout@v4
+        with:
+          ref: data-feed
+          path: feed
+      - run: mkdir -p feed/data/scalp && python3 tools/scalp_snap.py | tee feed/data/scalp/latest.txt
+      - name: Store
+        working-directory: feed
+        run: |
+          git config user.name "derivs-bot"
+          git config user.email "derivs-bot@users.noreply.github.com"
+          git add data/scalp/
+          git commit -m "scalp snapshot $(date -u +%FT%H:%M)" || echo "no changes"
+          for i in 1 2 3; do git pull --rebase -q origin data-feed && git push origin HEAD:data-feed && break; sleep 5; done
