@@ -15,6 +15,10 @@ Alarm rules
   5. 7-day correlation more than 0.5 away from the 30-day correlation
   6. Weekly net-liquidity change flipped direction versus the prior week
   7. Squeeze warning: coin OI z > 2 (side read from funding)
+  8. Bull regime but daily close below MA50 (came with 5/5 tops, 2/6 corrections)
+  9. CPI / FOMC / NFP today or tomorrow (event risk)
+Levels block ("likidite olmayalım"): MA50, 20-day high/low, ATR and the leverage
+ceiling that keeps liquidation beyond a stop placed half an ATR past the swing.
 Positioning is read against the trend: a crowded long book in a bull trend is
 "düzeltme riski", in a bear trend "çöküş riski". Each coin also gets the day's
 price-vs-OI label (kaldıraçlı yükseliş / short squeeze / yeni short / temizlik).
@@ -127,6 +131,73 @@ def latest_oi_usd(coin):
         return float(max(data, key=lambda x: int(x[0]))[3])
     except Exception:
         return None
+
+
+LEV_BUFFER_ATR = 0.5   # stop sits half an ATR beyond the 20-day swing (where the crowd's stops are)
+LEV_SAFETY = 0.8       # keep liquidation 20% further than the stop (maintenance margin, fees, wicks)
+NEAR_MA50_PCT = 2.0
+EVENT_NAMES = {"CPI": "ABD enflasyonu (CPI)", "FOMC": "Fed faiz kararı (FOMC)", "NFP": "ABD istihdam (NFP)"}
+EVENT_TIME = {"CPI": "15:30", "NFP": "15:30", "FOMC": "21:00"}  # Istanbul
+
+
+def levels_and_risk(out, rows, calendar):
+    """'Likidite olmayalım' block: key levels and the leverage that keeps a position's
+    liquidation beyond them.
+
+    - MA50 in a bull regime: in our top-vs-correction study a daily close below MA50
+      came with 5/5 tops but only 2/6 corrections -> alarm, with the streak length.
+    - 20-day high/low: obvious swing levels where stops and liquidation clusters sit.
+    - Max leverage: the stop goes half an ATR past the swing; liquidation must be
+      beyond the stop with a 20% margin -> lev = 0.8 / stop distance.
+    - Macro event today/tomorrow (CPI, FOMC, NFP): event-risk alarm.
+    """
+    out["levels"] = {}
+    for c in ("btc", "eth"):
+        C = c.upper()
+        days = [r["pos"].get(c) or {} for r in rows]
+        if len(days) < 21 or not days[-1].get("close"):
+            continue
+        tr = rows[-1]["regime"].get("trend_" + c) or {}
+        close, ma50, ma200 = days[-1]["close"], tr.get("ma50"), tr.get("ma200")
+        hi20 = max(d["high"] for d in days[-20:] if d.get("high"))
+        lo20 = min(d["low"] for d in days[-20:] if d.get("low"))
+        trs = [max(d["high"], p["close"]) - min(d["low"], p["close"]) for p, d in zip(days[-15:-1], days[-14:])]
+        atr = sum(trs) / len(trs)
+        long_stop, short_stop = lo20 - LEV_BUFFER_ATR * atr, hi20 + LEV_BUFFER_ATR * atr
+        long_dist, short_dist = (close - long_stop) / close, (short_stop - close) / close
+        # how many consecutive daily closes below MA50 (MA50 per day from the rows we have)
+        closes = [d.get("close") for d in days]
+        streak = 0
+        for i in range(len(closes) - 1, 49, -1):
+            if closes[i] < sum(closes[i - 49:i + 1]) / 50:
+                streak += 1
+            else:
+                break
+        if ma50 and closes[-1] < ma50 and streak == 0:
+            streak = 1
+        lv = {"close": close, "ma50": ma50, "ma200": ma200,
+              "d50_pct": round((close / ma50 - 1) * 100, 2) if ma50 else None,
+              "hi20": hi20, "lo20": lo20, "atr": round(atr, 2), "atr_pct": round(atr / close * 100, 2),
+              "long_stop": round(long_stop, 2), "short_stop": round(short_stop, 2),
+              "long_stop_pct": round(long_dist * 100, 2), "short_stop_pct": round(short_dist * 100, 2),
+              "max_lev_long": max(1, math.floor(LEV_SAFETY / long_dist)) if long_dist > 0 else None,
+              "max_lev_short": max(1, math.floor(LEV_SAFETY / short_dist)) if short_dist > 0 else None,
+              "below_ma50_days": streak}
+        out["levels"][c] = lv
+        if ma50 and close < ma50 and tr.get("state") == "boga":
+            out["alarms"].append({"layer": "regime", "rule": "ma50",
+                                  "text": f"{C} günlük kapanış 50 günlük ortalamanın altında ({close:,.0f} < {ma50:,.0f}, {streak} gündür). "
+                                          "Zirve araştırmasında 5/5 zirvede görüldü, düzeltmelerde 2/6: long kaldıracını azalt, "
+                                          "MA50 geri alınana kadar yeni long'u küçük tut."})
+
+    report_day = dt.date.fromisoformat(out["date"]) + dt.timedelta(days=1)
+    for kind, dates in calendar.items():
+        for when, d in (("Bugün", report_day), ("Yarın", report_day + dt.timedelta(days=1))):
+            if d.isoformat() in dates:
+                out["alarms"].append({"layer": "macro", "rule": "event",
+                                      "text": f"{when} {EVENT_NAMES.get(kind, kind)} ({EVENT_TIME.get(kind, '')} İstanbul): veri anında iki yönde iğne gelir, "
+                                              "likidite bantları süpürülür. Veriden önce yeni pozisyon açma, açık pozisyonda kaldıracı düşür, "
+                                              "stopu 20 günlük uçların ötesine koy."})
 
 
 def build():
@@ -271,6 +342,8 @@ def build():
         out["watch"][c] = w
         out["watch_alarms"] += w["alarms"]
 
+    levels_and_risk(out, rows, nb["calendar"])
+
     for layer, name in LAYERS.items():
         zs = [i["z"] for i in out["indicators"].values() if i["layer"] == layer and i["z"] is not None]
         al = [a for a in out["alarms"] if a["layer"] == layer]
@@ -301,7 +374,7 @@ def message(b):
     gun = dt.date.fromisoformat(b["report_day"]).strftime("%d.%m.%Y")
     lines = [f"<b>Kaldıraç Gözlem Defteri · {gun}</b>"]
     if b["today_events"]:
-        lines.append("📅 Bugün: <b>" + ", ".join(b["today_events"]) + "</b> (15:30 İstanbul)")
+        lines.append("📅 Bugün: <b>" + ", ".join(f"{k} {EVENT_TIME.get(k, '')}" for k in b["today_events"]) + "</b> (İstanbul)")
     lines.append("")
     co = b["coins"]
     for layer, info in b["layers"].items():
@@ -323,6 +396,16 @@ def message(b):
     lines.append(f"Altın {ind['gold']['display']}" + (f" (120g zirveden {m['gold_from_high_pct']:+.1f}%)" if m.get("gold_from_high_pct") is not None else "")
                  + f" · WTI {ind['wti']['display']} · Brent {ind['brent']['display']}")
     lines.append(f"VIX {ind['vix']['display']} · HY {ind['hy']['display']} · DXY {ind['dxy']['display']} · Reel faiz {ind['real10y']['display']}")
+    lv = b.get("levels") or {}
+    if lv:
+        lines.append("")
+        lines.append("<b>Seviyeler · likidite olmayalım</b>")
+        for c, x in lv.items():
+            ma = f"MA50 {x['ma50']:,.0f} ({x['d50_pct']:+.1f}%)" if x.get("ma50") else ""
+            lines.append(f"{c.upper()} {x['close']:,.0f} · {ma} · 20g {x['lo20']:,.0f}–{x['hi20']:,.0f} · ATR %{x['atr_pct']:.1f}")
+            lines.append(f"   Long: stop &lt;{x['long_stop']:,.0f} (−%{x['long_stop_pct']:.1f}) → tavan {x['max_lev_long']}x · "
+                         f"Short: stop &gt;{x['short_stop']:,.0f} (+%{x['short_stop_pct']:.1f}) → tavan {x['max_lev_short']}x")
+        lines.append("   <i>Tavan: bunun üstünde stoptan önce likide olursun. Boyutu kaldıraç değil risk belirler: işlem başı hesabın en fazla %1'i.</i>")
     if b["alarms"]:
         lines.append("")
         lines.append("<b>Alarmlar</b>")
