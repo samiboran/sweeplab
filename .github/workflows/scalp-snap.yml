@@ -17,6 +17,7 @@ jobs:
           ref: data-feed
           path: feed
       - run: mkdir -p feed/data/scalp && python3 tools/scalp_snap.py | tee feed/data/scalp/latest.txt
+      - run: python3 tools/screen_4h.py | tee feed/data/scalp/screen_4h.txt
       - name: Store
         working-directory: feed
         run: |
