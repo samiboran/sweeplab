@@ -343,6 +343,23 @@ def build():
         out["watch_alarms"] += w["alarms"]
 
     levels_and_risk(out, rows, nb["calendar"])
+    try:
+        lm = json.load(open(f"{OUT}/liq_map.json"))
+        out["liq_map"] = {"built_utc": lm.get("built_utc"),
+                          "coins": {c: {k: v.get(k) for k in ("price", "long_bands", "short_bands", "error")}
+                                    for c, v in lm.get("coins", {}).items()}}
+    except Exception:
+        out["liq_map"] = None
+    eb = [(r["date"], r["pos"]["eth"]["close"] / r["pos"]["btc"]["close"]) for r in rows
+          if (r["pos"].get("eth") or {}).get("close") and (r["pos"].get("btc") or {}).get("close")]
+    sb = [(r["date"], r["pos"]["sol"]["close"] / r["pos"]["btc"]["close"]) for r in rows
+          if (r["pos"].get("sol") or {}).get("close") and (r["pos"].get("btc") or {}).get("close")]
+    out["ratios"] = {}
+    for k, ser in (("eth_btc", eb), ("sol_btc", sb)):
+        if len(ser) >= 30:
+            v = [x for _, x in ser]
+            out["ratios"][k] = {"value": round(v[-1], 6), "hi30": round(max(v[-30:]), 6), "lo30": round(min(v[-30:]), 6),
+                                "chg30_pct": round((v[-1] / v[-30] - 1) * 100, 2), "ma20": round(sum(v[-20:]) / 20, 6)}
 
     for layer, name in LAYERS.items():
         zs = [i["z"] for i in out["indicators"].values() if i["layer"] == layer and i["z"] is not None]
@@ -405,6 +422,16 @@ def message(b):
             lines.append(f"{c.upper()} {x['close']:,.0f} · {ma} · 20g {x['lo20']:,.0f}–{x['hi20']:,.0f} · ATR %{x['atr_pct']:.1f}")
             lines.append(f"   Long: stop &lt;{x['long_stop']:,.0f} (−%{x['long_stop_pct']:.1f}) → tavan {x['max_lev_long']}x · "
                          f"Short: stop &gt;{x['short_stop']:,.0f} (+%{x['short_stop_pct']:.1f}) → tavan {x['max_lev_short']}x")
+        lm = (b.get("liq_map") or {}).get("coins") or {}
+        for c in ("btc", "eth"):
+            m = lm.get(c) or {}
+            if m.get("long_bands") or m.get("short_bands"):
+                f = lambda bs: ", ".join(f"{x['price']:,.0f} ({x['lev']}x)" for x in bs[:3]) or "–"
+                lines.append(f"   {c.upper()} tahmini likidasyon: long ↓ {f(m.get('long_bands') or [])} · short ↑ {f(m.get('short_bands') or [])}")
+        r = b.get("ratios") or {}
+        if r.get("eth_btc"):
+            x = r["eth_btc"]
+            lines.append(f"   ETH/BTC {x['value']:.4f} (30g {x['chg30_pct']:+.1f}%, aralık {x['lo30']:.4f}–{x['hi30']:.4f})")
         lines.append("   <i>Tavan: bunun üstünde stoptan önce likide olursun. Boyutu kaldıraç değil risk belirler: işlem başı hesabın en fazla %1'i.</i>")
     if b["alarms"]:
         lines.append("")

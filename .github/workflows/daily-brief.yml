@@ -30,6 +30,8 @@ jobs:
         run: python3 tools/fetch_derivs.py
       - name: OKX daily history (1y price, 30d positioning)
         run: python3 tools/fetch_okx_history.py
+      - name: Estimated liquidation map (OKX OI 4h, 45 days)
+        run: python3 tools/liq_map.py || echo "liq map failed"
       - name: Four-layer dataset (60 days shown; z-scores still use 30)
         env:
           SHOW_DAYS: "60"
