@@ -1,0 +1,8 @@
+{
+  "SPCX": {
+    "name": "SpaceX",
+    "buy_dips": [150, 135],
+    "breakout_adds": [180],
+    "notes": "135 = halka arz fiyatı (12.06.2026). Diğer erken yatırımcıların 180 günlük satış yasağı ~9 Aralık 2026'da bitiyor: o tarih civarı satış baskısı olabilir."
+  }
+}

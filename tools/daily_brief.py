@@ -200,6 +200,50 @@ def levels_and_risk(out, rows, calendar):
                                               "stopu 20 günlük uçların ötesine koy."})
 
 
+STOCK_PLAN = os.path.join(os.path.dirname(os.path.abspath(__file__)), "stock_plan.json")
+
+
+def stock_plans():
+    """Price-level plan for stocks the user holds (tools/stock_plan.json): dip-buy levels
+    and breakout-add levels, checked against Yahoo daily candles."""
+    try:
+        plan = json.load(open(STOCK_PLAN))
+    except Exception:
+        return {}, []
+    out, alarms = {}, []
+    for sym, p in plan.items():
+        try:
+            req = urllib.request.Request(f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}?range=3mo&interval=1d",
+                                         headers={"User-Agent": "Mozilla/5.0"})
+            res = json.loads(urllib.request.urlopen(req, timeout=20).read())["chart"]["result"][0]
+            q = res["indicators"]["quote"][0]
+            bars = [(dt.datetime.fromtimestamp(t, dt.timezone.utc).date().isoformat(), h, l, c)
+                    for t, h, l, c in zip(res["timestamp"], q["high"], q["low"], q["close"]) if c is not None]
+        except Exception as e:
+            out[sym] = {"name": p.get("name", sym), "error": str(e)[:120]}
+            continue
+        d, hi, lo, close = bars[-1]
+        prev = bars[-2][3] if len(bars) > 1 else None
+        closes = [b[3] for b in bars]
+        ma20 = sum(closes[-20:]) / min(20, len(closes))
+        x = {"name": p.get("name", sym), "date": d, "close": round(close, 2), "high": round(hi, 2), "low": round(lo, 2),
+             "chg_pct": round((close / prev - 1) * 100, 2) if prev else None, "ma20": round(ma20, 2),
+             "hi3m": round(max(b[1] for b in bars), 2), "lo3m": round(min(b[2] for b in bars), 2),
+             "levels": [], "notes": p.get("notes")}
+        for lv in p.get("buy_dips", []):
+            hit = lo <= lv
+            x["levels"].append({"kind": "dip", "price": lv, "dist_pct": round((lv / close - 1) * 100, 1), "hit": hit})
+            if hit:
+                alarms.append(f"{x['name']} ({sym}) alım seviyesine indi: {lv} (gün dibi {lo:.2f}, kapanış {close:.2f}). Planlı ekleme zamanı; tek seferde değil, parça parça.")
+        for lv in p.get("breakout_adds", []):
+            hit = close >= lv
+            x["levels"].append({"kind": "breakout", "price": lv, "dist_pct": round((lv / close - 1) * 100, 1), "hit": hit})
+            if hit:
+                alarms.append(f"{x['name']} ({sym}) {lv} üstünde kapattı ({close:.2f}): kırılım eklemesi. Ertesi gün {lv} üstünde kalırsa teyit.")
+        out[sym] = x
+    return out, alarms
+
+
 def build():
     nb = json.load(open(f"{OUT}/notebook_daily.json"))
     rows, weekly = nb["rows"], nb["weekly"]
@@ -343,6 +387,7 @@ def build():
         out["watch_alarms"] += w["alarms"]
 
     levels_and_risk(out, rows, nb["calendar"])
+    out["stocks"], out["stock_alarms"] = stock_plans()
     try:
         lm = json.load(open(f"{OUT}/liq_map.json"))
         out["liq_map"] = {"built_utc": lm.get("built_utc"),
@@ -433,6 +478,19 @@ def message(b):
             x = r["eth_btc"]
             lines.append(f"   ETH/BTC {x['value']:.4f} (30g {x['chg30_pct']:+.1f}%, aralık {x['lo30']:.4f}–{x['hi30']:.4f})")
         lines.append("   <i>Tavan: bunun üstünde stoptan önce likide olursun. Boyutu kaldıraç değil risk belirler: işlem başı hesabın en fazla %1'i.</i>")
+    st = b.get("stocks") or {}
+    if st:
+        lines.append("")
+        lines.append("<b>Hisse planı</b>")
+        for sym, x in st.items():
+            if x.get("error"):
+                lines.append(f"{x['name']} ({sym}): veri alınamadı")
+                continue
+            lv = " · ".join(f"{'al' if l['kind'] == 'dip' else 'ekle↑'} {l['price']:g} ({l['dist_pct']:+.1f}%)" for l in x["levels"])
+            chg = f" ({x['chg_pct']:+.1f}%)" if x.get("chg_pct") is not None else ""
+            lines.append(f"{x['name']} {x['close']:.2f}{chg} · {lv}")
+        for a in b.get("stock_alarms") or []:
+            lines.append("⚠️ " + html.escape(a))
     if b["alarms"]:
         lines.append("")
         lines.append("<b>Alarmlar</b>")
