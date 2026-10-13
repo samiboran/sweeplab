@@ -244,6 +244,40 @@ def stock_plans():
     return out, alarms
 
 
+def band_check(rows):
+    """Which of yesterday's estimated liquidation bands did the last full day sweep,
+    and did price close back beyond them (sweep + reclaim) or not. Appends to
+    OUT_DIR/band_log.csv so hit rates can be counted later."""
+    last = rows[-1]
+    day = last["date"]
+    try:
+        lm = json.load(open(f"{OUT}/liq_maps/{day}.json"))
+    except Exception:
+        return []
+    res, log = [], []
+    for c, m in lm.get("coins", {}).items():
+        p = (last.get("pos") or {}).get(c) or {}
+        hi, lo, cl = p.get("high"), p.get("low"), p.get("close")
+        if not (hi and lo and cl) or m.get("error"):
+            continue
+        for side, key in (("long", "long_bands"), ("short", "short_bands")):
+            for bnd in m.get(key) or []:
+                px = bnd["price"]
+                swept = lo <= px if side == "long" else hi >= px
+                reclaimed = swept and (cl > px if side == "long" else cl < px)
+                log.append([day, c, side, round(px, 4), bnd.get("lev"), bnd.get("dist_pct"), int(swept), int(reclaimed), cl])
+                if swept:
+                    res.append({"coin": c, "side": side, "price": px, "lev": bnd.get("lev"), "reclaimed": reclaimed, "close": cl})
+    try:
+        path = f"{OUT}/band_log.csv"
+        old = open(path).read().splitlines() if os.path.exists(path) else ["date,coin,side,band,lev,dist_pct,swept,reclaimed,close"]
+        old = [l for l in old if not l.startswith(day + ",")] + [",".join(map(str, x)) for x in log]
+        open(path, "w").write("\n".join(old) + "\n")
+    except Exception:
+        pass
+    return res
+
+
 def build():
     nb = json.load(open(f"{OUT}/notebook_daily.json"))
     rows, weekly = nb["rows"], nb["weekly"]
@@ -388,6 +422,7 @@ def build():
 
     levels_and_risk(out, rows, nb["calendar"])
     out["stocks"], out["stock_alarms"] = stock_plans()
+    out["band_sweeps"] = band_check(rows)
     try:
         lm = json.load(open(f"{OUT}/liq_map.json"))
         out["liq_map"] = {"built_utc": lm.get("built_utc"),
@@ -473,6 +508,10 @@ def message(b):
             if m.get("long_bands") or m.get("short_bands"):
                 f = lambda bs: ", ".join(f"{x['price']:,.0f} ({x['lev']}x)" for x in bs[:3]) or "–"
                 lines.append(f"   {c.upper()} tahmini likidasyon: long ↓ {f(m.get('long_bands') or [])} · short ↑ {f(m.get('short_bands') or [])}")
+        bs = b.get("band_sweeps") or []
+        if bs:
+            f2 = lambda x: f"{x['coin'].upper()} {x['side']} {x['price']:,.{2 if x['price'] < 100 else 0}f} ({x['lev']}x) " + ("→ geri alındı" if x["reclaimed"] else "→ geri alınmadı")
+            lines.append("   Dün süpürülen bantlar: " + " · ".join(f2(x) for x in bs))
         r = b.get("ratios") or {}
         if r.get("eth_btc"):
             x = r["eth_btc"]
