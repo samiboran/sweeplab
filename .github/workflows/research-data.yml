@@ -1,0 +1,27 @@
+# On-demand research data pull (daily candles for a large-cap universe) into data-feed:data/research/.
+name: research-data
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: data-feed-push
+  cancel-in-progress: false
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: data-feed
+          path: feed
+      - run: python3 tools/fetch_daily_universe.py
+      - name: Store
+        working-directory: feed
+        run: |
+          git config user.name "derivs-bot"
+          git config user.email "derivs-bot@users.noreply.github.com"
+          git add data/research/
+          git commit -m "research daily candles $(date -u +%F)" || echo "no changes"
+          for i in 1 2 3; do git pull --rebase -q origin data-feed && git push origin HEAD:data-feed && break; sleep 5; done
