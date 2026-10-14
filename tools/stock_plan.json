@@ -21,5 +21,79 @@
     "buy_dips": [],
     "breakout_adds": [],
     "notes": "Spekülatif (enerji depolama). Bilanço kasım başı (tarih teyit edilecek). Seviyeler henüz belirlenmedi."
+  },
+  "MRNA": {
+    "name": "Moderna",
+    "buy_dips": [
+      204
+    ],
+    "breakout_adds": [
+      228
+    ],
+    "notes": "Momentum: 3 ayda +%217, ADR %8. 13.10 EMA9'a değip üstünde kapattı (kurulum). Stop 203,5 altı. Uzamış: EMA21'in %15 üstünde."
+  },
+  "AMD": {
+    "name": "AMD",
+    "buy_dips": [
+      596
+    ],
+    "breakout_adds": [
+      614
+    ],
+    "notes": "Momentum geri çekilme: EMA9 614 geri alınırsa giriş, stop 594 (EMA21 altı). 3R ~675."
+  },
+  "MRVL": {
+    "name": "Marvell",
+    "buy_dips": [
+      262
+    ],
+    "breakout_adds": [
+      271
+    ],
+    "notes": "13.10 çekiç mum (dip 248). EMA9 271 geri alınırsa giriş, stop 259. 3R ~306."
+  },
+  "CRWD": {
+    "name": "CrowdStrike",
+    "buy_dips": [
+      256
+    ],
+    "breakout_adds": [
+      266
+    ],
+    "notes": "EMA21'de. EMA9 266 geri alınırsa giriş, stop 255. 3R ~297."
+  },
+  "MSTR": {
+    "name": "Strategy",
+    "buy_dips": [
+      147.5
+    ],
+    "breakout_adds": [
+      155
+    ],
+    "notes": "BTC'ye bağlı. EMA9 155 üstü giriş, stop 147. CPI/BTC yönüne dikkat."
+  },
+  "SHOP": {
+    "name": "Shopify",
+    "buy_dips": [
+      166
+    ],
+    "breakout_adds": [],
+    "notes": "Uzamış (EMA21 +%13). EMA9 ~166'ya geri çekilmeyi bekle, stop 160 altı."
+  },
+  "PLTR": {
+    "name": "Palantir",
+    "buy_dips": [
+      200
+    ],
+    "breakout_adds": [],
+    "notes": "Uzamış. EMA9 ~200'e geri çekilmeyi bekle, stop 189 altı."
+  },
+  "ZS": {
+    "name": "Zscaler",
+    "buy_dips": [
+      218
+    ],
+    "breakout_adds": [],
+    "notes": "Uzamış. EMA9 ~218'e geri çekilmeyi bekle, stop 206 altı."
   }
 }
