@@ -17,6 +17,7 @@ jobs:
           ref: data-feed
           path: feed
       - run: python3 tools/fetch_daily_universe.py
+      - run: python3 tools/fetch_us_universe.py
       - name: Store
         working-directory: feed
         run: |
