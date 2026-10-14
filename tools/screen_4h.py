@@ -66,7 +66,10 @@ for coin in COINS:
     fr = get(f"/api/v5/public/funding-rate?instId={inst}")
     f = float(fr[0]["fundingRate"]) * 100 if fr else None
     trend = sum([px > e20, e20 > e50, (e200 is not None and e50 > e200), (e200 is not None and px > e200)])
-    rows.append(dict(coin=coin, px=px, trend=trend, e50=e50, e200=e200, hi=hi30, lo=lo30, pos=pos, bbp=bbp,
+    hi6 = max(x[1] for x in c[-6:])
+    res = min([v for v in (e50, e200, hi30) if v is not None and v >= px], default=None)
+    rej = res is not None and hi6 >= res * 0.99 and px < res
+    rows.append(dict(coin=coin, px=px, trend=trend, hi6=hi6, rej=rej, res=res, off_hi6=(px / hi6 - 1) * 100, e50=e50, e200=e200, hi=hi30, lo=lo30, pos=pos, bbp=bbp,
                      ch7=ch7, oi24=oi24, f=f, d_hi=(hi30 / px - 1) * 100, d_lo=(px / lo30 - 1) * 100))
     time.sleep(0.15)
 
@@ -76,6 +79,10 @@ for r in rows:
     dn = (4 - r["trend"]) * 1.0 + (1 if r["rs"] and r["rs"] < 0 else 0) + (1 if r["d_lo"] < 2 else 0) + (0.5 if r["bbp"] < 25 else 0)
     r["score"] = up - dn
 
+print("DİRENÇTEN DÖNENLER (son 24s tepe EMA50/EMA200/5g tepeye değdi, fiyat altında):")
+for r in sorted([r for r in rows if r["rej"] and r["trend"] <= 2], key=lambda r: r["off_hi6"]):
+    print(f"  {r['coin']:5} fiyat {r['px']:.6g} · 24s tepe {r['hi6']:.6g} ({r['off_hi6']:+.1f}%) · direnç {r['res']:.6g} · trend {r['trend']}/4 · OI24s {r['oi24'] if r['oi24'] is not None else float('nan'):+.1f}% · funding {r['f'] if r['f'] is not None else float('nan'):+.4f} · 5g dip {r['lo']:.6g}")
+print()
 print("coin   fiyat        trend  aralık%  tepeye%  dibe%  sıkışma%  7g   BTC'ye göre  OI24s%  funding%  skor")
 for r in sorted(rows, key=lambda r: -r["score"]):
     p = r["px"]; fmt = (lambda v: f"{v:.6f}") if p < 0.01 else (lambda v: f"{v:.4f}") if p < 10 else (lambda v: f"{v:.2f}")
