@@ -40,6 +40,9 @@ PLUG ~100 $, EOSE ~100 $ (ikisi de düşüş trendinde; "yanıldım" seviyesi: P
 
 ## Yapılacaklar
 - [ ] Deneme hesabı ayarları: teminat kontrolü açık, hisse 1x, kripto 5x, komisyon %0,05
-- [ ] "Demo işlemler" kaydı (ayrı sayfa): hisse, yön, giriş, stop, çıkış, R, not → kazanma oranı, ortalama R
+- [x] "Demo işlemler" kaydı (ayrı sayfa): https://claude.ai/artifact/HGLb369A3BEcxYoriT7uDh
+  - Veri artifact'ın kendi deposunda: `trades` koleksiyonu (her işlem bir belge), `plan/current` (aday listesi: asOf, items[sym, kind long|wait|short, trigger, stop, target, note])
+  - R komisyon dahil hesaplanır (%0,05 giriş + çıkış); kısmi satış (varsayılan %20) ağırlıklı ortalamaya girer
+  - Claude bu depoyu okuyup yazabilir: değerlendirmede `trades` okunur, günlük taramada `plan/current` güncellenir
 - [ ] Günlük tarama işini otomatikleştir (her sabah 10 aday + tetik seviyeleri)
 - [ ] 3–4 hafta sonra değerlendirme: R ortalaması > 0 mı, kurallara uyuldu mu
