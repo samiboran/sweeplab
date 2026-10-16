@@ -90,6 +90,10 @@ for u in pick:
         hs = [x[2] for x in h[-7:-1]]
         u["lower_highs"] = sum(1 for i in range(1, len(hs)) if hs[i] < hs[i - 1])
         u["rsi_4h"] = rsi(cl)
+        u["swing_hi"] = max(x[2] for x in h[-13:])
+        u["lo_2d"] = min(x[3] for x in h[-13:])
+        tr = [max(h[i][2], h[i-1][4]) - min(h[i][3], h[i-1][4]) for i in range(len(h)-14, len(h))]
+        u["atr4h"] = sum(tr) / len(tr)
     f = get(f"/api/v5/public/funding-rate?instId={u['inst']}")
     u["fund"] = float(f[0]["fundingRate"]) * 100 if f else None
     oi = get(f"/api/v5/rubik/stat/contracts/open-interest-history?instId={u['inst']}&period=1H&limit=25")
@@ -126,4 +130,6 @@ table("7 GÜNDE EN ÇOK ARTANLAR", top)
 table("30 GÜNDE EN ÇOK ARTANLAR", top30)
 roll = sorted([u for u in pick if u["roll"] >= 3], key=lambda u: (-u["roll"], -u["pump30"]))
 table("SHORT ADAYI: pompalanmış + dönüyor (skor>=3)", roll)
-print("\nlast prices:", ", ".join(f"{u['coin']} {u['last']:g} (tepe {u['peak']:g})" for u in roll))
+print("\nSEVİYELER (4h): fiyat | EMA20 | 2g swing tepe | 2g dip | ATR4h")
+for u in roll:
+    print(f"{u['coin']:<9}{u['last']:<12g}{u.get('e20_4h',0):<12.5g}{u.get('swing_hi',0):<12g}{u.get('lo_2d',0):<12g}{u.get('atr4h',0):.4g}")
