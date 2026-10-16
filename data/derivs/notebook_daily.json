@@ -1,23 +1,23 @@
 {
- "built_utc": "2026-10-16T10:10:12+00:00",
+ "built_utc": "2026-10-16T20:15:36+00:00",
  "status": {
   "WALCL": "OK 20 (2026-06-03..2026-10-14)",
   "WTREGEN": "OK 20 (2026-06-03..2026-10-14)",
-  "RRPONTSYD": "OK 96 (2026-05-29..2026-10-15)",
+  "RRPONTSYD": "OK 97 (2026-05-29..2026-10-16)",
   "DFII10": "OK 95 (2026-05-29..2026-10-14)",
   "DTWEXBGS": "OK 93 (2026-05-29..2026-10-09)",
   "SP500": "OK 97 (2026-05-29..2026-10-15)",
   "NASDAQCOM": "OK 97 (2026-05-29..2026-10-15)",
-  "VIXCLS": "OK 99 (2026-05-29..2026-10-14)",
-  "BAMLH0A0HYM2": "OK 100 (2026-05-29..2026-10-14)",
+  "VIXCLS": "OK 100 (2026-05-29..2026-10-15)",
+  "BAMLH0A0HYM2": "OK 101 (2026-05-29..2026-10-15)",
   "yahoo:DX-Y.NYB": "OK 252",
   "defillama_stables": "OK 141",
-  "cot_btc": "OK 30 (2026-03-17..2026-10-06)",
-  "cot_eth": "OK 30 (2026-03-17..2026-10-06)",
+  "cot_btc": "OK 30 (2026-03-24..2026-10-13)",
+  "cot_eth": "OK 30 (2026-03-24..2026-10-13)",
   "yahoo:GC=F": "OK 252",
   "yahoo:CL=F": "OK 252",
   "yahoo:BZ=F": "OK 252",
-  "cot_gold": "OK 30 (2026-03-17..2026-10-06)",
+  "cot_gold": "OK 30 (2026-03-24..2026-10-13)",
   "gld_tonnes": "ERR RuntimeError: no 'Tonnes' column; file starts: %PDF-1.5\r | %\u00e2\u00e3\u00cf\u00d3\r | 2 0 obj\r | <<\r | /Type /XObject\r | /Subtype /Image\r | /Width 1489\r | /Height 680\r | /ColorSpace /DeviceGray\r | /BitsPerComponent 8\r | /Interpolate false\r | /Filt",
   "net_liquidity": "OK 20 weeks"
  },
@@ -141,10 +141,6 @@
   ],
   "cot_btc_lev_net": [
    [
-    "2026-03-17",
-    -10860.0
-   ],
-   [
     "2026-03-24",
     -8351.0
    ],
@@ -259,13 +255,13 @@
    [
     "2026-10-06",
     -6852.0
+   ],
+   [
+    "2026-10-13",
+    -5844.0
    ]
   ],
   "cot_eth_lev_net": [
-   [
-    "2026-03-17",
-    -13989.0
-   ],
    [
     "2026-03-24",
     -11002.0
@@ -381,13 +377,13 @@
    [
     "2026-10-06",
     -7949.0
+   ],
+   [
+    "2026-10-13",
+    -6283.0
    ]
   ],
   "cot_gold_mm_net": [
-   [
-    "2026-03-17",
-    102043.0
-   ],
    [
     "2026-03-24",
     91621.0
@@ -503,6 +499,10 @@
    [
     "2026-10-06",
     110987.0
+   ],
+   [
+    "2026-10-13",
+    107089.0
    ]
   ]
  },
@@ -3622,7 +3622,7 @@
      "close": 103.0,
      "oi_usd": 315191218.6335,
      "oi_coin": 3061595.13,
-     "ls_ratio": 1.840112,
+     "ls_ratio": 1.883981,
      "taker_sell_usd": 534078054.348,
      "taker_buy_usd": 550656803.847,
      "funding_sum_pct": -0.009922,
@@ -12984,18 +12984,18 @@
      "taker_buy_share": 0.514705
     },
     "cot_btc": {
-     "oi": 21432.0,
-     "lev_net": -6852.0,
-     "am_net": 3532.0,
-     "dealer_net": 2339.0,
-     "asof": "2026-10-06"
+     "oi": 20752.0,
+     "lev_net": -5844.0,
+     "am_net": 3642.0,
+     "dealer_net": 1841.0,
+     "asof": "2026-10-13"
     },
     "cot_eth": {
-     "oi": 27681.0,
-     "lev_net": -7949.0,
-     "am_net": -589.0,
-     "dealer_net": 9088.0,
-     "asof": "2026-10-06"
+     "oi": 25543.0,
+     "lev_net": -6283.0,
+     "am_net": -671.0,
+     "dealer_net": 8300.0,
+     "asof": "2026-10-13"
     }
    },
    "macro": {
@@ -13007,11 +13007,11 @@
     "gold_high120": 4697.799805,
     "gold_high120_date": "2026-08-24",
     "gold_from_high_pct": -11.079655,
-    "cot_gold_mm_net": 110987.0,
-    "cot_gold_mm_long": 127101.0,
-    "cot_gold_mm_short": 16114.0,
-    "cot_gold_asof": "2026-10-06",
-    "cot_gold_mm_net_wk_chg": -9331.0,
+    "cot_gold_mm_net": 107089.0,
+    "cot_gold_mm_long": 124747.0,
+    "cot_gold_mm_short": 17658.0,
+    "cot_gold_asof": "2026-10-13",
+    "cot_gold_mm_net_wk_chg": -3898.0,
     "gld_tonnes": null,
     "gld_asof": null,
     "gld_7d_chg_t": null,
@@ -13202,18 +13202,18 @@
      "taker_buy_share": 0.476274
     },
     "cot_btc": {
-     "oi": 21432.0,
-     "lev_net": -6852.0,
-     "am_net": 3532.0,
-     "dealer_net": 2339.0,
-     "asof": "2026-10-06"
+     "oi": 20752.0,
+     "lev_net": -5844.0,
+     "am_net": 3642.0,
+     "dealer_net": 1841.0,
+     "asof": "2026-10-13"
     },
     "cot_eth": {
-     "oi": 27681.0,
-     "lev_net": -7949.0,
-     "am_net": -589.0,
-     "dealer_net": 9088.0,
-     "asof": "2026-10-06"
+     "oi": 25543.0,
+     "lev_net": -6283.0,
+     "am_net": -671.0,
+     "dealer_net": 8300.0,
+     "asof": "2026-10-13"
     }
    },
    "macro": {
@@ -13225,11 +13225,11 @@
     "gold_high120": 4697.799805,
     "gold_high120_date": "2026-08-24",
     "gold_from_high_pct": -12.55694,
-    "cot_gold_mm_net": 110987.0,
-    "cot_gold_mm_long": 127101.0,
-    "cot_gold_mm_short": 16114.0,
-    "cot_gold_asof": "2026-10-06",
-    "cot_gold_mm_net_wk_chg": -9331.0,
+    "cot_gold_mm_net": 107089.0,
+    "cot_gold_mm_long": 124747.0,
+    "cot_gold_mm_short": 17658.0,
+    "cot_gold_asof": "2026-10-13",
+    "cot_gold_mm_net_wk_chg": -3898.0,
     "gld_tonnes": null,
     "gld_asof": null,
     "gld_7d_chg_t": null,
@@ -13302,11 +13302,11 @@
     "ndx": 26713.03,
     "ndx_asof": "2026-10-15",
     "ndx_1d_pct": 0.075526,
-    "vix": 16.87,
-    "vix_asof": "2026-10-14",
-    "hy_oas": 3.25,
-    "hy_asof": "2026-10-14",
-    "hy_wk_chg_bp": 16.0
+    "vix": 16.46,
+    "vix_asof": "2026-10-15",
+    "hy_oas": 3.23,
+    "hy_asof": "2026-10-15",
+    "hy_wk_chg_bp": 8.0
    },
    "pos": {
     "btc": {
@@ -13418,18 +13418,18 @@
      "taker_buy_share": 0.462926
     },
     "cot_btc": {
-     "oi": 21432.0,
-     "lev_net": -6852.0,
-     "am_net": 3532.0,
-     "dealer_net": 2339.0,
-     "asof": "2026-10-06"
+     "oi": 20752.0,
+     "lev_net": -5844.0,
+     "am_net": 3642.0,
+     "dealer_net": 1841.0,
+     "asof": "2026-10-13"
     },
     "cot_eth": {
-     "oi": 27681.0,
-     "lev_net": -7949.0,
-     "am_net": -589.0,
-     "dealer_net": 9088.0,
-     "asof": "2026-10-06"
+     "oi": 25543.0,
+     "lev_net": -6283.0,
+     "am_net": -671.0,
+     "dealer_net": 8300.0,
+     "asof": "2026-10-13"
     }
    },
    "macro": {
@@ -13441,11 +13441,11 @@
     "gold_high120": 4697.799805,
     "gold_high120_date": "2026-08-24",
     "gold_from_high_pct": -11.232912,
-    "cot_gold_mm_net": 110987.0,
-    "cot_gold_mm_long": 127101.0,
-    "cot_gold_mm_short": 16114.0,
-    "cot_gold_asof": "2026-10-06",
-    "cot_gold_mm_net_wk_chg": -9331.0,
+    "cot_gold_mm_net": 107089.0,
+    "cot_gold_mm_long": 124747.0,
+    "cot_gold_mm_short": 17658.0,
+    "cot_gold_asof": "2026-10-13",
+    "cot_gold_mm_net_wk_chg": -3898.0,
     "gld_tonnes": null,
     "gld_asof": null,
     "gld_7d_chg_t": null,
