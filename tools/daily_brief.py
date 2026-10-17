@@ -230,11 +230,17 @@ def stock_plans():
              "chg_pct": round((close / prev - 1) * 100, 2) if prev else None, "ma20": round(ma20, 2),
              "hi3m": round(max(b[1] for b in bars), 2), "lo3m": round(min(b[2] for b in bars), 2),
              "levels": [], "notes": p.get("notes")}
+        stop = p.get("stop")
+        if stop:
+            x["stop"] = stop
+        broken = stop is not None and close < stop
         for lv in p.get("buy_dips", []):
             hit = lo <= lv
             x["levels"].append({"kind": "dip", "price": lv, "dist_pct": round((lv / close - 1) * 100, 1), "hit": hit})
-            if hit:
+            if hit and not broken:
                 alarms.append(f"{x['name']} ({sym}) alım seviyesine indi: {lv} (gün dibi {lo:.2f}, kapanış {close:.2f}). Planlı ekleme zamanı; tek seferde değil, parça parça.")
+        if broken:
+            alarms.append(f"{x['name']} ({sym}) stop {stop} altında kapattı ({close:.2f}): kurulum bozuldu, alım yok. Plandan çıkar.")
         for lv in p.get("breakout_adds", []):
             hit = close >= lv
             x["levels"].append({"kind": "breakout", "price": lv, "dist_pct": round((lv / close - 1) * 100, 1), "hit": hit})
