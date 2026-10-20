@@ -40,12 +40,9 @@
   },
   "PLTR": {
     "name": "Palantir",
-    "buy_dips": [
-      200
-    ],
+    "buy_dips": [],
     "breakout_adds": [],
-    "notes": "Uzamış. EMA9 ~200'e geri çekilmeyi bekle, stop 189 altı.",
-    "stop": 189
+    "notes": "16.10 stop 189 altında kapattı (186): kurulum bozuldu, plandan çıkarıldı. Yeni kurulum oluşursa tekrar eklenir."
   },
   "ZS": {
     "name": "Zscaler",
