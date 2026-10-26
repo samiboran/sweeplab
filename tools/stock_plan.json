@@ -26,8 +26,7 @@
     "name": "Moderna",
     "buy_dips": [],
     "breakout_adds": [],
-    "notes": "15.10 228 üstünde kapattı (kırılım). Stop 204 altı; +3R ~253'te %20 sat, kalan EMA9 altı kapanışta.",
-    "stop": 204
+    "notes": "15.10 228 kırılımı → 245'e çıktı, 23.10 stop 204 altında kapattı (200,10): kurulum bitti, plandan çıkarıldı."
   },
   "SHOP": {
     "name": "Shopify",
