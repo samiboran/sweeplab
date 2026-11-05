@@ -30,12 +30,9 @@
   },
   "SHOP": {
     "name": "Shopify",
-    "buy_dips": [
-      166
-    ],
+    "buy_dips": [],
     "breakout_adds": [],
-    "notes": "Uzamış (EMA21 +%13). EMA9 ~166'ya geri çekilmeyi bekle, stop 160 altı.",
-    "stop": 160
+    "notes": "04.11 stop 160 altında kapattı (153,03): kurulum bozuldu, plandan çıkarıldı."
   },
   "PLTR": {
     "name": "Palantir",
