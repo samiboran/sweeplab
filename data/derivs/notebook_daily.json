@@ -1,5 +1,5 @@
 {
- "built_utc": "2026-11-08T12:14:47+00:00",
+ "built_utc": "2026-11-09T06:27:41+00:00",
  "status": {
   "WALCL": "OK 20 (2026-06-24..2026-11-04)",
   "WTREGEN": "OK 20 (2026-06-24..2026-11-04)",
@@ -10,13 +10,13 @@
   "NASDAQCOM": "OK 98 (2026-06-22..2026-11-06)",
   "VIXCLS": "OK 99 (2026-06-22..2026-11-05)",
   "BAMLH0A0HYM2": "OK 99 (2026-06-22..2026-11-05)",
-  "yahoo:DX-Y.NYB": "OK 250",
+  "yahoo:DX-Y.NYB": "OK 251",
   "defillama_stables": "OK 141",
   "cot_btc": "OK 30 (2026-04-14..2026-11-03)",
-  "cot_eth": "OK 30 (2026-04-14..2026-11-03)",
-  "yahoo:GC=F": "OK 250",
-  "yahoo:CL=F": "OK 250",
-  "yahoo:BZ=F": "OK 250",
+  "cot_eth": "ERR <urlopen error [Errno 104] Connection reset by peer>",
+  "yahoo:GC=F": "OK 251",
+  "yahoo:CL=F": "OK 251",
+  "yahoo:BZ=F": "OK 251",
   "cot_gold": "OK 30 (2026-04-14..2026-11-03)",
   "gld_tonnes": "ERR RuntimeError: no 'Tonnes' column; file starts: %PDF-1.5\r | %\u00e2\u00e3\u00cf\u00d3\r | 2 0 obj\r | <<\r | /Type /XObject\r | /Subtype /Image\r | /Width 1489\r | /Height 680\r | /ColorSpace /DeviceGray\r | /BitsPerComponent 8\r | /Interpolate false\r | /Filt",
   "net_liquidity": "OK 20 weeks"
@@ -261,128 +261,7 @@
     -2591.0
    ]
   ],
-  "cot_eth_lev_net": [
-   [
-    "2026-04-14",
-    -11949.0
-   ],
-   [
-    "2026-04-21",
-    -10683.0
-   ],
-   [
-    "2026-04-28",
-    -11641.0
-   ],
-   [
-    "2026-05-05",
-    -13593.0
-   ],
-   [
-    "2026-05-12",
-    -10404.0
-   ],
-   [
-    "2026-05-19",
-    -8335.0
-   ],
-   [
-    "2026-05-26",
-    -7504.0
-   ],
-   [
-    "2026-06-02",
-    -4321.0
-   ],
-   [
-    "2026-06-09",
-    -4651.0
-   ],
-   [
-    "2026-06-16",
-    -6752.0
-   ],
-   [
-    "2026-06-23",
-    -4977.0
-   ],
-   [
-    "2026-06-30",
-    -4691.0
-   ],
-   [
-    "2026-07-07",
-    -7309.0
-   ],
-   [
-    "2026-07-14",
-    -7961.0
-   ],
-   [
-    "2026-07-21",
-    -7053.0
-   ],
-   [
-    "2026-07-28",
-    -5396.0
-   ],
-   [
-    "2026-08-04",
-    -3205.0
-   ],
-   [
-    "2026-08-11",
-    -3998.0
-   ],
-   [
-    "2026-08-18",
-    -4395.0
-   ],
-   [
-    "2026-08-25",
-    -8385.0
-   ],
-   [
-    "2026-09-01",
-    -5325.0
-   ],
-   [
-    "2026-09-08",
-    -7286.0
-   ],
-   [
-    "2026-09-15",
-    -7722.0
-   ],
-   [
-    "2026-09-22",
-    -10617.0
-   ],
-   [
-    "2026-09-29",
-    -8083.0
-   ],
-   [
-    "2026-10-06",
-    -7949.0
-   ],
-   [
-    "2026-10-13",
-    -6283.0
-   ],
-   [
-    "2026-10-20",
-    -5128.0
-   ],
-   [
-    "2026-10-27",
-    -4025.0
-   ],
-   [
-    "2026-11-03",
-    -3699.0
-   ]
-  ],
+  "cot_eth_lev_net": [],
   "cot_gold_mm_net": [
    [
     "2026-04-14",
@@ -508,222 +387,6 @@
  },
  "rows": [
   {
-   "date": "2026-09-09",
-   "cal": [],
-   "regime": {
-    "netliq_musd": 5856852.0,
-    "netliq_asof": "2026-09-09",
-    "netliq_wk_chg_pct": 1.527334,
-    "real10y": 2.46,
-    "real10y_asof": "2026-09-09",
-    "real10y_wk_chg_bp": 1.0,
-    "dxy": 98.769997,
-    "dxy_asof": "2026-09-09",
-    "dxy_src": "DXY (ICE)",
-    "dxy_7d_pct": -0.793492,
-    "stables_usd": 303987124821.0,
-    "stables_asof": "2026-09-09",
-    "stables_7d_pct": 0.611205,
-    "trend_btc": {
-     "state": "boga",
-     "close": 78265.0,
-     "ma50": 70200.08,
-     "ma200": 69920.26,
-     "dist200_pct": 11.93,
-     "dist50_pct": 11.49
-    },
-    "trend_eth": {
-     "state": "boga",
-     "close": 2467.02,
-     "ma50": 2137.89,
-     "ma200": 2046.69,
-     "dist200_pct": 20.54,
-     "dist50_pct": 15.4
-    }
-   },
-   "risk": {
-    "spx": 7636.36,
-    "spx_asof": "2026-09-09",
-    "spx_1d_pct": -0.484263,
-    "ndx": 26253.34,
-    "ndx_asof": "2026-09-09",
-    "ndx_1d_pct": -0.636113,
-    "vix": 16.46,
-    "vix_asof": "2026-09-09",
-    "hy_oas": 2.71,
-    "hy_asof": "2026-09-09",
-    "hy_wk_chg_bp": 5.0
-   },
-   "pos": {
-    "btc": {
-     "open": 78420.8,
-     "high": 79744.4,
-     "low": 77710.0,
-     "close": 78265.0,
-     "oi_usd": 2079369627.559739,
-     "oi_coin": 26569.0337,
-     "ls_ratio": 1.391101,
-     "taker_sell_usd": 3056990721.76764,
-     "taker_buy_usd": 3097335625.34784,
-     "funding_sum_pct": 0.01868,
-     "funding_n": 3,
-     "oi_chg_pct": -4.219129,
-     "oi_coin_chg_pct": -4.045957,
-     "chg_pct": -0.198545,
-     "flow": "yatay",
-     "taker_buy_share": 0.503278
-    },
-    "eth": {
-     "open": 2484.11,
-     "high": 2523.0,
-     "low": 2441.98,
-     "close": 2467.02,
-     "oi_usd": 1471336104.249205,
-     "oi_coin": 596455.369,
-     "ls_ratio": 1.586918,
-     "taker_sell_usd": 3517510828.78298,
-     "taker_buy_usd": 3457694267.82973,
-     "funding_sum_pct": 0.010584,
-     "funding_n": 3,
-     "oi_chg_pct": -2.060826,
-     "oi_coin_chg_pct": -1.373966,
-     "chg_pct": -0.687973,
-     "flow": "temizlik",
-     "taker_buy_share": 0.495712
-    },
-    "sol": {
-     "open": 103.32,
-     "high": 105.15,
-     "low": 100.15,
-     "close": 101.5,
-     "oi_usd": 276436884.5588,
-     "oi_coin": 2722443.22,
-     "ls_ratio": 2.050639,
-     "taker_sell_usd": 554661049.0442,
-     "taker_buy_usd": 487403076.6676,
-     "funding_sum_pct": -0.015601,
-     "funding_n": 3,
-     "oi_chg_pct": -3.877139,
-     "oi_coin_chg_pct": -2.220501,
-     "chg_pct": -1.761518,
-     "flow": "temizlik",
-     "taker_buy_share": 0.467728
-    },
-    "xrp": {
-     "open": 1.4165,
-     "high": 1.4454,
-     "low": 1.3763,
-     "close": 1.3941,
-     "oi_usd": 103116027.972,
-     "oi_coin": 73981940.0,
-     "ls_ratio": 2.533987,
-     "taker_sell_usd": 244597548.0964,
-     "taker_buy_usd": 231309239.723,
-     "funding_sum_pct": -0.005355,
-     "funding_n": 3,
-     "oi_chg_pct": -4.306221,
-     "oi_coin_chg_pct": -2.754578,
-     "chg_pct": -1.581363,
-     "flow": "temizlik",
-     "taker_buy_share": 0.486039
-    },
-    "doge": {
-     "open": 0.09,
-     "high": 0.09156,
-     "low": 0.0845,
-     "close": 0.08611,
-     "oi_usd": 86234312.9043,
-     "oi_coin": 1001211110.0,
-     "ls_ratio": 3.989026,
-     "taker_sell_usd": 225777251.152,
-     "taker_buy_usd": 210825835.4262,
-     "funding_sum_pct": 0.017707,
-     "funding_n": 3,
-     "oi_chg_pct": -2.314393,
-     "oi_coin_chg_pct": 2.040799,
-     "chg_pct": -4.322222,
-     "flow": "yeni_short",
-     "taker_buy_share": 0.482878
-    },
-    "pump": {
-     "open": 0.004313,
-     "high": 0.004873,
-     "low": 0.004043,
-     "close": 0.004086,
-     "oi_usd": 27860398.608,
-     "oi_coin": 6815166000.0,
-     "ls_ratio": 1.388859,
-     "taker_sell_usd": 122284379.642,
-     "taker_buy_usd": 120592238.186,
-     "funding_sum_pct": 0.013546,
-     "funding_n": 6,
-     "oi_chg_pct": -2.011756,
-     "oi_coin_chg_pct": 3.213645,
-     "chg_pct": -5.241187,
-     "flow": "yeni_short",
-     "taker_buy_share": 0.496516
-    },
-    "cot_btc": {
-     "oi": 21083.0,
-     "lev_net": -7892.0,
-     "am_net": 3743.0,
-     "dealer_net": 2943.0,
-     "asof": "2026-09-08"
-    },
-    "cot_eth": {
-     "oi": 26564.0,
-     "lev_net": -7286.0,
-     "am_net": -1653.0,
-     "dealer_net": 9403.0,
-     "asof": "2026-09-08"
-    }
-   },
-   "macro": {
-    "gold": 4460.700195,
-    "gold_asof": "2026-09-09",
-    "gold_src": "Alt\u0131n vadeli (COMEX, GC=F)",
-    "gold_1d_pct": 0.488853,
-    "gold_7d_pct": 1.044264,
-    "gold_high120": 4706.700195,
-    "gold_high120_date": "2026-05-13",
-    "gold_from_high_pct": -5.226592,
-    "cot_gold_mm_net": 134972.0,
-    "cot_gold_mm_long": 145804.0,
-    "cot_gold_mm_short": 10832.0,
-    "cot_gold_asof": "2026-09-08",
-    "cot_gold_mm_net_wk_chg": -1799.0,
-    "gld_tonnes": null,
-    "gld_asof": null,
-    "gld_7d_chg_t": null,
-    "wti": 96.050003,
-    "wti_asof": "2026-09-09",
-    "wti_1d_pct": 3.246269,
-    "brent": 101.209999,
-    "brent_asof": "2026-09-09",
-    "brent_1d_pct": 3.359887
-   },
-   "corr": {
-    "btc_spx": 0.306126,
-    "btc_spx_n": 22,
-    "btc_spx_7d": 0.870588,
-    "btc_ndx": 0.281173,
-    "btc_ndx_n": 22,
-    "btc_ndx_7d": 0.873897,
-    "btc_dxy": -0.579415,
-    "btc_dxy_n": 22,
-    "btc_dxy_7d": -0.788572,
-    "btc_eth": 0.877968,
-    "btc_eth_n": 31,
-    "btc_eth_7d": 0.952596,
-    "btc_gold": 0.793267,
-    "btc_gold_n": 22,
-    "btc_gold_7d": 0.974349,
-    "eth_gold": 0.687486,
-    "eth_gold_n": 22,
-    "eth_gold_7d": 0.789191
-   }
-  },
-  {
    "date": "2026-09-10",
    "cal": [],
    "regime": {
@@ -737,9 +400,9 @@
     "dxy_asof": "2026-09-10",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.090905,
-    "stables_usd": 303846863746.0,
+    "stables_usd": 303868504599.0,
     "stables_asof": "2026-09-10",
-    "stables_7d_pct": 0.441219,
+    "stables_7d_pct": 0.448354,
     "trend_btc": {
      "state": "boga",
      "close": 76540.0,
@@ -886,13 +549,7 @@
      "dealer_net": 2943.0,
      "asof": "2026-09-08"
     },
-    "cot_eth": {
-     "oi": 26564.0,
-     "lev_net": -7286.0,
-     "am_net": -1653.0,
-     "dealer_net": 9403.0,
-     "asof": "2026-09-08"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4407.299805,
@@ -955,9 +612,9 @@
     "dxy_asof": "2026-09-11",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": -0.04034,
-    "stables_usd": 303471204492.0,
+    "stables_usd": 303494051780.0,
     "stables_asof": "2026-09-11",
-    "stables_7d_pct": -0.029045,
+    "stables_7d_pct": -0.021594,
     "trend_btc": {
      "state": "boga",
      "close": 77184.7,
@@ -1104,13 +761,7 @@
      "dealer_net": 2943.0,
      "asof": "2026-09-08"
     },
-    "cot_eth": {
-     "oi": 26564.0,
-     "lev_net": -7286.0,
-     "am_net": -1653.0,
-     "dealer_net": 9403.0,
-     "asof": "2026-09-08"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4408.899902,
@@ -1171,9 +822,9 @@
     "dxy_asof": "2026-09-11",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": -0.04034,
-    "stables_usd": 303657654394.0,
+    "stables_usd": 303682088224.0,
     "stables_asof": "2026-09-12",
-    "stables_7d_pct": -0.053021,
+    "stables_7d_pct": -0.044999,
     "trend_btc": {
      "state": "boga",
      "close": 77247.0,
@@ -1320,13 +971,7 @@
      "dealer_net": 2943.0,
      "asof": "2026-09-08"
     },
-    "cot_eth": {
-     "oi": 26564.0,
-     "lev_net": -7286.0,
-     "am_net": -1653.0,
-     "dealer_net": 9403.0,
-     "asof": "2026-09-08"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4408.899902,
@@ -1387,9 +1032,9 @@
     "dxy_asof": "2026-09-11",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": -0.04034,
-    "stables_usd": 303630173642.0,
+    "stables_usd": 303654787204.0,
     "stables_asof": "2026-09-13",
-    "stables_7d_pct": -0.076374,
+    "stables_7d_pct": -0.068309,
     "trend_btc": {
      "state": "boga",
      "close": 76793.5,
@@ -1536,13 +1181,7 @@
      "dealer_net": 2943.0,
      "asof": "2026-09-08"
     },
-    "cot_eth": {
-     "oi": 26564.0,
-     "lev_net": -7286.0,
-     "am_net": -1653.0,
-     "dealer_net": 9403.0,
-     "asof": "2026-09-08"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4408.899902,
@@ -1603,9 +1242,9 @@
     "dxy_asof": "2026-09-14",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.302537,
-    "stables_usd": 303513241054.0,
+    "stables_usd": 303536795718.0,
     "stables_asof": "2026-09-14",
-    "stables_7d_pct": -0.122684,
+    "stables_7d_pct": -0.114969,
     "trend_btc": {
      "state": "boga",
      "close": 78158.4,
@@ -1752,13 +1391,7 @@
      "dealer_net": 2943.0,
      "asof": "2026-09-08"
     },
-    "cot_eth": {
-     "oi": 26564.0,
-     "lev_net": -7286.0,
-     "am_net": -1653.0,
-     "dealer_net": 9403.0,
-     "asof": "2026-09-08"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4351.899902,
@@ -1819,9 +1452,9 @@
     "dxy_asof": "2026-09-15",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.819512,
-    "stables_usd": 303685116836.0,
+    "stables_usd": 303711808126.0,
     "stables_asof": "2026-09-15",
-    "stables_7d_pct": -0.020679,
+    "stables_7d_pct": -0.011901,
     "trend_btc": {
      "state": "boga",
      "close": 75611.2,
@@ -1968,13 +1601,7 @@
      "dealer_net": 3419.0,
      "asof": "2026-09-15"
     },
-    "cot_eth": {
-     "oi": 28413.0,
-     "lev_net": -7722.0,
-     "am_net": -1920.0,
-     "dealer_net": 10571.0,
-     "asof": "2026-09-15"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4332.799805,
@@ -2037,9 +1664,9 @@
     "dxy_asof": "2026-09-16",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 1.559179,
-    "stables_usd": 302906612455.0,
+    "stables_usd": 302929193816.0,
     "stables_asof": "2026-09-16",
-    "stables_7d_pct": -0.355447,
+    "stables_7d_pct": -0.353569,
     "trend_btc": {
      "state": "boga",
      "close": 76168.1,
@@ -2186,13 +1813,7 @@
      "dealer_net": 3419.0,
      "asof": "2026-09-15"
     },
-    "cot_eth": {
-     "oi": 28413.0,
-     "lev_net": -7722.0,
-     "am_net": -1920.0,
-     "dealer_net": 10571.0,
-     "asof": "2026-09-15"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4387.5,
@@ -2253,9 +1874,9 @@
     "dxy_asof": "2026-09-17",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 1.140382,
-    "stables_usd": 302974373203.0,
+    "stables_usd": 302998725902.0,
     "stables_asof": "2026-09-17",
-    "stables_7d_pct": -0.287148,
+    "stables_7d_pct": -0.286235,
     "trend_btc": {
      "state": "boga",
      "close": 76390.1,
@@ -2402,13 +2023,7 @@
      "dealer_net": 3419.0,
      "asof": "2026-09-15"
     },
-    "cot_eth": {
-     "oi": 28413.0,
-     "lev_net": -7722.0,
-     "am_net": -1920.0,
-     "dealer_net": 10571.0,
-     "asof": "2026-09-15"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4399.700195,
@@ -2469,9 +2084,9 @@
     "dxy_asof": "2026-09-18",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 1.109764,
-    "stables_usd": 303045632136.0,
+    "stables_usd": 303073731415.0,
     "stables_asof": "2026-09-18",
-    "stables_7d_pct": -0.140235,
+    "stables_7d_pct": -0.138494,
     "trend_btc": {
      "state": "boga",
      "close": 80876.6,
@@ -2618,13 +2233,7 @@
      "dealer_net": 3419.0,
      "asof": "2026-09-15"
     },
-    "cot_eth": {
-     "oi": 28413.0,
-     "lev_net": -7722.0,
-     "am_net": -1920.0,
-     "dealer_net": 10571.0,
-     "asof": "2026-09-15"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4424.899902,
@@ -2685,9 +2294,9 @@
     "dxy_asof": "2026-09-18",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 1.109764,
-    "stables_usd": 303548902814.0,
+    "stables_usd": 303584516193.0,
     "stables_asof": "2026-09-19",
-    "stables_7d_pct": -0.035814,
+    "stables_7d_pct": -0.03213,
     "trend_btc": {
      "state": "boga",
      "close": 81231.2,
@@ -2834,13 +2443,7 @@
      "dealer_net": 3419.0,
      "asof": "2026-09-15"
     },
-    "cot_eth": {
-     "oi": 28413.0,
-     "lev_net": -7722.0,
-     "am_net": -1920.0,
-     "dealer_net": 10571.0,
-     "asof": "2026-09-15"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4424.899902,
@@ -2901,9 +2504,9 @@
     "dxy_asof": "2026-09-18",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 1.109764,
-    "stables_usd": 303528055260.0,
+    "stables_usd": 303560445344.0,
     "stables_asof": "2026-09-20",
-    "stables_7d_pct": -0.033632,
+    "stables_7d_pct": -0.031069,
     "trend_btc": {
      "state": "boga",
      "close": 81144.3,
@@ -3050,13 +2653,7 @@
      "dealer_net": 3419.0,
      "asof": "2026-09-15"
     },
-    "cot_eth": {
-     "oi": 28413.0,
-     "lev_net": -7722.0,
-     "am_net": -1920.0,
-     "dealer_net": 10571.0,
-     "asof": "2026-09-15"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4424.899902,
@@ -3117,9 +2714,9 @@
     "dxy_asof": "2026-09-21",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.975268,
-    "stables_usd": 303736446219.0,
+    "stables_usd": 303768395609.0,
     "stables_asof": "2026-09-21",
-    "stables_7d_pct": 0.073541,
+    "stables_7d_pct": 0.0763,
     "trend_btc": {
      "state": "boga",
      "close": 86589.1,
@@ -3266,13 +2863,7 @@
      "dealer_net": 3419.0,
      "asof": "2026-09-15"
     },
-    "cot_eth": {
-     "oi": 28413.0,
-     "lev_net": -7722.0,
-     "am_net": -1920.0,
-     "dealer_net": 10571.0,
-     "asof": "2026-09-15"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4383.899902,
@@ -3333,9 +2924,9 @@
     "dxy_asof": "2026-09-22",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.953334,
-    "stables_usd": 304448235505.0,
+    "stables_usd": 304481546053.0,
     "stables_asof": "2026-09-22",
-    "stables_7d_pct": 0.251286,
+    "stables_7d_pct": 0.253444,
     "trend_btc": {
      "state": "boga",
      "close": 86167.5,
@@ -3482,13 +3073,7 @@
      "dealer_net": 3647.0,
      "asof": "2026-09-22"
     },
-    "cot_eth": {
-     "oi": 29985.0,
-     "lev_net": -10617.0,
-     "am_net": -1492.0,
-     "dealer_net": 12372.0,
-     "asof": "2026-09-22"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4376.399902,
@@ -3549,9 +3134,9 @@
     "dxy_asof": "2026-09-23",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.78756,
-    "stables_usd": 304683626189.0,
+    "stables_usd": 304709144902.0,
     "stables_asof": "2026-09-23",
-    "stables_7d_pct": 0.586654,
+    "stables_7d_pct": 0.58758,
     "trend_btc": {
      "state": "boga",
      "close": 84366.1,
@@ -3698,13 +3283,7 @@
      "dealer_net": 3647.0,
      "asof": "2026-09-22"
     },
-    "cot_eth": {
-     "oi": 29985.0,
-     "lev_net": -10617.0,
-     "am_net": -1492.0,
-     "dealer_net": 12372.0,
-     "asof": "2026-09-22"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4318.399902,
@@ -3765,9 +3344,9 @@
     "dxy_asof": "2026-09-24",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 1.067651,
-    "stables_usd": 304450863383.0,
+    "stables_usd": 304477379959.0,
     "stables_asof": "2026-09-24",
-    "stables_7d_pct": 0.487332,
+    "stables_7d_pct": 0.488007,
     "trend_btc": {
      "state": "boga",
      "close": 84369.4,
@@ -3914,13 +3493,7 @@
      "dealer_net": 3647.0,
      "asof": "2026-09-22"
     },
-    "cot_eth": {
-     "oi": 29985.0,
-     "lev_net": -10617.0,
-     "am_net": -1492.0,
-     "dealer_net": 12372.0,
-     "asof": "2026-09-22"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4298.0,
@@ -3981,9 +3554,9 @@
     "dxy_asof": "2026-09-25",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.748354,
-    "stables_usd": 304835551017.0,
+    "stables_usd": 304869416948.0,
     "stables_asof": "2026-09-25",
-    "stables_7d_pct": 0.590643,
+    "stables_7d_pct": 0.592491,
     "trend_btc": {
      "state": "boga",
      "close": 84059.9,
@@ -4130,13 +3703,7 @@
      "dealer_net": 3647.0,
      "asof": "2026-09-22"
     },
-    "cot_eth": {
-     "oi": 29985.0,
-     "lev_net": -10617.0,
-     "am_net": -1492.0,
-     "dealer_net": 12372.0,
-     "asof": "2026-09-22"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4321.200195,
@@ -4197,9 +3764,9 @@
     "dxy_asof": "2026-09-25",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.748354,
-    "stables_usd": 305110082204.0,
+    "stables_usd": 305146460454.0,
     "stables_asof": "2026-09-26",
-    "stables_7d_pct": 0.514309,
+    "stables_7d_pct": 0.514501,
     "trend_btc": {
      "state": "boga",
      "close": 84394.1,
@@ -4346,13 +3913,7 @@
      "dealer_net": 3647.0,
      "asof": "2026-09-22"
     },
-    "cot_eth": {
-     "oi": 29985.0,
-     "lev_net": -10617.0,
-     "am_net": -1492.0,
-     "dealer_net": 12372.0,
-     "asof": "2026-09-22"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4321.200195,
@@ -4413,9 +3974,9 @@
     "dxy_asof": "2026-09-25",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.748354,
-    "stables_usd": 305300874722.0,
+    "stables_usd": 305337245440.0,
     "stables_asof": "2026-09-27",
-    "stables_7d_pct": 0.584071,
+    "stables_7d_pct": 0.58532,
     "trend_btc": {
      "state": "boga",
      "close": 84440.9,
@@ -4562,13 +4123,7 @@
      "dealer_net": 3647.0,
      "asof": "2026-09-22"
     },
-    "cot_eth": {
-     "oi": 29985.0,
-     "lev_net": -10617.0,
-     "am_net": -1492.0,
-     "dealer_net": 12372.0,
-     "asof": "2026-09-22"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4321.200195,
@@ -4629,9 +4184,9 @@
     "dxy_asof": "2026-09-28",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.7667,
-    "stables_usd": 306765774863.0,
+    "stables_usd": 306805166651.0,
     "stables_asof": "2026-09-28",
-    "stables_7d_pct": 0.997354,
+    "stables_7d_pct": 0.999699,
     "trend_btc": {
      "state": "boga",
      "close": 83461.0,
@@ -4778,13 +4333,7 @@
      "dealer_net": 3647.0,
      "asof": "2026-09-22"
     },
-    "cot_eth": {
-     "oi": 29985.0,
-     "lev_net": -10617.0,
-     "am_net": -1492.0,
-     "dealer_net": 12372.0,
-     "asof": "2026-09-22"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4168.399902,
@@ -4845,9 +4394,9 @@
     "dxy_asof": "2026-09-29",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.765412,
-    "stables_usd": 306374583524.0,
+    "stables_usd": 306415465179.0,
     "stables_asof": "2026-09-29",
-    "stables_7d_pct": 0.632734,
+    "stables_7d_pct": 0.635152,
     "trend_btc": {
      "state": "boga",
      "close": 83627.0,
@@ -4994,13 +4543,7 @@
      "dealer_net": 2680.0,
      "asof": "2026-09-29"
     },
-    "cot_eth": {
-     "oi": 27392.0,
-     "lev_net": -8083.0,
-     "am_net": -1197.0,
-     "dealer_net": 9885.0,
-     "asof": "2026-09-29"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4179.700195,
@@ -5061,9 +4604,9 @@
     "dxy_asof": "2026-09-30",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.34619,
-    "stables_usd": 306314764973.0,
+    "stables_usd": 306353435559.0,
     "stables_asof": "2026-09-30",
-    "stables_7d_pct": 0.535355,
+    "stables_7d_pct": 0.539626,
     "trend_btc": {
      "state": "boga",
      "close": 83579.9,
@@ -5210,13 +4753,7 @@
      "dealer_net": 2680.0,
      "asof": "2026-09-29"
     },
-    "cot_eth": {
-     "oi": 27392.0,
-     "lev_net": -8083.0,
-     "am_net": -1197.0,
-     "dealer_net": 9885.0,
-     "asof": "2026-09-29"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4186.700195,
@@ -5277,9 +4814,9 @@
     "dxy_asof": "2026-10-01",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.799682,
-    "stables_usd": 305823340908.0,
+    "stables_usd": 305861575437.0,
     "stables_asof": "2026-10-01",
-    "stables_7d_pct": 0.450804,
+    "stables_7d_pct": 0.454614,
     "trend_btc": {
      "state": "boga",
      "close": 84837.7,
@@ -5426,13 +4963,7 @@
      "dealer_net": 2680.0,
      "asof": "2026-09-29"
     },
-    "cot_eth": {
-     "oi": 27392.0,
-     "lev_net": -8083.0,
-     "am_net": -1197.0,
-     "dealer_net": 9885.0,
-     "asof": "2026-09-29"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4202.299805,
@@ -5495,9 +5026,9 @@
     "dxy_asof": "2026-10-02",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.950777,
-    "stables_usd": 306619476145.0,
+    "stables_usd": 306659157443.0,
     "stables_asof": "2026-10-02",
-    "stables_7d_pct": 0.585209,
+    "stables_7d_pct": 0.587052,
     "trend_btc": {
      "state": "boga",
      "close": 84480.0,
@@ -5644,13 +5175,7 @@
      "dealer_net": 2680.0,
      "asof": "2026-09-29"
     },
-    "cot_eth": {
-     "oi": 27392.0,
-     "lev_net": -8083.0,
-     "am_net": -1197.0,
-     "dealer_net": 9885.0,
-     "asof": "2026-09-29"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4162.299805,
@@ -5711,9 +5236,9 @@
     "dxy_asof": "2026-10-02",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.950777,
-    "stables_usd": 306991157684.0,
+    "stables_usd": 307030048164.0,
     "stables_asof": "2026-10-03",
-    "stables_7d_pct": 0.616524,
+    "stables_7d_pct": 0.617273,
     "trend_btc": {
      "state": "boga",
      "close": 84719.9,
@@ -5860,13 +5385,7 @@
      "dealer_net": 2680.0,
      "asof": "2026-09-29"
     },
-    "cot_eth": {
-     "oi": 27392.0,
-     "lev_net": -8083.0,
-     "am_net": -1197.0,
-     "dealer_net": 9885.0,
-     "asof": "2026-09-29"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4162.299805,
@@ -5927,9 +5446,9 @@
     "dxy_asof": "2026-10-02",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.950777,
-    "stables_usd": 307077734456.0,
+    "stables_usd": 307118068770.0,
     "stables_asof": "2026-10-04",
-    "stables_7d_pct": 0.582003,
+    "stables_7d_pct": 0.583232,
     "trend_btc": {
      "state": "boga",
      "close": 86484.8,
@@ -6076,13 +5595,7 @@
      "dealer_net": 2680.0,
      "asof": "2026-09-29"
     },
-    "cot_eth": {
-     "oi": 27392.0,
-     "lev_net": -8083.0,
-     "am_net": -1197.0,
-     "dealer_net": 9885.0,
-     "asof": "2026-09-29"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4162.299805,
@@ -6143,9 +5656,9 @@
     "dxy_asof": "2026-10-05",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.958499,
-    "stables_usd": 307312664672.0,
+    "stables_usd": 307353454849.0,
     "stables_asof": "2026-10-05",
-    "stables_7d_pct": 0.178276,
+    "stables_7d_pct": 0.178709,
     "trend_btc": {
      "state": "boga",
      "close": 85715.0,
@@ -6292,13 +5805,7 @@
      "dealer_net": 2680.0,
      "asof": "2026-09-29"
     },
-    "cot_eth": {
-     "oi": 27392.0,
-     "lev_net": -8083.0,
-     "am_net": -1197.0,
-     "dealer_net": 9885.0,
-     "asof": "2026-09-29"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4156.799805,
@@ -6359,9 +5866,9 @@
     "dxy_asof": "2026-10-06",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.453782,
-    "stables_usd": 307767777156.0,
+    "stables_usd": 307807851059.0,
     "stables_asof": "2026-10-06",
-    "stables_7d_pct": 0.454735,
+    "stables_7d_pct": 0.454411,
     "trend_btc": {
      "state": "boga",
      "close": 85512.1,
@@ -6508,13 +6015,7 @@
      "dealer_net": 2339.0,
      "asof": "2026-10-06"
     },
-    "cot_eth": {
-     "oi": 27681.0,
-     "lev_net": -7949.0,
-     "am_net": -589.0,
-     "dealer_net": 9088.0,
-     "asof": "2026-10-06"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4187.100098,
@@ -6575,9 +6076,9 @@
     "dxy_asof": "2026-10-07",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.77871,
-    "stables_usd": 307904246466.0,
+    "stables_usd": 307935345801.0,
     "stables_asof": "2026-10-07",
-    "stables_7d_pct": 0.518905,
+    "stables_7d_pct": 0.516368,
     "trend_btc": {
      "state": "boga",
      "close": 83283.9,
@@ -6724,13 +6225,7 @@
      "dealer_net": 2339.0,
      "asof": "2026-10-06"
     },
-    "cot_eth": {
-     "oi": 27681.0,
-     "lev_net": -7949.0,
-     "am_net": -589.0,
-     "dealer_net": 9088.0,
-     "asof": "2026-10-06"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4140.700195,
@@ -6791,9 +6286,9 @@
     "dxy_asof": "2026-10-08",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.039178,
-    "stables_usd": 307331706612.0,
+    "stables_usd": 307358255268.0,
     "stables_asof": "2026-10-08",
-    "stables_7d_pct": 0.493215,
+    "stables_7d_pct": 0.489332,
     "trend_btc": {
      "state": "boga",
      "close": 81714.9,
@@ -6940,13 +6435,7 @@
      "dealer_net": 2339.0,
      "asof": "2026-10-06"
     },
-    "cot_eth": {
-     "oi": 27681.0,
-     "lev_net": -7949.0,
-     "am_net": -589.0,
-     "dealer_net": 9088.0,
-     "asof": "2026-10-06"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4157.0,
@@ -7007,9 +6496,9 @@
     "dxy_asof": "2026-10-09",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.274697,
-    "stables_usd": 306623635404.0,
+    "stables_usd": 306649591329.0,
     "stables_asof": "2026-10-09",
-    "stables_7d_pct": 0.001356,
+    "stables_7d_pct": -0.003119,
     "trend_btc": {
      "state": "boga",
      "close": 82586.8,
@@ -7156,13 +6645,7 @@
      "dealer_net": 2339.0,
      "asof": "2026-10-06"
     },
-    "cot_eth": {
-     "oi": 27681.0,
-     "lev_net": -7949.0,
-     "am_net": -589.0,
-     "dealer_net": 9088.0,
-     "asof": "2026-10-06"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4216.299805,
@@ -7223,9 +6706,9 @@
     "dxy_asof": "2026-10-09",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.274697,
-    "stables_usd": 305977481278.0,
+    "stables_usd": 306003913107.0,
     "stables_asof": "2026-10-10",
-    "stables_7d_pct": -0.330197,
+    "stables_7d_pct": -0.334213,
     "trend_btc": {
      "state": "boga",
      "close": 82940.4,
@@ -7372,13 +6855,7 @@
      "dealer_net": 2339.0,
      "asof": "2026-10-06"
     },
-    "cot_eth": {
-     "oi": 27681.0,
-     "lev_net": -7949.0,
-     "am_net": -589.0,
-     "dealer_net": 9088.0,
-     "asof": "2026-10-06"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4216.299805,
@@ -7439,9 +6916,9 @@
     "dxy_asof": "2026-10-09",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.274697,
-    "stables_usd": 306071829807.0,
+    "stables_usd": 306097806580.0,
     "stables_asof": "2026-10-11",
-    "stables_7d_pct": -0.327573,
+    "stables_7d_pct": -0.332205,
     "trend_btc": {
      "state": "boga",
      "close": 83716.0,
@@ -7588,13 +7065,7 @@
      "dealer_net": 2339.0,
      "asof": "2026-10-06"
     },
-    "cot_eth": {
-     "oi": 27681.0,
-     "lev_net": -7949.0,
-     "am_net": -589.0,
-     "dealer_net": 9088.0,
-     "asof": "2026-10-06"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4216.299805,
@@ -7655,9 +7126,9 @@
     "dxy_asof": "2026-10-12",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.401296,
-    "stables_usd": 306141058214.0,
+    "stables_usd": 306167319800.0,
     "stables_asof": "2026-10-12",
-    "stables_7d_pct": -0.381242,
+    "stables_7d_pct": -0.385919,
     "trend_btc": {
      "state": "boga",
      "close": 81808.0,
@@ -7804,13 +7275,7 @@
      "dealer_net": 2339.0,
      "asof": "2026-10-06"
     },
-    "cot_eth": {
-     "oi": 27681.0,
-     "lev_net": -7949.0,
-     "am_net": -589.0,
-     "dealer_net": 9088.0,
-     "asof": "2026-10-06"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4190.600098,
@@ -7871,9 +7336,9 @@
     "dxy_asof": "2026-10-13",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.343709,
-    "stables_usd": 306105287890.0,
+    "stables_usd": 306131418509.0,
     "stables_asof": "2026-10-13",
-    "stables_7d_pct": -0.540177,
+    "stables_7d_pct": -0.544636,
     "trend_btc": {
      "state": "boga",
      "close": 83136.6,
@@ -8020,13 +7485,7 @@
      "dealer_net": 1841.0,
      "asof": "2026-10-13"
     },
-    "cot_eth": {
-     "oi": 25543.0,
-     "lev_net": -6283.0,
-     "am_net": -671.0,
-     "dealer_net": 8300.0,
-     "asof": "2026-10-13"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4177.299805,
@@ -8089,9 +7548,9 @@
     "dxy_asof": "2026-10-14",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.303213,
-    "stables_usd": 306100714566.0,
+    "stables_usd": 306127057366.0,
     "stables_asof": "2026-10-14",
-    "stables_7d_pct": -0.585744,
+    "stables_7d_pct": -0.58723,
     "trend_btc": {
      "state": "boga",
      "close": 81641.4,
@@ -8238,13 +7697,7 @@
      "dealer_net": 1841.0,
      "asof": "2026-10-13"
     },
-    "cot_eth": {
-     "oi": 25543.0,
-     "lev_net": -6283.0,
-     "am_net": -671.0,
-     "dealer_net": 8300.0,
-     "asof": "2026-10-13"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4107.899902,
@@ -8305,9 +7758,9 @@
     "dxy_asof": "2026-10-15",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": -0.137066,
-    "stables_usd": 305514952969.0,
+    "stables_usd": 305536756798.0,
     "stables_asof": "2026-10-15",
-    "stables_7d_pct": -0.591138,
+    "stables_7d_pct": -0.59263,
     "trend_btc": {
      "state": "boga",
      "close": 82193.0,
@@ -8454,13 +7907,7 @@
      "dealer_net": 1841.0,
      "asof": "2026-10-13"
     },
-    "cot_eth": {
-     "oi": 25543.0,
-     "lev_net": -6283.0,
-     "am_net": -671.0,
-     "dealer_net": 8300.0,
-     "asof": "2026-10-13"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4170.100098,
@@ -8521,9 +7968,9 @@
     "dxy_asof": "2026-10-16",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": -0.362002,
-    "stables_usd": 305200445112.0,
+    "stables_usd": 305220065318.0,
     "stables_asof": "2026-10-16",
-    "stables_7d_pct": -0.464149,
+    "stables_7d_pct": -0.466176,
     "trend_btc": {
      "state": "boga",
      "close": 81585.8,
@@ -8670,13 +8117,7 @@
      "dealer_net": 1841.0,
      "asof": "2026-10-13"
     },
-    "cot_eth": {
-     "oi": 25543.0,
-     "lev_net": -6283.0,
-     "am_net": -671.0,
-     "dealer_net": 8300.0,
-     "asof": "2026-10-13"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4181.100098,
@@ -8737,9 +8178,9 @@
     "dxy_asof": "2026-10-16",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": -0.362002,
-    "stables_usd": 304866769045.0,
+    "stables_usd": 304886209530.0,
     "stables_asof": "2026-10-17",
-    "stables_7d_pct": -0.363005,
+    "stables_7d_pct": -0.365258,
     "trend_btc": {
      "state": "boga",
      "close": 81453.3,
@@ -8886,13 +8327,7 @@
      "dealer_net": 1841.0,
      "asof": "2026-10-13"
     },
-    "cot_eth": {
-     "oi": 25543.0,
-     "lev_net": -6283.0,
-     "am_net": -671.0,
-     "dealer_net": 8300.0,
-     "asof": "2026-10-13"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4181.100098,
@@ -8953,9 +8388,9 @@
     "dxy_asof": "2026-10-16",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": -0.362002,
-    "stables_usd": 304652383857.0,
+    "stables_usd": 304671638536.0,
     "stables_asof": "2026-10-18",
-    "stables_7d_pct": -0.463762,
+    "stables_7d_pct": -0.465919,
     "trend_btc": {
      "state": "boga",
      "close": 82069.5,
@@ -9102,13 +8537,7 @@
      "dealer_net": 1841.0,
      "asof": "2026-10-13"
     },
-    "cot_eth": {
-     "oi": 25543.0,
-     "lev_net": -6283.0,
-     "am_net": -671.0,
-     "dealer_net": 8300.0,
-     "asof": "2026-10-13"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4181.100098,
@@ -9169,9 +8598,9 @@
     "dxy_asof": "2026-10-19",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": -0.584908,
-    "stables_usd": 304621197021.0,
+    "stables_usd": 304640413942.0,
     "stables_asof": "2026-10-19",
-    "stables_7d_pct": -0.496458,
+    "stables_7d_pct": -0.498716,
     "trend_btc": {
      "state": "boga",
      "close": 81909.6,
@@ -9318,13 +8747,7 @@
      "dealer_net": 1841.0,
      "asof": "2026-10-13"
     },
-    "cot_eth": {
-     "oi": 25543.0,
-     "lev_net": -6283.0,
-     "am_net": -671.0,
-     "dealer_net": 8300.0,
-     "asof": "2026-10-13"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4160.100098,
@@ -9385,9 +8808,9 @@
     "dxy_asof": "2026-10-20",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": -0.440396,
-    "stables_usd": 303737459270.0,
+    "stables_usd": 303756798128.0,
     "stables_asof": "2026-10-20",
-    "stables_7d_pct": -0.773534,
+    "stables_7d_pct": -0.775687,
     "trend_btc": {
      "state": "boga",
      "close": 82984.5,
@@ -9534,13 +8957,7 @@
      "dealer_net": 1392.0,
      "asof": "2026-10-20"
     },
-    "cot_eth": {
-     "oi": 28344.0,
-     "lev_net": -5128.0,
-     "am_net": -1306.0,
-     "dealer_net": 7550.0,
-     "asof": "2026-10-20"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4142.600098,
@@ -9601,9 +9018,9 @@
     "dxy_asof": "2026-10-21",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": -0.750857,
-    "stables_usd": 303537955957.0,
+    "stables_usd": 303557649517.0,
     "stables_asof": "2026-10-21",
-    "stables_7d_pct": -0.837227,
+    "stables_7d_pct": -0.839327,
     "trend_btc": {
      "state": "boga",
      "close": 84049.9,
@@ -9750,13 +9167,7 @@
      "dealer_net": 1392.0,
      "asof": "2026-10-20"
     },
-    "cot_eth": {
-     "oi": 28344.0,
-     "lev_net": -5128.0,
-     "am_net": -1306.0,
-     "dealer_net": 7550.0,
-     "asof": "2026-10-20"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4150.0,
@@ -9817,9 +9228,9 @@
     "dxy_asof": "2026-10-22",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": -0.382352,
-    "stables_usd": 303687100264.0,
+    "stables_usd": 303706280534.0,
     "stables_asof": "2026-10-22",
-    "stables_7d_pct": -0.598286,
+    "stables_7d_pct": -0.599102,
     "trend_btc": {
      "state": "boga",
      "close": 81380.9,
@@ -9966,13 +9377,7 @@
      "dealer_net": 1392.0,
      "asof": "2026-10-20"
     },
-    "cot_eth": {
-     "oi": 28344.0,
-     "lev_net": -5128.0,
-     "am_net": -1306.0,
-     "dealer_net": 7550.0,
-     "asof": "2026-10-20"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4060.399902,
@@ -10033,9 +9438,9 @@
     "dxy_asof": "2026-10-23",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": -0.029457,
-    "stables_usd": 303248376479.0,
+    "stables_usd": 303267553691.0,
     "stables_asof": "2026-10-23",
-    "stables_7d_pct": -0.639602,
+    "stables_7d_pct": -0.639706,
     "trend_btc": {
      "state": "boga",
      "close": 81149.9,
@@ -10182,13 +9587,7 @@
      "dealer_net": 1392.0,
      "asof": "2026-10-20"
     },
-    "cot_eth": {
-     "oi": 28344.0,
-     "lev_net": -5128.0,
-     "am_net": -1306.0,
-     "dealer_net": 7550.0,
-     "asof": "2026-10-20"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4007.899902,
@@ -10249,9 +9648,9 @@
     "dxy_asof": "2026-10-23",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": -0.029457,
-    "stables_usd": 302800143228.0,
+    "stables_usd": 302819173762.0,
     "stables_asof": "2026-10-24",
-    "stables_7d_pct": -0.677878,
+    "stables_7d_pct": -0.67797,
     "trend_btc": {
      "state": "boga",
      "close": 80850.0,
@@ -10398,13 +9797,7 @@
      "dealer_net": 1392.0,
      "asof": "2026-10-20"
     },
-    "cot_eth": {
-     "oi": 28344.0,
-     "lev_net": -5128.0,
-     "am_net": -1306.0,
-     "dealer_net": 7550.0,
-     "asof": "2026-10-20"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4007.899902,
@@ -10465,9 +9858,9 @@
     "dxy_asof": "2026-10-23",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": -0.029457,
-    "stables_usd": 302596851136.0,
+    "stables_usd": 302615716283.0,
     "stables_asof": "2026-10-25",
-    "stables_7d_pct": -0.674714,
+    "stables_7d_pct": -0.674799,
     "trend_btc": {
      "state": "boga",
      "close": 80119.1,
@@ -10614,13 +10007,7 @@
      "dealer_net": 1392.0,
      "asof": "2026-10-20"
     },
-    "cot_eth": {
-     "oi": 28344.0,
-     "lev_net": -5128.0,
-     "am_net": -1306.0,
-     "dealer_net": 7550.0,
-     "asof": "2026-10-20"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4007.899902,
@@ -10681,9 +10068,9 @@
     "dxy_asof": "2026-10-26",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": -0.019616,
-    "stables_usd": 302279415034.0,
+    "stables_usd": 302298496271.0,
     "stables_asof": "2026-10-26",
-    "stables_7d_pct": -0.768752,
+    "stables_7d_pct": -0.768748,
     "trend_btc": {
      "state": "boga",
      "close": 80124.9,
@@ -10830,13 +10217,7 @@
      "dealer_net": 1392.0,
      "asof": "2026-10-20"
     },
-    "cot_eth": {
-     "oi": 28344.0,
-     "lev_net": -5128.0,
-     "am_net": -1306.0,
-     "dealer_net": 7550.0,
-     "asof": "2026-10-20"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4038.399902,
@@ -10897,9 +10278,9 @@
     "dxy_asof": "2026-10-27",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.579963,
-    "stables_usd": 301556307384.0,
+    "stables_usd": 301592753124.0,
     "stables_asof": "2026-10-27",
-    "stables_7d_pct": -0.718104,
+    "stables_7d_pct": -0.712427,
     "trend_btc": {
      "state": "boga",
      "close": 80881.4,
@@ -11046,13 +10427,7 @@
      "dealer_net": 1256.0,
      "asof": "2026-10-27"
     },
-    "cot_eth": {
-     "oi": 28068.0,
-     "lev_net": -4025.0,
-     "am_net": -1184.0,
-     "dealer_net": 6887.0,
-     "asof": "2026-10-27"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4074.600098,
@@ -11115,9 +10490,9 @@
     "dxy_asof": "2026-10-28",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.402833,
-    "stables_usd": 301599202788.0,
+    "stables_usd": 301633025145.0,
     "stables_asof": "2026-10-28",
-    "stables_7d_pct": -0.638719,
+    "stables_7d_pct": -0.634023,
     "trend_btc": {
      "state": "boga",
      "close": 81309.9,
@@ -11264,13 +10639,7 @@
      "dealer_net": 1256.0,
      "asof": "2026-10-27"
     },
-    "cot_eth": {
-     "oi": 28068.0,
-     "lev_net": -4025.0,
-     "am_net": -1184.0,
-     "dealer_net": 6887.0,
-     "asof": "2026-10-27"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4051.600098,
@@ -11331,9 +10700,9 @@
     "dxy_asof": "2026-10-29",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.423187,
-    "stables_usd": 300109721672.0,
+    "stables_usd": 300128939518.0,
     "stables_asof": "2026-10-29",
-    "stables_7d_pct": -1.177982,
+    "stables_7d_pct": -1.177895,
     "trend_btc": {
      "state": "boga",
      "close": 77966.9,
@@ -11480,13 +10849,7 @@
      "dealer_net": 1256.0,
      "asof": "2026-10-27"
     },
-    "cot_eth": {
-     "oi": 28068.0,
-     "lev_net": -4025.0,
-     "am_net": -1184.0,
-     "dealer_net": 6887.0,
-     "asof": "2026-10-27"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4031.399902,
@@ -11547,9 +10910,9 @@
     "dxy_asof": "2026-10-30",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.068755,
-    "stables_usd": 299701015151.0,
+    "stables_usd": 299721431470.0,
     "stables_asof": "2026-10-30",
-    "stables_7d_pct": -1.169787,
+    "stables_7d_pct": -1.169305,
     "trend_btc": {
      "state": "boga",
      "close": 77286.8,
@@ -11696,13 +11059,7 @@
      "dealer_net": 1256.0,
      "asof": "2026-10-27"
     },
-    "cot_eth": {
-     "oi": 28068.0,
-     "lev_net": -4025.0,
-     "am_net": -1184.0,
-     "dealer_net": 6887.0,
-     "asof": "2026-10-27"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 3898.899902,
@@ -11763,9 +11120,9 @@
     "dxy_asof": "2026-10-30",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.068755,
-    "stables_usd": 298961959704.0,
+    "stables_usd": 298981769366.0,
     "stables_asof": "2026-10-31",
-    "stables_7d_pct": -1.267563,
+    "stables_7d_pct": -1.267226,
     "trend_btc": {
      "state": "boga",
      "close": 77521.0,
@@ -11912,13 +11269,7 @@
      "dealer_net": 1256.0,
      "asof": "2026-10-27"
     },
-    "cot_eth": {
-     "oi": 28068.0,
-     "lev_net": -4025.0,
-     "am_net": -1184.0,
-     "dealer_net": 6887.0,
-     "asof": "2026-10-27"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 3898.899902,
@@ -11979,9 +11330,9 @@
     "dxy_asof": "2026-10-30",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.068755,
-    "stables_usd": 298364119913.0,
+    "stables_usd": 298384787661.0,
     "stables_asof": "2026-11-01",
-    "stables_7d_pct": -1.398802,
+    "stables_7d_pct": -1.398119,
     "trend_btc": {
      "state": "boga",
      "close": 78308.7,
@@ -12128,13 +11479,7 @@
      "dealer_net": 1256.0,
      "asof": "2026-10-27"
     },
-    "cot_eth": {
-     "oi": 28068.0,
-     "lev_net": -4025.0,
-     "am_net": -1184.0,
-     "dealer_net": 6887.0,
-     "asof": "2026-10-27"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 3898.899902,
@@ -12195,9 +11540,9 @@
     "dxy_asof": "2026-11-02",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": -0.205962,
-    "stables_usd": 297624945845.0,
+    "stables_usd": 297645655258.0,
     "stables_asof": "2026-11-02",
-    "stables_7d_pct": -1.53979,
+    "stables_7d_pct": -1.539155,
     "trend_btc": {
      "state": "boga",
      "close": 76795.5,
@@ -12344,13 +11689,7 @@
      "dealer_net": 1256.0,
      "asof": "2026-10-27"
     },
-    "cot_eth": {
-     "oi": 28068.0,
-     "lev_net": -4025.0,
-     "am_net": -1184.0,
-     "dealer_net": 6887.0,
-     "asof": "2026-10-27"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 3969.600098,
@@ -12411,9 +11750,9 @@
     "dxy_asof": "2026-11-03",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": -0.439794,
-    "stables_usd": 296010847293.0,
+    "stables_usd": 296677988280.0,
     "stables_asof": "2026-11-03",
-    "stables_7d_pct": -1.838947,
+    "stables_7d_pct": -1.629603,
     "trend_btc": {
      "state": "boga",
      "close": 77439.4,
@@ -12560,13 +11899,7 @@
      "dealer_net": 479.0,
      "asof": "2026-11-03"
     },
-    "cot_eth": {
-     "oi": 22869.0,
-     "lev_net": -3699.0,
-     "am_net": -1825.0,
-     "dealer_net": 7406.0,
-     "asof": "2026-11-03"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 3940.399902,
@@ -12627,9 +11960,9 @@
     "dxy_asof": "2026-11-04",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": -0.665427,
-    "stables_usd": 295127894949.0,
+    "stables_usd": 295792191171.0,
     "stables_asof": "2026-11-04",
-    "stables_7d_pct": -2.145665,
+    "stables_7d_pct": -1.936404,
     "trend_btc": {
      "state": "boga",
      "close": 80466.1,
@@ -12776,13 +12109,7 @@
      "dealer_net": 479.0,
      "asof": "2026-11-03"
     },
-    "cot_eth": {
-     "oi": 22869.0,
-     "lev_net": -3699.0,
-     "am_net": -1825.0,
-     "dealer_net": 7406.0,
-     "asof": "2026-11-03"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4073.0,
@@ -12843,9 +12170,9 @@
     "dxy_asof": "2026-11-05",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": -0.480202,
-    "stables_usd": 294548125917.0,
+    "stables_usd": 295216506037.0,
     "stables_asof": "2026-11-05",
-    "stables_7d_pct": -1.853187,
+    "stables_7d_pct": -1.636774,
     "trend_btc": {
      "state": "boga",
      "close": 76049.5,
@@ -12992,13 +12319,7 @@
      "dealer_net": 479.0,
      "asof": "2026-11-03"
     },
-    "cot_eth": {
-     "oi": 22869.0,
-     "lev_net": -3699.0,
-     "am_net": -1825.0,
-     "dealer_net": 7406.0,
-     "asof": "2026-11-03"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4113.5,
@@ -13061,9 +12382,9 @@
     "dxy_asof": "2026-11-06",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.412255,
-    "stables_usd": 293725622933.0,
+    "stables_usd": 294388165385.0,
     "stables_asof": "2026-11-06",
-    "stables_7d_pct": -1.993784,
+    "stables_7d_pct": -1.779408,
     "trend_btc": {
      "state": "boga",
      "close": 75816.3,
@@ -13210,13 +12531,7 @@
      "dealer_net": 479.0,
      "asof": "2026-11-03"
     },
-    "cot_eth": {
-     "oi": 22869.0,
-     "lev_net": -3699.0,
-     "am_net": -1825.0,
-     "dealer_net": 7406.0,
-     "asof": "2026-11-03"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4074.899902,
@@ -13277,9 +12592,9 @@
     "dxy_asof": "2026-11-06",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.412255,
-    "stables_usd": 292305540534.0,
+    "stables_usd": 293191526240.0,
     "stables_asof": "2026-11-07",
-    "stables_7d_pct": -2.22651,
+    "stables_7d_pct": -1.936654,
     "trend_btc": {
      "state": "boga",
      "close": 75829.9,
@@ -13408,7 +12723,7 @@
      "close": 0.003719,
      "oi_usd": 21811656.075,
      "oi_coin": 5864925000.0,
-     "ls_ratio": 1.744805,
+     "ls_ratio": 1.747888,
      "taker_sell_usd": 44110722.792,
      "taker_buy_usd": 38404722.978,
      "funding_sum_pct": -0.006165,
@@ -13426,13 +12741,7 @@
      "dealer_net": 479.0,
      "asof": "2026-11-03"
     },
-    "cot_eth": {
-     "oi": 22869.0,
-     "lev_net": -3699.0,
-     "am_net": -1825.0,
-     "dealer_net": 7406.0,
-     "asof": "2026-11-03"
-    }
+    "cot_eth": null
    },
    "macro": {
     "gold": 4074.899902,
@@ -13476,6 +12785,216 @@
     "btc_gold_7d": 0.299852,
     "eth_gold": 0.3144,
     "eth_gold_n": 22,
+    "eth_gold_7d": 0.365947
+   }
+  },
+  {
+   "date": "2026-11-08",
+   "cal": [],
+   "regime": {
+    "netliq_musd": 5790745.0,
+    "netliq_asof": "2026-11-04",
+    "netliq_wk_chg_pct": 0.783416,
+    "real10y": 2.6,
+    "real10y_asof": "2026-11-05",
+    "real10y_wk_chg_bp": -3.0,
+    "dxy": 102.300003,
+    "dxy_asof": "2026-11-06",
+    "dxy_src": "DXY (ICE)",
+    "dxy_7d_pct": 0.412255,
+    "stables_usd": 293236814701.0,
+    "stables_asof": "2026-11-08",
+    "stables_7d_pct": -1.72528,
+    "trend_btc": {
+     "state": "boga",
+     "close": 74818.1,
+     "ma50": 81782.73,
+     "ma200": 73189.99,
+     "dist200_pct": 2.22,
+     "dist50_pct": -8.52
+    },
+    "trend_eth": {
+     "state": "gecis",
+     "close": 2126.61,
+     "ma50": 2481.98,
+     "ma200": 2155.02,
+     "dist200_pct": -1.32,
+     "dist50_pct": -14.32
+    }
+   },
+   "risk": {
+    "spx": 7353.73,
+    "spx_asof": "2026-11-05",
+    "spx_1d_pct": -4.355658,
+    "ndx": 24579.42,
+    "ndx_asof": "2026-11-06",
+    "ndx_1d_pct": 1.087477,
+    "vix": 28.18,
+    "vix_asof": "2026-11-05",
+    "hy_oas": 3.48,
+    "hy_asof": "2026-11-05",
+    "hy_wk_chg_bp": 22.0
+   },
+   "pos": {
+    "btc": {
+     "open": 75830.0,
+     "high": 76160.0,
+     "low": 73385.0,
+     "close": 74818.1,
+     "oi_usd": 2526238559.28781,
+     "oi_coin": 33779.9265,
+     "ls_ratio": 2.629048,
+     "taker_sell_usd": 1913786125.31833,
+     "taker_buy_usd": 1706402705.07774,
+     "funding_sum_pct": 0.006738,
+     "funding_n": 3,
+     "oi_chg_pct": -3.162989,
+     "oi_coin_chg_pct": -1.818786,
+     "chg_pct": -1.334302,
+     "flow": "temizlik",
+     "taker_buy_share": 0.471357
+    },
+    "eth": {
+     "open": 2239.0,
+     "high": 2245.08,
+     "low": 2051.9,
+     "close": 2126.61,
+     "oi_usd": 1419711058.524963,
+     "oi_coin": 667791.352,
+     "ls_ratio": 3.308386,
+     "taker_sell_usd": 2120703662.97876,
+     "taker_buy_usd": 1904115053.77534,
+     "funding_sum_pct": -0.003805,
+     "funding_n": 3,
+     "oi_chg_pct": -6.266061,
+     "oi_coin_chg_pct": -1.288328,
+     "chg_pct": -5.020076,
+     "flow": "temizlik",
+     "taker_buy_share": 0.473093
+    },
+    "sol": {
+     "open": 89.77,
+     "high": 89.96,
+     "low": 84.81,
+     "close": 86.49,
+     "oi_usd": 293994042.9147,
+     "oi_coin": 3399168.03,
+     "ls_ratio": 3.517873,
+     "taker_sell_usd": 333017292.061,
+     "taker_buy_usd": 286396656.73,
+     "funding_sum_pct": 0.0175,
+     "funding_n": 3,
+     "oi_chg_pct": -7.093586,
+     "oi_coin_chg_pct": -3.559512,
+     "chg_pct": -3.664513,
+     "flow": "temizlik",
+     "taker_buy_share": 0.462367
+    },
+    "xrp": {
+     "open": 1.1633,
+     "high": 1.1693,
+     "low": 1.0912,
+     "close": 1.1126,
+     "oi_usd": 87413186.889,
+     "oi_coin": 78538353.0,
+     "ls_ratio": 3.819742,
+     "taker_sell_usd": 146435474.1212,
+     "taker_buy_usd": 127801768.0567,
+     "funding_sum_pct": 0.013895,
+     "funding_n": 3,
+     "oi_chg_pct": -6.154051,
+     "oi_coin_chg_pct": -1.921287,
+     "chg_pct": -4.366512,
+     "flow": "temizlik",
+     "taker_buy_share": 0.466026
+    },
+    "doge": {
+     "open": 0.0716,
+     "high": 0.07165,
+     "low": 0.06701,
+     "close": 0.06892,
+     "oi_usd": 85685267.9701,
+     "oi_coin": 1243076570.0,
+     "ls_ratio": 5.230094,
+     "taker_sell_usd": 88636553.5778,
+     "taker_buy_usd": 72702249.6863,
+     "funding_sum_pct": 0.016489,
+     "funding_n": 3,
+     "oi_chg_pct": -7.422662,
+     "oi_coin_chg_pct": -3.823253,
+     "chg_pct": -3.743017,
+     "flow": "temizlik",
+     "taker_buy_share": 0.450619
+    },
+    "pump": {
+     "open": 0.003719,
+     "high": 0.003771,
+     "low": 0.003472,
+     "close": 0.003526,
+     "oi_usd": 19198109.371,
+     "oi_coin": 5440099000.0,
+     "ls_ratio": 1.716188,
+     "taker_sell_usd": 39689661.503,
+     "taker_buy_usd": 35229629.949,
+     "funding_sum_pct": 0.005848,
+     "funding_n": 3,
+     "oi_chg_pct": -11.98234,
+     "oi_coin_chg_pct": -7.243503,
+     "chg_pct": -5.189567,
+     "flow": "temizlik",
+     "taker_buy_share": 0.470234
+    },
+    "cot_btc": {
+     "oi": 17527.0,
+     "lev_net": -2591.0,
+     "am_net": 2403.0,
+     "dealer_net": 479.0,
+     "asof": "2026-11-03"
+    },
+    "cot_eth": null
+   },
+   "macro": {
+    "gold": 4074.899902,
+    "gold_asof": "2026-11-06",
+    "gold_src": "Alt\u0131n vadeli (COMEX, GC=F)",
+    "gold_1d_pct": -0.938376,
+    "gold_7d_pct": 4.514094,
+    "gold_high120": 4697.799805,
+    "gold_high120_date": "2026-08-24",
+    "gold_from_high_pct": -13.259396,
+    "cot_gold_mm_net": 103614.0,
+    "cot_gold_mm_long": 122283.0,
+    "cot_gold_mm_short": 18669.0,
+    "cot_gold_asof": "2026-11-03",
+    "cot_gold_mm_net_wk_chg": -1948.0,
+    "gld_tonnes": null,
+    "gld_asof": null,
+    "gld_7d_chg_t": null,
+    "wti": 90.830002,
+    "wti_asof": "2026-11-06",
+    "wti_1d_pct": 0.342471,
+    "brent": 98.32,
+    "brent_asof": "2026-11-06",
+    "brent_1d_pct": 0.030521
+   },
+   "corr": {
+    "btc_spx": 0.793291,
+    "btc_spx_n": 20,
+    "btc_spx_7d": 0.987034,
+    "btc_ndx": 0.796871,
+    "btc_ndx_n": 21,
+    "btc_ndx_7d": 0.918949,
+    "btc_dxy": -0.179013,
+    "btc_dxy_n": 21,
+    "btc_dxy_7d": -0.262534,
+    "btc_eth": 0.943262,
+    "btc_eth_n": 31,
+    "btc_eth_7d": 0.940169,
+    "btc_gold": 0.348501,
+    "btc_gold_n": 21,
+    "btc_gold_7d": 0.299852,
+    "eth_gold": 0.344715,
+    "eth_gold_n": 21,
     "eth_gold_7d": 0.365947
    }
   }
