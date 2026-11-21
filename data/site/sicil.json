@@ -1,0 +1,87 @@
+{
+ "source": "Piyasa Hava Durumu",
+ "site_url": "https://samiboran.github.io/sweeplab/piyasa/",
+ "rules_version": "v1",
+ "generated_at": "2026-11-21T16:12:56Z",
+ "license": "CC BY 4.0 (yalnızca kamu kaynaklı türetilmiş alanlar)",
+ "attribution": "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0",
+ "schema_version": 1,
+ "freeze_date": "2026-11-21",
+ "show_from": "2026-10-01",
+ "data_until": "2026-11-19",
+ "check": {
+  "window_days": 20,
+  "confirm_drop_pct": -5.0,
+  "miss_drop_pct": -10.0,
+  "reference": "Nasdaq Bileşik kapanışı (lisanslı; değer yayımlanmaz)"
+ },
+ "summary_live": {
+  "canli_sinyal": 0,
+  "canli_teyit": 0,
+  "canli_yanlis_alarm": 0,
+  "canli_bekliyor": 0,
+  "canli_kacirilan": 0
+ },
+ "entries": [
+  {
+   "date": "2026-10-11",
+   "kind": "sinyal",
+   "level": "KIRMIZI",
+   "mode": "retro",
+   "rules_version": "v1",
+   "result": "teyit edildi",
+   "confirm_date": "2026-10-23",
+   "days_to_confirm": 12
+  },
+  {
+   "date": "2026-10-17",
+   "kind": "sinyal",
+   "level": "KIRMIZI",
+   "mode": "retro",
+   "rules_version": "v1",
+   "result": "teyit edildi",
+   "confirm_date": "2026-11-05",
+   "days_to_confirm": 19
+  },
+  {
+   "date": "2026-10-24",
+   "kind": "sinyal",
+   "level": "KIRMIZI",
+   "mode": "retro",
+   "rules_version": "v1",
+   "result": "teyit edildi",
+   "confirm_date": "2026-11-05",
+   "days_to_confirm": 12
+  },
+  {
+   "date": "2026-10-31",
+   "kind": "sinyal",
+   "level": "KIRMIZI",
+   "mode": "retro",
+   "rules_version": "v1",
+   "result": "teyit edildi",
+   "confirm_date": "2026-11-19",
+   "days_to_confirm": 19
+  },
+  {
+   "date": "2026-11-13",
+   "kind": "sinyal",
+   "level": "KIRMIZI",
+   "mode": "retro",
+   "rules_version": "v1",
+   "result": "teyit edildi",
+   "confirm_date": "2026-11-19",
+   "days_to_confirm": 6
+  },
+  {
+   "date": "2026-09-30",
+   "kind": "sinyal",
+   "level": "KIRMIZI",
+   "mode": "retro",
+   "rules_version": "v1",
+   "result": "yanlış alarm",
+   "checked_until": "2026-10-20"
+  }
+ ],
+ "disclaimer": "Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır."
+}
