@@ -67,57 +67,98 @@
     } catch (e) { /* ignore */ }
   }
 
+  var UNIT_TR = { gram_altin: "gram altın", gram_gumus: "gram gümüş", dolar: "dolar", btc: "BTC", eth: "ETH", bist100: "puan" };
+
+  function labels(a, c) {
+    var cur = c === "USD" ? "dolar" : "TL";
+    if (a === "dolar") return ["1 doları ortalama kaç TL'ye aldın?", "Kaç doların var?"];
+    if (a === "bist100") return ["Aldığında BIST 100 ortalama kaç puandı?", "Yatırdığın tutar (TL)"];
+    if (a === "btc" || a === "eth") return ["1 " + UNIT_TR[a] + " için ortalama kaç " + cur + " ödedin?", "Kaç " + UNIT_TR[a] + " var?"];
+    return ["1 gram için ortalama kaç " + cur + " ödedin?", "Kaç gramın var?"];
+  }
+  function todayPrice(a, c) {
+    var px = P ? C.prices(a, P) : null;
+    if (!px) return null;
+    return a === "dolar" || a === "bist100" || c !== "USD" ? px.tl : px.usd;
+  }
+
   function update() {
     var a = $("varlik").value, A = C.ASSETS[a];
     var tlOnly = !!(A && A.tlOnly);
     $("ccy-set").hidden = tlOnly;
     var c = tlOnly ? "TL" : ccy();
-    $("maliyet-label").textContent = "Ortalama maliyet (" + (c === "USD" ? "dolar" : "TL") + " / " + A.unit + ")";
-    $("miktar-label").textContent = "Miktar (" + A.unit + ")";
+    var L = labels(a, c);
+    $("maliyet-label").textContent = L[0];
+    $("miktar-label").textContent = L[1];
+    var tp = todayPrice(a, c);
+    $("maliyet").placeholder = tp ? "bugün: " + num(tp, tp >= 1000 ? 0 : 2) : "örn. 102,50";
+    $("miktar").placeholder = a === "bist100" ? "örn. 10.000" : "örn. 10";
     save();
     var out = $("sonuc");
     out.textContent = "";
     if (!P) return;
-    var r = C.compute(a, parse($("maliyet").value), c, parse($("miktar").value), P);
+    var cost = parse($("maliyet").value), qty = parse($("miktar").value);
+    if (a === "bist100" && cost > 0) qty = qty / cost;           // TL invested -> index units
+    var r = C.compute(a, cost, c, qty, P);
     if (!r) {
       if ($("maliyet").value || $("miktar").value) out.appendChild(el("p", "mute small", "Maliyet ve miktarı sıfırdan büyük sayı olarak gir. Bu varlık için güncel fiyat yoksa hesap yapılamaz."));
       return;
     }
+    var unitName = UNIT_TR[a], cur = r.ccy === "USD" ? "dolar" : "TL";
     out.appendChild(el("p", "label", "Sonuç"));
-    var pl = el("p", "big" + (r.plPct < 0 ? " neg" : ""), signedPct(r.plPct));
-    out.appendChild(pl);
+    out.appendChild(el("p", "big" + (r.plPct < 0 ? " neg" : ""), signedPct(r.plPct)));
+
+    // plain-language summary (every number from the calculation above)
+    var s1 = a === "bist100"
+      ? num(r.costTotal, 2) + " TL, BIST 100 ortalama " + num(r.cost, 0) + " puandayken yatırılmış."
+      : num(r.amount, Number.isInteger(r.amount) ? 0 : (r.amount < 1 ? 4 : 2)) + " " + unitName + ", tanesi ortalama " + money(r.cost, r.ccy) + ": toplam maliyet " + money(r.costTotal, r.ccy) + ".";
+    var s2 = a === "bist100"
+      ? "Bugün endeks " + num(r.price, 0) + " puan; aynı oranla bugünkü değer " + money(r.value, "TL") + "."
+      : "Bugün 1 " + unitName + " " + money(r.price, r.ccy) + "; bugünkü değer " + money(r.value, r.ccy) + ".";
+    var s3 = "Fark: " + (r.pl < 0 ? "−" : "+") + money(Math.abs(r.pl), r.ccy) + " (" + signedPct(r.plPct) + ").";
+    [s1, s2, s3].forEach(function (x) { out.appendChild(el("p", "sum", x)); });
+    var ratio = r.cost / r.price;
+    if (ratio > 2 || ratio < 0.5) {
+      out.appendChild(el("p", "notice", "Kontrol et: girdiğin maliyet (" + money(r.cost, r.ccy) + ") bugünkü fiyatın (" +
+        money(r.price, r.ccy) + ") " + num(ratio, 1) + " katı. " + "1 " + unitName + " için ödediğin birim fiyatı (" + cur + ") girdiğinden emin ol."));
+    }
+
     var t = el("table"), tb = el("tbody");
-    row(tb, "Güncel fiyat (" + r.unit + ")", money(r.price, r.ccy));
+    row(tb, a === "bist100" ? "Bugünkü BIST 100" : "Bugünkü fiyat (1 " + unitName + ")", a === "bist100" ? num(r.price, 0) + " puan" : money(r.price, r.ccy));
     row(tb, "Toplam maliyet", money(r.costTotal, r.ccy));
-    row(tb, "Güncel değer", money(r.value, r.ccy));
+    row(tb, "Bugünkü değer", money(r.value, r.ccy));
     row(tb, "Kâr / zarar", (r.pl < 0 ? "−" : "+") + money(Math.abs(r.pl), r.ccy), r.pl < 0 ? "neg" : null);
-    row(tb, "Başabaş fiyatı (" + r.unit + ")", money(r.breakeven, r.ccy));
-    row(tb, "Başabaşa uzaklık", r.toBreakevenPct <= 0 ? "Başabaşın üzerinde" : signedPct(r.toBreakevenPct));
+    row(tb, "Maliyetine dönmek için fiyat", a === "bist100" ? num(r.breakeven, 0) + " puan" : money(r.breakeven, r.ccy));
+    row(tb, "Gereken yükseliş", r.toBreakevenPct <= 0 ? "Yok (maliyetin üzerindesin)" : signedPct(r.toBreakevenPct));
     t.appendChild(tb);
     out.appendChild(t);
 
-    out.appendChild(el("p", "label kicker", "Dolar/TL senaryosu"));
+    if (a === "bist100") return;
+    out.appendChild(el("p", "label kicker", "Dolar/TL değişirse"));
+    var showBe = a !== "dolar";
     var t2 = el("table"), th = el("thead"), hr = el("tr");
     var cols = ["Dolar/TL"];
-    if (r.ccy === "TL") cols.push("Başabaş (" + (r.scenarios[0].breakevenUsdUnit === "ons" ? "ons, $" : r.unit + ", $") + ")");
-    else cols.push("Başabaş (TL / " + r.unit + ")");
-    if (a !== "bist100") cols.push("Değer (TL)");
-    cols.forEach(function (c) { hr.appendChild(el("th", null, c)); });
+    if (showBe) cols.push(r.ccy === "TL"
+      ? (A.metal ? "Maliyetine dönmek için ons ($)" : "Maliyetine dönmek için 1 " + unitName + " ($)")
+      : "Maliyetin TL karşılığı (1 " + unitName + ")");
+    cols.push("Değer (TL)");
+    cols.forEach(function (x) { hr.appendChild(el("th", null, x)); });
     th.appendChild(hr); t2.appendChild(th);
     var b2 = el("tbody");
-    r.scenarios.forEach(function (s) {
+    r.scenarios.forEach(function (sc) {
       var tr = el("tr");
-      tr.appendChild(el("th", null, num(s.usdtry, 2) + (s.shockPct ? " (+%" + s.shockPct + ")" : " (bugün)")));
-      tr.appendChild(el("td", null, r.ccy === "TL" ? num(s.breakevenUsd, 2) : num(s.breakevenTl, 2)));
-      if (a !== "bist100") tr.appendChild(el("td", null, s.valueTl == null ? "—" : num(s.valueTl, 0)));
+      tr.appendChild(el("th", null, num(sc.usdtry, 2) + (sc.shockPct ? " (+%" + sc.shockPct + ")" : " (bugün)")));
+      if (showBe) tr.appendChild(el("td", null, num(r.ccy === "TL" ? sc.breakevenUsd : sc.breakevenTl, 2)));
+      tr.appendChild(el("td", null, sc.valueTl == null ? "—" : num(sc.valueTl, 0)));
       b2.appendChild(tr);
     });
     t2.appendChild(b2);
     out.appendChild(t2);
-    var note = r.ccy === "TL"
-      ? "Başabaş sütunu, TL maliyetinin karşılanması için varlığın dolar fiyatının ne olması gerektiğini gösterir" + (A.metal ? " (ons = 31,1035 gram)" : "") + ". Değer sütunu, dolar fiyatı bugünkü gibi kalırsa TL karşılığıdır."
-      : "Maliyet dolar cinsinden; kur senaryosu yalnız TL karşılığını değiştirir. Değer sütunu, dolar fiyatı bugünkü gibi kalırsa TL karşılığıdır.";
-    if (a === "bist100") note = "BIST 100 TL cinsinden izlenir; başabaş sütunu, endeksin dolar bazında karşılığını gösterir.";
+    var note = a === "dolar"
+      ? "Değer sütunu, dolar/TL bu seviyeye gelirse elindeki dolarların TL karşılığıdır."
+      : r.ccy === "TL"
+        ? "Orta sütun: TL maliyetine dönmek için varlığın dolar fiyatının ne olması gerektiği" + (A.metal ? " (1 ons = 31,1035 gram)" : "") + ". Değer sütunu: dolar fiyatı bugünkü gibi kalırsa TL karşılığı."
+        : "Maliyet dolar cinsinden; kur yalnız TL karşılığını değiştirir. Değer sütunu: dolar fiyatı bugünkü gibi kalırsa TL karşılığı.";
     out.appendChild(el("p", "mute small", note));
   }
 

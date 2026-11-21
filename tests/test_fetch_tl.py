@@ -71,3 +71,23 @@ def test_calculator_js():
     here = os.path.dirname(__file__)
     out = subprocess.run(["node", os.path.join(here, "hesapla_test.js")], capture_output=True, text=True)
     assert out.returncode == 0, out.stderr
+
+
+def test_is_daily_rejects_monthly_bars():
+    monthly = {f"{y}-{m:02d}-01": 1.0 for y in range(2020, 2027) for m in range(1, 13)}
+    assert not tl.is_daily(monthly)
+    assert tl.is_daily(series("2024-01-01", 600, lambda i: 1.0))
+
+
+def test_update_raw_rebuilds_monthly_store(tmp_path, monkeypatch):
+    monkeypatch.setattr(tl, "RAW_DIR", str(tmp_path))
+    monthly = {f"{y}-{m:02d}-01": 1.0 for y in range(2010, 2027) for m in range(1, 13)}
+    for n in tl.SYMBOLS:
+        tl.write_csv(str(tmp_path / f"{n}.csv"), monthly)
+    daily = series("2020-01-01", 1500, lambda i: 2.0)
+    calls = []
+    monkeypatch.setattr(tl, "yahoo", lambda sym, start=None, rng="1y": calls.append(start) or dict(daily))
+    data = tl.update_raw()
+    assert all(c == tl.BACKFILL_START for c in calls)
+    assert all(tl.is_daily(v) and len(v) == 1500 for v in data.values())
+    assert tl.read_csv(str(tmp_path / "USDTRY.csv")) == daily

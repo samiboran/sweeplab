@@ -353,6 +353,45 @@ def inputs_asof(row):
     return {k: get(row, a) for k, (_, a, _) in CORE_INPUTS.items()}
 
 
+def business_day(d):
+    """The row's own date, or the Friday before for a weekend row."""
+    x = dt.date.fromisoformat(d)
+    while x.weekday() > 4:
+        x -= dt.timedelta(days=1)
+    return x.isoformat()
+
+
+def settled(rows, i):
+    """True when rows[i]'s daily inputs are final for its date: each daily core input is
+    from the row's own business day, or a LATER row already carries a newer value for it
+    (the source had nothing for that day, e.g. a US holiday).
+    The morning build's newest row usually still carries the previous day's US data
+    (FRED publishes VIX, real yield, HY OAS a day later); scoring it would mix days."""
+    row = rows[i]
+    a = inputs_asof(row)
+    for k, (_, ap, kind) in CORE_INPUTS.items():
+        if kind == "weekly":
+            continue
+        d = a.get(k)
+        if not d:
+            return False
+        need = row["date"] if k == "stables" else business_day(row["date"])
+        if str(d)[:10] >= need:
+            continue
+        later = any(str(get(r, ap) or "")[:10] > row["date"] for r in rows[i + 1:])
+        if not later:
+            return False
+    return True
+
+
+def settled_rows(rows):
+    """rows up to and including the newest settled row ([] if none)."""
+    for i in range(len(rows) - 1, -1, -1):
+        if settled(rows, i):
+            return rows[:i + 1]
+    return []
+
+
 def stale_inputs(asof, today):
     out = []
     for k, (_, _, kind) in CORE_INPUTS.items():
@@ -407,6 +446,9 @@ def build(notebook, site, now=None):
     rows = sorted(json.load(open(notebook, encoding="utf-8"))["rows"], key=lambda x: x["date"])
     if not rows:
         raise ValueError("notebook has no rows")
+    rows = settled_rows(rows)            # score only days whose inputs are complete
+    if not rows:
+        raise ValueError("notebook has no settled row")
     os.makedirs(os.path.join(site, "archive"), exist_ok=True)
     hpath = os.path.join(site, "history.csv")
     hist = read_history(hpath)

@@ -10,8 +10,8 @@ Publishes DERIVED, rounded values only:
 Sources (Yahoo Finance chart API, personal-use terms — to be replaced by a licensed
 or public source before any monetization):
   TRY=X (USD/TRY), GC=F (COMEX gold, USD/oz), SI=F (COMEX silver, USD/oz), XU100.IS
-First run (no CSV yet) backfills range=max (aim >= 5 years); later runs fetch 1 year
-and merge. Each symbol is independent: a failure is logged and the rest continue.
+First run (or a store that is not daily) backfills daily bars from 2000 via
+period1/period2 (range=max returns MONTHLY bars); later runs fetch 1 year and merge. Each symbol is independent: a failure is logged and the rest continue.
 BIST 100 index level is published only as the current rounded level (needed by the
 calculator); its series is published only as BIST 100 in USD, rebased to 100.
 """
@@ -33,24 +33,44 @@ status = {}
 
 
 # ---------------------------------------------------------------- fetch / store (private side)
-def yahoo(symbol, rng):
-    url = (f"https://query1.finance.yahoo.com/v8/finance/chart/{urllib.parse.quote(symbol)}"
-           f"?range={rng}&interval=1d")
+def yahoo(symbol, start=None, rng="1y"):
+    """Daily closes. Uses period1/period2 for long history: Yahoo silently returns
+    MONTHLY bars for range=max even with interval=1d."""
+    if start:
+        p1 = int(dt.datetime.fromisoformat(start).replace(tzinfo=dt.timezone.utc).timestamp())
+        p2 = int(time.time()) + 86400
+        q = f"period1={p1}&period2={p2}&interval=1d"
+    else:
+        q = f"range={rng}&interval=1d"
+    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{urllib.parse.quote(symbol)}?{q}"
     err = None
     for a in range(3):
         try:
-            with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30) as r:
+            with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=60) as r:
                 j = json.loads(r.read())
             res = j["chart"]["result"][0]
             out = {}
             for t, c in zip(res.get("timestamp") or [], res["indicators"]["quote"][0]["close"]):
                 if c is not None and c > 0:
                     out[dt.datetime.fromtimestamp(t, dt.timezone.utc).strftime("%Y-%m-%d")] = float(c)
+            if not is_daily(out):
+                raise RuntimeError("not daily bars (median gap > 4 days)")
             return out
         except Exception as e:
             err = f"{type(e).__name__}: {str(e)[:120]}"
             time.sleep(2 * (a + 1))
     raise RuntimeError(err)
+
+
+def is_daily(series):
+    """True when the last 2 years look like daily bars (median gap <= 4 days)."""
+    d = sorted(series)
+    if len(d) < 20:
+        return len(d) > 0
+    cut = (dt.date.fromisoformat(d[-1]) - dt.timedelta(days=730)).isoformat()
+    d = [x for x in d if x >= cut]
+    gaps = sorted((dt.date.fromisoformat(b) - dt.date.fromisoformat(a)).days for a, b in zip(d, d[1:]))
+    return bool(gaps) and gaps[len(gaps) // 2] <= 4
 
 
 def read_csv(path):
@@ -71,18 +91,27 @@ def write_csv(path, series):
     os.replace(tmp, path)
 
 
+BACKFILL_START = "2000-01-01"
+
+
 def update_raw():
     data = {}
     for name, sym in SYMBOLS.items():
         path = os.path.join(RAW_DIR, name + ".csv")
         old = read_csv(path)
         try:
-            new = yahoo(sym, "1y" if len(old) > 300 else "max")
-            old.update(new)
+            if len(old) > 1000 and is_daily(old):
+                new = yahoo(sym, rng="1y")
+                old.update(new)
+            else:   # first run, or a store polluted by monthly bars: rebuild from daily history
+                new = yahoo(sym, start=BACKFILL_START)
+                old = dict(new)
             write_csv(path, old)
             status[name] = f"OK {sym} +{len(new)} -> {len(old)} ({min(old)}..{max(old)})"
         except Exception as e:
             status[name] = f"ERR {sym} {e}"
+            if not is_daily(old):
+                old = {}     # never derive from non-daily bars
         data[name] = old
     return data
 
