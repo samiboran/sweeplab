@@ -1,0 +1,199 @@
+{
+ "source": "Piyasa Hava Durumu",
+ "site_url": "https://samiboran.github.io/sweeplab/piyasa/",
+ "rules_version": "v1",
+ "generated_at": "2026-11-21T09:16:23Z",
+ "license": "CC BY 4.0 (yalnızca kamu kaynaklı türetilmiş alanlar)",
+ "attribution": "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0",
+ "schema_version": 1,
+ "status": "güncel",
+ "mode": "retro",
+ "data_date": "2026-10-06",
+ "publish_date": "2026-10-06",
+ "compare_date": "2026-09-22",
+ "last_good_date": "2026-10-06",
+ "level": "KIRMIZI",
+ "level_word": "KIRMIZI",
+ "raw_score": 5,
+ "max_score": 9,
+ "raw_level": "KIRMIZI",
+ "level_held": false,
+ "held_note": null,
+ "headline": "6 Ekim 2026 — Makro hava: KIRMIZI",
+ "groups": {
+  "Likidite": {
+   "points": 2,
+   "max": 3
+  },
+  "Dolar": {
+   "points": 1,
+   "max": 1
+  },
+  "Kredi / risk": {
+   "points": 1,
+   "max": 3
+  },
+  "Nakde kaçış": {
+   "points": 1,
+   "max": 1
+  },
+  "Petrol": {
+   "points": 0,
+   "max": 1
+  }
+ },
+ "rules": [
+  {
+   "code": "L1",
+   "group": "Likidite",
+   "title": "Stablecoin arzı",
+   "flag": 0,
+   "sentence": "Stablecoin arzı son 7 günde %0,5 arttı."
+  },
+  {
+   "code": "L2",
+   "group": "Likidite",
+   "title": "Fed net likiditesi",
+   "flag": 1,
+   "sentence": "Fed net likiditesi 20 günde %1,39 azaldı."
+  },
+  {
+   "code": "L3",
+   "group": "Likidite",
+   "title": "Reel faiz",
+   "flag": 1,
+   "sentence": "10 yıllık reel faiz %2,91; 20 günde 28 baz puan yükseldi."
+  },
+  {
+   "code": "D1",
+   "group": "Dolar",
+   "title": "Dolar endeksi",
+   "flag": 1,
+   "sentence": "Dolar endeksi 20 günde yükseldi; eşik aşıldı."
+  },
+  {
+   "code": "K1",
+   "group": "Kredi / risk",
+   "title": "Kredi risk primi",
+   "flag": 1,
+   "sentence": "Yüksek getirili tahvil risk primi 20 günde açıldı; eşik aşıldı."
+  },
+  {
+   "code": "K2",
+   "group": "Kredi / risk",
+   "title": "Oynaklık (VIX)",
+   "flag": 0,
+   "sentence": "VIX oynaklık endeksi 15,0 (18'in altında)."
+  },
+  {
+   "code": "K3",
+   "group": "Kredi / risk",
+   "title": "Nasdaq 100",
+   "flag": 0,
+   "sentence": "Nasdaq 100 endeksi 20 günde yükseldi; eşik aşılmadı."
+  },
+  {
+   "code": "N1",
+   "group": "Nakde kaçış",
+   "title": "Altın ve dolar",
+   "flag": 1,
+   "sentence": "Altın 20 günde %4,3 geriledi, dolar endeksi yükseldi — nakde kaçış işareti."
+  },
+  {
+   "code": "P1",
+   "group": "Petrol",
+   "title": "Petrol",
+   "flag": 0,
+   "sentence": "Ham petrol (WTI) 20 günde %5,4 geriledi."
+  }
+ ],
+ "values": {
+  "stables_7d_pct": 0.5,
+  "netliq_20g_pct": -1.39,
+  "real10y": 2.91,
+  "real10y_20g_bp": 28,
+  "dxy_20g_yon": "yükseldi",
+  "hy_oas_20g_yon": "açıldı",
+  "vix": 15.0,
+  "ndx_20g_yon": "yükseldi",
+  "gold_20g_pct": -4.3,
+  "wti_20g_pct": -5.4
+ },
+ "trend": {
+  "btc": {
+   "state": "boga",
+   "close": 85512.1,
+   "ma50": 79891.04,
+   "ma200": 71660.48,
+   "dist200_pct": 19.33,
+   "dist50_pct": 7.04
+  },
+  "eth": {
+   "state": "boga",
+   "close": 2696.67,
+   "ma50": 2532.8,
+   "ma200": 2124.14,
+   "dist200_pct": 26.95,
+   "dist50_pct": 6.47
+  }
+ },
+ "inputs_asof": {
+  "stables": "2026-10-06",
+  "netliq": "2026-09-30",
+  "real10y": "2026-10-06",
+  "dxy": "2026-10-06",
+  "hy_oas": "2026-10-06",
+  "vix": "2026-10-06",
+  "ndx": "2026-10-06",
+  "gold": "2026-10-06",
+  "wti": "2026-10-06"
+ },
+ "disclaimer": "Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.",
+ "answers": [
+  {
+   "id": "hava",
+   "q": "Bugün makro hava nasıl?",
+   "a": [
+    "6 Ekim 2026 itibarıyla makro hava: KIRMIZI.",
+    "Dokuz kuraldan 5 tanesi işaret veriyor (ham skor 5/9).",
+    "Veriler 6 Ekim 2026 kapanışına ait."
+   ]
+  },
+  {
+   "id": "isaretler",
+   "q": "Hangi kurallar işaret veriyor?",
+   "a": [
+    "Fed net likiditesi 20 günde %1,39 azaldı.",
+    "10 yıllık reel faiz %2,91; 20 günde 28 baz puan yükseldi.",
+    "Dolar endeksi 20 günde yükseldi; eşik aşıldı.",
+    "Yüksek getirili tahvil risk primi 20 günde açıldı; eşik aşıldı.",
+    "Altın 20 günde %4,3 geriledi, dolar endeksi yükseldi — nakde kaçış işareti."
+   ]
+  },
+  {
+   "id": "degisim",
+   "q": "Dünden bu yana ne değişti?",
+   "a": [
+    "Ham skor değişmedi (5)."
+   ]
+  },
+  {
+   "id": "kripto",
+   "q": "BTC ve ETH ortalamalara göre nerede?",
+   "a": [
+    "BTC günlük kapanışı 85.512 $; 200 günlük ortalamanın %19,3 üstünde, 50 günlük ortalamanın %7,0 üstünde.",
+    "ETH günlük kapanışı 2.697 $; 200 günlük ortalamanın %26,9 üstünde, 50 günlük ortalamanın %6,5 üstünde."
+   ]
+  },
+  {
+   "id": "yontem",
+   "q": "Bu ölçüm nasıl yapılıyor?",
+   "a": [
+    "Skor, likidite, dolar, kredi/risk, nakde kaçış ve petrol başlıklarındaki dokuz kuraldan oluşur; her kural 1 puan.",
+    "0–2 YEŞİL, 3–4 SARI, 5 ve üzeri KIRMIZI. Seviye, ikinci gün onayı olmadan değişmez.",
+    "Kurallar sabittir ve sürümlenir; yayımlanan skorlar sonradan değiştirilmez."
+   ],
+   "link": "yontem.html"
+  }
+ ]
+}

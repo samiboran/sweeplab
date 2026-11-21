@@ -1,0 +1,197 @@
+{
+ "source": "Piyasa Hava Durumu",
+ "site_url": "https://samiboran.github.io/sweeplab/piyasa/",
+ "rules_version": "v1",
+ "generated_at": "2026-11-21T09:16:23Z",
+ "license": "CC BY 4.0 (yalnızca kamu kaynaklı türetilmiş alanlar)",
+ "attribution": "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0",
+ "schema_version": 1,
+ "status": "güncel",
+ "mode": "retro",
+ "data_date": "2026-09-24",
+ "publish_date": "2026-09-24",
+ "compare_date": "2026-09-22",
+ "last_good_date": "2026-09-24",
+ "level": "YESIL",
+ "level_word": "YEŞİL",
+ "raw_score": 2,
+ "max_score": 9,
+ "raw_level": "YESIL",
+ "level_held": false,
+ "held_note": null,
+ "headline": "24 Eylül 2026 — Makro hava: YEŞİL",
+ "groups": {
+  "Likidite": {
+   "points": 2,
+   "max": 3
+  },
+  "Dolar": {
+   "points": 0,
+   "max": 1
+  },
+  "Kredi / risk": {
+   "points": 0,
+   "max": 3
+  },
+  "Nakde kaçış": {
+   "points": 0,
+   "max": 1
+  },
+  "Petrol": {
+   "points": 0,
+   "max": 1
+  }
+ },
+ "rules": [
+  {
+   "code": "L1",
+   "group": "Likidite",
+   "title": "Stablecoin arzı",
+   "flag": 0,
+   "sentence": "Stablecoin arzı son 7 günde %0,7 arttı."
+  },
+  {
+   "code": "L2",
+   "group": "Likidite",
+   "title": "Fed net likiditesi",
+   "flag": 1,
+   "sentence": "Fed net likiditesi 20 günde %1,60 azaldı."
+  },
+  {
+   "code": "L3",
+   "group": "Likidite",
+   "title": "Reel faiz",
+   "flag": 1,
+   "sentence": "10 yıllık reel faiz %2,85; 20 günde 22 baz puan yükseldi."
+  },
+  {
+   "code": "D1",
+   "group": "Dolar",
+   "title": "Dolar endeksi",
+   "flag": 0,
+   "sentence": "Dolar endeksi 20 günde yükseldi; eşik aşılmadı."
+  },
+  {
+   "code": "K1",
+   "group": "Kredi / risk",
+   "title": "Kredi risk primi",
+   "flag": 0,
+   "sentence": "Yüksek getirili tahvil risk primi 20 günde açıldı; eşik aşılmadı."
+  },
+  {
+   "code": "K2",
+   "group": "Kredi / risk",
+   "title": "Oynaklık (VIX)",
+   "flag": 0,
+   "sentence": "VIX oynaklık endeksi 15,7 (18'in altında)."
+  },
+  {
+   "code": "K3",
+   "group": "Kredi / risk",
+   "title": "Nasdaq 100",
+   "flag": 0,
+   "sentence": "Nasdaq 100 endeksi 20 günde düştü; eşik aşılmadı."
+  },
+  {
+   "code": "N1",
+   "group": "Nakde kaçış",
+   "title": "Altın ve dolar",
+   "flag": 0,
+   "sentence": "Altın 20 günde %1,8 geriledi, dolar endeksi yükseldi."
+  },
+  {
+   "code": "P1",
+   "group": "Petrol",
+   "title": "Petrol",
+   "flag": 0,
+   "sentence": "Ham petrol (WTI) 20 günde %0,0 değişmedi."
+  }
+ ],
+ "values": {
+  "stables_7d_pct": 0.7,
+  "netliq_20g_pct": -1.6,
+  "real10y": 2.85,
+  "real10y_20g_bp": 22,
+  "dxy_20g_yon": "yükseldi",
+  "hy_oas_20g_yon": "açıldı",
+  "vix": 15.7,
+  "ndx_20g_yon": "düştü",
+  "gold_20g_pct": -1.8,
+  "wti_20g_pct": 0.0
+ },
+ "trend": {
+  "btc": {
+   "state": "boga",
+   "close": 84369.4,
+   "ma50": 74922.19,
+   "ma200": 70854.22,
+   "dist200_pct": 19.07,
+   "dist50_pct": 12.61
+  },
+  "eth": {
+   "state": "boga",
+   "close": 2686.69,
+   "ma50": 2340.81,
+   "ma200": 2090.91,
+   "dist200_pct": 28.49,
+   "dist50_pct": 14.78
+  }
+ },
+ "inputs_asof": {
+  "stables": "2026-09-24",
+  "netliq": "2026-09-23",
+  "real10y": "2026-09-24",
+  "dxy": "2026-09-24",
+  "hy_oas": "2026-09-24",
+  "vix": "2026-09-24",
+  "ndx": "2026-09-24",
+  "gold": "2026-09-24",
+  "wti": "2026-09-24"
+ },
+ "disclaimer": "Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.",
+ "answers": [
+  {
+   "id": "hava",
+   "q": "Bugün makro hava nasıl?",
+   "a": [
+    "24 Eylül 2026 itibarıyla makro hava: YEŞİL.",
+    "Dokuz kuraldan 2 tanesi işaret veriyor (ham skor 2/9).",
+    "Veriler 24 Eylül 2026 kapanışına ait."
+   ]
+  },
+  {
+   "id": "isaretler",
+   "q": "Hangi kurallar işaret veriyor?",
+   "a": [
+    "Fed net likiditesi 20 günde %1,60 azaldı.",
+    "10 yıllık reel faiz %2,85; 20 günde 22 baz puan yükseldi."
+   ]
+  },
+  {
+   "id": "degisim",
+   "q": "Dünden bu yana ne değişti?",
+   "a": [
+    "Ham skor 1 → 2.",
+    "Reel faiz: işaret vermeye başladı."
+   ]
+  },
+  {
+   "id": "kripto",
+   "q": "BTC ve ETH ortalamalara göre nerede?",
+   "a": [
+    "BTC günlük kapanışı 84.369 $; 200 günlük ortalamanın %19,1 üstünde, 50 günlük ortalamanın %12,6 üstünde.",
+    "ETH günlük kapanışı 2.687 $; 200 günlük ortalamanın %28,5 üstünde, 50 günlük ortalamanın %14,8 üstünde."
+   ]
+  },
+  {
+   "id": "yontem",
+   "q": "Bu ölçüm nasıl yapılıyor?",
+   "a": [
+    "Skor, likidite, dolar, kredi/risk, nakde kaçış ve petrol başlıklarındaki dokuz kuraldan oluşur; her kural 1 puan.",
+    "0–2 YEŞİL, 3–4 SARI, 5 ve üzeri KIRMIZI. Seviye, ikinci gün onayı olmadan değişmez.",
+    "Kurallar sabittir ve sürümlenir; yayımlanan skorlar sonradan değiştirilmez."
+   ],
+   "link": "yontem.html"
+  }
+ ]
+}
