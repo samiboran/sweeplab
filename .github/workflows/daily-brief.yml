@@ -49,6 +49,11 @@ jobs:
           SITE_OUT: feed/data/site
           NOTEBOOK: feed/data/derivs/notebook_daily.json
         run: python3 tools/fetch_tl.py || echo "tl layer failed"
+      - name: Chart data (derived -> data/site/charts.json, non-fatal)
+        env:
+          SITE_OUT: feed/data/site
+          RESEARCH_DIR: feed/data/research/candles_1d
+        run: python3 tools/build_charts.py || echo "charts failed"
       - name: Z-scores, alarms, Telegram
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}

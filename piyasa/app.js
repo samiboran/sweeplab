@@ -103,6 +103,7 @@
     if (timer) clearTimeout(timer);
     (function next() {
       if (!lines.length) {
+        if (window.PHDCharts) window.PHDCharts.attach(q.id, box);
         if (q.link === "yontem.html") {
           var p = el("p", "line");
           var a = el("a", null, "Yöntem sayfası");
