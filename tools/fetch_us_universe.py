@@ -7,7 +7,8 @@ PLTR CRWD NET SNOW DDOG MDB ZS PANW NOW SHOP APP TTD RDDT DUOL AXON NBIS CRWV OR
 COIN MSTR HOOD SOFI AFRM UPST NU MELI SE
 TSLA META AMZN GOOGL MSFT AAPL NFLX UBER ABNB DASH RBLX DKNG CVNA CAVA ONON HIMS CELH ELF
 RKLB ASTS LUNR SPCX IONQ RGTI QBTS OKLO SMR CEG VST NRG GEV CCJ LEU EOSE PLUG FSLR
-IREN CIFR WULF CORZ BABA PDD JD LLY NVO VKTX MRNA SPY QQQ COST BRK-B GLD""".split()
+IREN CIFR WULF CORZ BABA PDD JD LLY NVO VKTX MRNA SPY QQQ COST BRK-B GLD
+RSP SMH SLV CPER COPX FCX ASML TXN ADI NXPI MCHP ON STM SNPS CDNS TER MPWR""".split()
 
 
 def get(sym):
@@ -22,10 +23,11 @@ def get(sym):
 
 
 os.makedirs(f"{OUT}/us_1d", exist_ok=True)
+failed = []
 for s in TICKERS:
     r = get(s)
     if not r or "timestamp" not in r:
-        print(s, "ERR"); continue
+        print(s, "ERR"); failed.append(s); continue
     q = r["indicators"]["quote"][0]
     n = 0
     with open(f"{OUT}/us_1d/{s}.csv", "w") as f:
@@ -36,3 +38,7 @@ for s in TICKERS:
             f.write(f"{dt.datetime.fromtimestamp(t, dt.timezone.utc).date()},{o:.4f},{h:.4f},{l:.4f},{c:.4f},{v or 0}\n"); n += 1
     print(s, n)
     time.sleep(0.2)
+
+print(f"done: {len(TICKERS) - len(failed)}/{len(TICKERS)} ok")
+if failed:
+    print(f"::warning::Yahoo returned no data for: {' '.join(failed)}")
