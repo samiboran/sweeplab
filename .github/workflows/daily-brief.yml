@@ -49,11 +49,21 @@ jobs:
           SITE_OUT: feed/data/site
           NOTEBOOK: feed/data/derivs/notebook_daily.json
         run: python3 tools/fetch_tl.py || echo "tl layer failed"
+      - name: Dünyada bu Pazartesi / Cuma (derived -> data/site/hafta.json, Mon/Fri, non-fatal)
+        env:
+          TL_RAW_DIR: feed/data/research/tl_1d
+          SITE_OUT: feed/data/site
+          NOTEBOOK: feed/data/derivs/notebook_daily.json
+        run: python3 tools/build_week.py || echo "hafta failed"
       - name: Chart data (derived -> data/site/charts.json, non-fatal)
         env:
           SITE_OUT: feed/data/site
           RESEARCH_DIR: feed/data/research/candles_1d
         run: python3 tools/build_charts.py || echo "charts failed"
+      - name: Sicil / track record (derived words only -> data/site/sicil.json, non-fatal)
+        env:
+          SITE_OUT: feed/data/site
+        run: python3 tools/build_sicil.py || echo "sicil failed"
       - name: Z-scores, alarms, Telegram
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -100,7 +110,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: piyasa
+          sparse-checkout: |
+            piyasa
+            tools
       - uses: actions/checkout@v4
         with:
           ref: data-feed
@@ -112,6 +124,8 @@ jobs:
           rm -rf dist && mkdir -p dist/data
           cp -R piyasa/. dist/
           if [ -d feed/data/site ]; then cp -R feed/data/site dist/data/site; fi
+          if [ -f dist/data/site/today.json ]; then
+            SITE_BASE="${{ vars.SITE_BASE }}" python3 tools/build_static.py dist || echo "static snapshots failed"; fi
           if grep -rIlE 'ghp_|github_pat_|xox[bp]-|BEGIN [A-Z ]*PRIVATE KEY|[0-9]{8,10}:[A-Za-z0-9_-]{35}' dist; then
             echo "secret-like string found in showcase; aborting"; exit 1; fi
       - uses: actions/checkout@v4
@@ -138,7 +152,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: piyasa
+          sparse-checkout: |
+            piyasa
+            tools
       - uses: actions/checkout@v4
         with:
           ref: data-feed
@@ -150,6 +166,8 @@ jobs:
           rm -rf dist && mkdir -p dist/data
           cp -R piyasa/. dist/
           if [ -d feed/data/site ]; then cp -R feed/data/site dist/data/site; fi
+          if [ -f dist/data/site/today.json ]; then
+            SITE_BASE="${{ vars.SITE_BASE }}" python3 tools/build_static.py dist || echo "static snapshots failed"; fi
           if grep -rIlE 'ghp_|github_pat_|xox[bp]-|BEGIN [A-Z ]*PRIVATE KEY|[0-9]{8,10}:[A-Za-z0-9_-]{35}' dist; then
             echo "secret-like string found in showcase; aborting"; exit 1; fi
       - uses: cloudflare/wrangler-action@v3

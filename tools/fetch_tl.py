@@ -25,7 +25,9 @@ OZ_GRAM = 31.1035
 SERIES_DAYS = 400          # calendar days of derived series kept for small charts (> 1 year)
 UA = {"User-Agent": "Mozilla/5.0 (piyasa-hava-durumu; github actions)"}
 SYMBOLS = {"USDTRY": "TRY=X", "GOLD_USD": "GC=F", "SILVER_USD": "SI=F", "XU100": "XU100.IS",
-           "BTC_USD": "BTC-USD", "ETH_USD": "ETH-USD"}
+           "BTC_USD": "BTC-USD", "ETH_USD": "ETH-USD",
+           # long history for 'Dünyada bu Pazartesi/Cuma' (fund prices, not licensed index levels)
+           "SPY": "SPY", "QQQ": "QQQ"}
 SOURCE = "Piyasa Hava Durumu"
 SITE_URL = "https://samiboran.github.io/sweeplab/piyasa/"
 ATTRIBUTION = "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0"
