@@ -8,10 +8,10 @@
  "schema_version": 1,
  "status": "güncel",
  "mode": "retro",
- "data_date": "2026-11-20",
- "publish_date": "2026-11-21",
- "compare_date": "2026-10-31",
- "last_good_date": "2026-11-20",
+ "data_date": "2026-11-19",
+ "publish_date": "2026-11-19",
+ "compare_date": "2026-10-30",
+ "last_good_date": "2026-11-19",
  "level": "KIRMIZI",
  "level_word": "KIRMIZI",
  "raw_score": 7,
@@ -19,7 +19,7 @@
  "raw_level": "KIRMIZI",
  "level_held": false,
  "held_note": null,
- "headline": "21 Kasım 2026 — Makro hava: KIRMIZI",
+ "headline": "19 Kasım 2026 — Makro hava: KIRMIZI",
  "groups": {
   "Likidite": {
    "points": 2,
@@ -48,7 +48,7 @@
    "group": "Likidite",
    "title": "Stablecoin arzı",
    "flag": 1,
-   "sentence": "Stablecoin arzı son 7 günde %1,5 azaldı."
+   "sentence": "Stablecoin arzı son 7 günde %1,3 azaldı."
   },
   {
    "code": "L2",
@@ -97,19 +97,19 @@
    "group": "Nakde kaçış",
    "title": "Altın ve dolar",
    "flag": 1,
-   "sentence": "Altın 20 günde %9,8 geriledi, dolar endeksi yükseldi — nakde kaçış işareti."
+   "sentence": "Altın 20 günde %5,5 geriledi, dolar endeksi yükseldi — nakde kaçış işareti."
   },
   {
    "code": "P1",
    "group": "Petrol",
    "title": "Petrol",
    "flag": 1,
-   "sentence": "Ham petrol (WTI) 20 günde %19,3 geriledi — talep zayıflığı işareti.",
+   "sentence": "Ham petrol (WTI) 20 günde %20,1 geriledi — talep zayıflığı işareti.",
    "label": "talep zayıflığı"
   }
  ],
  "values": {
-  "stables_7d_pct": -1.5,
+  "stables_7d_pct": -1.3,
   "netliq_20g_pct": 1.37,
   "real10y": 2.88,
   "real10y_20g_bp": 28,
@@ -117,37 +117,37 @@
   "hy_oas_20g_yon": "açıldı",
   "vix": 28.4,
   "ndx_20g_yon": "düştü",
-  "gold_20g_pct": -9.8,
-  "wti_20g_pct": -19.3
+  "gold_20g_pct": -5.5,
+  "wti_20g_pct": -20.1
  },
  "trend": {
   "btc": {
    "state": "gecis",
-   "close": 58919.5,
-   "ma50": 77679.71,
-   "ma200": 72555.88,
-   "dist200_pct": -18.79,
-   "dist50_pct": -24.15
+   "close": 61949.1,
+   "ma50": 78198.07,
+   "ma200": 72660.39,
+   "dist200_pct": -14.74,
+   "dist50_pct": -20.78
   },
   "eth": {
    "state": "gecis",
-   "close": 1621.98,
-   "ma50": 2286.45,
-   "ma200": 2129.44,
-   "dist200_pct": -23.83,
-   "dist50_pct": -29.06
+   "close": 1756.87,
+   "ma50": 2308.11,
+   "ma200": 2133.06,
+   "dist200_pct": -17.64,
+   "dist50_pct": -23.88
   }
  },
  "inputs_asof": {
-  "stables": "2026-11-20",
+  "stables": "2026-11-19",
   "netliq": "2026-11-18",
   "real10y": "2026-11-19",
-  "dxy": "2026-11-20",
+  "dxy": "2026-11-19",
   "hy_oas": "2026-11-19",
   "vix": "2026-11-19",
   "ndx": "2026-11-19",
-  "gold": "2026-11-20",
-  "wti": "2026-11-20"
+  "gold": "2026-11-19",
+  "wti": "2026-11-19"
  },
  "disclaimer": "Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.",
  "answers": [
@@ -155,22 +155,22 @@
    "id": "hava",
    "q": "Bugün makro hava nasıl?",
    "a": [
-    "21 Kasım 2026 itibarıyla makro hava: KIRMIZI.",
+    "19 Kasım 2026 itibarıyla makro hava: KIRMIZI.",
     "Dokuz kuraldan 7 tanesi işaret veriyor (ham skor 7/9).",
-    "Veriler 20 Kasım 2026 kapanışına ait."
+    "Veriler 19 Kasım 2026 kapanışına ait."
    ]
   },
   {
    "id": "isaretler",
    "q": "Hangi kurallar işaret veriyor?",
    "a": [
-    "Stablecoin arzı son 7 günde %1,5 azaldı.",
+    "Stablecoin arzı son 7 günde %1,3 azaldı.",
     "10 yıllık reel faiz %2,88; 20 günde 28 baz puan yükseldi.",
     "Dolar endeksi 20 günde yükseldi; eşik aşıldı.",
     "VIX oynaklık endeksi 28,4 (18 ve üzeri).",
     "Nasdaq 100 endeksi 20 günde düştü; eşik aşıldı.",
-    "Altın 20 günde %9,8 geriledi, dolar endeksi yükseldi — nakde kaçış işareti.",
-    "Ham petrol (WTI) 20 günde %19,3 geriledi — talep zayıflığı işareti."
+    "Altın 20 günde %5,5 geriledi, dolar endeksi yükseldi — nakde kaçış işareti.",
+    "Ham petrol (WTI) 20 günde %20,1 geriledi — talep zayıflığı işareti."
    ]
   },
   {
@@ -184,8 +184,8 @@
    "id": "kripto",
    "q": "BTC ve ETH ortalamalara göre nerede?",
    "a": [
-    "BTC günlük kapanışı 58.920 $; 200 günlük ortalamanın %18,8 altında, 50 günlük ortalamanın %24,1 altında.",
-    "ETH günlük kapanışı 1.622 $; 200 günlük ortalamanın %23,8 altında, 50 günlük ortalamanın %29,1 altında."
+    "BTC günlük kapanışı 61.949 $; 200 günlük ortalamanın %14,7 altında, 50 günlük ortalamanın %20,8 altında.",
+    "ETH günlük kapanışı 1.757 $; 200 günlük ortalamanın %17,6 altında, 50 günlük ortalamanın %23,9 altında."
    ]
   },
   {
@@ -198,6 +198,5 @@
    ],
    "link": "yontem.html"
   }
- ],
- "checked_at": "2026-11-21T09:21:10Z"
+ ]
 }

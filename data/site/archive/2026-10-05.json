@@ -2,7 +2,7 @@
  "source": "Piyasa Hava Durumu",
  "site_url": "https://samiboran.github.io/sweeplab/piyasa/",
  "rules_version": "v1",
- "generated_at": "2026-11-21T09:16:23Z",
+ "generated_at": "2026-11-21T09:46:37Z",
  "license": "CC BY 4.0 (yalnızca kamu kaynaklı türetilmiş alanlar)",
  "attribution": "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0",
  "schema_version": 1,
@@ -10,11 +10,11 @@
  "mode": "retro",
  "data_date": "2026-10-05",
  "publish_date": "2026-10-05",
- "compare_date": "2026-09-22",
+ "compare_date": "2026-09-15",
  "last_good_date": "2026-10-05",
  "level": "KIRMIZI",
  "level_word": "KIRMIZI",
- "raw_score": 5,
+ "raw_score": 6,
  "max_score": 9,
  "raw_level": "KIRMIZI",
  "level_held": false,
@@ -38,7 +38,7 @@
    "max": 1
   },
   "Petrol": {
-   "points": 0,
+   "points": 1,
    "max": 1
   }
  },
@@ -55,14 +55,14 @@
    "group": "Likidite",
    "title": "Fed net likiditesi",
    "flag": 1,
-   "sentence": "Fed net likiditesi 20 günde %1,39 azaldı."
+   "sentence": "Fed net likiditesi 20 günde %1,26 azaldı."
   },
   {
    "code": "L3",
    "group": "Likidite",
    "title": "Reel faiz",
    "flag": 1,
-   "sentence": "10 yıllık reel faiz %2,95; 20 günde 32 baz puan yükseldi."
+   "sentence": "10 yıllık reel faiz %2,95; 20 günde 33 baz puan yükseldi."
   },
   {
    "code": "D1",
@@ -97,27 +97,28 @@
    "group": "Nakde kaçış",
    "title": "Altın ve dolar",
    "flag": 1,
-   "sentence": "Altın 20 günde %5,0 geriledi, dolar endeksi yükseldi — nakde kaçış işareti."
+   "sentence": "Altın 20 günde %4,1 geriledi, dolar endeksi yükseldi — nakde kaçış işareti."
   },
   {
    "code": "P1",
    "group": "Petrol",
    "title": "Petrol",
-   "flag": 0,
-   "sentence": "Ham petrol (WTI) 20 günde %5,5 geriledi."
+   "flag": 1,
+   "sentence": "Ham petrol (WTI) 20 günde %15,5 geriledi — talep zayıflığı işareti.",
+   "label": "talep zayıflığı"
   }
  ],
  "values": {
   "stables_7d_pct": 0.2,
-  "netliq_20g_pct": -1.39,
+  "netliq_20g_pct": -1.26,
   "real10y": 2.95,
-  "real10y_20g_bp": 32,
+  "real10y_20g_bp": 33,
   "dxy_20g_yon": "yükseldi",
   "hy_oas_20g_yon": "açıldı",
   "vix": 15.5,
   "ndx_20g_yon": "yükseldi",
-  "gold_20g_pct": -5.0,
-  "wti_20g_pct": -5.5
+  "gold_20g_pct": -4.1,
+  "wti_20g_pct": -15.5
  },
  "trend": {
   "btc": {
@@ -149,13 +150,18 @@
   "wti": "2026-10-05"
  },
  "disclaimer": "Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.",
+ "backfill": {
+  "method": "settled",
+  "notebook_version": "f3bb8b4",
+  "note": "Geriye dönük: saklanan veri sürümlerinden o güne ait tamamlanmış veriyle v1 kurallarına göre sonradan hesaplandı."
+ },
  "answers": [
   {
    "id": "hava",
    "q": "Bugün makro hava nasıl?",
    "a": [
     "5 Ekim 2026 itibarıyla makro hava: KIRMIZI.",
-    "Dokuz kuraldan 5 tanesi işaret veriyor (ham skor 5/9).",
+    "Dokuz kuraldan 6 tanesi işaret veriyor (ham skor 6/9).",
     "Veriler 5 Ekim 2026 kapanışına ait."
    ]
   },
@@ -163,18 +169,20 @@
    "id": "isaretler",
    "q": "Hangi kurallar işaret veriyor?",
    "a": [
-    "Fed net likiditesi 20 günde %1,39 azaldı.",
-    "10 yıllık reel faiz %2,95; 20 günde 32 baz puan yükseldi.",
+    "Fed net likiditesi 20 günde %1,26 azaldı.",
+    "10 yıllık reel faiz %2,95; 20 günde 33 baz puan yükseldi.",
     "Dolar endeksi 20 günde yükseldi; eşik aşıldı.",
     "Yüksek getirili tahvil risk primi 20 günde açıldı; eşik aşıldı.",
-    "Altın 20 günde %5,0 geriledi, dolar endeksi yükseldi — nakde kaçış işareti."
+    "Altın 20 günde %4,1 geriledi, dolar endeksi yükseldi — nakde kaçış işareti.",
+    "Ham petrol (WTI) 20 günde %15,5 geriledi — talep zayıflığı işareti."
    ]
   },
   {
    "id": "degisim",
    "q": "Dünden bu yana ne değişti?",
    "a": [
-    "Ham skor değişmedi (5)."
+    "Ham skor 5 → 6.",
+    "Petrol: işaret vermeye başladı."
    ]
   },
   {
@@ -195,5 +203,13 @@
    ],
    "link": "yontem.html"
   }
- ]
+ ],
+ "duzeltme": {
+  "date": "2026-11-21",
+  "note": "Geriye dönük hesap düzeltildi: (1) pencerenin ilk 20 gününde kısaltılmış karşılaştırma yerine saklanan eski veriyle tam 20 günlük karşılaştırma; (2) ABD verisi henüz gelmemiş (tamamlanmamış) gün puanlanmaz.",
+  "onceki": {
+   "raw_score": 5,
+   "level": "KIRMIZI"
+  }
+ }
 }

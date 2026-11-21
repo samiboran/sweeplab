@@ -2,7 +2,7 @@
  "source": "Piyasa Hava Durumu",
  "site_url": "https://samiboran.github.io/sweeplab/piyasa/",
  "rules_version": "v1",
- "generated_at": "2026-11-21T09:16:23Z",
+ "generated_at": "2026-11-21T09:46:37Z",
  "license": "CC BY 4.0 (yalnızca kamu kaynaklı türetilmiş alanlar)",
  "attribution": "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0",
  "schema_version": 1,
@@ -10,7 +10,7 @@
  "mode": "retro",
  "data_date": "2026-09-28",
  "publish_date": "2026-09-28",
- "compare_date": "2026-09-22",
+ "compare_date": "2026-09-08",
  "last_good_date": "2026-09-28",
  "level": "SARI",
  "level_word": "SARI",
@@ -22,11 +22,11 @@
  "headline": "28 Eylül 2026 — Makro hava: SARI",
  "groups": {
   "Likidite": {
-   "points": 2,
+   "points": 1,
    "max": 3
   },
   "Dolar": {
-   "points": 0,
+   "points": 1,
    "max": 1
   },
   "Kredi / risk": {
@@ -54,22 +54,22 @@
    "code": "L2",
    "group": "Likidite",
    "title": "Fed net likiditesi",
-   "flag": 1,
-   "sentence": "Fed net likiditesi 20 günde %1,60 azaldı."
+   "flag": 0,
+   "sentence": "Fed net likiditesi 20 günde %0,02 arttı."
   },
   {
    "code": "L3",
    "group": "Likidite",
    "title": "Reel faiz",
    "flag": 1,
-   "sentence": "10 yıllık reel faiz %2,90; 20 günde 27 baz puan yükseldi."
+   "sentence": "10 yıllık reel faiz %2,90; 20 günde 47 baz puan yükseldi."
   },
   {
    "code": "D1",
    "group": "Dolar",
    "title": "Dolar endeksi",
-   "flag": 0,
-   "sentence": "Dolar endeksi 20 günde yükseldi; eşik aşılmadı."
+   "flag": 1,
+   "sentence": "Dolar endeksi 20 günde yükseldi; eşik aşıldı."
   },
   {
    "code": "K1",
@@ -90,34 +90,34 @@
    "group": "Kredi / risk",
    "title": "Nasdaq 100",
    "flag": 0,
-   "sentence": "Nasdaq 100 endeksi 20 günde düştü; eşik aşılmadı."
+   "sentence": "Nasdaq 100 endeksi 20 günde yükseldi; eşik aşılmadı."
   },
   {
    "code": "N1",
    "group": "Nakde kaçış",
    "title": "Altın ve dolar",
    "flag": 1,
-   "sentence": "Altın 20 günde %4,8 geriledi, dolar endeksi yükseldi — nakde kaçış işareti."
+   "sentence": "Altın 20 günde %6,1 geriledi, dolar endeksi yükseldi — nakde kaçış işareti."
   },
   {
    "code": "P1",
    "group": "Petrol",
    "title": "Petrol",
    "flag": 0,
-   "sentence": "Ham petrol (WTI) 20 günde %2,1 geriledi."
+   "sentence": "Ham petrol (WTI) 20 günde %0,5 geriledi."
   }
  ],
  "values": {
   "stables_7d_pct": 1.0,
-  "netliq_20g_pct": -1.6,
+  "netliq_20g_pct": 0.02,
   "real10y": 2.9,
-  "real10y_20g_bp": 27,
+  "real10y_20g_bp": 47,
   "dxy_20g_yon": "yükseldi",
   "hy_oas_20g_yon": "açıldı",
   "vix": 16.1,
-  "ndx_20g_yon": "düştü",
-  "gold_20g_pct": -4.8,
-  "wti_20g_pct": -2.1
+  "ndx_20g_yon": "yükseldi",
+  "gold_20g_pct": -6.1,
+  "wti_20g_pct": -0.5
  },
  "trend": {
   "btc": {
@@ -149,6 +149,11 @@
   "wti": "2026-09-28"
  },
  "disclaimer": "Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.",
+ "backfill": {
+  "method": "settled",
+  "notebook_version": "950594f",
+  "note": "Geriye dönük: saklanan veri sürümlerinden o güne ait tamamlanmış veriyle v1 kurallarına göre sonradan hesaplandı."
+ },
  "answers": [
   {
    "id": "hava",
@@ -163,18 +168,17 @@
    "id": "isaretler",
    "q": "Hangi kurallar işaret veriyor?",
    "a": [
-    "Fed net likiditesi 20 günde %1,60 azaldı.",
-    "10 yıllık reel faiz %2,90; 20 günde 27 baz puan yükseldi.",
+    "10 yıllık reel faiz %2,90; 20 günde 47 baz puan yükseldi.",
+    "Dolar endeksi 20 günde yükseldi; eşik aşıldı.",
     "Yüksek getirili tahvil risk primi 20 günde açıldı; eşik aşıldı.",
-    "Altın 20 günde %4,8 geriledi, dolar endeksi yükseldi — nakde kaçış işareti."
+    "Altın 20 günde %6,1 geriledi, dolar endeksi yükseldi — nakde kaçış işareti."
    ]
   },
   {
    "id": "degisim",
    "q": "Dünden bu yana ne değişti?",
    "a": [
-    "Ham skor 3 → 4.",
-    "Altın ve dolar: işaret vermeye başladı."
+    "Ham skor değişmedi (4)."
    ]
   },
   {
@@ -195,5 +199,13 @@
    ],
    "link": "yontem.html"
   }
- ]
+ ],
+ "duzeltme": {
+  "date": "2026-11-21",
+  "note": "Geriye dönük hesap düzeltildi: (1) pencerenin ilk 20 gününde kısaltılmış karşılaştırma yerine saklanan eski veriyle tam 20 günlük karşılaştırma; (2) ABD verisi henüz gelmemiş (tamamlanmamış) gün puanlanmaz.",
+  "onceki": {
+   "raw_score": 4,
+   "level": "SARI"
+  }
+ }
 }

@@ -2,7 +2,7 @@
  "source": "Piyasa Hava Durumu",
  "site_url": "https://samiboran.github.io/sweeplab/piyasa/",
  "rules_version": "v1",
- "generated_at": "2026-11-21T09:16:23Z",
+ "generated_at": "2026-11-21T09:46:37Z",
  "license": "CC BY 4.0 (yalnızca kamu kaynaklı türetilmiş alanlar)",
  "attribution": "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0",
  "schema_version": 1,
@@ -10,23 +10,23 @@
  "mode": "retro",
  "data_date": "2026-09-24",
  "publish_date": "2026-09-24",
- "compare_date": "2026-09-22",
+ "compare_date": "2026-09-04",
  "last_good_date": "2026-09-24",
- "level": "YESIL",
- "level_word": "YEŞİL",
- "raw_score": 2,
+ "level": "SARI",
+ "level_word": "SARI",
+ "raw_score": 3,
  "max_score": 9,
- "raw_level": "YESIL",
+ "raw_level": "SARI",
  "level_held": false,
  "held_note": null,
- "headline": "24 Eylül 2026 — Makro hava: YEŞİL",
+ "headline": "24 Eylül 2026 — Makro hava: SARI",
  "groups": {
   "Likidite": {
-   "points": 2,
+   "points": 1,
    "max": 3
   },
   "Dolar": {
-   "points": 0,
+   "points": 1,
    "max": 1
   },
   "Kredi / risk": {
@@ -34,7 +34,7 @@
    "max": 3
   },
   "Nakde kaçış": {
-   "points": 0,
+   "points": 1,
    "max": 1
   },
   "Petrol": {
@@ -48,28 +48,28 @@
    "group": "Likidite",
    "title": "Stablecoin arzı",
    "flag": 0,
-   "sentence": "Stablecoin arzı son 7 günde %0,7 arttı."
+   "sentence": "Stablecoin arzı son 7 günde %0,5 arttı."
   },
   {
    "code": "L2",
    "group": "Likidite",
    "title": "Fed net likiditesi",
-   "flag": 1,
-   "sentence": "Fed net likiditesi 20 günde %1,60 azaldı."
+   "flag": 0,
+   "sentence": "Fed net likiditesi 20 günde %0,02 arttı."
   },
   {
    "code": "L3",
    "group": "Likidite",
    "title": "Reel faiz",
    "flag": 1,
-   "sentence": "10 yıllık reel faiz %2,85; 20 günde 22 baz puan yükseldi."
+   "sentence": "10 yıllık reel faiz %2,85; 20 günde 42 baz puan yükseldi."
   },
   {
    "code": "D1",
    "group": "Dolar",
    "title": "Dolar endeksi",
-   "flag": 0,
-   "sentence": "Dolar endeksi 20 günde yükseldi; eşik aşılmadı."
+   "flag": 1,
+   "sentence": "Dolar endeksi 20 günde yükseldi; eşik aşıldı."
   },
   {
    "code": "K1",
@@ -90,34 +90,34 @@
    "group": "Kredi / risk",
    "title": "Nasdaq 100",
    "flag": 0,
-   "sentence": "Nasdaq 100 endeksi 20 günde düştü; eşik aşılmadı."
+   "sentence": "Nasdaq 100 endeksi 20 günde yükseldi; eşik aşılmadı."
   },
   {
    "code": "N1",
    "group": "Nakde kaçış",
    "title": "Altın ve dolar",
-   "flag": 0,
-   "sentence": "Altın 20 günde %1,8 geriledi, dolar endeksi yükseldi."
+   "flag": 1,
+   "sentence": "Altın 20 günde %4,0 geriledi, dolar endeksi yükseldi — nakde kaçış işareti."
   },
   {
    "code": "P1",
    "group": "Petrol",
    "title": "Petrol",
    "flag": 0,
-   "sentence": "Ham petrol (WTI) 20 günde %0,0 değişmedi."
+   "sentence": "Ham petrol (WTI) 20 günde %3,4 yükseldi."
   }
  ],
  "values": {
-  "stables_7d_pct": 0.7,
-  "netliq_20g_pct": -1.6,
+  "stables_7d_pct": 0.5,
+  "netliq_20g_pct": 0.02,
   "real10y": 2.85,
-  "real10y_20g_bp": 22,
+  "real10y_20g_bp": 42,
   "dxy_20g_yon": "yükseldi",
   "hy_oas_20g_yon": "açıldı",
   "vix": 15.7,
-  "ndx_20g_yon": "düştü",
-  "gold_20g_pct": -1.8,
-  "wti_20g_pct": 0.0
+  "ndx_20g_yon": "yükseldi",
+  "gold_20g_pct": -4.0,
+  "wti_20g_pct": 3.4
  },
  "trend": {
   "btc": {
@@ -149,13 +149,18 @@
   "wti": "2026-09-24"
  },
  "disclaimer": "Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.",
+ "backfill": {
+  "method": "settled",
+  "notebook_version": "a353859",
+  "note": "Geriye dönük: saklanan veri sürümlerinden o güne ait tamamlanmış veriyle v1 kurallarına göre sonradan hesaplandı."
+ },
  "answers": [
   {
    "id": "hava",
    "q": "Bugün makro hava nasıl?",
    "a": [
-    "24 Eylül 2026 itibarıyla makro hava: YEŞİL.",
-    "Dokuz kuraldan 2 tanesi işaret veriyor (ham skor 2/9).",
+    "24 Eylül 2026 itibarıyla makro hava: SARI.",
+    "Dokuz kuraldan 3 tanesi işaret veriyor (ham skor 3/9).",
     "Veriler 24 Eylül 2026 kapanışına ait."
    ]
   },
@@ -163,16 +168,17 @@
    "id": "isaretler",
    "q": "Hangi kurallar işaret veriyor?",
    "a": [
-    "Fed net likiditesi 20 günde %1,60 azaldı.",
-    "10 yıllık reel faiz %2,85; 20 günde 22 baz puan yükseldi."
+    "10 yıllık reel faiz %2,85; 20 günde 42 baz puan yükseldi.",
+    "Dolar endeksi 20 günde yükseldi; eşik aşıldı.",
+    "Altın 20 günde %4,0 geriledi, dolar endeksi yükseldi — nakde kaçış işareti."
    ]
   },
   {
    "id": "degisim",
    "q": "Dünden bu yana ne değişti?",
    "a": [
-    "Ham skor 1 → 2.",
-    "Reel faiz: işaret vermeye başladı."
+    "Ham skor değişmedi (3).",
+    "Yayımlanan seviye YEŞİL → SARI."
    ]
   },
   {
@@ -193,5 +199,13 @@
    ],
    "link": "yontem.html"
   }
- ]
+ ],
+ "duzeltme": {
+  "date": "2026-11-21",
+  "note": "Geriye dönük hesap düzeltildi: (1) pencerenin ilk 20 gününde kısaltılmış karşılaştırma yerine saklanan eski veriyle tam 20 günlük karşılaştırma; (2) ABD verisi henüz gelmemiş (tamamlanmamış) gün puanlanmaz.",
+  "onceki": {
+   "raw_score": 2,
+   "level": "YESIL"
+  }
+ }
 }

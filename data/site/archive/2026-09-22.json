@@ -2,7 +2,7 @@
  "source": "Piyasa Hava Durumu",
  "site_url": "https://samiboran.github.io/sweeplab/piyasa/",
  "rules_version": "v1",
- "generated_at": "2026-11-21T09:16:23Z",
+ "generated_at": "2026-11-21T09:46:37Z",
  "license": "CC BY 4.0 (yalnızca kamu kaynaklı türetilmiş alanlar)",
  "attribution": "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0",
  "schema_version": 1,
@@ -10,11 +10,11 @@
  "mode": "retro",
  "data_date": "2026-09-22",
  "publish_date": "2026-09-22",
- "compare_date": "2026-09-22",
+ "compare_date": "2026-09-02",
  "last_good_date": "2026-09-22",
  "level": "YESIL",
  "level_word": "YEŞİL",
- "raw_score": 0,
+ "raw_score": 2,
  "max_score": 9,
  "raw_level": "YESIL",
  "level_held": false,
@@ -22,11 +22,11 @@
  "headline": "22 Eylül 2026 — Makro hava: YEŞİL",
  "groups": {
   "Likidite": {
-   "points": 0,
+   "points": 1,
    "max": 3
   },
   "Dolar": {
-   "points": 0,
+   "points": 1,
    "max": 1
   },
   "Kredi / risk": {
@@ -48,35 +48,35 @@
    "group": "Likidite",
    "title": "Stablecoin arzı",
    "flag": 0,
-   "sentence": "Stablecoin arzı son 7 günde %0,4 arttı."
+   "sentence": "Stablecoin arzı son 7 günde %0,5 arttı."
   },
   {
    "code": "L2",
    "group": "Likidite",
    "title": "Fed net likiditesi",
    "flag": 0,
-   "sentence": "Fed net likiditesi 20 günde %0,00 değişmedi."
+   "sentence": "Fed net likiditesi 20 günde %1,65 arttı."
   },
   {
    "code": "L3",
    "group": "Likidite",
    "title": "Reel faiz",
-   "flag": 0,
-   "sentence": "10 yıllık reel faiz %2,63; 20 günde 0 baz puan değişmedi."
+   "flag": 1,
+   "sentence": "10 yıllık reel faiz %2,63; 20 günde 18 baz puan yükseldi."
   },
   {
    "code": "D1",
    "group": "Dolar",
    "title": "Dolar endeksi",
-   "flag": 0,
-   "sentence": "Dolar endeksi 20 günde yatay; eşik aşılmadı."
+   "flag": 1,
+   "sentence": "Dolar endeksi 20 günde yükseldi; eşik aşıldı."
   },
   {
    "code": "K1",
    "group": "Kredi / risk",
    "title": "Kredi risk primi",
    "flag": 0,
-   "sentence": "Yüksek getirili tahvil risk primi 20 günde yatay; eşik aşılmadı."
+   "sentence": "Yüksek getirili tahvil risk primi 20 günde açıldı; eşik aşılmadı."
   },
   {
    "code": "K2",
@@ -90,34 +90,34 @@
    "group": "Kredi / risk",
    "title": "Nasdaq 100",
    "flag": 0,
-   "sentence": "Nasdaq 100 endeksi 20 günde yatay; eşik aşılmadı."
+   "sentence": "Nasdaq 100 endeksi 20 günde yükseldi; eşik aşılmadı."
   },
   {
    "code": "N1",
    "group": "Nakde kaçış",
    "title": "Altın ve dolar",
    "flag": 0,
-   "sentence": "Altın 20 günde %0,0 değişmedi, dolar endeksi yatay."
+   "sentence": "Altın 20 günde %0,9 geriledi, dolar endeksi yükseldi."
   },
   {
    "code": "P1",
    "group": "Petrol",
    "title": "Petrol",
    "flag": 0,
-   "sentence": "Ham petrol (WTI) 20 günde %0,0 değişmedi."
+   "sentence": "Ham petrol (WTI) 20 günde %3,9 yükseldi."
   }
  ],
  "values": {
-  "stables_7d_pct": 0.4,
-  "netliq_20g_pct": 0.0,
+  "stables_7d_pct": 0.5,
+  "netliq_20g_pct": 1.65,
   "real10y": 2.63,
-  "real10y_20g_bp": 0,
-  "dxy_20g_yon": "yatay",
-  "hy_oas_20g_yon": "yatay",
+  "real10y_20g_bp": 18,
+  "dxy_20g_yon": "yükseldi",
+  "hy_oas_20g_yon": "açıldı",
   "vix": 14.2,
-  "ndx_20g_yon": "yatay",
-  "gold_20g_pct": 0.0,
-  "wti_20g_pct": 0.0
+  "ndx_20g_yon": "yükseldi",
+  "gold_20g_pct": -0.9,
+  "wti_20g_pct": 3.9
  },
  "trend": {
   "btc": {
@@ -149,13 +149,18 @@
   "wti": "2026-09-22"
  },
  "disclaimer": "Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.",
+ "backfill": {
+  "method": "settled",
+  "notebook_version": "32585dc",
+  "note": "Geriye dönük: saklanan veri sürümlerinden o güne ait tamamlanmış veriyle v1 kurallarına göre sonradan hesaplandı."
+ },
  "answers": [
   {
    "id": "hava",
    "q": "Bugün makro hava nasıl?",
    "a": [
     "22 Eylül 2026 itibarıyla makro hava: YEŞİL.",
-    "Dokuz kuraldan 0 tanesi işaret veriyor (ham skor 0/9).",
+    "Dokuz kuraldan 2 tanesi işaret veriyor (ham skor 2/9).",
     "Veriler 22 Eylül 2026 kapanışına ait."
    ]
   },
@@ -163,14 +168,17 @@
    "id": "isaretler",
    "q": "Hangi kurallar işaret veriyor?",
    "a": [
-    "Bugün hiçbir kural işaret vermiyor."
+    "10 yıllık reel faiz %2,63; 20 günde 18 baz puan yükseldi.",
+    "Dolar endeksi 20 günde yükseldi; eşik aşıldı."
    ]
   },
   {
    "id": "degisim",
    "q": "Dünden bu yana ne değişti?",
    "a": [
-    "Karşılaştırma için önceki gün kaydı yok."
+    "Ham skor 1 → 2.",
+    "Dolar endeksi: işaret vermeye başladı.",
+    "Yayımlanan seviye SARI → YEŞİL."
    ]
   },
   {
@@ -191,5 +199,13 @@
    ],
    "link": "yontem.html"
   }
- ]
+ ],
+ "duzeltme": {
+  "date": "2026-11-21",
+  "note": "Geriye dönük hesap düzeltildi: (1) pencerenin ilk 20 gününde kısaltılmış karşılaştırma yerine saklanan eski veriyle tam 20 günlük karşılaştırma; (2) ABD verisi henüz gelmemiş (tamamlanmamış) gün puanlanmaz.",
+  "onceki": {
+   "raw_score": 0,
+   "level": "YESIL"
+  }
+ }
 }
