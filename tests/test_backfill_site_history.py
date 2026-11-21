@@ -54,11 +54,14 @@ def test_backfill_prepends_and_keeps_existing_rows(tmp_path):
     hist = list(csv.DictReader(open(os.path.join(site, "history.csv"), encoding="utf-8")))
     assert hist[0]["date"] == rows[20]["date"] and all(h["mode"] == "retro" for h in hist[:10])
     rec = json.load(open(os.path.join(site, "archive", rows[29]["date"] + ".json"), encoding="utf-8"))
-    assert rec["backfill"]["method"] == "point-in-time" and rec["mode"] == "retro"
-    assert json.load(open(os.path.join(site, "archive", rows[21]["date"] + ".json")))["backfill"]["method"] == "window"
-    # point-in-time comparison file
-    bf.write_pit(repo, site, "2026-11-21T00:00:00Z")
-    pit = [l for l in open(os.path.join(site, "retro_pit.csv"), encoding="utf-8") if not l.startswith("#")]
-    assert len(pit) == 1 + 21 and pit[1].startswith(rows[24]["date"])
+    assert rec["backfill"]["method"] == "settled" and rec["mode"] == "retro"
     # re-run adds nothing
     assert bf.run(repo, site, "2026-11-21T00:00:00Z") == 0
+
+
+def test_rebuild_refuses_when_live_rows_exist(tmp_path):
+    site = tmp_path / "site"
+    site.mkdir()
+    (site / "history.csv").write_text("date,rules_version,mode,raw_score\n2026-11-22,v1,live,3\n")
+    with pytest.raises(SystemExit):
+        bf.rebuild(str(tmp_path), str(site), "2026-11-23T00:00:00Z", "x")

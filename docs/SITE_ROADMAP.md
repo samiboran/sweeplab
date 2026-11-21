@@ -147,3 +147,18 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
   bir düzeltme olarak yapılabilir. S6 "Sicil" bu farkı açıkça gösterecek.
   Hesaplayıcı da sadeleşti (soru biçiminde etiketler, düz Türkçe özet, birim
   uyarısı, dolar için anlamsız başabaş sütunu kaldırıldı). 47 test geçti.
+- **2026-11-21 (6. çalışma, Boran: "hangisi doğruysa onu paylaş, hatayı bul")** —
+  Hata bulundu ve düzeltildi. (1) Sabah derlemesinin en yeni satırı bir önceki
+  günün ABD verisini taşıyor (FRED bir gün geç); bu "tamamlanmamış" gün
+  puanlanıyordu → `build_site.settled()`: yalnız girdileri o güne ait gün
+  puanlanır (ABD tatilleri için sonraki satır kontrolü). (2) Geriye dönük
+  pencerenin ilk 20 günü kısaltılmış karşılaştırmayla hesaplanmıştı → saklanan
+  eski sürümlerden tam 20 günlük karşılaştırma. data-feed'de belgelenmiş
+  düzeltme: history.csv 2026-08-30..2026-11-19 (82 gün) yeniden kuruldu,
+  11 kayıt düzeltildi (arşivde `duzeltme` + önceki değer), 2026-11-20 kaldırıldı,
+  yanıltıcı `retro_pit.csv` silindi. `MAKRO_KURALLAR_v1.md`'ye "veri günü"
+  netleştirmesi eklendi (eşikler aynı). `backfill_site_history.py --rebuild`
+  canlı satır varsa çalışmayı reddeder. 51 test geçti.
+  **Önemli:** PR birleşmeden main'deki eski build_site.py yarın sabah
+  tamamlanmamış 20–21 Kasım satırlarını yeniden ekler → PR sabah 05:50 UTC'den
+  önce birleşmeli.

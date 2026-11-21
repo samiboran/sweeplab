@@ -155,3 +155,30 @@ def test_answers_have_no_action_words():
     text = json.dumps(rec, ensure_ascii=False).lower()
     for w in (" al ", " sat ", "fırsat", "ucuz", "hedef", "kaçırma", "🚀"):
         assert w not in text
+
+
+def test_settled_skips_row_with_previous_day_us_data():
+    rows = _rows_with(_asof(copy.deepcopy(BASE_1030), "2026-10-30"), _asof(copy.deepcopy(ROW_1119), "2026-11-19"))
+    nxt = _asof(copy.deepcopy(ROW_1119), "2026-11-20")
+    nxt["date"] = "2026-11-20"
+    nxt["risk"]["vix_asof"] = "2026-11-19"          # FRED not out yet for 11-20
+    assert bs.settled(rows, len(rows) - 1) and not bs.settled(rows + [nxt], len(rows))
+    assert bs.settled_rows(rows + [nxt])[-1]["date"] == "2026-11-19"
+
+
+def test_settled_weekend_row_accepts_friday_data():
+    sat = _asof(copy.deepcopy(ROW_1119), "2026-11-20")      # Friday closes
+    sat["date"] = "2026-11-21"
+    sat["regime"]["stables_asof"] = "2026-11-21"             # crypto data is daily
+    assert bs.settled([sat], 0)
+    sat["regime"]["stables_asof"] = "2026-11-20"
+    assert not bs.settled([sat], 0)
+
+
+def test_settled_us_holiday_row_once_later_data_exists():
+    hol = _asof(copy.deepcopy(ROW_1119), "2026-11-11")
+    hol["date"] = "2026-11-11"
+    hol["risk"]["hy_asof"] = "2026-11-10"                    # bond market closed
+    nxt = _asof(copy.deepcopy(ROW_1119), "2026-11-12")
+    nxt["date"] = "2026-11-12"
+    assert not bs.settled([hol], 0) and bs.settled([hol, nxt], 0)

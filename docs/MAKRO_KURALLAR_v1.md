@@ -109,3 +109,22 @@ Eşikler bu nota göre değiştirilmez.
 ## Kayıt
 
 - 2026-11-21 — v1 donduruldu, commit `4d8b1f6`.
+
+## Netleştirme — veri günü (2026-11-21, ilk canlı kayıttan önce)
+
+Eşikler ve kurallar değişmedi; yalnız **hangi günün** puanlanacağı netleştirildi:
+
+- Bir gün ancak **tamamlanmışsa** puanlanır: her günlük çekirdek girdi o günün
+  (hafta sonu satırı için önceki cuma) değerini taşımalı; ya da kaynak o gün veri
+  yayımlamadıysa (ABD tatili) sonraki bir satır daha yeni değeri taşımalı.
+- Neden: sabah derlemesinin en yeni satırı (dün) çoğunlukla bir önceki günün ABD
+  verisini taşır (FRED; VIX, reel faiz, HY OAS bir gün geç yayımlanır). Bu satırı
+  puanlamak iki farklı günü karıştırıyordu.
+- Sonuç: yayımlanan veri günü genellikle takvim gününden 2 gün geridedir; sayfada
+  "Veri: … kapanışı" olarak açıkça yazılır.
+- Geriye dönük kayıtlar için "20g" karşılaştırması, saklanan eski notebook
+  sürümlerinden **tam 20 satırla** yapılır ("en eski satır" yedeği yalnız veri
+  yoksa).
+- Aynı gün belgelenmiş düzeltme: 2026-09-22..2026-10-05 arası 11 geriye dönük
+  kayıt yeniden hesaplandı (arşivde `duzeltme` alanı, önceki değerleriyle);
+  tamamlanmamış 2026-11-20 kaydı kaldırıldı (tamamlanınca eklenecek).
