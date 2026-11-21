@@ -14,7 +14,7 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
 - [x] S1 Mimari + yayın planı: a) site `piyasa/` (vanilla, build yok), önizleme https://samiboran.github.io/sweeplab/piyasa/, günlük veri data-feed'den raw.githubusercontent.com ile (CORS doğrulandı); b) `docs/DEPLOY_PLAN.md` (A önerilen: Cloudflare Pages, B: GitHub Pro, C: ayrı public repo); c) workflow'da sırrı yoksa ATLANAN deploy işi. ⏸ Boran: hesap/token/repo.
 - [x] S2 `tools/build_site.py` + testler: makro hava, yalnız türetilmiş veri → data-feed `data/site/` (today.json, history.csv, archive/YYYY-MM-DD.json); daily-brief.yml'de build_notebook.py sonrası hata-toleranslı adım; "Store data on data-feed" adımı `data/site/` ekler. Her kayıt: rules_version, mode, kaynak alanları. Lisanslı girdiler (HY OAS, S&P/Nasdaq) yalnız 0/1 + yön kelimesi. Cevap metinlerindeki tüm sayılar koddan (şablon cümle). Tazelik koruması (çekirdek girdi > 3 takvim günü eski ya da derleme hatası → "güncellenmedi" + son iyi tarih) ve hata halinde Boran'ın mevcut sohbetine kısa Telegram uyarısı. HISTORY kuralı.
 - [x] S3 Sayfa `piyasa/index.html` (DESIGN): tarihli başlık, seviye (daire + kelime; "7/9" yalnız detayda), kural başına tek cümle (yontem.html bağlantılı), soru düğmeleri. Yasak kelimeler: al, sat, fırsat, ucuz, ucuzladı, hedef, kaçırma; 🚀 yok; tavsiye yok. Grafik kütüphanesi ve fontlar hariç < 100 KB. Footer: "Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır." + veri tarihi + kural sürümü + © satırı.
-- [ ] S4 TL katmanı + "Benim pozisyonum ne durumda?" hesaplayıcı: a) `tools/fetch_tl.py` (kendi hata-toleranslı adımı, data-feed `data/research/tl_1d/`; TRY=X, GC=F, SI=F, XU100.IS; ≥5 yıl backfill; gram altın/gümüş TL, BIST 100 USD; yalnız türetilmiş/yuvarlanmış değer ve % değişim; kaynak + şart riski kaydı); b) "TL tarafı" bölümü + küçük grafikler; c) `piyasa/hesapla.html` (tamamen istemci tarafı, ağ çağrısı yok, çerez yok, "bu cihazda hatırla" ile localStorage, "Girdiğin bilgiler cihazından çıkmaz."); d) birim testleri (102 TL/gr gümüş: USDTRY 50,58 → başabaş ons ≈ $62,7; USDTRY 60 → ≈ $52,9).
+- [x] S4 TL katmanı + "Benim pozisyonum ne durumda?" hesaplayıcı: a) `tools/fetch_tl.py` (kendi hata-toleranslı adımı, data-feed `data/research/tl_1d/`; TRY=X, GC=F, SI=F, XU100.IS; ≥5 yıl backfill; gram altın/gümüş TL, BIST 100 USD; yalnız türetilmiş/yuvarlanmış değer ve % değişim; kaynak + şart riski kaydı); b) "TL tarafı" bölümü + küçük grafikler; c) `piyasa/hesapla.html` (tamamen istemci tarafı, ağ çağrısı yok, çerez yok, "bu cihazda hatırla" ile localStorage, "Girdiğin bilgiler cihazından çıkmaz."); d) birim testleri (102 TL/gr gümüş: USDTRY 50,58 → başabaş ons ≈ $62,7; USDTRY 60 → ≈ $52,9).
 - [ ] S5 Grafikler: Lightweight Charts 4.1.3 (kök terminalle aynı, atıf korunur). BTC/ETH günlük kapanış + 50/200 gün ort.; makro seviye geçmişi (retro gri, live siyah/kırmızı, sürüm sınırları). Cevapların içinde.
 - [ ] S6 Arşiv + sicil + SEO: `piyasa/arsiv.html`, "Sicil" görünümü (dondurma tarihinden itibaren, yanlış alarmlar dahil; kontrol yontem.html'de tanımlı), `piyasa/yontem.html`. SEO: başlık/açıklama, canonical, lang="tr", OG/Twitter, sitemap.xml + robots.txt (arama ve yapay zekâ tarayıcılarına izin), schema.org Dataset + WebSite JSON-LD, semantik HTML, alt metin, hızlı LCP, JS'siz tarayıcılar için bugünün ve arşivin statik HTML anlık görüntüsü. Lighthouse mobil ≥ 90 (SEO, a11y, perf) — skorlar kaydedilir.
 - [ ] S7 Herkese açık Telegram kanalı: TELEGRAM_PUBLIC_CHANNEL_ID varsa (a) yayımlanan seviye değişince, (b) Pazar haftalık özet. Mesaj: seviye, değişen kurallar, bağlantı, "Yatırım tavsiyesi değildir." Yoksa ⏸ adımlarla.
@@ -95,3 +95,23 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
   önizlemesi "Veri şu an yüklenemedi" gösterir (ekran görüntüleri yerel
   derlemeyle alındı). İlk canlı kayıt 22 Kasım sabahı (veri tarihi 21 Kasım)
   bekleniyor — birleştirme öncesi çalışmalar retro kalır.
+- **2026-11-21 (3. çalışma, Boran'ın isteğiyle elle)** — S4 tamam.
+  `tools/fetch_tl.py`: Yahoo TRY=X, GC=F, SI=F, XU100.IS → data-feed
+  `data/research/tl_1d/*.csv` (özel taraf; ilk çalışmada `range=max` ile
+  backfill, sonra 1 yıl birleştirme); yayımlanan `data/site/tl.json` yalnız
+  türetilmiş: gram altın/gümüş TL, dolar/TL, BIST 100 dolar bazında (100'e
+  endekslenmiş seri, endeks seviyesi serisi yok), 1g/7g/30g/yılbaşı/200g ort.
+  farkı, küçük grafik serisi (son 400 gün), hesaplayıcı için güncel fiyatlar
+  (BIST 100 yalnız güncel yuvarlanmış seviye; BTC/ETH notebook'tan). Kendi
+  hata-toleranslı workflow adımı; sembol başına hata ayrı loglanır.
+  Ana sayfada "TL tarafı" bölümü (SVG küçük grafik: siyah kapanış, kırmızı 200g
+  ort.) + `piyasa/hesapla.html` (tamamen istemci tarafı; tek istek herkese açık
+  tl.json; çerez yok; localStorage yalnız "Bu cihazda hatırla" işaretliyken,
+  try/catch; Playwright ile doğrulandı). Testler: `tests/hesapla_test.js`
+  (102 TL/gr gümüş → USDTRY 50,58'de ≈ $62,7, 60'ta ≈ $52,9) +
+  `tests/test_fetch_tl.py`; toplam 41 test geçti. **Doğrulanmadı:** Yahoo bu
+  ortamdan erişilemedi; semboller ilk Actions çalışmasında doğrulanacak
+  (XU100.IS gecikmeli olabilir). Kaynak şart riski: Yahoo kişisel kullanım —
+  gelir modelinden önce lisanslı/kamu kaynağıyla değiştirilecek (yontem.html
+  ve tl.json `note` alanında yazılı). S4 ekran görüntüleri sentetik örnek
+  veriyle alındı.

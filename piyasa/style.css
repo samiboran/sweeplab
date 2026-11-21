@@ -76,3 +76,36 @@ button.q[aria-pressed="true"]{color:var(--red);border-bottom-color:var(--red)}
 .prose dt{font-weight:600;margin-top:14px;scroll-margin-top:16px}
 .prose dt:target{color:var(--red)}
 .prose dd{margin:2px 0 0;color:#333}
+
+/* ---- TL tarafı + hesaplayıcı (S4) ---- */
+.tl-item{padding:16px 0;border-bottom:1px solid var(--rule)}
+.tl-item:first-child{padding-top:0}
+.tl-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.tl-head h3{font-size:15px;font-weight:600;margin:0}
+.tl-val{font-size:24px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+.tl-chg{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin:10px 0 8px}
+.tl-chg dt{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.tl-chg dd{margin:0;font-size:14px;font-weight:600}
+.spark{display:block;width:100%;height:64px;margin:6px 0}
+.spark path{fill:none;stroke-width:1.25}
+.spark .px{stroke:var(--ink)}
+.spark .ma{stroke:var(--red);stroke-width:1}
+.tl-link{margin:16px 0 0}
+.calc label{display:block;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin:18px 0 6px}
+.calc select,.calc input[type=text]{width:100%;font:inherit;font-size:18px;padding:8px 0;border:0;border-bottom:1px solid var(--ink);border-radius:0;background:var(--bg);color:var(--ink)}
+.calc select:focus,.calc input:focus{outline:none;border-bottom-color:var(--red)}
+.calc fieldset{border:0;padding:0;margin:18px 0 0}
+.calc legend{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);padding:0;margin-bottom:6px}
+.calc .radios label,.calc .remember{display:inline-flex;align-items:center;gap:6px;text-transform:none;letter-spacing:0;font-size:16px;font-weight:400;color:var(--ink);margin:0 18px 0 0}
+.calc input[type=radio],.calc input[type=checkbox]{accent-color:var(--red)}
+.calc .remember{margin-top:18px}
+.res{margin-top:28px}
+.res table{width:100%;border-collapse:collapse;font-size:15px}
+.res th,.res td{text-align:left;padding:8px 0;border-bottom:1px solid var(--rule);vertical-align:baseline}
+.res td{text-align:right;font-weight:600}
+.res thead th{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.res thead th+th{text-align:right}
+.res .big{color:var(--ink)}
+.res .neg{color:var(--red)}
+header.masthead nav a+a{margin-left:16px}
+.kicker{margin-top:36px}

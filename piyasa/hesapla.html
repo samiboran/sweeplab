@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://raw.githubusercontent.com; base-uri 'self'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Benim pozisyonum ne durumda? — Piyasa Hava Durumu</title>
+<meta name="description" content="Gram altın, gram gümüş, dolar, BIST 100, BTC ve ETH için ortalama maliyetine göre güncel değer, kâr/zarar ve başabaş noktası. Hesap tamamen cihazında yapılır.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="style.css">
+<script src="hesapla-core.js" defer></script>
+<script src="hesapla.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <a class="brand" href="./">Piyasa Hava Durumu</a>
+    <nav aria-label="Site"><a href="./">Bugün</a><a href="yontem.html">Yöntem</a></nav>
+  </header>
+  <main>
+    <p class="label kicker">Hesaplayıcı</p>
+    <h1>Benim pozisyonum ne durumda?</h1>
+    <p class="meta" id="fiyat-meta">Güncel fiyatlar yükleniyor…</p>
+    <p class="notice">Girdiğin bilgiler cihazından çıkmaz. Hesap tarayıcında yapılır; hiçbir yere gönderilmez, çerez kullanılmaz.</p>
+    <hr class="accent">
+    <form class="calc" id="calc" autocomplete="off" novalidate>
+      <label for="varlik">Varlık</label>
+      <select id="varlik">
+        <option value="gram_altin">Gram altın</option>
+        <option value="gram_gumus">Gram gümüş</option>
+        <option value="dolar">Dolar</option>
+        <option value="bist100">BIST 100 (puan)</option>
+        <option value="btc">Bitcoin (BTC)</option>
+        <option value="eth">Ether (ETH)</option>
+      </select>
+      <fieldset id="ccy-set">
+        <legend>Maliyet para birimi</legend>
+        <span class="radios">
+          <label><input type="radio" name="ccy" value="TL" checked> TL</label>
+          <label><input type="radio" name="ccy" value="USD"> Dolar</label>
+        </span>
+      </fieldset>
+      <label for="maliyet" id="maliyet-label">Ortalama maliyet (birim başına)</label>
+      <input type="text" id="maliyet" inputmode="decimal" placeholder="örn. 102,50">
+      <label for="miktar" id="miktar-label">Miktar</label>
+      <input type="text" id="miktar" inputmode="decimal" placeholder="örn. 10">
+      <label class="remember"><input type="checkbox" id="hatirla"> Bu cihazda hatırla</label>
+    </form>
+    <div class="res" id="sonuc" aria-live="polite"></div>
+  </main>
+  <footer>
+    <p>Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır. Hesap sonuçları yalnız aritmetiktir.</p>
+    <p id="foot-meta">Fiyat tarihi: —</p>
+    <p>© Piyasa Hava Durumu — türetilmiş veriler kaynak gösterilerek kullanılabilir (CC BY 4.0)</p>
+  </footer>
+</div>
+</body>
+</html>
