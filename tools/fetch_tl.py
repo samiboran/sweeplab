@@ -1,0 +1,238 @@
+"""TL layer for Piyasa Hava Durumu (S4).
+
+Private engine. Pulls daily closes and keeps them on data-feed (private side):
+  data/research/tl_1d/<name>.csv   date,close   (USDTRY, GOLD_USD, SILVER_USD, XU100)
+Publishes DERIVED, rounded values only:
+  data/site/tl.json   gram altın TL, gram gümüş TL, dolar/TL, BIST 100 (TL and USD terms):
+                      last value, % changes 1g/7g/30g/YTD, % vs 200-day MA, a short
+                      derived series for small charts, BTC/ETH reference prices.
+
+Sources (Yahoo Finance chart API, personal-use terms — to be replaced by a licensed
+or public source before any monetization):
+  TRY=X (USD/TRY), GC=F (COMEX gold, USD/oz), SI=F (COMEX silver, USD/oz), XU100.IS
+First run (no CSV yet) backfills range=max (aim >= 5 years); later runs fetch 1 year
+and merge. Each symbol is independent: a failure is logged and the rest continue.
+BIST 100 index level is published only as the current rounded level (needed by the
+calculator); its series is published only as BIST 100 in USD, rebased to 100.
+"""
+import csv, datetime as dt, json, os, sys, time, urllib.parse, urllib.request
+
+RAW_DIR = os.environ.get("TL_RAW_DIR", "data/research/tl_1d")
+SITE_OUT = os.environ.get("SITE_OUT", "data/site")
+NOTEBOOK = os.environ.get("NOTEBOOK", "data/derivs/notebook_daily.json")
+OZ_GRAM = 31.1035
+SERIES_DAYS = 400          # derived series kept for small charts
+UA = {"User-Agent": "Mozilla/5.0 (piyasa-hava-durumu; github actions)"}
+SYMBOLS = {"USDTRY": "TRY=X", "GOLD_USD": "GC=F", "SILVER_USD": "SI=F", "XU100": "XU100.IS"}
+SOURCE = "Piyasa Hava Durumu"
+SITE_URL = "https://samiboran.github.io/sweeplab/piyasa/"
+ATTRIBUTION = "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0"
+DATA_NOTE = ("Hesaplama: gram altın TL = ons altın (USD) × USD/TRY ÷ 31,1035; gram gümüş aynı şekilde. "
+             "Girdi kaynağı Yahoo Finance (kişisel kullanım şartlı); ticari kullanım öncesi lisanslı kaynakla değiştirilecek.")
+status = {}
+
+
+# ---------------------------------------------------------------- fetch / store (private side)
+def yahoo(symbol, rng):
+    url = (f"https://query1.finance.yahoo.com/v8/finance/chart/{urllib.parse.quote(symbol)}"
+           f"?range={rng}&interval=1d")
+    err = None
+    for a in range(3):
+        try:
+            with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30) as r:
+                j = json.loads(r.read())
+            res = j["chart"]["result"][0]
+            out = {}
+            for t, c in zip(res.get("timestamp") or [], res["indicators"]["quote"][0]["close"]):
+                if c is not None and c > 0:
+                    out[dt.datetime.fromtimestamp(t, dt.timezone.utc).strftime("%Y-%m-%d")] = float(c)
+            return out
+        except Exception as e:
+            err = f"{type(e).__name__}: {str(e)[:120]}"
+            time.sleep(2 * (a + 1))
+    raise RuntimeError(err)
+
+
+def read_csv(path):
+    if not os.path.exists(path):
+        return {}
+    with open(path, encoding="utf-8") as fh:
+        return {r["date"]: float(r["close"]) for r in csv.DictReader(fh) if r.get("close")}
+
+
+def write_csv(path, series):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    tmp = path + ".tmp"
+    with open(tmp, "w", encoding="utf-8", newline="") as fh:
+        w = csv.writer(fh)
+        w.writerow(["date", "close"])
+        for d in sorted(series):
+            w.writerow([d, f"{series[d]:.6f}"])
+    os.replace(tmp, path)
+
+
+def update_raw():
+    data = {}
+    for name, sym in SYMBOLS.items():
+        path = os.path.join(RAW_DIR, name + ".csv")
+        old = read_csv(path)
+        try:
+            new = yahoo(sym, "1y" if len(old) > 300 else "max")
+            old.update(new)
+            write_csv(path, old)
+            status[name] = f"OK {sym} +{len(new)} -> {len(old)} ({min(old)}..{max(old)})"
+        except Exception as e:
+            status[name] = f"ERR {sym} {e}"
+        data[name] = old
+    return data
+
+
+# ---------------------------------------------------------------- derived (public side)
+def combine(a, b, fn):
+    """Series on a's dates, b forward-filled (b may miss a holiday)."""
+    out, last = {}, None
+    bd = sorted(b)
+    j = 0
+    for d in sorted(a):
+        while j < len(bd) and bd[j] <= d:
+            last = b[bd[j]]
+            j += 1
+        if last is not None:
+            out[d] = fn(a[d], last)
+    return out
+
+
+def value_on_or_before(series, dates, day):
+    lo = None
+    for d in dates:
+        if d <= day:
+            lo = d
+        else:
+            break
+    return None if lo is None else series[lo]
+
+
+def stats(series):
+    """Last value, % changes (1g by row, 7g/30g by calendar, YTD vs last close of prior year), % vs MA200."""
+    if not series:
+        return None
+    dates = sorted(series)
+    last_d, last = dates[-1], series[dates[-1]]
+    ld = dt.date.fromisoformat(last_d)
+    pc = lambda base: None if base in (None, 0) else round((last / base - 1) * 100, 2)
+    prev = series[dates[-2]] if len(dates) > 1 else None
+    w7 = value_on_or_before(series, dates, (ld - dt.timedelta(days=7)).isoformat())
+    w30 = value_on_or_before(series, dates, (ld - dt.timedelta(days=30)).isoformat())
+    ytd = value_on_or_before(series, dates, f"{ld.year - 1}-12-31")
+    ma200 = sum(series[d] for d in dates[-200:]) / 200 if len(dates) >= 200 else None
+    return {"asof": last_d, "last": last, "chg_1g": pc(prev), "chg_7g": pc(w7), "chg_30g": pc(w30),
+            "chg_ytd": pc(ytd), "vs_ma200": pc(ma200), "ma200": ma200}
+
+
+def chart_series(series, days=SERIES_DAYS, nd=2, rebase=False):
+    dates = sorted(series)
+    vals = [series[d] for d in dates]
+    out = []
+    for i in range(max(0, len(dates) - days), len(dates)):
+        ma = sum(vals[i - 199:i + 1]) / 200 if i >= 199 else None
+        out.append([dates[i], vals[i], ma])
+    if rebase and out:
+        base = out[0][1]
+        out = [[d, v / base * 100, None if m is None else m / base * 100] for d, v, m in out]
+    return [[d, round(v, nd), None if m is None else round(m, nd)] for d, v, m in out]
+
+
+def weekday_age(asof, today):
+    a, t = dt.date.fromisoformat(asof), dt.date.fromisoformat(today)
+    n = 0
+    while a < t:
+        a += dt.timedelta(days=1)
+        if a.weekday() < 5:
+            n += 1
+    return n
+
+
+def crypto_refs(path):
+    try:
+        rows = sorted(json.load(open(path, encoding="utf-8"))["rows"], key=lambda r: r["date"])
+        last = rows[-1]
+        out = {}
+        for k in ("btc", "eth"):
+            t = (last.get("regime") or {}).get("trend_" + k) or {}
+            if t.get("close"):
+                out[k] = {"asof": last["date"], "usd": round(float(t["close"]), 2)}
+        return out
+    except Exception:
+        return {}
+
+
+def derive(data, today, crypto=None):
+    usd, gold, silver, xu = (data.get(k) or {} for k in ("USDTRY", "GOLD_USD", "SILVER_USD", "XU100"))
+    gram_gold = combine(gold, usd, lambda g, u: g * u / OZ_GRAM) if gold and usd else {}
+    gram_silver = combine(silver, usd, lambda s, u: s * u / OZ_GRAM) if silver and usd else {}
+    xu_usd = combine(xu, usd, lambda x, u: x / u) if xu and usd else {}
+    assets = []
+
+    def add(aid, label, unit, series, nd, chart_nd, show_level=True, rebase=False, note=None):
+        s = stats(series)
+        if not s:
+            assets.append({"id": aid, "label": label, "status": "veri yok"})
+            return
+        item = {"id": aid, "label": label, "unit": unit, "asof": s["asof"],
+                "last": round(s["last"], nd) if show_level else None,
+                "chg_1g": s["chg_1g"], "chg_7g": s["chg_7g"], "chg_30g": s["chg_30g"], "chg_ytd": s["chg_ytd"],
+                "vs_ma200": s["vs_ma200"], "stale": weekday_age(s["asof"], today) > 3,
+                "series": chart_series(series, nd=chart_nd, rebase=rebase)}
+        if note:
+            item["note"] = note
+        assets.append(item)
+
+    add("gram_altin", "Gram altın", "TL/gram", gram_gold, 2, 2)
+    add("gram_gumus", "Gram gümüş", "TL/gram", gram_silver, 2, 3)
+    add("dolar", "Dolar/TL", "TL", usd, 4, 4)
+    add("bist100_usd", "BIST 100 (dolar bazında)", "endeks, başlangıç = 100", xu_usd, 2, 2, show_level=False,
+        rebase=True, note="Endeks seviyesi yerine dolar bazında değişim gösterilir.")
+    # current values the calculator needs (no series)
+    prices = {}
+    sg, su, sx = stats(gram_gold), stats(usd), stats(xu)
+    ss = stats(gram_silver)
+    if su:
+        prices["usdtry"] = round(su["last"], 4)
+        prices["usdtry_asof"] = su["asof"]
+    if sg:
+        prices["gram_altin_tl"] = round(sg["last"], 2)
+    if ss:
+        prices["gram_gumus_tl"] = round(ss["last"], 3)
+    if sx:
+        prices["bist100_tl"] = round(sx["last"])
+        prices["bist100_asof"] = sx["asof"]
+    for k, v in (crypto or {}).items():
+        prices[k + "_usd"] = v["usd"]
+        prices[k + "_asof"] = v["asof"]
+    core_ok = all(a.get("asof") and not a.get("stale") for a in assets if a["id"] in ("gram_altin", "dolar"))
+    return {"assets": assets, "prices": prices, "status": "ok" if core_ok else "güncellenmedi"}
+
+
+def main():
+    now = dt.datetime.now(dt.timezone.utc).replace(microsecond=0)
+    data = update_raw()
+    for k, v in status.items():
+        print(f"  {k}: {v}")
+    d = derive(data, now.date().isoformat(), crypto_refs(NOTEBOOK))
+    rec = {"schema": "phd.tl/1", "schema_version": 1, "source": SOURCE, "site_url": SITE_URL,
+           "generated_at": now.isoformat().replace("+00:00", "Z"), "attribution": ATTRIBUTION,
+           "license": "CC BY 4.0 (türetilmiş değerler)", "note": DATA_NOTE, "rules_version": "v1",
+           "inputs": {k: ("ok" if v.startswith("OK") else "hata") for k, v in status.items()}, **d}
+    os.makedirs(SITE_OUT, exist_ok=True)
+    path = os.path.join(SITE_OUT, "tl.json")
+    tmp = path + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as fh:
+        json.dump(rec, fh, ensure_ascii=False, separators=(",", ":"))
+    os.replace(tmp, path)
+    print(f"tl.json: {d['status']}, {len(d['assets'])} varlık")
+    if not any(v.startswith("OK") for v in status.values()):
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

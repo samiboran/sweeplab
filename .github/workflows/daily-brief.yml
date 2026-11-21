@@ -43,6 +43,12 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           SEND_TELEGRAM: ${{ github.event_name == 'push' && '0' || '1' }}
         run: python3 tools/build_site.py || echo "site build failed"
+      - name: TL layer (Yahoo TRY=X, GC=F, SI=F, XU100.IS; derived -> data/site/tl.json, non-fatal)
+        env:
+          TL_RAW_DIR: feed/data/research/tl_1d
+          SITE_OUT: feed/data/site
+          NOTEBOOK: feed/data/derivs/notebook_daily.json
+        run: python3 tools/fetch_tl.py || echo "tl layer failed"
       - name: Z-scores, alarms, Telegram
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -56,6 +62,7 @@ jobs:
           git config user.email "derivs-bot@users.noreply.github.com"
           git add data/derivs/
           if [ -d data/site ]; then git add data/site/; fi
+          if [ -d data/research/tl_1d ]; then git add data/research/tl_1d/; fi
           git commit -m "daily brief $(date -u +%F)" || echo "no changes"
           git push origin HEAD:data-feed
 
