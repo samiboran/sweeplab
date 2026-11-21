@@ -83,7 +83,9 @@ button.q[aria-pressed="true"]{color:var(--red);border-bottom-color:var(--red)}
 .tl-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
 .tl-head h3{font-size:15px;font-weight:600;margin:0}
 .tl-val{font-size:24px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
-.tl-chg{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin:10px 0 8px}
+.tl-chg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px 4px;margin:10px 0 8px}
+@media (min-width:700px){.tl-chg{grid-template-columns:repeat(6,1fr)}}
+.tl-ago{font-size:14px;margin:4px 0 6px}
 .tl-chg dt{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
 .tl-chg dd{margin:0;font-size:14px;font-weight:600}
 .spark{display:block;width:100%;height:64px;margin:6px 0}

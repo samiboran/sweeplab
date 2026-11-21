@@ -26,9 +26,16 @@
   }
 
   function spark(series, label) {
-    var pts = (Array.isArray(series) ? series : []).slice(-250).filter(function (p) {
-      return Array.isArray(p) && typeof p[1] === "number";
+    var all = (Array.isArray(series) ? series : []).filter(function (p) {
+      return Array.isArray(p) && typeof p[1] === "number" && /^\d{4}-\d{2}-\d{2}$/.test(String(p[0]));
     });
+    var cut = "";
+    if (all.length) {
+      var dl = new Date(all[all.length - 1][0] + "T00:00:00Z");
+      dl.setUTCDate(dl.getUTCDate() - 366);
+      cut = dl.toISOString().slice(0, 10);
+    }
+    var pts = all.filter(function (p) { return p[0] >= cut; });     // last 1 year
     if (pts.length < 2) return null;
     var W = 320, H = 64, vals = [];
     pts.forEach(function (p) { vals.push(p[1]); if (typeof p[2] === "number") vals.push(p[2]); });
@@ -48,7 +55,7 @@
     svg.setAttribute("preserveAspectRatio", "none");
     svg.setAttribute("class", "spark");
     svg.setAttribute("role", "img");
-    svg.setAttribute("aria-label", label + ": son " + pts.length + " işlem günü, siyah çizgi kapanış, kırmızı çizgi 200 günlük ortalama");
+    svg.setAttribute("aria-label", label + ": son 1 yıl, siyah çizgi kapanış, kırmızı çizgi 200 günlük ortalama");
     [[2, "ma"], [1, "px"]].forEach(function (k) {
       var d = path(k[0]);
       if (!d) return;
@@ -65,9 +72,11 @@
     gram_altin: ["1 gram altının TL karşılığı.", "Ons altın fiyatı (dolar) × dolar/TL ÷ 31,1035 (1 ons = 31,1035 gram). Kuyumcu satış fiyatı değildir; işçilik ve makas içermez.", "Yahoo Finance: COMEX altın vadeli (GC=F) ve USD/TRY"],
     gram_gumus: ["1 gram gümüşün TL karşılığı.", "Ons gümüş fiyatı (dolar) × dolar/TL ÷ 31,1035. Banka ve kuyumcu fiyatları makas nedeniyle farklı olabilir.", "Yahoo Finance: COMEX gümüş vadeli (SI=F) ve USD/TRY"],
     dolar: ["1 ABD dolarının TL karşılığı (piyasa kuru).", "Günlük kapanış kuru. Banka ve döviz bürosu kurları alış-satış makası nedeniyle farklıdır.", "Yahoo Finance: USD/TRY (TRY=X)"],
+    btc: ["Bitcoin'in dolar fiyatı (günlük kapanış, UTC).", "Kripto piyasası 7/24 açıktır; günlük kapanış UTC gece yarısı alınır. Hesaplayıcı OKX kapanışını kullanır, küçük fark olabilir.", "Yahoo Finance: BTC-USD"],
+    eth: ["Ether'in dolar fiyatı (günlük kapanış, UTC).", "Kripto piyasası 7/24 açıktır; günlük kapanış UTC gece yarısı alınır.", "Yahoo Finance: ETH-USD"],
     bist100_usd: ["BIST 100 endeksinin dolar cinsinden değeri.", "BIST 100 ÷ dolar/TL. Grafikte başlangıç günü 100 kabul edilir; böylece TL'deki değer kaybından arındırılmış performans görülür.", "Yahoo Finance: XU100.IS (gecikmeli olabilir) ve USD/TRY"]
   };
-  var CHG_NOTE = "1 gün: bir önceki kapanışa göre. 7 ve 30 gün: o kadar takvim günü önceki son kapanışa göre. Yılbaşı: geçen yılın son kapanışına göre. 200g ort. farkı: son 200 işlem gününün ortalamasına göre uzaklık. Grafikte siyah çizgi kapanış, kırmızı çizgi 200 günlük ortalama.";
+  var CHG_NOTE = "1 gün: bir önceki kapanışa göre. 7 ve 30 gün: o kadar takvim günü önceki son kapanışa göre. Yılbaşı: geçen yılın son kapanışına göre. 1 yıl: 365 gün önceki son kapanışa göre. 200g ort. farkı: son 200 işlem gününün ortalamasına göre uzaklık. Grafikte siyah çizgi kapanış, kırmızı çizgi 200 günlük ortalama.";
 
   function render(d) {
     var box = document.getElementById("tl");
@@ -95,13 +104,16 @@
         btn.setAttribute("aria-expanded", open ? "false" : "true");
         panel.hidden = open;
       });
+      if (a.status && (a.id === "btc" || a.id === "eth")) return;   // optional rows: hide when missing
       if (a.status) { item.appendChild(head); item.appendChild(el("p", "mute small", "Veri yok.")); box.appendChild(item); return; }
-      var v = a.last == null ? pct(a.chg_ytd) : num(a.last, a.id === "dolar" ? 2 : 2) + " " + (a.unit === "TL/gram" ? "TL" : a.unit === "TL" ? "TL" : "");
+      var nd = a.id === "btc" ? 0 : 2;
+      var unitTxt = a.unit === "$" ? " $" : (a.unit === "TL/gram" || a.unit === "TL") ? " TL" : "";
+      var v = a.last == null ? pct(a.chg_ytd) : num(a.last, nd) + unitTxt;
       head.appendChild(el("span", "tl-val", a.last == null ? pct(a.chg_ytd) + " yılbaşından" : v));
       item.appendChild(head);
       item.appendChild(panel);
       var dl = el("dl", "tl-chg");
-      [["1 gün", a.chg_1g], ["7 gün", a.chg_7g], ["30 gün", a.chg_30g], ["Yılbaşı", a.chg_ytd], ["200g ort. farkı", a.vs_ma200]].forEach(function (c) {
+      [["1 gün", a.chg_1g], ["7 gün", a.chg_7g], ["30 gün", a.chg_30g], ["Yılbaşı", a.chg_ytd], ["1 yıl", a.chg_1y], ["200g ort. farkı", a.vs_ma200]].forEach(function (c) {
         var w = el("div");
         w.appendChild(el("dt", null, c[0]));
         w.appendChild(el("dd", null, pct(c[1])));
@@ -110,6 +122,12 @@
       item.appendChild(dl);
       var s = spark(a.series, a.label);
       if (s) item.appendChild(s);
+      if (a.date_1y) {
+        var ago = "1 yıl önce (" + trDate(a.date_1y) + "): " + (a.val_1y != null ? num(a.val_1y, nd) + unitTxt : "—") +
+          " · bugün: " + (a.last != null ? num(a.last, nd) + unitTxt : "—") + " · değişim " + pct(a.chg_1y);
+        if (a.val_1y == null) ago = "1 yıl önceye (" + trDate(a.date_1y) + ") göre değişim: " + pct(a.chg_1y);
+        item.appendChild(el("p", "tl-ago", ago));
+      }
       var note = "Veri: " + trDate(a.asof) + (a.note ? " · " + a.note : "");
       item.appendChild(el("p", "mute small", note));
       box.appendChild(item);
