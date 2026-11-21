@@ -14,6 +14,7 @@ OUT_DIR = os.environ.get("OUT_DIR", os.path.join(FEED, "derivs"))
 SITE_OUT = os.environ.get("SITE_OUT", os.path.join(FEED, "site"))
 RESEARCH = os.environ.get("RESEARCH_DIR", os.path.join(FEED, "research", "candles_1d"))
 DAYS = 365
+MACRO_FROM = "2026-10-01"   # Boran: our own macro record is shown from October 2026 (data kept since then)
 SOURCE = "Piyasa Hava Durumu"
 SITE_URL = "https://samiboran.github.io/sweeplab/piyasa/"
 ATTRIBUTION = "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0"
@@ -65,6 +66,8 @@ def macro(history_path):
         rows = list(csv.DictReader(line for line in fh if not line.startswith("#")))
     out, bounds, seen = [], [], set()
     for r in rows:
+        if r["date"] < MACRO_FROM:
+            continue
         out.append([r["date"], int(r["raw_score"]), r["level"].upper(), r["mode"], r["rules_version"]])
         if r["rules_version"] not in seen:
             seen.add(r["rules_version"])

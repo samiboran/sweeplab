@@ -50,7 +50,7 @@ def test_derive_publishes_derived_only():
     d = tl.derive({"USDTRY": usd, "GOLD_USD": gold, "SILVER_USD": silver, "XU100": xu}, last,
                   {"btc": {"asof": last, "usd": 60000.0}})
     ids = [a["id"] for a in d["assets"]]
-    assert ids == ["gram_altin", "gram_gumus", "dolar", "bist100_usd"]
+    assert ids == ["gram_altin", "gram_gumus", "dolar", "bist100_usd", "btc", "eth"]
     bist = d["assets"][3]
     assert bist["last"] is None and bist["series"][0][1] == 100.0          # rebased, no index levels
     assert len(d["assets"][0]["series"]) <= tl.SERIES_DAYS
@@ -91,3 +91,20 @@ def test_update_raw_rebuilds_monthly_store(tmp_path, monkeypatch):
     assert all(c == tl.BACKFILL_START for c in calls)
     assert all(tl.is_daily(v) and len(v) == 1500 for v in data.values())
     assert tl.read_csv(str(tmp_path / "USDTRY.csv")) == daily
+
+
+def test_one_year_ago_value_and_change():
+    s = {}
+    d = dt.date(2025, 1, 1)
+    while d <= dt.date(2026, 11, 20):
+        s[d.isoformat()] = 100.0 if d <= dt.date(2025, 11, 20) else 150.0
+        d += dt.timedelta(days=1)
+    st = tl.stats(s)
+    assert st["date_1y"] == "2025-11-20" and st["val_1y"] == 100.0 and st["chg_1y"] == 50.0
+    cs = tl.chart_series(s)
+    assert cs[0][0] <= "2025-11-20" and len(cs) == tl.SERIES_DAYS + 1
+
+
+def test_no_one_year_value_when_history_is_short():
+    st = tl.stats(series("2026-06-01", 100, lambda i: 1.0))
+    assert st["chg_1y"] is None and st["date_1y"] is None

@@ -9,7 +9,8 @@ Publishes DERIVED, rounded values only:
 
 Sources (Yahoo Finance chart API, personal-use terms — to be replaced by a licensed
 or public source before any monetization):
-  TRY=X (USD/TRY), GC=F (COMEX gold, USD/oz), SI=F (COMEX silver, USD/oz), XU100.IS
+  TRY=X (USD/TRY), GC=F (COMEX gold, USD/oz), SI=F (COMEX silver, USD/oz), XU100.IS,
+  BTC-USD, ETH-USD (for the 1-year view; the calculator prefers OKX closes from the notebook)
 First run (or a store that is not daily) backfills daily bars from 2000 via
 period1/period2 (range=max returns MONTHLY bars); later runs fetch 1 year and merge. Each symbol is independent: a failure is logged and the rest continue.
 BIST 100 index level is published only as the current rounded level (needed by the
@@ -21,9 +22,10 @@ RAW_DIR = os.environ.get("TL_RAW_DIR", "data/research/tl_1d")
 SITE_OUT = os.environ.get("SITE_OUT", "data/site")
 NOTEBOOK = os.environ.get("NOTEBOOK", "data/derivs/notebook_daily.json")
 OZ_GRAM = 31.1035
-SERIES_DAYS = 400          # derived series kept for small charts
+SERIES_DAYS = 400          # calendar days of derived series kept for small charts (> 1 year)
 UA = {"User-Agent": "Mozilla/5.0 (piyasa-hava-durumu; github actions)"}
-SYMBOLS = {"USDTRY": "TRY=X", "GOLD_USD": "GC=F", "SILVER_USD": "SI=F", "XU100": "XU100.IS"}
+SYMBOLS = {"USDTRY": "TRY=X", "GOLD_USD": "GC=F", "SILVER_USD": "SI=F", "XU100": "XU100.IS",
+           "BTC_USD": "BTC-USD", "ETH_USD": "ETH-USD"}
 SOURCE = "Piyasa Hava Durumu"
 SITE_URL = "https://samiboran.github.io/sweeplab/piyasa/"
 ATTRIBUTION = "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0"
@@ -154,15 +156,23 @@ def stats(series):
     w30 = value_on_or_before(series, dates, (ld - dt.timedelta(days=30)).isoformat())
     ytd = value_on_or_before(series, dates, f"{ld.year - 1}-12-31")
     ma200 = sum(series[d] for d in dates[-200:]) / 200 if len(dates) >= 200 else None
+    d1y = (ld - dt.timedelta(days=365)).isoformat()
+    y1d = max((d for d in dates if d <= d1y), default=None)
+    y1 = series[y1d] if y1d and (dt.date.fromisoformat(d1y) - dt.date.fromisoformat(y1d)).days <= 7 else None
     return {"asof": last_d, "last": last, "chg_1g": pc(prev), "chg_7g": pc(w7), "chg_30g": pc(w30),
-            "chg_ytd": pc(ytd), "vs_ma200": pc(ma200), "ma200": ma200}
+            "chg_ytd": pc(ytd), "chg_1y": pc(y1), "val_1y": y1, "date_1y": y1d if y1 is not None else None,
+            "vs_ma200": pc(ma200), "ma200": ma200}
 
 
 def chart_series(series, days=SERIES_DAYS, nd=2, rebase=False):
+    """Last `days` CALENDAR days (≈ 13 months, so "1 year ago" is on the chart)."""
     dates = sorted(series)
     vals = [series[d] for d in dates]
     out = []
-    for i in range(max(0, len(dates) - days), len(dates)):
+    cut = (dt.date.fromisoformat(dates[-1]) - dt.timedelta(days=days)).isoformat() if dates else ""
+    for i in range(len(dates)):
+        if dates[i] < cut:
+            continue
         ma = sum(vals[i - 199:i + 1]) / 200 if i >= 199 else None
         out.append([dates[i], vals[i], ma])
     if rebase and out:
@@ -210,6 +220,8 @@ def derive(data, today, crypto=None):
         item = {"id": aid, "label": label, "unit": unit, "asof": s["asof"],
                 "last": round(s["last"], nd) if show_level else None,
                 "chg_1g": s["chg_1g"], "chg_7g": s["chg_7g"], "chg_30g": s["chg_30g"], "chg_ytd": s["chg_ytd"],
+                "chg_1y": s["chg_1y"], "date_1y": s["date_1y"],
+                "val_1y": round(s["val_1y"], nd) if (show_level and s["val_1y"] is not None) else None,
                 "vs_ma200": s["vs_ma200"], "stale": weekday_age(s["asof"], today) > 3,
                 "series": chart_series(series, nd=chart_nd, rebase=rebase)}
         if note:
@@ -221,6 +233,8 @@ def derive(data, today, crypto=None):
     add("dolar", "Dolar/TL", "TL", usd, 4, 4)
     add("bist100_usd", "BIST 100 (dolar bazında)", "endeks, başlangıç = 100", xu_usd, 2, 2, show_level=False,
         rebase=True, note="Endeks seviyesi yerine dolar bazında değişim gösterilir.")
+    add("btc", "Bitcoin (dolar)", "$", data.get("BTC_USD") or {}, 0, 0)
+    add("eth", "Ether (dolar)", "$", data.get("ETH_USD") or {}, 2, 2)
     # current values the calculator needs (no series)
     prices = {}
     sg, su, sx = stats(gram_gold), stats(usd), stats(xu)
@@ -235,9 +249,13 @@ def derive(data, today, crypto=None):
     if sx:
         prices["bist100_tl"] = round(sx["last"])
         prices["bist100_asof"] = sx["asof"]
-    for k, v in (crypto or {}).items():
-        prices[k + "_usd"] = v["usd"]
-        prices[k + "_asof"] = v["asof"]
+    for k in ("btc", "eth"):                       # OKX (notebook) first, Yahoo as fallback
+        v = (crypto or {}).get(k)
+        y = stats(data.get(k.upper() + "_USD") or {})
+        if v:
+            prices[k + "_usd"], prices[k + "_asof"] = v["usd"], v["asof"]
+        elif y:
+            prices[k + "_usd"], prices[k + "_asof"] = round(y["last"], 2), y["asof"]
     core_ok = all(a.get("asof") and not a.get("stale") for a in assets if a["id"] in ("gram_altin", "dolar"))
     return {"assets": assets, "prices": prices, "status": "ok" if core_ok else "güncellenmedi"}
 
