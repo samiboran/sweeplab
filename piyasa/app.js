@@ -49,7 +49,7 @@
           neden: "Normalde güvenli liman olan altın düşerken dolar yükseliyorsa, yatırımcılar her şeyi satıp nakde geçiyor olabilir.",
           nasil: "Altın 20 günde en az %3 düştüyse ve aynı dönemde dolar endeksi yükseldiyse işaret verir.", kaynak: "Yahoo Finance (altın vadeli, DXY)", keys: ["gold", "dxy"] },
     P1: { ne: "WTI ham petrol vadeli fiyatı.",
-          neden: "Sert yükseliş enflasyon baskısı, kredi primi açılırken sert düşüş talep zayıflığı işareti olabilir.",
+          neden: "Sert yükseliş enflasyon baskısına, kredi primi açılırken sert düşüş talep zayıflığına işaret edebilir. Bunlar olası yorumlardır: petrol arz artışı ya da jeopolitik primin sönmesiyle de düşebilir.",
           nasil: "20 günde en az %10 yükseldiyse ya da en az %15 düşüp kredi primi açılıyorsa işaret verir.", kaynak: "Yahoo Finance (WTI vadeli)", keys: ["wti", "hy_oas"] }
   };
 

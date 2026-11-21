@@ -129,9 +129,19 @@ def weekday_age(asof, today):
 
 
 # ---------------------------------------------------------------- rules v1
+def _near_peak(rows, i, path):
+    """True when the 20-day comparison value sits within 3% of the 60-row high
+    (so a large 20-day drop is partly a reversal of a recent spike). Context only."""
+    base = get(rows[max(0, i - LOOKBACK)], path)
+    vals = [get(r, path) for r in rows[max(0, i - 3 * LOOKBACK):i + 1]]
+    vals = [x for x in vals if x is not None]
+    return bool(base and vals and base >= 0.97 * max(vals))
+
+
 def score_row(rows, i):
     """Score rows[i] against rows[i-20] (or the oldest row). Returns a dict."""
     cur, base = rows[i], rows[max(0, i - LOOKBACK)]
+    base60 = rows[max(0, i - 3 * LOOKBACK)]          # context only (never scored)
     g = lambda p: get(cur, p)
     b = lambda p: get(base, p)
 
@@ -181,6 +191,11 @@ def score_row(rows, i):
         "ndx_20g_yon": direction(ndx_pct, 0.05),
         "gold_20g_pct": r(gold_pct, 1),
         "wti_20g_pct": r(wti_pct, 1),
+        # context only — shown next to the rule, never changes a flag
+        "stables_20g_pct": r(pct(g("regime.stables_usd"), b("regime.stables_usd")), 1),
+        "wti_60g_pct": r(pct(g("macro.wti"), get(base60, "macro.wti")), 1),
+        "wti_60g_days": (dt.date.fromisoformat(cur["date"]) - dt.date.fromisoformat(base60["date"])).days,
+        "wti_base_near_peak": _near_peak(rows, i, "macro.wti"),
     }
     return {"date": cur["date"], "base_date": base["date"], "flags": flags, "raw_score": score,
             "raw_level": level_of(score), "p1_label": p1_label, "values": values,
@@ -197,36 +212,64 @@ def publish_level(prev_published, prev_raw_level, raw_level):
 
 
 # ---------------------------------------------------------------- sentences
+def _chg(x, nd=1, up="arttı", down="azaldı"):
+    return f"%{tr_num(abs(x), nd)} {down if x < 0 else up if x > 0 else 'değişmedi'}" if x else "değişmedi"
+
+
 def rule_sentence(code, s):
+    """One plain sentence per rule. 'İşaret' = the rule gives a point today. Context
+    clauses (20/60-day) are information only and never change a flag."""
     v, f = s["values"], s["flags"][code]
     if f is None:
         return "Bu kural için bugün veri yok; puan verilmedi."
     if code == "L1":
-        x = v["stables_7d_pct"]
-        return f"Stablecoin arzı son 7 günde %{tr_num(abs(x))} {'azaldı' if x < 0 else 'arttı' if x > 0 else 'değişmedi'}."
+        x, c = v["stables_7d_pct"], v.get("stables_20g_pct")
+        t = f"Stablecoin arzı son 7 günde {_chg(x)}"
+        if c is not None:
+            t += f"; 20 günde {_chg(c)}"
+        return t + "."
     if code == "L2":
         x = v["netliq_20g_pct"]
-        return f"Fed net likiditesi 20 günde %{tr_num(abs(x), 2)} {'azaldı' if x < 0 else 'arttı' if x > 0 else 'değişmedi'}."
+        return f"Fed net likiditesi 20 günde {_chg(x, 2)}."
     if code == "L3":
         x = v["real10y_20g_bp"]
         word = "yükseldi" if x > 0 else "düştü" if x < 0 else "değişmedi"
-        return f"10 yıllık reel faiz %{tr_num(v['real10y'], 2)}; 20 günde {abs(x)} baz puan {word}."
+        return (f"10 yıllık reel faiz %{tr_num(v['real10y'], 2)}; 20 günde {abs(x)} baz puan {word}"
+                + (" (15 baz puan eşiğinin üzerinde)." if f else "."))
     if code == "D1":
-        return f"Dolar endeksi 20 günde {v['dxy_20g_yon']}" + ("; eşik aşıldı." if f else "; eşik aşılmadı.")
+        if f:
+            return "Dolar endeksi 20 günde %1'den fazla yükseldi."
+        y = v["dxy_20g_yon"]
+        return f"Dolar endeksi 20 günde {y}" + ("; %1'lik yükseliş eşiğine ulaşmadı." if y == "yükseldi" else ".")
     if code == "K1":
-        return f"Yüksek getirili tahvil risk primi 20 günde {v['hy_oas_20g_yon']}" + ("; eşik aşıldı." if f else "; eşik aşılmadı.")
+        if f:
+            return "Yüksek getirili tahvil risk primi 20 günde 0,25 puandan fazla açıldı: kredi tarafında gerginlik."
+        y = v["hy_oas_20g_yon"]
+        return f"Yüksek getirili tahvil risk primi 20 günde {y}" + ("; 0,25 puanlık eşiğe ulaşmadı." if y == "açıldı" else ".")
     if code == "K2":
-        return f"VIX oynaklık endeksi {tr_num(v['vix'])}" + (" (18 ve üzeri)." if f else " (18'in altında).")
+        return f"VIX oynaklık endeksi {tr_num(v['vix'])}" + (": 18'in üzerinde, piyasada gerginlik var." if f else ": 18'in altında, sakin bölgede.")
     if code == "K3":
-        return f"Nasdaq Bileşik endeksi 20 günde {v['ndx_20g_yon']}" + ("; eşik aşıldı." if f else "; eşik aşılmadı.")
+        if f:
+            return "Nasdaq Bileşik endeksi 20 günde %3'ten fazla düştü."
+        y = v["ndx_20g_yon"]
+        return f"Nasdaq Bileşik endeksi 20 günde {y}" + ("; %3'lük düşüş eşiğine ulaşmadı." if y == "düştü" else ".")
     if code == "N1":
         x = v["gold_20g_pct"]
         g = f"Altın 20 günde %{tr_num(abs(x))} {'geriledi' if x < 0 else 'yükseldi' if x > 0 else 'değişmedi'}"
-        return g + f", dolar endeksi {v['dxy_20g_yon']}" + (" — nakde kaçış işareti." if f else ".")
+        return g + f", dolar endeksi {v['dxy_20g_yon']}" + (": ikisinin birlikte olması nakde kaçış işareti sayılır." if f else ".")
     if code == "P1":
         x = v["wti_20g_pct"]
         t = f"Ham petrol (WTI) 20 günde %{tr_num(abs(x))} {'geriledi' if x < 0 else 'yükseldi' if x > 0 else 'değişmedi'}"
-        return t + (f" — {s['p1_label']} işareti." if f else ".")
+        if f and s["p1_label"] == "talep zayıflığı":
+            t += "; kredi risk primi de açılıyor. Kural bu ikiliyi olası talep zayıflığı işareti sayar"
+        elif f:
+            t += "; kural bunu olası enflasyon baskısı işareti sayar"
+        c = v.get("wti_60g_pct")
+        if f and v.get("wti_base_near_peak") and c is not None:
+            t += (f". Bağlam: karşılaştırma günü ({tr_date(s['base_date'])}) fiyat son 60 günün zirvesine yakındı; "
+                  f"{v.get('wti_60g_days', 60)} gün öncesine göre değişim {_chg(c, 1, 'artış', 'düşüş').replace('artış', 'yukarıda').replace('düşüş', 'aşağıda')}. "
+                  "Düşüşün bir kısmı önceki ani yükselişin geri alınmasıdır; arz ve jeopolitik etkenler de rol oynayabilir")
+        return t + "."
     raise KeyError(code)
 
 

@@ -177,3 +177,12 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
   history.csv'deki Ağustos–Eylül retro satırları silinmedi (yalnız gösterilmiyor;
   S6 arşiv/sicil de Ekim'den başlayacak). "Veri: 20 Kasım" doğru: 21 Kasım
   cumartesi, son kapanış cuma.
+- **2026-11-21 (9. çalışma, Boran'ın soruları)** — Kural cümleleri sadeleşti:
+  "eşik aşıldı/aşılmadı" yerine eşik kelimeyle ("%3'ten fazla düştü",
+  "0,25 puanlık eşiğe ulaşmadı"); kuralların üstüne "kırmızı nokta = bugün işaret
+  var" açıklaması. Bağlam (puanı etkilemez): stablecoin 7 günün yanında 20 günlük
+  değişim; petrolde karşılaştırma günü 60 günlük zirveye yakınsa "önceki ani
+  yükselişin geri alınması olabilir" notu; "talep zayıflığı" artık "olası" bir
+  yorum olarak yazılıyor. **Karar bekleyen:** `docs/MAKRO_KURALLAR_v1_1_ONERI.md`
+  (P1 düşüş kolu için kredi teyidi ≥ 0,25; etkisi: 18–19 Kasım 7→6, seviye aynı).
+  ⏸ Boran onaylarsa v1.1.
