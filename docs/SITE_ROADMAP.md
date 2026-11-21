@@ -162,3 +162,9 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
   **Önemli:** PR birleşmeden main'deki eski build_site.py yarın sabah
   tamamlanmamış 20–21 Kasım satırlarını yeniden ekler → PR sabah 05:50 UTC'den
   önce birleşmeli.
+- **2026-11-21 (7. çalışma, Boran'ın isteği)** — Kural başlıklarına ve TL
+  kalemlerine tıklayınca açılan açıklama: "Nedir? / Neden izleniyor? / Nasıl
+  hesaplanıyor? / Kaynak" + verinin tarihi ve karşılaştırma günü (yalnız
+  yontem.html'de zaten yazan eşikler; DOM API, `aria-expanded`). Etiket
+  düzeltmesi: veri Nasdaq **Bileşik** (FRED NASDAQCOM), "Nasdaq 100" yazıyordu
+  (build_site, yontem.html; yeni kayıtlardan itibaren).
