@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self'; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Yöntem — Piyasa Hava Durumu</title>
+<meta name="description" content="Piyasa Hava Durumu makro hava seviyesinin dokuz kuralı, veri kaynakları ve sürüm kuralı, düz Türkçe ile.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <a class="brand" href="./">Piyasa Hava Durumu</a>
+    <nav aria-label="Site"><a href="./">Bugün</a></nav>
+  </header>
+  <main class="prose">
+    <p class="label kick">Yöntem</p>
+    <h1>Makro hava nasıl ölçülüyor?</h1>
+    <p class="mute">Kural sürümü v1 · dondurulma 21 Kasım 2026</p>
+    <hr class="accent">
+
+    <section>
+      <h2>Kısaca</h2>
+      <p>Her sabah dokuz basit kural kontrol edilir. Her kural ya işaret verir (1 puan) ya vermez (0 puan). Çoğu kural bugünü 20 gün önceki veriyle karşılaştırır. Toplam 0–2 ise <strong>YEŞİL</strong>, 3–4 ise <strong>SARI</strong>, 5 ve üzeri ise <strong>KIRMIZI</strong>.</p>
+      <p>Tek günlük sıçramalar seviyeyi değiştirmez: seviye ancak iki gün üst üste aynı yeni seviyeye işaret edilirse değişir. Aksi halde önceki seviye korunur ve sayfada bu yazılır.</p>
+      <p>Bu sayfa piyasayı tarif eder; alım, satım ya da zamanlama önerisi vermez.</p>
+    </section>
+
+    <section>
+      <h2>Dokuz kural</h2>
+      <dl>
+        <dt id="l1">Likidite — Stablecoin arzı</dt>
+        <dd>Dolar bazlı stablecoin'lerin toplam arzı son 7 günde azaldıysa işaret verir.</dd>
+        <dt id="l2">Likidite — Fed net likiditesi</dt>
+        <dd>ABD Merkez Bankası bilançosundan Hazine hesabı ve ters repo düşüldükten sonra kalan tutar 20 günde azaldıysa işaret verir.</dd>
+        <dt id="l3">Likidite — Reel faiz</dt>
+        <dd>ABD 10 yıllık enflasyona endeksli tahvil faizi 20 günde en az 15 baz puan yükseldiyse işaret verir.</dd>
+        <dt id="d1">Dolar — Dolar endeksi</dt>
+        <dd>Dolar endeksi 20 günde en az %1 yükseldiyse işaret verir. Endeks lisanslı olduğu için yalnız yön yayımlanır.</dd>
+        <dt id="k1">Kredi / risk — Kredi risk primi</dt>
+        <dd>ABD yüksek getirili şirket tahvillerinin risk primi 20 günde en az 25 baz puan açıldıysa işaret verir. Lisanslı veri: yalnız işaret ve yön yayımlanır.</dd>
+        <dt id="k2">Kredi / risk — Oynaklık (VIX)</dt>
+        <dd>VIX oynaklık endeksi 18 veya üzerindeyse işaret verir.</dd>
+        <dt id="k3">Kredi / risk — Nasdaq 100</dt>
+        <dd>Nasdaq 100 endeksi 20 günde en az %3 düştüyse işaret verir. Lisanslı endeks: yalnız işaret ve yön yayımlanır.</dd>
+        <dt id="n1">Nakde kaçış — Altın ve dolar</dt>
+        <dd>Altın 20 günde en az %3 düşerken dolar endeksi de yükseldiyse işaret verir. Güvenli liman sayılan altın da geriliyorsa nakde talep artıyor olabilir.</dd>
+        <dt id="p1">Petrol</dt>
+        <dd>Ham petrol (WTI) 20 günde en az %10 yükseldiyse "enflasyon dürtüsü"; en az %15 düşerken kredi risk primi de açıldıysa "talep zayıflığı" olarak işaret verir.</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>Sürüm ve kayıt</h2>
+      <p>Kurallar sabittir. Bir eşik değişirse yeni bir sürüm (v1.1, v2 …) yayımlanır; daha önce yayımlanmış skorlar yeniden yazılmaz. 21 Kasım 2026'dan önceki günler sonradan hesaplanmıştır ve "geriye dönük" olarak işaretlenir; o tarihten sonraki günler "canlı" kayıttır.</p>
+      <p>Bir veri 3 iş gününden eskiyse (haftalık Fed verisi için 10 gün) ya da derleme başarısız olursa sayfa "güncellenmedi" yazar ve son iyi veriyi gösterir.</p>
+    </section>
+
+    <section>
+      <h2>Kaynaklar</h2>
+      <p>FRED (ABD Merkez Bankası St. Louis şubesi: Fed bilançosu, reel faiz, VIX, yüksek getirili tahvil risk primi, Nasdaq 100), DefiLlama (stablecoin arzı), Yahoo Finance (altın ve petrol vadelileri, dolar endeksi), OKX (BTC ve ETH günlük kapanışları). Ham veriler yayımlanmaz; yalnız türetilmiş değerler, yüzde değişimler ve 0/1 işaretleri yayımlanır.</p>
+    </section>
+  </main>
+  <footer>
+    <p>Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.</p>
+    <p>Kural sürümü v1</p>
+    <p>© Piyasa Hava Durumu — türetilmiş veriler kaynak gösterilerek kullanılabilir (CC BY 4.0)</p>
+  </footer>
+</div>
+</body>
+</html>

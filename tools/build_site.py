@@ -256,7 +256,7 @@ def answers(rec, prev):
         a1.append(rec["held_note"])
     a1.append(f"Veriler {tr_date(rec['data_date'])} kapanışına ait.")
     on = [x for x in rec["rules"] if x["flag"] == 1]
-    a2 = [f"{x['title']}: {x['sentence']}" for x in on] or ["Bugün hiçbir kural işaret vermiyor."]
+    a2 = [x["sentence"] for x in on] or ["Bugün hiçbir kural işaret vermiyor."]
     a3 = []
     if prev:
         pf = {k: prev.get(k) for k in RULE_CODES}

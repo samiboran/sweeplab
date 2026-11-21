@@ -5,32 +5,46 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://raw.githubusercontent.com; base-uri 'self'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<title>Piyasa Hava Durumu</title>
-<meta name="description" content="Türk yatırımcı için sakin, günlük piyasa verisi: makro hava, gram altın, gram gümüş, dolar/TL, BIST 100. Yatırım tavsiyesi değildir.">
+<title>Piyasa Hava Durumu — günlük makro hava</title>
+<meta name="description" content="Türk yatırımcı için sakin, günlük piyasa verisi: likidite, dolar, kredi, nakde kaçış ve petrol kurallarından derlenen makro hava seviyesi. Yatırım tavsiyesi değildir.">
 <meta name="robots" content="noindex">
+<link rel="preload" href="fonts/inter-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
 </head>
 <body>
 <div class="wrap">
-  <header class="masthead"><a class="brand" href="./">Piyasa Hava Durumu</a></header>
-  <main>
-    <h1><span class="dot" aria-hidden="true"></span>Yapım aşamasında</h1>
-    <p class="mute">Günlük makro hava, TL tarafı ve pozisyon hesaplayıcı burada yayımlanacak.</p>
+  <header class="masthead">
+    <a class="brand" href="./">Piyasa Hava Durumu</a>
+    <nav aria-label="Site"><a href="yontem.html">Yöntem</a></nav>
+  </header>
+  <main id="main">
+    <p class="label" id="kicker">Makro hava</p>
+    <h1 id="headline"><span class="dot" aria-hidden="true"></span><span id="headline-text">Veri yükleniyor…</span></h1>
+    <p class="meta" id="meta"></p>
+    <p class="notice" id="notice" hidden></p>
+    <noscript><p class="notice">Bu sayfa günlük veriyi JavaScript ile yükler. Kuralların açıklaması için <a href="yontem.html">Yöntem</a> sayfasına bakabilirsiniz.</p></noscript>
     <hr class="accent">
-    <section>
-      <p class="label">Ne olacak</p>
-      <p>Her sabah güncellenen veriler: likidite, dolar, kredi, nakde kaçış ve petrol sinyallerinden derlenen tek bir makro hava seviyesi; gram altın, gram gümüş, dolar/TL ve BIST 100.</p>
-      <p>Sayfa veri ve gözlem sunar; öneri vermez.</p>
+
+    <section aria-labelledby="l-kurallar">
+      <p class="label" id="l-kurallar">Kurallar</p>
+      <ol class="rules" id="rules"></ol>
+      <details class="detail" id="detail">
+        <summary>Ayrıntı</summary>
+        <div id="detail-body"></div>
+      </details>
     </section>
-    <section>
-      <p class="label">Türkçe karakter denemesi</p>
-      <p class="big">ğ ş ı İ ö ü ç</p>
-      <p class="mute">Ağır, şeffaf, ılık; İstanbul, Göztepe, Üsküdar, Çağlayan.</p>
+
+    <section aria-labelledby="l-sor">
+      <p class="label" id="l-sor">Sor</p>
+      <div class="questions" id="questions"></div>
+      <div class="answer" id="answer" aria-live="polite"></div>
+      <p class="mute small">Cevaplar her sabah verilerle birlikte hazırlanır; sayılar doğrudan veriden gelir.</p>
     </section>
   </main>
   <footer>
     <p>Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.</p>
-    <p>Kural sürümü v1 (dondurulma: 21 Kasım 2026)</p>
+    <p id="foot-meta">Kural sürümü v1</p>
     <p>© Piyasa Hava Durumu — türetilmiş veriler kaynak gösterilerek kullanılabilir (CC BY 4.0)</p>
   </footer>
 </div>
