@@ -182,3 +182,18 @@ def test_settled_us_holiday_row_once_later_data_exists():
     nxt = _asof(copy.deepcopy(ROW_1119), "2026-11-12")
     nxt["date"] = "2026-11-12"
     assert not bs.settled([hol], 0) and bs.settled([hol, nxt], 0)
+
+
+def test_sentences_explain_thresholds_in_words_and_add_context():
+    rows = _rows_with(_asof(copy.deepcopy(BASE_1030), "2026-10-30"), _asof(copy.deepcopy(ROW_1119), "2026-11-19"))
+    for r in rows:
+        r["regime"]["stables_usd"] = 300e9
+    rows[-1]["regime"]["stables_usd"] = 285e9
+    s = bs.score_row(rows, len(rows) - 1)
+    texts = {c: bs.rule_sentence(c, s) for c in bs.RULE_CODES}
+    assert "eşik aşıldı" not in " ".join(texts.values())
+    assert texts["K3"] == "Nasdaq Bileşik endeksi 20 günde %3'ten fazla düştü."
+    assert "20 günde %5,0 azaldı" in texts["L1"]
+    assert "olası talep zayıflığı" in texts["P1"]
+    # 20-day base equals the 60-row high -> spike-reversal context is stated
+    assert "zirvesine yakındı" in texts["P1"] and s["flags"]["P1"] == 1

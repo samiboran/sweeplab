@@ -42,10 +42,11 @@
         </span>
       </fieldset>
       <label for="maliyet" id="maliyet-label">Ortalama maliyet (birim başına)</label>
-      <input type="text" id="maliyet" inputmode="decimal" placeholder="örn. 102,50">
+      <input type="text" id="maliyet" inputmode="decimal" enterkeyhint="next" placeholder="örn. 102,50">
       <label for="miktar" id="miktar-label">Miktar</label>
-      <input type="text" id="miktar" inputmode="decimal" placeholder="örn. 10">
+      <input type="text" id="miktar" inputmode="decimal" enterkeyhint="done" placeholder="örn. 10">
       <label class="remember"><input type="checkbox" id="hatirla"> Bu cihazda hatırla</label>
+      <button type="submit" class="go" id="hesapla">Hesapla</button>
     </form>
     <div class="res" id="sonuc" aria-live="polite"></div>
   </main>

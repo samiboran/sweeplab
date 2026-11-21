@@ -82,7 +82,8 @@
     return a === "dolar" || a === "bist100" || c !== "USD" ? px.tl : px.usd;
   }
 
-  function update() {
+  function update(show) {
+    show = show === true;
     var a = $("varlik").value, A = C.ASSETS[a];
     var tlOnly = !!(A && A.tlOnly);
     $("ccy-set").hidden = tlOnly;
@@ -101,9 +102,21 @@
     if (a === "bist100" && cost > 0) qty = qty / cost;           // TL invested -> index units
     var r = C.compute(a, cost, c, qty, P);
     if (!r) {
-      if ($("maliyet").value || $("miktar").value) out.appendChild(el("p", "mute small", "Maliyet ve miktarı sıfırdan büyük sayı olarak gir. Bu varlık için güncel fiyat yoksa hesap yapılamaz."));
+      if (show || $("maliyet").value || $("miktar").value) {
+        var msg;
+        if (!tp) msg = "Bu varlık için güncel fiyat yok; hesap yapılamaz.";
+        else if (!(cost > 0)) msg = "Eksik: " + L[0] + " (bugünkü fiyat: " + num(tp, tp >= 1000 ? 0 : 2) + (a === "bist100" ? " puan" : c === "USD" && a !== "dolar" ? " $" : " TL") + "). Kendi ortalama maliyetini yaz.";
+        else msg = "Eksik: " + L[1] + " Sıfırdan büyük bir sayı yaz.";
+        out.appendChild(el("p", "notice", msg));
+        if (show) {
+          var f = !(cost > 0) ? $("maliyet") : $("miktar");
+          if (f) { f.setAttribute("aria-invalid", "true"); f.focus(); }
+        }
+      }
       return;
     }
+    $("maliyet").removeAttribute("aria-invalid");
+    $("miktar").removeAttribute("aria-invalid");
     var unitName = UNIT_TR[a], cur = r.ccy === "USD" ? "dolar" : "TL";
     out.appendChild(el("p", "label", "Sonuç"));
     out.appendChild(el("p", "big" + (r.plPct < 0 ? " neg" : ""), signedPct(r.plPct)));
@@ -171,10 +184,22 @@
   }
 
   ["varlik", "maliyet", "miktar", "hatirla"].forEach(function (id) {
-    $(id).addEventListener(id === "varlik" || id === "hatirla" ? "change" : "input", update);
+    $(id).addEventListener(id === "varlik" || id === "hatirla" ? "change" : "input", function () { update(); });
   });
-  Array.prototype.forEach.call(document.querySelectorAll('input[name="ccy"]'), function (r) { r.addEventListener("change", update); });
-  $("calc").addEventListener("submit", function (e) { e.preventDefault(); });
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="ccy"]'), function (r) { r.addEventListener("change", function () { update(); }); });
+  // Mobile: "next" on the cost field moves on; "done"/Enter or the button computes and closes the keyboard.
+  $("maliyet").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") { e.preventDefault(); $("miktar").focus(); }
+  });
+  $("calc").addEventListener("submit", function (e) {
+    e.preventDefault();
+    update(true);
+    var out = $("sonuc");
+    if (out.querySelector(".big")) {
+      if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+      out.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
   load();
   fetch(DATA + "tl.json", { cache: "no-cache", credentials: "omit", referrerPolicy: "no-referrer" })
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })

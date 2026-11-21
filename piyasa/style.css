@@ -139,3 +139,8 @@ ol.rules button.rtitle:focus-visible{outline:1px solid var(--red);outline-offset
 .tl-q{appearance:none;background:none;border:0;padding:0;font:inherit;font-weight:600;color:var(--ink);cursor:pointer;text-align:left;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;text-decoration-color:var(--rule)}
 .tl-q:hover,.tl-q:focus-visible,.tl-q[aria-expanded="true"]{color:var(--red);text-decoration-color:var(--red)}
 .tl-item .explain{margin-top:10px}
+.rules-intro{margin:-4px 0 10px}
+.calc button.go{display:block;width:100%;margin:26px 0 0;padding:14px 0;font:inherit;font-size:16px;font-weight:600;letter-spacing:.06em;color:#fff;background:var(--ink);border:0;border-radius:0;cursor:pointer}
+.calc button.go:hover,.calc button.go:focus-visible{background:var(--red);outline:none}
+.calc input[aria-invalid=true]{border-bottom-color:var(--red)}
+.res{scroll-margin-top:12px}
