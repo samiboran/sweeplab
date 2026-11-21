@@ -45,7 +45,7 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
   sunucumuzdan — latin + latin-ext (ğ ş ı İ). Font CDN'i yok → CSP `font-src
   'self'`, SRI gerekmez, üçüncü tarafa istek yok.
 - **Grafik kütüphanesi:** kök terminalin sabitlediği Lightweight Charts 4.1.3
-  (cdnjs), SRI ile (S5).
+  — `piyasa/vendor/` altında kendi sunucumuzdan (npm dosyası, Apache-2.0 + NOTICE), tembel yükleme (S5).
 - **Veri yolu (S3):** `app.js` `*.github.io` üzerinde raw data-feed adresini, diğer
   tüm hostlarda (Cloudflare / ayrı repo / yerel önizleme) göreli `data/site/`
   yolunu kullanır — deploy işleri `data/site/` klasörünü sitenin yanına koyar.
