@@ -27,3 +27,52 @@ hr.accent{border:0;border-top:1px solid var(--red);width:48px;margin:20px 0}
 footer{border-top:1px solid var(--ink);margin-top:40px;padding:20px 0 40px;font-size:13px;color:var(--mute)}
 footer p{margin:0 0 6px}
 @media (min-width:900px){h1{font-size:40px}.big{font-size:56px}}
+
+/* ---- home page (S3) ---- */
+header.masthead{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+header.masthead nav a{font-size:13px;text-decoration:none;letter-spacing:.04em}
+header.masthead nav a:hover{text-decoration:underline}
+#kicker,.kick{margin-top:36px}
+#headline{margin-top:0}
+.dot.lv-kirmizi{background:var(--red)}
+.dot.lv-sari{background:transparent;border:.14em solid var(--red)}
+.dot.lv-yesil{background:transparent;border:.14em solid var(--ink)}
+.dot.lv-none{background:var(--rule)}
+.meta{font-size:13px;color:var(--mute);margin:0}
+.notice{border-left:2px solid var(--red);padding:2px 0 2px 12px;margin:18px 0 0;font-size:15px}
+.small{font-size:13px}
+ol.rules{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+ol.rules li{display:grid;grid-template-columns:18px 1fr;gap:10px;padding:12px 0;border-bottom:1px solid var(--rule)}
+ol.rules .mark{width:9px;height:9px;border-radius:50%;margin-top:.55em;border:1px solid var(--ink)}
+ol.rules li.on .mark{background:var(--red);border-color:var(--red)}
+ol.rules li.na .mark{border-style:dashed;border-color:var(--mute)}
+ol.rules .body{display:flex;flex-wrap:wrap;column-gap:10px}
+ol.rules .rtitle{font-weight:600;text-decoration:none}
+ol.rules .rtitle:hover{text-decoration:underline}
+ol.rules .rgroup{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);align-self:center}
+ol.rules .rtext{flex-basis:100%;color:#333;font-size:16px}
+details.detail{margin-top:18px}
+details.detail summary{cursor:pointer;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;list-style:none;display:inline-block;border-bottom:1px solid var(--ink)}
+details.detail summary::-webkit-details-marker{display:none}
+details.detail[open] summary{margin-bottom:16px}
+details.detail .big{color:var(--red)}
+table.groups{border-collapse:collapse;width:100%;max-width:22rem;margin:10px 0 12px;font-size:15px}
+table.groups caption{text-align:left}
+table.groups th{font-weight:400;text-align:left;padding:6px 0;border-bottom:1px solid var(--rule)}
+table.groups td{text-align:right;padding:6px 0;border-bottom:1px solid var(--rule);font-weight:600}
+.questions{display:flex;flex-direction:column;align-items:flex-start;gap:12px;margin-bottom:20px}
+button.q{font:inherit;font-size:17px;color:var(--ink);background:none;border:0;border-bottom:1px solid var(--ink);padding:0 0 2px;cursor:pointer;text-align:left;border-radius:0}
+button.q:hover,button.q:focus-visible{color:var(--red);border-bottom-color:var(--red);outline:none}
+button.q[aria-pressed="true"]{color:var(--red);border-bottom-color:var(--red)}
+.answer{min-height:1px}
+.answer .aq{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin:8px 0 10px}
+.answer .line{font-size:19px;line-height:1.5;margin:0 0 10px;animation:in .35s ease-out both}
+@keyframes in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.answer .line{animation:none}}
+.answer:not(:empty){border-top:1px solid var(--red);padding-top:14px;margin-bottom:18px}
+/* ---- yontem ---- */
+.prose h2{font-size:20px;font-weight:700;margin:0 0 8px;scroll-margin-top:16px}
+.prose dl{margin:0}
+.prose dt{font-weight:600;margin-top:14px;scroll-margin-top:16px}
+.prose dt:target{color:var(--red)}
+.prose dd{margin:2px 0 0;color:#333}
