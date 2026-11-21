@@ -85,7 +85,7 @@
     (d.assets || []).forEach(function (a) {
       var item = el("div", "tl-item");
       var head = el("div", "tl-head");
-      var h3 = el("h3");
+      var h3 = el("h2");
       var btn = el("button", "tl-q", a.label);
       btn.type = "button";
       btn.setAttribute("aria-expanded", "false");

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://raw.githubusercontent.com; base-uri 'self'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Arşiv ve sicil — Piyasa Hava Durumu</title>
+<meta name="description" content="Makro hava seviyesinin gün gün arşivi (seviye, dokuz kuralın işaretleri, kural sürümü, geriye dönük/canlı) ve yanlış alarmlar dahil açık sicil.">
+<link rel="canonical" href="https://samiboran.github.io/sweeplab/piyasa/arsiv.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Piyasa Hava Durumu">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:title" content="Arşiv ve sicil — Piyasa Hava Durumu">
+<meta property="og:description" content="Her günün makro hava kaydı ve yanlış alarmlar dahil açık sicil.">
+<meta property="og:url" content="https://samiboran.github.io/sweeplab/piyasa/arsiv.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Arşiv ve sicil — Piyasa Hava Durumu">
+<meta name="twitter:description" content="Her günün makro hava kaydı ve yanlış alarmlar dahil açık sicil.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Dataset","name":"Piyasa Hava Durumu — makro hava geçmişi","description":"Günlük makro hava seviyesi (YEŞİL/SARI/KIRMIZI), dokuz kuralın 0/1 işaretleri, kural sürümü ve kayıt türü (geriye dönük/canlı). Yalnız türetilmiş veri.","inLanguage":"tr","url":"https://samiboran.github.io/sweeplab/piyasa/arsiv.html","license":"https://creativecommons.org/licenses/by/4.0/","isAccessibleForFree":true,"creator":{"@type":"Organization","name":"Piyasa Hava Durumu","url":"https://samiboran.github.io/sweeplab/piyasa/"},"temporalCoverage":"2026-08-30/..","distribution":[{"@type":"DataDownload","encodingFormat":"text/csv","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/history.csv"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/sicil.json"}]}
+</script>
+<script src="arsiv.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <a class="brand" href="./">Piyasa Hava Durumu</a>
+    <nav aria-label="Site"><a href="./">Bugün</a><a href="arsiv.html" aria-current="page">Arşiv</a><a href="yontem.html">Yöntem</a></nav>
+  </header>
+  <main>
+    <p class="label kick">Arşiv</p>
+    <h1>Arşiv ve sicil</h1>
+    <p class="meta">Her gün o sabah yayımlanan kayıt. Kayıtlar sonradan yeniden yazılmaz; belgelenmiş bir hata düzeltmesi olursa kaydın içinde yazılır.</p>
+    <noscript><p class="notice">Bu sayfa arşivi JavaScript ile yükler. Ham dosya: <a href="https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/history.csv" rel="noopener noreferrer">history.csv</a>.</p></noscript>
+    <hr class="accent">
+
+    <section id="sicil" aria-labelledby="l-sicil">
+      <p class="label" id="l-sicil">Sicil</p>
+      <h2 class="sh">KIRMIZI işaretlerinden sonra ne oldu?</h2>
+      <p id="sicil-sum"><!--S:sicil-sum-->Sicil yükleniyor…<!--/S--></p>
+      <div id="sicil-live" class="tablewrap"></div>
+      <p class="mute small">Kontrol: KIRMIZI'ya geçilen günden sonraki 20 gün içinde Nasdaq Bileşik, o günkü kapanışının en az %5 altında kapandıysa "teyit edildi", kapanmadıysa "yanlış alarm". Seviye KIRMIZI değilken 20 günde %10'luk düşüş olursa "kaçırılan düşüş" yazılır. Bu, kuralların ne kadar isabetli olduğunu dürüstçe göstermek içindir; gelecek hakkında bir şey söylemez. <a href="yontem.html#sicil">Ayrıntı</a></p>
+      <div id="sicil-retro-wrap" hidden>
+        <details class="wk-d">
+          <summary>Geriye dönük sicil (bilgi amaçlı, Ekim 2026'dan)</summary>
+          <p class="mute small">Bu günler kurallar donmadan önce, sonradan hesaplandı. Canlı sicile sayılmaz.</p>
+          <div id="sicil-retro" class="tablewrap"></div>
+        </details>
+      </div>
+      <p class="mute small" id="sicil-meta"></p>
+    </section>
+
+    <section aria-labelledby="l-gunler">
+      <p class="label" id="l-gunler">Günler</p>
+      <p class="mute small">Noktalar dokuz kuralı sırayla gösterir: Stablecoin arzı, Fed net likiditesi, Reel faiz, Dolar endeksi, Kredi risk primi, VIX, Nasdaq Bileşik, Altın ve dolar, Petrol. Dolu kırmızı: işaret var. Tarihe dokununca o günün sayfası açılır.</p>
+      <div class="tablewrap">
+        <table class="days">
+          <caption class="sr">Günlük makro hava kayıtları</caption>
+          <thead><tr><th scope="col">Tarih</th><th scope="col">Seviye</th><th scope="col">Skor</th><th scope="col">Kurallar</th><th scope="col">Sürüm</th><th scope="col">Kayıt</th></tr></thead>
+          <tbody id="days-body"><!--S:days--><!--/S--></tbody>
+        </table>
+      </div>
+      <p class="mute small" id="days-note">Arşiv yükleniyor…</p>
+      <p class="small"><a href="https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/history.csv" rel="noopener noreferrer">history.csv</a> (türetilmiş veri, CC BY 4.0)</p>
+    </section>
+  </main>
+  <footer>
+    <p>Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.</p>
+    <p>Kural sürümü v1 · Ağustos–Kasım 2026 kayıtları geriye dönük; 21 Kasım 2026'dan sonrası canlı.</p>
+    <p>© Piyasa Hava Durumu — türetilmiş veriler kaynak gösterilerek kullanılabilir (CC BY 4.0)</p>
+  </footer>
+</div>
+</body>
+</html>

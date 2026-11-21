@@ -17,7 +17,7 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
 - [x] S4 TL katmanı + "Benim pozisyonum ne durumda?" hesaplayıcı: a) `tools/fetch_tl.py` (kendi hata-toleranslı adımı, data-feed `data/research/tl_1d/`; TRY=X, GC=F, SI=F, XU100.IS; ≥5 yıl backfill; gram altın/gümüş TL, BIST 100 USD; yalnız türetilmiş/yuvarlanmış değer ve % değişim; kaynak + şart riski kaydı); b) "TL tarafı" bölümü + küçük grafikler; c) `piyasa/hesapla.html` (tamamen istemci tarafı, ağ çağrısı yok, çerez yok, "bu cihazda hatırla" ile localStorage, "Girdiğin bilgiler cihazından çıkmaz."); d) birim testleri (102 TL/gr gümüş: USDTRY 50,58 → başabaş ons ≈ $62,7; USDTRY 60 → ≈ $52,9).
 - [x] S4-fix Yahoo `range=max` günlük değil AYLIK bar döndürüyor (21 Kasım ilk çalışmada tl.json değişimleri aylık barlardan hesaplandı). Uzun geçmiş artık period1/period2 ile günlük çekiliyor; günlük olmayan depo otomatik yeniden kuruluyor; günlük olmayan bardan türetme yapılmıyor (`is_daily`).
 - [x] S5 Grafikler: Lightweight Charts 4.1.3 (kök terminalle aynı, atıf korunur). BTC/ETH günlük kapanış + 50/200 gün ort.; makro seviye geçmişi (retro gri, live siyah/kırmızı, sürüm sınırları). Cevapların içinde.
-- [ ] S6 Arşiv + sicil + SEO: `piyasa/arsiv.html`, "Sicil" görünümü (dondurma tarihinden itibaren, yanlış alarmlar dahil; kontrol yontem.html'de tanımlı), `piyasa/yontem.html`. SEO: başlık/açıklama, canonical, lang="tr", OG/Twitter, sitemap.xml + robots.txt (arama ve yapay zekâ tarayıcılarına izin), schema.org Dataset + WebSite JSON-LD, semantik HTML, alt metin, hızlı LCP, JS'siz tarayıcılar için bugünün ve arşivin statik HTML anlık görüntüsü. Lighthouse mobil ≥ 90 (SEO, a11y, perf) — skorlar kaydedilir. **+ Boran isteği (21 Kasım):** ana sayfada "Tarih seç" — geçmiş bir günün makro havasını `archive/YYYY-MM-DD.json` dosyasından aynı düzende gösterir (o günün kaydı neyse o; yeniden hesaplanmaz).
+- [x] S6 Arşiv + sicil + SEO: `piyasa/arsiv.html`, "Sicil" görünümü (dondurma tarihinden itibaren, yanlış alarmlar dahil; kontrol yontem.html'de tanımlı), `piyasa/yontem.html`. SEO: başlık/açıklama, canonical, lang="tr", OG/Twitter, sitemap.xml + robots.txt (arama ve yapay zekâ tarayıcılarına izin), schema.org Dataset + WebSite JSON-LD, semantik HTML, alt metin, hızlı LCP, JS'siz tarayıcılar için bugünün ve arşivin statik HTML anlık görüntüsü. Lighthouse mobil ≥ 90 (SEO, a11y, perf) — skorlar kaydedilir. **+ Boran isteği (21 Kasım):** ana sayfada "Tarih seç" — geçmiş bir günün makro havasını `archive/YYYY-MM-DD.json` dosyasından aynı düzende gösterir (o günün kaydı neyse o; yeniden hesaplanmaz).
 - [x] S6b **Boran isteği (21 Kasım): "Dünyada bu Pazartesi" / "Dünyada bu Cuma"** (`piyasa/hafta.html`, `tools/build_week.py`, `data/site/hafta.json` + `hafta/YYYY-MM-DD.json`): her pazartesi ve cuma (İstanbul) — gram altın, gram gümüş, dolar/TL, BIST 100 (dolar bazında), SPY, QQQ, BTC'nin son 10 yılda aynı takvim haftasındaki seyri (kaç yıl yükseldi/düştü, ortanca, en güçlü/zayıf yıl, yıl yıl çubuk); cuma baskısında bu haftanın şimdiye kadarki hareketi ve geçmiş yıllar içindeki yeri; haftanın ABD veri takvimi (FOMC/TÜFE/istihdam); "Tarihte bu hafta" + "İlkler" (`tools/tarihte.json`: yalnız kaynak bağlantılı girdiler; kaynaksız girdi yayımlanmaz). Tahmin yok, tavsiye yok. **Her zamanlanmış çalışma:** önümüzdeki iki haftanın tarihlerine düşen, kaynağı doğrulanmış 3–6 ekonomi tarihi girdisi + 1 "ilk" ekler (dünya ve Türkiye; vergi, sanayi ilkleri, piyasa krizleri, merkez bankaları, emtia). Sonra: TCMB PPK takvimi (resmî kaynaktan), SPY/QQQ için 2000'den beri geçmiş (fetch_tl'e eklendi; ilk çalışmada dolar), ara sıra "Karşılaştırma" (ör. OECD vergi rekabeti sıralaması, Türkiye satırı vurgulu, kaynak + lisans kontrolü).
 - [ ] S7 Herkese açık Telegram kanalı: TELEGRAM_PUBLIC_CHANNEL_ID varsa (a) yayımlanan seviye değişince, (b) Pazar haftalık özet. Mesaj: seviye, değişen kurallar, bağlantı, "Yatırım tavsiyesi değildir." Yoksa ⏸ adımlarla.
 - [ ] S8 Marka kancaları: `piyasa/config.js` (başlık, "İstatistik yalan söylemez", Altınkulak bağlantısı "Daha derin araçlar", X + Telegram yer tutucuları). Sunucusuz mümkünse günün başlık kartı og:image.
@@ -60,6 +60,21 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
   tarih, Telegram uyarısı (yalnız zamanlanmış/elle çalıştırmada).
 - **Seviye dairesi (S3):** KIRMIZI = dolu kırmızı daire, SARI = kırmızı halka,
   YEŞİL = siyah halka — tek vurgu rengi kuralı korunur.
+- **Dizine ekleme (S6):** `noindex` kaldırıldı; her sayfada canonical, OG/Twitter, JSON-LD
+  (ana sayfa: WebSite + Dataset; arşiv: Dataset). `robots.txt` yalnız alan adının kökünde
+  geçerli olduğu için GitHub Pages önizlemesinde (`/sweeplab/piyasa/`) etkisiz; son
+  barındırıcıda (A/C) kökte çalışır. Arama + yapay zekâ tarayıcılarına izin verir.
+- **Statik anlık görüntü (S6):** `tools/build_static.py` deploy işlerinde (A/C) çalışır:
+  index.html/arsiv.html'deki `<!--S:…-->` yuvalarını bugünün verisiyle doldurur, Ekim
+  2026'dan itibaren her gün için betiksiz `arsiv/YYYY-MM-DD.html` üretir, sitemap.xml'i
+  günlerle yeniden yazar. `SITE_BASE` (repo değişkeni) ayarlanınca canonical/sitemap
+  yeni alan adını izler. GitHub Pages önizlemesinde (main'e günlük commit yok) yalnız
+  JS görünümü var.
+- **Sicil kontrolü (S6):** KIRMIZI'ya geçiş + 20 gün içinde Nasdaq Bileşik ≥ %5 düşüş →
+  "teyit edildi", yoksa "yanlış alarm"; KIRMIZI yokken 20 günde ≥ %10 düşüş → "kaçırılan
+  düşüş". Nasdaq değeri yayımlanmaz (lisanslı), yalnız sonuç kelimesi. `sicil.json`
+  yalnız ekleme: kesinleşmiş sonuç yeniden yazılmaz. Canlı sicil 21 Kasım sonrası;
+  Ekim'den itibaren geriye dönük ayrı ve "bilgi amaçlı".
 - **Kural girdisi:** `notebook_daily.json` 60 günlük pencere tutuyor; bu yüzden
   `history.csv` ve `archive/` yalnız ekleme yapılan ayrı dosyalar (HISTORY kuralı).
 
@@ -72,6 +87,7 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
 - [x] CDN varlığı yok: grafik kütüphanesi sabit sürümle (4.1.3) kendi sunucumuzdan; CDN eklenirse SRI zorunlu
 - [x] Çekilen JSON / haber / kullanıcı girdisi yalnız textContent/DOM API ile (app.js'te innerHTML yok); dış bağlantılar `rel="noopener noreferrer"` (S3; sonraki sayfalarda da korunacak)
 - [x] Üçüncü taraf izleyici/analitik yok, çerez yok
+- [x] S6 sayfaları (arsiv.html, statik `arsiv/*.html`) aynı CSP; statik sayfalarda `script-src 'none'`; statik üretici tüm veri metnini `html.escape` ile yazar (testli)
 
 ## Notlar
 
@@ -192,3 +208,19 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
   ekran görüntüleri `docs/site-preview/s6b-*.png`). `tools/tarihte.json` 10
   kaynaklı girdiyle başladı. SPY/QQQ şimdilik 5 yıllık (research us_1d) —
   fetch_tl 2000'den beri geçmişi ilk çalışmada çekecek. 62 test geçti.
+- **2026-11-21 (zamanlanmış çalışma)** — S6 tamam. `piyasa/arsiv.html` (Ekim 2026'dan
+  günler: seviye, skor, 9 kural noktası, sürüm, geriye dönük/canlı; tarih → o günün
+  kaydı) + "Sicil" (`tools/build_sicil.py` → `data/site/sicil.json`, kendi
+  hata-toleranslı adımı; yanlış alarmlar ve kaçırılan düşüşler dahil; kontrol
+  yontem.html#sicil'de). Ana sayfada **"Tarih seç"** (Boran isteği): `archive/
+  YYYY-MM-DD.json` aynı düzende, yeniden hesaplanmadan; `?tarih=` bağlantısı,
+  "Bugüne dön". SEO: canonical, OG/Twitter, JSON-LD, sitemap.xml, robots.txt, favicon,
+  başlık sırası düzeltmesi (TL kalemleri h2). Statik görüntü: `tools/build_static.py`
+  (deploy işlerinde). **Lighthouse mobil** (yerel, data-feed verisiyle): ana sayfa
+  perf 99 / a11y 100 / best 100 / SEO 100; arşiv 95/100/100/100; hesapla 98/100/100/100;
+  yöntem 96/100/100/100; hafta 98/100/96/100 (yerelde hafta.json yok → konsol 404);
+  statik gün sayfası 100/100/100/100. Geriye dönük sicil (Ekim'den): 5 KIRMIZI
+  geçişinin 5'i teyit (bilgi amaçlı; canlı değil). 67 Python testi + hesapla testi geçti.
+  **Kalan:** S6b'nin her çalışma görevi (önümüzdeki iki haftaya kaynaklı 3–6 "Tarihte
+  bu hafta" + 1 "ilk") bu çalışmada yapılmadı — kaynak doğrulaması için sonraki
+  çalışmaya bırakıldı. Mobilde arşiv tablosunun "Kayıt" sütunu yatay kaydırmayla görünür.

@@ -5,11 +5,24 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://raw.githubusercontent.com; base-uri 'self'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<title>Piyasa Hava Durumu — günlük makro hava</title>
+<title>Piyasa Hava Durumu — günlük makro hava, gram altın, dolar/TL</title>
 <meta name="description" content="Türk yatırımcı için sakin, günlük piyasa verisi: likidite, dolar, kredi, nakde kaçış ve petrol kurallarından derlenen makro hava seviyesi. Yatırım tavsiyesi değildir.">
-<meta name="robots" content="noindex">
+<link rel="canonical" href="https://samiboran.github.io/sweeplab/piyasa/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Piyasa Hava Durumu">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:title" content="Piyasa Hava Durumu — günlük makro hava">
+<meta property="og:description" content="Likidite, dolar, kredi, nakde kaçış ve petrol: dokuz kuraldan derlenen günlük makro hava; gram altın, gram gümüş, dolar/TL ve BIST 100. Yatırım tavsiyesi değildir.">
+<meta property="og:url" content="https://samiboran.github.io/sweeplab/piyasa/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Piyasa Hava Durumu — günlük makro hava">
+<meta name="twitter:description" content="Dokuz kuraldan derlenen günlük makro hava ve TL tarafı. Yatırım tavsiyesi değildir.">
 <link rel="preload" href="fonts/inter-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://samiboran.github.io/sweeplab/piyasa/#site","name":"Piyasa Hava Durumu","url":"https://samiboran.github.io/sweeplab/piyasa/","inLanguage":"tr","description":"Türk yatırımcı için günlük makro hava ve TL tarafı verisi. Yatırım tavsiyesi değildir.","publisher":{"@type":"Organization","name":"Piyasa Hava Durumu","url":"https://samiboran.github.io/sweeplab/piyasa/"}},{"@type":"Dataset","name":"Piyasa Hava Durumu — günlük makro hava","description":"Her sabah yayımlanan makro hava seviyesi (YEŞİL/SARI/KIRMIZI), dokuz kuralın 0/1 işaretleri, yuvarlanmış kamu verisi değerleri, gram altın/gümüş TL ve dolar/TL değişimleri. Yalnız türetilmiş veri; lisanslı girdiler yalnız işaret ve yön olarak.","inLanguage":"tr","url":"https://samiboran.github.io/sweeplab/piyasa/","license":"https://creativecommons.org/licenses/by/4.0/","isAccessibleForFree":true,"creator":{"@type":"Organization","name":"Piyasa Hava Durumu","url":"https://samiboran.github.io/sweeplab/piyasa/"},"isBasedOn":["https://fred.stlouisfed.org/","https://defillama.com/stablecoins"],"temporalCoverage":"2026-08-30/..","distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/today.json"},{"@type":"DataDownload","encodingFormat":"text/csv","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/history.csv"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/tl.json"}]}]}
+</script>
 <script src="app.js" defer></script>
 <script src="tl.js" defer></script>
 <script src="charts.js" defer></script>
@@ -18,12 +31,18 @@
 <div class="wrap">
   <header class="masthead">
     <a class="brand" href="./">Piyasa Hava Durumu</a>
-    <nav aria-label="Site"><a href="yontem.html">Yöntem</a></nav>
+    <nav aria-label="Site"><a href="arsiv.html">Arşiv</a><a href="yontem.html">Yöntem</a></nav>
   </header>
   <main id="main">
     <p class="label" id="kicker">Makro hava</p>
-    <h1 id="headline"><span class="dot" aria-hidden="true"></span><span id="headline-text">Veri yükleniyor…</span></h1>
-    <p class="meta" id="meta"></p>
+    <h1 id="headline"><span class="dot" aria-hidden="true"></span><span id="headline-text"><!--S:headline-->Veri yükleniyor…<!--/S--></span></h1>
+    <p class="meta" id="meta"><!--S:meta--><!--/S--></p>
+    <div class="datepick" id="datepick">
+      <label for="tarih" class="label">Tarih seç</label>
+      <input type="date" id="tarih" min="2026-10-01" aria-describedby="tarih-not">
+      <button type="button" id="bugun" hidden>Bugüne dön</button>
+      <span class="mute small" id="tarih-not">Geçmiş bir günün kaydı, o gün yayımlandığı gibi.</span>
+    </div>
     <p class="notice" id="notice" hidden></p>
     <noscript><p class="notice">Bu sayfa günlük veriyi JavaScript ile yükler. Kuralların açıklaması için <a href="yontem.html">Yöntem</a> sayfasına bakabilirsiniz.</p></noscript>
     <hr class="accent">
@@ -31,7 +50,7 @@
     <section aria-labelledby="l-kurallar">
       <p class="label" id="l-kurallar">Kurallar</p>
       <p class="mute small rules-intro">Her satır bir kural. Kırmızı nokta: kural bugün olumsuz işaret veriyor (1 puan). Boş daire: vermiyor. Başlığa dokununca kuralın ne ölçtüğü açılır.</p>
-      <ol class="rules" id="rules"></ol>
+      <ol class="rules" id="rules"><!--S:rules--><!--/S--></ol>
       <details class="detail" id="detail">
         <summary>Ayrıntı</summary>
         <div id="detail-body"></div>
@@ -59,7 +78,7 @@
   </main>
   <footer>
     <p>Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.</p>
-    <p id="foot-meta">Kural sürümü v1</p>
+    <p id="foot-meta"><!--S:foot-->Kural sürümü v1<!--/S--></p>
     <p>© Piyasa Hava Durumu — türetilmiş veriler kaynak gösterilerek kullanılabilir (CC BY 4.0)</p>
   </footer>
 </div>
