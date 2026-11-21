@@ -131,3 +131,19 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
   Apache-2.0 lisansı + NOTICE; sayfada TradingView bağlantılı atıf) → CSP
   `script-src 'self'` kalır, SRI gerekmez (cdnjs bu ortamdan erişilemedi).
   46 test geçti. Boran'ın iki fikri S6 ve S10b'ye eklendi.
+- **2026-11-21 (5. çalışma, Boran'ın isteği: "Ekim'den beri tuttuğumuz veriyi
+  de ekle")** — `tools/backfill_site_history.py`: data-feed'deki
+  `notebook_daily.json` git geçmişinden (8 Ekim'den beri 120 sürüm)
+  geriye dönük doldurma. history.csv 2026-09-22'de başlıyordu; **2026-08-30 ..
+  2026-09-21 (23 gün)** eklendi (tam 20 günlük karşılaştırması olan en eski
+  günler; mode=retro; mevcut satırlar bayt bayt korunarak ÖNE eklendi; arşiv
+  dosyaları yalnız eksikse yazıldı). Ayrıca `data/site/retro_pit.csv`: 7 Ekim –
+  20 Kasım arasındaki 45 gün, **o sabahki veriyle** (point-in-time) puanlandı.
+  Bulgu: 45 günün 16'sında o sabahki ham skor, sonradan (düzeltilmiş veriyle)
+  hesaplanan history.csv skorundan farklı (ör. 16 Ekim: o sabah 3, sonradan 5)
+  — veri revizyonları/haftalık serilerin taşınması yüzünden. history.csv
+  değiştirilmedi (kural: yayımlanmış satır yeniden yazılmaz); karar Boran'da:
+  retro satırları point-in-time değerlere çevirmek tek seferlik, belgelenmiş
+  bir düzeltme olarak yapılabilir. S6 "Sicil" bu farkı açıkça gösterecek.
+  Hesaplayıcı da sadeleşti (soru biçiminde etiketler, düz Türkçe özet, birim
+  uyarısı, dolar için anlamsız başabaş sütunu kaldırıldı). 47 test geçti.
