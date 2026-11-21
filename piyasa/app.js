@@ -73,7 +73,7 @@
     return box;
   }
 
-  function render(d) {
+  function render(d, archived) {
     var lvl = safeLevel(d.level);
     var dot = document.querySelector("#headline .dot");
     dot.className = "dot " + (lvl ? "lv-" + lvl.toLowerCase() : "lv-none");
@@ -87,7 +87,14 @@
       (d.rules_version || "—") + " · Kayıt: " + mode;
 
     var n = $("notice");
-    if (d.status !== "güncel") {
+    n.hidden = true;
+    n.textContent = "";
+    if (archived) {
+      n.hidden = false;
+      n.textContent = "Arşiv kaydı: " + trDate(d.publish_date) + ". O gün yayımlandığı gibi gösteriliyor; yeniden hesaplanmadı." +
+        (d.duzeltme ? " Bu kayıtta belgelenmiş bir düzeltme var (Yöntem sayfası)." : "") +
+        " TL tarafı bugünün verisini gösterir.";
+    } else if (d.status !== "güncel") {
       n.hidden = false;
       n.textContent = "Güncellenmedi. Gösterilen son iyi veri: " + trDate(d.last_good_date) +
         ". Yeni veri gelene kadar seviye değişmez.";
@@ -145,6 +152,8 @@
 
     var qs = $("questions");
     qs.textContent = "";
+    if (timer) clearTimeout(timer);
+    $("answer").textContent = "";
     (d.answers || []).forEach(function (q) {
       var b = el("button", "q", q.q);
       b.type = "button";
@@ -190,8 +199,49 @@
     n.textContent = "Günlük veri dosyasına ulaşılamadı. Biraz sonra yeniden deneyin.";
   }
 
-  fetch(DATA + "today.json", { cache: "no-cache", credentials: "omit", referrerPolicy: "no-referrer" })
-    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then(render)
+  function getJson(path) {
+    return fetch(DATA + path, { cache: "no-cache", credentials: "omit", referrerPolicy: "no-referrer" })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); });
+  }
+
+  // "Tarih seç": show a past day's published record from archive/YYYY-MM-DD.json (never recomputed).
+  var ISO = /^\d{4}-\d{2}-\d{2}$/;
+  var today = null;
+  var input = $("tarih"), back = $("bugun");
+  function setUrl(day) {
+    try { history.replaceState(null, "", day ? "?tarih=" + day : location.pathname); } catch (e) { /* ignore */ }
+  }
+  function showToday() {
+    if (!today) return;
+    render(today, false);
+    input.value = "";
+    back.hidden = true;
+    setUrl(null);
+  }
+  function showDay(day) {
+    if (!ISO.test(day) || !today) return;
+    if (day >= today.data_date) { showToday(); return; }
+    getJson("archive/" + day + ".json").then(function (d) {
+      render(d, true);
+      input.value = day;
+      back.hidden = false;
+      setUrl(day);
+    }).catch(function () {
+      var n = $("notice");
+      n.hidden = false;
+      n.textContent = trDate(day) + " için kayıt bulunamadı. Arşiv sayfasında kayıtlı günler listelenir.";
+    });
+  }
+  input.addEventListener("change", function () { if (input.value) showDay(input.value); else showToday(); });
+  back.addEventListener("click", showToday);
+
+  getJson("today.json")
+    .then(function (d) {
+      today = d;
+      if (ISO.test(String(d.data_date))) input.max = d.data_date;
+      render(d, false);
+      var q = /[?&]tarih=(\d{4}-\d{2}-\d{2})/.exec(location.search);
+      if (q) showDay(q[1]);
+    })
     .catch(fail);
 })();

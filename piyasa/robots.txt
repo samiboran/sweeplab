@@ -1,0 +1,33 @@
+# Piyasa Hava Durumu — arama motorları ve yapay zekâ tarayıcıları serbest.
+# Search engines and AI crawlers are welcome. Derived data: CC BY 4.0 (see veri / yontem).
+User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://samiboran.github.io/sweeplab/piyasa/sitemap.xml
