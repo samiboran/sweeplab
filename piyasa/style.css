@@ -144,3 +144,29 @@ ol.rules button.rtitle:focus-visible{outline:1px solid var(--red);outline-offset
 .calc button.go:hover,.calc button.go:focus-visible{background:var(--red);outline:none}
 .calc input[aria-invalid=true]{border-bottom-color:var(--red)}
 .res{scroll-margin-top:12px}
+/* ---- Dünyada bu hafta ---- */
+.hafta-link{font-size:19px;margin:0 0 6px}
+.wk{padding:16px 0;border-bottom:1px solid var(--rule)}
+.wk:first-child{border-top:1px solid var(--ink)}
+.wk-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.wk-head h2{font-size:16px;font-weight:600;margin:0}
+.wk-k{font-size:13px;font-weight:600;white-space:nowrap}
+.wk-s{font-size:15px;color:#333;margin:6px 0 4px}
+.wk-d summary{cursor:pointer;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);display:inline-block;border-bottom:1px solid var(--mute);list-style:none}
+.wk-d summary::-webkit-details-marker{display:none}
+table.yrs{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}
+table.yrs th{font-weight:400;text-align:left;width:3.2em;padding:3px 0;color:var(--mute)}
+table.yrs td.bar{padding:3px 8px}
+table.yrs .b{display:block;height:6px;background:var(--ink)}
+table.yrs .b.neg{background:var(--red)}
+table.yrs td.v{text-align:right;width:5em;font-weight:600}
+table.yrs td.v.neg{color:var(--red)}
+ul.plain{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+ul.plain li{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--rule)}
+ul.plain .dt{font-weight:600;min-width:5.5em}
+.th-e{padding:14px 0;border-bottom:1px solid var(--rule)}
+.th-e:first-child{border-top:1px solid var(--ink)}
+.th-d{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin:0 0 4px}
+.th-e h3{font-size:18px;font-weight:700;margin:0 0 6px;line-height:1.3}
+.th-e p{margin:0 0 6px}
+.th-e .src{font-size:13px;color:var(--mute)}

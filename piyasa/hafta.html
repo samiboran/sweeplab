@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://raw.githubusercontent.com; base-uri 'self'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Dünyada bu hafta — Piyasa Hava Durumu</title>
+<meta name="description" content="Her pazartesi ve cuma: gram altın, gram gümüş, dolar/TL, BIST 100, S&amp;P 500, Nasdaq 100 ve Bitcoin'in son 10 yılda aynı haftadaki seyri; haftanın veri takvimi ve ekonomi tarihinden kaynaklı notlar.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="style.css">
+<script src="hafta.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <a class="brand" href="./">Piyasa Hava Durumu</a>
+    <nav aria-label="Site"><a href="./">Bugün</a><a href="yontem.html">Yöntem</a></nav>
+  </header>
+  <main>
+    <p class="label kicker" id="h-kicker">Haftalık</p>
+    <h1 id="h-title">Dünyada bu hafta</h1>
+    <p class="meta" id="h-meta">Yükleniyor…</p>
+    <noscript><p class="notice">Bu sayfa haftalık veriyi JavaScript ile yükler.</p></noscript>
+    <hr class="accent">
+
+    <section id="s-bu" aria-labelledby="l-bu" hidden>
+      <p class="label" id="l-bu">Bu hafta şimdiye kadar</p>
+      <div id="bu"></div>
+    </section>
+
+    <section aria-labelledby="l-gecmis">
+      <p class="label" id="l-gecmis">Geçmiş yıllarda bu hafta</p>
+      <div id="gecmis"></div>
+      <p class="mute small" id="h-method"></p>
+    </section>
+
+    <section id="s-takvim" aria-labelledby="l-takvim" hidden>
+      <p class="label" id="l-takvim">Bu haftanın takvimi</p>
+      <ul class="plain" id="takvim"></ul>
+    </section>
+
+    <section id="s-tarih" aria-labelledby="l-tarih" hidden>
+      <p class="label" id="l-tarih">Tarihte bu hafta</p>
+      <div id="tarih"></div>
+    </section>
+
+    <section id="s-ilk" aria-labelledby="l-ilk" hidden>
+      <p class="label" id="l-ilk">İlkler</p>
+      <div id="ilk"></div>
+    </section>
+  </main>
+  <footer>
+    <p id="h-disc">Geçmiş yıllardaki hareketler yalnız tarihsel bilgidir; gelecek hakkında bir şey söylemez. Yatırım tavsiyesi değildir.</p>
+    <p id="foot-meta">—</p>
+    <p>© Piyasa Hava Durumu — türetilmiş veriler kaynak gösterilerek kullanılabilir (CC BY 4.0)</p>
+  </footer>
+</div>
+</body>
+</html>
