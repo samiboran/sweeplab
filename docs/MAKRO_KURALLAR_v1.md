@@ -9,7 +9,7 @@ kopyalanmaz.
 |---|---|
 | Sürüm | `v1` (`rules_version: "v1"`) |
 | Dondurulma tarihi | **2026-11-21** |
-| Dondurulduğu commit | site-dev üzerinde bu dosyayı ekleyen commit (hash: aşağıdaki "Kayıt" bölümünde) |
+| Dondurulduğu commit | `4d8b1f6` (site-dev) |
 | Taban (main) commit | `1273399` |
 | Girdi | `data/derivs/notebook_daily.json` → `rows[]` (data-feed dalı) |
 
@@ -108,4 +108,4 @@ Eşikler bu nota göre değiştirilmez.
 
 ## Kayıt
 
-- 2026-11-21 — v1 donduruldu.
+- 2026-11-21 — v1 donduruldu, commit `4d8b1f6`.
