@@ -64,6 +64,19 @@ jobs:
         env:
           SITE_OUT: feed/data/site
         run: python3 tools/build_sicil.py || echo "sicil failed"
+      - name: Public Telegram channel (level change + Sunday summary; skipped without TELEGRAM_PUBLIC_CHANNEL_ID)
+        env:
+          SITE_OUT: feed/data/site
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_PUBLIC_CHANNEL_ID: ${{ secrets.TELEGRAM_PUBLIC_CHANNEL_ID }}
+          SEND_TELEGRAM: ${{ github.event_name == 'push' && '0' || '1' }}
+        run: python3 tools/post_public.py || echo "public channel post failed"
+      - name: Headline card og:image (derived -> data/site/og.png, non-fatal)
+        env:
+          SITE_OUT: feed/data/site
+        run: |
+          python3 -m pip install --quiet --break-system-packages pillow 2>/dev/null || python3 -m pip install --quiet pillow || true
+          python3 tools/build_og.py || echo "og card failed"
       - name: Z-scores, alarms, Telegram
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}

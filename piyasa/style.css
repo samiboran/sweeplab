@@ -15,6 +15,10 @@ a{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-
 a:hover,a:focus-visible{color:var(--red)}
 header.masthead{padding:28px 0 18px;border-bottom:1px solid var(--ink)}
 .brand{font-weight:700;letter-spacing:.02em;font-size:15px;text-decoration:none}
+.brandbox{display:flex;flex-direction:column;gap:2px}
+.tagline{font-size:12px;color:var(--mute);letter-spacing:.04em}
+footer .brand-links a{color:var(--ink)}
+footer .brand-links a:hover{color:var(--red)}
 .label{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin:0 0 10px}
 h1{font-weight:700;font-size:30px;line-height:1.2;letter-spacing:-.01em;margin:36px 0 8px}
 .dot{display:inline-block;width:.62em;height:.62em;border-radius:50%;background:var(--red);vertical-align:.08em;margin-right:.35em}

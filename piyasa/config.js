@@ -1,0 +1,44 @@
+/* Piyasa Hava Durumu — marka ayarları (roadmap S8). Yalnız bu dosyayı düzenleyin.
+   Boş bırakılan bağlantılar sayfada gösterilmez. Metinler textContent ile yazılır. */
+window.PHD_CONFIG = Object.freeze({
+  title: "Piyasa Hava Durumu",
+  tagline: "İstatistik yalan söylemez",
+  deeper: { label: "Daha derin araçlar", name: "Altınkulak", url: "https://samiboran.github.io/altinkulak/" },
+  x: "",          // ör. "https://x.com/kullaniciadi" — boşsa gösterilmez
+  telegram: "",   // ör. "https://t.me/kanaladi" — herkese açık kanal açılınca (S7)
+  verification: { google: "", bing: "" }   // S11: Search Console / Bing doğrulama kodu
+});
+
+(function () {
+  "use strict";
+  var C = window.PHD_CONFIG;
+  function safeUrl(u) { return typeof u === "string" && /^https:\/\/[^\s"'<>]+$/.test(u); }
+  function link(text, url) {
+    var a = document.createElement("a");
+    a.href = url; a.textContent = text; a.rel = "noopener noreferrer";
+    return a;
+  }
+  function apply() {
+    document.querySelectorAll("[data-cfg=tagline]").forEach(function (el) { el.textContent = C.tagline; });
+    var foot = document.querySelector("footer");
+    if (!foot || foot.querySelector(".brand-links")) return;
+    var p = document.createElement("p");
+    p.className = "brand-links";
+    var parts = [];
+    if (safeUrl(C.deeper.url)) {
+      var s = document.createElement("span");
+      s.textContent = C.deeper.label + ": ";
+      s.appendChild(link(C.deeper.name, C.deeper.url));
+      parts.push(s);
+    }
+    if (safeUrl(C.x)) parts.push(link("X", C.x));
+    if (safeUrl(C.telegram)) parts.push(link("Telegram", C.telegram));
+    parts.forEach(function (el, i) {
+      if (i) p.appendChild(document.createTextNode(" · "));
+      p.appendChild(el);
+    });
+    if (parts.length) foot.insertBefore(p, foot.firstChild);
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", apply);
+  else apply();
+})();
