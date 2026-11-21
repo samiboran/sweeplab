@@ -1,23 +1,23 @@
 {
- "built_utc": "2026-11-20T14:25:23+00:00",
+ "built_utc": "2026-11-21T06:26:45+00:00",
  "status": {
   "WALCL": "OK 20 (2026-07-08..2026-11-18)",
   "WTREGEN": "OK 20 (2026-07-08..2026-11-18)",
-  "RRPONTSYD": "OK 96 (2026-07-06..2026-11-19)",
-  "DFII10": "OK 95 (2026-07-06..2026-11-18)",
+  "RRPONTSYD": "OK 97 (2026-07-06..2026-11-20)",
+  "DFII10": "OK 96 (2026-07-06..2026-11-19)",
   "DTWEXBGS": "OK 92 (2026-07-06..2026-11-13)",
-  "SP500": "OK 97 (2026-07-06..2026-11-18)",
+  "SP500": "OK 98 (2026-07-06..2026-11-19)",
   "NASDAQCOM": "OK 98 (2026-07-06..2026-11-19)",
-  "VIXCLS": "OK 99 (2026-07-03..2026-11-18)",
-  "BAMLH0A0HYM2": "OK 100 (2026-07-03..2026-11-19)",
-  "yahoo:DX-Y.NYB": "OK 252",
+  "VIXCLS": "OK 99 (2026-07-06..2026-11-19)",
+  "BAMLH0A0HYM2": "OK 99 (2026-07-06..2026-11-19)",
+  "yahoo:DX-Y.NYB": "OK 251",
   "defillama_stables": "OK 141",
-  "cot_btc": "OK 30 (2026-04-21..2026-11-10)",
-  "cot_eth": "OK 30 (2026-04-21..2026-11-10)",
-  "yahoo:GC=F": "OK 252",
-  "yahoo:CL=F": "OK 252",
-  "yahoo:BZ=F": "OK 252",
-  "cot_gold": "OK 30 (2026-04-21..2026-11-10)",
+  "cot_btc": "OK 30 (2026-04-28..2026-11-17)",
+  "cot_eth": "OK 30 (2026-04-28..2026-11-17)",
+  "yahoo:GC=F": "OK 251",
+  "yahoo:CL=F": "OK 251",
+  "yahoo:BZ=F": "OK 251",
+  "cot_gold": "OK 30 (2026-04-28..2026-11-17)",
   "gld_tonnes": "ERR RuntimeError: no 'Tonnes' column; file starts: %PDF-1.5\r | %\u00e2\u00e3\u00cf\u00d3\r | 2 0 obj\r | <<\r | /Type /XObject\r | /Subtype /Image\r | /Width 1489\r | /Height 680\r | /ColorSpace /DeviceGray\r | /BitsPerComponent 8\r | /Interpolate false\r | /Filt",
   "net_liquidity": "OK 20 weeks"
  },
@@ -141,10 +141,6 @@
   ],
   "cot_btc_lev_net": [
    [
-    "2026-04-21",
-    -10722.0
-   ],
-   [
     "2026-04-28",
     -10360.0
    ],
@@ -259,13 +255,13 @@
    [
     "2026-11-10",
     -1243.0
+   ],
+   [
+    "2026-11-17",
+    -1211.0
    ]
   ],
   "cot_eth_lev_net": [
-   [
-    "2026-04-21",
-    -10683.0
-   ],
    [
     "2026-04-28",
     -11641.0
@@ -381,13 +377,13 @@
    [
     "2026-11-10",
     -2465.0
+   ],
+   [
+    "2026-11-17",
+    -1733.0
    ]
   ],
   "cot_gold_mm_net": [
-   [
-    "2026-04-21",
-    92976.0
-   ],
    [
     "2026-04-28",
     89752.0
@@ -503,226 +499,14 @@
    [
     "2026-11-10",
     112341.0
+   ],
+   [
+    "2026-11-17",
+    102942.0
    ]
   ]
  },
  "rows": [
-  {
-   "date": "2026-09-21",
-   "cal": [],
-   "regime": {
-    "netliq_musd": 5864145.0,
-    "netliq_asof": "2026-09-16",
-    "netliq_wk_chg_pct": 0.124521,
-    "real10y": 2.62,
-    "real10y_asof": "2026-09-21",
-    "real10y_wk_chg_bp": 2.0,
-    "dxy": 100.43,
-    "dxy_asof": "2026-09-21",
-    "dxy_src": "DXY (ICE)",
-    "dxy_7d_pct": 0.975268,
-    "stables_usd": 301471053732.0,
-    "stables_asof": "2026-09-21",
-    "stables_7d_pct": 0.2172,
-    "trend_btc": {
-     "state": "boga",
-     "close": 86589.1,
-     "ma50": 73668.3,
-     "ma200": 70585.94,
-     "dist200_pct": 22.67,
-     "dist50_pct": 17.54
-    },
-    "trend_eth": {
-     "state": "boga",
-     "close": 2774.62,
-     "ma50": 2291.08,
-     "ma200": 2079.71,
-     "dist200_pct": 33.41,
-     "dist50_pct": 21.11
-    }
-   },
-   "risk": {
-    "spx": 7764.7,
-    "spx_asof": "2026-09-21",
-    "spx_1d_pct": 1.492713,
-    "ndx": 27122.09,
-    "ndx_asof": "2026-09-21",
-    "ndx_1d_pct": 2.260492,
-    "vix": 14.87,
-    "vix_asof": "2026-09-21",
-    "hy_oas": 2.66,
-    "hy_asof": "2026-09-21",
-    "hy_wk_chg_bp": -5.0
-   },
-   "pos": {
-    "btc": {
-     "open": 81144.3,
-     "high": 87374.3,
-     "low": 80822.4,
-     "close": 86589.1,
-     "oi_usd": 2552294562.083769,
-     "oi_coin": 29475.9336,
-     "ls_ratio": 0.928377,
-     "taker_sell_usd": 5722967334.01694,
-     "taker_buy_usd": 6511973763.761681,
-     "funding_sum_pct": 0.022025,
-     "funding_n": 3,
-     "oi_chg_pct": 3.98869,
-     "oi_coin_chg_pct": -2.550212,
-     "chg_pct": 6.710022,
-     "flow": "short_squeeze",
-     "taker_buy_share": 0.532244
-    },
-    "eth": {
-     "open": 2643.36,
-     "high": 2806.96,
-     "low": 2642.08,
-     "close": 2774.62,
-     "oi_usd": 1710475118.897765,
-     "oi_coin": 616471.848,
-     "ls_ratio": 1.061802,
-     "taker_sell_usd": 5475267876.61336,
-     "taker_buy_usd": 5971749028.42265,
-     "funding_sum_pct": 0.011111,
-     "funding_n": 3,
-     "oi_chg_pct": 10.603776,
-     "oi_coin_chg_pct": 5.388542,
-     "chg_pct": 4.96565,
-     "flow": "kaldiracli_yukselis",
-     "taker_buy_share": 0.521686
-    },
-    "sol": {
-     "open": 111.12,
-     "high": 119.96,
-     "low": 110.65,
-     "close": 118.87,
-     "oi_usd": 371276357.9322,
-     "oi_coin": 3123644.27,
-     "ls_ratio": 1.530782,
-     "taker_sell_usd": 809959548.2327,
-     "taker_buy_usd": 839241555.6967,
-     "funding_sum_pct": 0.022238,
-     "funding_n": 3,
-     "oi_chg_pct": 11.5343,
-     "oi_coin_chg_pct": 4.252573,
-     "chg_pct": 6.974442,
-     "flow": "kaldiracli_yukselis",
-     "taker_buy_share": 0.508878
-    },
-    "xrp": {
-     "open": 1.41,
-     "high": 1.5745,
-     "low": 1.4032,
-     "close": 1.536,
-     "oi_usd": 125682694.3184,
-     "oi_coin": 81819344.0,
-     "ls_ratio": 2.291541,
-     "taker_sell_usd": 412504329.4806,
-     "taker_buy_usd": 431991734.3593,
-     "funding_sum_pct": 0.03,
-     "funding_n": 3,
-     "oi_chg_pct": 11.317026,
-     "oi_coin_chg_pct": 2.207885,
-     "chg_pct": 8.928445,
-     "flow": "kaldiracli_yukselis",
-     "taker_buy_share": 0.511538
-    },
-    "doge": {
-     "open": 0.08726,
-     "high": 0.10218,
-     "low": 0.08717,
-     "close": 0.09987,
-     "oi_usd": 109849353.4375,
-     "oi_coin": 1100143750.0,
-     "ls_ratio": 2.404386,
-     "taker_sell_usd": 438147585.4647,
-     "taker_buy_usd": 463313704.6248,
-     "funding_sum_pct": 0.03,
-     "funding_n": 3,
-     "oi_chg_pct": 22.785069,
-     "oi_coin_chg_pct": 7.315503,
-     "chg_pct": 14.437951,
-     "flow": "kaldiracli_yukselis",
-     "taker_buy_share": 0.513959
-    },
-    "pump": {
-     "open": 0.004225,
-     "high": 0.004516,
-     "low": 0.004155,
-     "close": 0.004376,
-     "oi_usd": 22942453.416,
-     "oi_coin": 5242791000.0,
-     "ls_ratio": 1.301498,
-     "taker_sell_usd": 49809238.17,
-     "taker_buy_usd": 45908593.55,
-     "funding_sum_pct": 0.013855,
-     "funding_n": 6,
-     "oi_chg_pct": -2.560525,
-     "oi_coin_chg_pct": -5.922811,
-     "chg_pct": 3.573964,
-     "flow": "short_squeeze",
-     "taker_buy_share": 0.479624
-    },
-    "cot_btc": {
-     "oi": 20773.0,
-     "lev_net": -6354.0,
-     "am_net": 2760.0,
-     "dealer_net": 3419.0,
-     "asof": "2026-09-15"
-    },
-    "cot_eth": {
-     "oi": 28413.0,
-     "lev_net": -7722.0,
-     "am_net": -1920.0,
-     "dealer_net": 10571.0,
-     "asof": "2026-09-15"
-    }
-   },
-   "macro": {
-    "gold": 4383.899902,
-    "gold_asof": "2026-09-21",
-    "gold_src": "Alt\u0131n vadeli (COMEX, GC=F)",
-    "gold_1d_pct": -0.926575,
-    "gold_7d_pct": 0.735311,
-    "gold_high120": 4697.799805,
-    "gold_high120_date": "2026-08-24",
-    "gold_from_high_pct": -6.681849,
-    "cot_gold_mm_net": 133116.0,
-    "cot_gold_mm_long": 142394.0,
-    "cot_gold_mm_short": 9278.0,
-    "cot_gold_asof": "2026-09-15",
-    "cot_gold_mm_net_wk_chg": -1856.0,
-    "gld_tonnes": null,
-    "gld_asof": null,
-    "gld_7d_chg_t": null,
-    "wti": 95.779999,
-    "wti_asof": "2026-09-21",
-    "wti_1d_pct": -4.506485,
-    "brent": 100.339996,
-    "brent_asof": "2026-09-21",
-    "brent_1d_pct": -3.398485
-   },
-   "corr": {
-    "btc_spx": 0.648732,
-    "btc_spx_n": 20,
-    "btc_spx_7d": 0.566074,
-    "btc_ndx": 0.668179,
-    "btc_ndx_n": 20,
-    "btc_ndx_7d": 0.621866,
-    "btc_dxy": -0.288724,
-    "btc_dxy_n": 20,
-    "btc_dxy_7d": -0.166809,
-    "btc_eth": 0.904581,
-    "btc_eth_n": 31,
-    "btc_eth_7d": 0.955692,
-    "btc_gold": 0.505728,
-    "btc_gold_n": 20,
-    "btc_gold_7d": -0.064895,
-    "eth_gold": 0.415857,
-    "eth_gold_n": 20,
-    "eth_gold_7d": 0.125379
-   }
-  },
   {
    "date": "2026-09-22",
    "cal": [],
@@ -12986,18 +12770,18 @@
      "taker_buy_share": 0.493267
     },
     "cot_btc": {
-     "oi": 19265.0,
-     "lev_net": -1243.0,
-     "am_net": 1956.0,
-     "dealer_net": 15.0,
-     "asof": "2026-11-10"
+     "oi": 19257.0,
+     "lev_net": -1211.0,
+     "am_net": 2285.0,
+     "dealer_net": -503.0,
+     "asof": "2026-11-17"
     },
     "cot_eth": {
-     "oi": 24610.0,
-     "lev_net": -2465.0,
-     "am_net": -2040.0,
-     "dealer_net": 6448.0,
-     "asof": "2026-11-10"
+     "oi": 27443.0,
+     "lev_net": -1733.0,
+     "am_net": -1893.0,
+     "dealer_net": 5553.0,
+     "asof": "2026-11-17"
     }
    },
    "macro": {
@@ -13009,11 +12793,11 @@
     "gold_high120": 4697.799805,
     "gold_high120_date": "2026-08-24",
     "gold_from_high_pct": -17.744474,
-    "cot_gold_mm_net": 112341.0,
-    "cot_gold_mm_long": 127406.0,
-    "cot_gold_mm_short": 15065.0,
-    "cot_gold_asof": "2026-11-10",
-    "cot_gold_mm_net_wk_chg": 8727.0,
+    "cot_gold_mm_net": 102942.0,
+    "cot_gold_mm_long": 121994.0,
+    "cot_gold_mm_short": 19052.0,
+    "cot_gold_asof": "2026-11-17",
+    "cot_gold_mm_net_wk_chg": -9399.0,
     "gld_tonnes": null,
     "gld_asof": null,
     "gld_7d_chg_t": null,
@@ -13202,18 +12986,18 @@
      "taker_buy_share": 0.472907
     },
     "cot_btc": {
-     "oi": 19265.0,
-     "lev_net": -1243.0,
-     "am_net": 1956.0,
-     "dealer_net": 15.0,
-     "asof": "2026-11-10"
+     "oi": 19257.0,
+     "lev_net": -1211.0,
+     "am_net": 2285.0,
+     "dealer_net": -503.0,
+     "asof": "2026-11-17"
     },
     "cot_eth": {
-     "oi": 24610.0,
-     "lev_net": -2465.0,
-     "am_net": -2040.0,
-     "dealer_net": 6448.0,
-     "asof": "2026-11-10"
+     "oi": 27443.0,
+     "lev_net": -1733.0,
+     "am_net": -1893.0,
+     "dealer_net": 5553.0,
+     "asof": "2026-11-17"
     }
    },
    "macro": {
@@ -13225,11 +13009,11 @@
     "gold_high120": 4697.799805,
     "gold_high120_date": "2026-08-24",
     "gold_from_high_pct": -20.347821,
-    "cot_gold_mm_net": 112341.0,
-    "cot_gold_mm_long": 127406.0,
-    "cot_gold_mm_short": 15065.0,
-    "cot_gold_asof": "2026-11-10",
-    "cot_gold_mm_net_wk_chg": 8727.0,
+    "cot_gold_mm_net": 102942.0,
+    "cot_gold_mm_long": 121994.0,
+    "cot_gold_mm_short": 19052.0,
+    "cot_gold_asof": "2026-11-17",
+    "cot_gold_mm_net_wk_chg": -9399.0,
     "gld_tonnes": null,
     "gld_asof": null,
     "gld_7d_chg_t": null,
@@ -13269,8 +13053,8 @@
     "netliq_asof": "2026-11-18",
     "netliq_wk_chg_pct": -0.339422,
     "real10y": 2.88,
-    "real10y_asof": "2026-11-18",
-    "real10y_wk_chg_bp": 10.0,
+    "real10y_asof": "2026-11-19",
+    "real10y_wk_chg_bp": 2.0,
     "dxy": 103.900002,
     "dxy_asof": "2026-11-19",
     "dxy_src": "DXY (ICE)",
@@ -13296,14 +13080,14 @@
     }
    },
    "risk": {
-    "spx": 7323.63,
-    "spx_asof": "2026-11-18",
-    "spx_1d_pct": -0.230229,
+    "spx": 7175.83,
+    "spx_asof": "2026-11-19",
+    "spx_1d_pct": -2.018125,
     "ndx": 23879.2,
     "ndx_asof": "2026-11-19",
     "ndx_1d_pct": -2.254125,
-    "vix": 24.56,
-    "vix_asof": "2026-11-18",
+    "vix": 28.44,
+    "vix_asof": "2026-11-19",
     "hy_oas": 3.52,
     "hy_asof": "2026-11-19",
     "hy_wk_chg_bp": 32.0
@@ -13418,18 +13202,18 @@
      "taker_buy_share": 0.508058
     },
     "cot_btc": {
-     "oi": 19265.0,
-     "lev_net": -1243.0,
-     "am_net": 1956.0,
-     "dealer_net": 15.0,
-     "asof": "2026-11-10"
+     "oi": 19257.0,
+     "lev_net": -1211.0,
+     "am_net": 2285.0,
+     "dealer_net": -503.0,
+     "asof": "2026-11-17"
     },
     "cot_eth": {
-     "oi": 24610.0,
-     "lev_net": -2465.0,
-     "am_net": -2040.0,
-     "dealer_net": 6448.0,
-     "asof": "2026-11-10"
+     "oi": 27443.0,
+     "lev_net": -1733.0,
+     "am_net": -1893.0,
+     "dealer_net": 5553.0,
+     "asof": "2026-11-17"
     }
    },
    "macro": {
@@ -13441,11 +13225,11 @@
     "gold_high120": 4697.799805,
     "gold_high120_date": "2026-08-24",
     "gold_from_high_pct": -21.548381,
-    "cot_gold_mm_net": 112341.0,
-    "cot_gold_mm_long": 127406.0,
-    "cot_gold_mm_short": 15065.0,
-    "cot_gold_asof": "2026-11-10",
-    "cot_gold_mm_net_wk_chg": 8727.0,
+    "cot_gold_mm_net": 102942.0,
+    "cot_gold_mm_long": 121994.0,
+    "cot_gold_mm_short": 19052.0,
+    "cot_gold_asof": "2026-11-17",
+    "cot_gold_mm_net_wk_chg": -9399.0,
     "gld_tonnes": null,
     "gld_asof": null,
     "gld_7d_chg_t": null,
@@ -13457,9 +13241,9 @@
     "brent_1d_pct": 0.032633
    },
    "corr": {
-    "btc_spx": 0.662193,
-    "btc_spx_n": 22,
-    "btc_spx_7d": 0.167918,
+    "btc_spx": 0.650012,
+    "btc_spx_n": 23,
+    "btc_spx_7d": -0.0698,
     "btc_ndx": 0.674525,
     "btc_ndx_n": 23,
     "btc_ndx_7d": 0.198282,
@@ -13475,6 +13259,222 @@
     "eth_gold": 0.270595,
     "eth_gold_n": 23,
     "eth_gold_7d": -0.060312
+   }
+  },
+  {
+   "date": "2026-11-20",
+   "cal": [],
+   "regime": {
+    "netliq_musd": 5824508.0,
+    "netliq_asof": "2026-11-18",
+    "netliq_wk_chg_pct": -0.339422,
+    "real10y": 2.88,
+    "real10y_asof": "2026-11-19",
+    "real10y_wk_chg_bp": 2.0,
+    "dxy": 103.809998,
+    "dxy_asof": "2026-11-20",
+    "dxy_src": "DXY (ICE)",
+    "dxy_7d_pct": 0.386804,
+    "stables_usd": 283440823804.0,
+    "stables_asof": "2026-11-20",
+    "stables_7d_pct": -1.505083,
+    "trend_btc": {
+     "state": "gecis",
+     "close": 58919.5,
+     "ma50": 77679.71,
+     "ma200": 72555.88,
+     "dist200_pct": -18.79,
+     "dist50_pct": -24.15
+    },
+    "trend_eth": {
+     "state": "gecis",
+     "close": 1621.98,
+     "ma50": 2286.45,
+     "ma200": 2129.44,
+     "dist200_pct": -23.83,
+     "dist50_pct": -29.06
+    }
+   },
+   "risk": {
+    "spx": 7175.83,
+    "spx_asof": "2026-11-19",
+    "spx_1d_pct": -2.018125,
+    "ndx": 23879.2,
+    "ndx_asof": "2026-11-19",
+    "ndx_1d_pct": -2.254125,
+    "vix": 28.44,
+    "vix_asof": "2026-11-19",
+    "hy_oas": 3.52,
+    "hy_asof": "2026-11-19",
+    "hy_wk_chg_bp": 32.0
+   },
+   "pos": {
+    "btc": {
+     "open": 61949.1,
+     "high": 62621.5,
+     "low": 57695.3,
+     "close": 58919.5,
+     "oi_usd": 1942664667.951149,
+     "oi_coin": 32996.8198,
+     "ls_ratio": 2.890479,
+     "taker_sell_usd": 7109209384.38282,
+     "taker_buy_usd": 6605189538.699901,
+     "funding_sum_pct": -0.00564,
+     "funding_n": 3,
+     "oi_chg_pct": -5.971382,
+     "oi_coin_chg_pct": -1.060594,
+     "chg_pct": -4.890467,
+     "flow": "temizlik",
+     "taker_buy_share": 0.481624
+    },
+    "eth": {
+     "open": 1756.86,
+     "high": 1769.92,
+     "low": 1578.91,
+     "close": 1621.98,
+     "oi_usd": 1142669425.513203,
+     "oi_coin": 704533.89,
+     "ls_ratio": 3.616637,
+     "taker_sell_usd": 5833381674.59305,
+     "taker_buy_usd": 5384096190.83469,
+     "funding_sum_pct": -0.017427,
+     "funding_n": 3,
+     "oi_chg_pct": -4.058062,
+     "oi_coin_chg_pct": 3.910085,
+     "chg_pct": -7.677859,
+     "flow": "yeni_short",
+     "taker_buy_share": 0.479974
+    },
+    "sol": {
+     "open": 73.11,
+     "high": 73.52,
+     "low": 67.09,
+     "close": 68.82,
+     "oi_usd": 224102995.256,
+     "oi_coin": 3256837.6,
+     "ls_ratio": 2.49077,
+     "taker_sell_usd": 562274306.2718,
+     "taker_buy_usd": 556679383.3849,
+     "funding_sum_pct": -0.020704,
+     "funding_n": 3,
+     "oi_chg_pct": 1.163061,
+     "oi_coin_chg_pct": 7.45543,
+     "chg_pct": -5.86787,
+     "flow": "yeni_short",
+     "taker_buy_share": 0.4975
+    },
+    "xrp": {
+     "open": 0.9598,
+     "high": 0.9726,
+     "low": 0.8836,
+     "close": 0.9101,
+     "oi_usd": 63078357.279,
+     "oi_coin": 69301645.0,
+     "ls_ratio": 1.834926,
+     "taker_sell_usd": 174057209.9101,
+     "taker_buy_usd": 165675092.0203,
+     "funding_sum_pct": -0.010928,
+     "funding_n": 3,
+     "oi_chg_pct": -7.802034,
+     "oi_coin_chg_pct": -2.798101,
+     "chg_pct": -5.178162,
+     "flow": "temizlik",
+     "taker_buy_share": 0.487664
+    },
+    "doge": {
+     "open": 0.05818,
+     "high": 0.05846,
+     "low": 0.05251,
+     "close": 0.05437,
+     "oi_usd": 57458387.844,
+     "oi_coin": 1057386600.0,
+     "ls_ratio": 4.02402,
+     "taker_sell_usd": 133458270.8398,
+     "taker_buy_usd": 116671583.6238,
+     "funding_sum_pct": -0.010091,
+     "funding_n": 3,
+     "oi_chg_pct": -5.612689,
+     "oi_coin_chg_pct": 0.987822,
+     "chg_pct": -6.564702,
+     "flow": "oi_sabit",
+     "taker_buy_share": 0.466444
+    },
+    "pump": {
+     "open": 0.002646,
+     "high": 0.002659,
+     "low": 0.002327,
+     "close": 0.002427,
+     "oi_usd": 17175691.84,
+     "oi_coin": 7079840000.0,
+     "ls_ratio": 1.625,
+     "taker_sell_usd": 35499137.329,
+     "taker_buy_usd": 35160226.666,
+     "funding_sum_pct": -0.012627,
+     "funding_n": 3,
+     "oi_chg_pct": -8.33725,
+     "oi_coin_chg_pct": -0.024881,
+     "chg_pct": -8.311296,
+     "flow": "oi_sabit",
+     "taker_buy_share": 0.497602
+    },
+    "cot_btc": {
+     "oi": 19257.0,
+     "lev_net": -1211.0,
+     "am_net": 2285.0,
+     "dealer_net": -503.0,
+     "asof": "2026-11-17"
+    },
+    "cot_eth": {
+     "oi": 27443.0,
+     "lev_net": -1733.0,
+     "am_net": -1893.0,
+     "dealer_net": 5553.0,
+     "asof": "2026-11-17"
+    }
+   },
+   "macro": {
+    "gold": 3515.399902,
+    "gold_asof": "2026-11-20",
+    "gold_src": "Alt\u0131n vadeli (COMEX, GC=F)",
+    "gold_1d_pct": -4.615387,
+    "gold_7d_pct": -9.543786,
+    "gold_high120": 4697.799805,
+    "gold_high120_date": "2026-08-24",
+    "gold_from_high_pct": -25.169227,
+    "cot_gold_mm_net": 102942.0,
+    "cot_gold_mm_long": 121994.0,
+    "cot_gold_mm_short": 19052.0,
+    "cot_gold_asof": "2026-11-17",
+    "cot_gold_mm_net_wk_chg": -9399.0,
+    "gld_tonnes": null,
+    "gld_asof": null,
+    "gld_7d_chg_t": null,
+    "wti": 83.980003,
+    "wti_asof": "2026-11-20",
+    "wti_1d_pct": 0.925375,
+    "brent": 92.57,
+    "brent_asof": "2026-11-20",
+    "brent_1d_pct": 0.64144
+   },
+   "corr": {
+    "btc_spx": 0.649254,
+    "btc_spx_n": 22,
+    "btc_spx_7d": -0.0167,
+    "btc_ndx": 0.682469,
+    "btc_ndx_n": 22,
+    "btc_ndx_7d": 0.253339,
+    "btc_dxy": -0.065835,
+    "btc_dxy_n": 23,
+    "btc_dxy_7d": -0.247966,
+    "btc_eth": 0.939567,
+    "btc_eth_n": 31,
+    "btc_eth_7d": 0.976568,
+    "btc_gold": 0.478469,
+    "btc_gold_n": 23,
+    "btc_gold_7d": 0.392404,
+    "eth_gold": 0.413395,
+    "eth_gold_n": 23,
+    "eth_gold_7d": 0.54825
    }
   }
  ]
