@@ -1,6 +1,8 @@
-# On-demand research data pull (daily candles for a large-cap universe) into data-feed:data/research/.
+# Weekday (after US close) + on-demand research data pull (daily candles for a large-cap universe) into data-feed:data/research/.
 name: research-data
 on:
+  schedule:
+    - cron: "17 22 * * 1-5"   # Mon-Fri 22:17 UTC = after the 16:00 ET close (EST and EDT)
   workflow_dispatch:
 permissions:
   contents: write
