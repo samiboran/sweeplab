@@ -22,6 +22,57 @@
   }
   function safeLevel(x) { return WORD[x] ? x : null; }
 
+  // Plain-language explanations per rule (same thresholds as yontem.html; static text).
+  var EXPLAIN = {
+    L1: { ne: "Dolara sabitlenmiş kripto paraların (USDT, USDC…) toplam piyasa değeri.",
+          neden: "Kripto piyasasına giren ya da çıkan nakdin kaba bir ölçüsüdür. Arz küçülüyorsa piyasadan nakit çekiliyor demektir.",
+          nasil: "Son 7 günde toplam arz azaldıysa işaret verir.", kaynak: "DefiLlama", keys: ["stables"] },
+    L2: { ne: "Fed bilançosundan Hazine'nin Fed'deki hesabı ve ters repo çıkarıldığında kalan tutar.",
+          neden: "Piyasadaki dolar bolluğunun yaygın bir göstergesidir; azalması likiditenin daraldığına işaret eder.",
+          nasil: "20 gün öncesine göre azaldıysa işaret verir. Haftalık yayımlanır.", kaynak: "FRED (Federal Reserve)", keys: ["netliq"] },
+    L3: { ne: "ABD'nin 10 yıllık enflasyona endeksli tahvil faizi: enflasyondan arındırılmış borçlanma maliyeti.",
+          neden: "Reel faiz yükselince parayı riskli varlıkta tutmanın maliyeti artar.",
+          nasil: "20 günde en az 0,15 puan (15 baz puan) yükseldiyse işaret verir.", kaynak: "FRED", keys: ["real10y"] },
+    D1: { ne: "Doların başlıca para birimlerine karşı değerini ölçen endeks.",
+          neden: "Hızlı dolar güçlenmesi dünya genelinde finansmanı zorlaştırır.",
+          nasil: "20 günde en az %1 yükseldiyse işaret verir. Endeks lisanslı olduğu için yalnız yön gösterilir.", kaynak: "Yahoo Finance (ICE DXY)", keys: ["dxy"] },
+    K1: { ne: "ABD'de düşük kredi notlu şirket tahvillerinin devlet tahviline göre ödediği ek faiz.",
+          neden: "Bu fark açılıyorsa piyasa şirketlerin borcunu daha riskli görüyor demektir.",
+          nasil: "20 günde en az 0,25 puan açıldıysa işaret verir. Lisanslı seri: yalnız işaret ve yön.", kaynak: "FRED (ICE BofA)", keys: ["hy_oas"] },
+    K2: { ne: "S&P 500 opsiyonlarından hesaplanan beklenen oynaklık; \"korku endeksi\" olarak da bilinir.",
+          neden: "Yükselmesi piyasada belirsizliğin ve korumaya talebin arttığını gösterir.",
+          nasil: "18 veya üzerindeyse işaret verir.", kaynak: "FRED (Cboe VIX)", keys: ["vix"] },
+    K3: { ne: "ABD teknoloji ağırlıklı Nasdaq Bileşik endeksi.",
+          neden: "Risk iştahının en hızlı tepki veren göstergelerinden biridir.",
+          nasil: "20 günde en az %3 düştüyse işaret verir. Lisanslı endeks: yalnız işaret ve yön.", kaynak: "FRED", keys: ["ndx"] },
+    N1: { ne: "Altın ile doların aynı anda nasıl hareket ettiği.",
+          neden: "Normalde güvenli liman olan altın düşerken dolar yükseliyorsa, yatırımcılar her şeyi satıp nakde geçiyor olabilir.",
+          nasil: "Altın 20 günde en az %3 düştüyse ve aynı dönemde dolar endeksi yükseldiyse işaret verir.", kaynak: "Yahoo Finance (altın vadeli, DXY)", keys: ["gold", "dxy"] },
+    P1: { ne: "WTI ham petrol vadeli fiyatı.",
+          neden: "Sert yükseliş enflasyon baskısı, kredi primi açılırken sert düşüş talep zayıflığı işareti olabilir.",
+          nasil: "20 günde en az %10 yükseldiyse ya da en az %15 düşüp kredi primi açılıyorsa işaret verir.", kaynak: "Yahoo Finance (WTI vadeli)", keys: ["wti", "hy_oas"] }
+  };
+
+  function explain(code, asof, compareDate) {
+    var e = EXPLAIN[code];
+    var box = el("div", "explain");
+    if (!e) { box.appendChild(el("p", null, "Bu kural için açıklama yok.")); return box; }
+    [["Nedir?", e.ne], ["Neden izleniyor?", e.neden], ["Nasıl hesaplanıyor?", e.nasil], ["Kaynak:", e.kaynak]].forEach(function (x) {
+      var p = el("p");
+      p.appendChild(el("strong", null, x[0] + " "));
+      p.appendChild(document.createTextNode(x[1]));
+      box.appendChild(p);
+    });
+    var dates = e.keys.map(function (k) { return asof[k]; }).filter(Boolean).map(trDate);
+    var meta = "Verinin tarihi: " + (dates.length ? dates.join(", ") : "—") +
+      (compareDate ? " · Karşılaştırma: " + trDate(compareDate) : "");
+    box.appendChild(el("p", "mute small", meta));
+    var a = el("a", "small", "Yöntem sayfasında oku");
+    a.href = "yontem.html#" + encodeURIComponent(code.toLowerCase());
+    var p = el("p"); p.appendChild(a); box.appendChild(p);
+    return box;
+  }
+
   function render(d) {
     var lvl = safeLevel(d.level);
     var dot = document.querySelector("#headline .dot");
@@ -47,15 +98,29 @@
 
     var list = $("rules");
     list.textContent = "";
-    (d.rules || []).forEach(function (r) {
+    var asof = d.inputs_asof || {};
+    (d.rules || []).forEach(function (r, idx) {
+      var code = String(r.code || "");
       var li = el("li", r.flag === 1 ? "on" : r.flag === 0 ? "off" : "na");
       li.appendChild(el("span", "mark"));
       var body = el("span", "body");
-      var a = el("a", "rtitle", r.title);
-      a.href = "yontem.html#" + encodeURIComponent(String(r.code || "").toLowerCase());
-      body.appendChild(a);
+      var btn = el("button", "rtitle", r.title);
+      btn.type = "button";
+      btn.setAttribute("aria-expanded", "false");
+      var pid = "acik-" + idx;
+      btn.setAttribute("aria-controls", pid);
+      body.appendChild(btn);
       body.appendChild(el("span", "rgroup", r.group));
       body.appendChild(el("span", "rtext", r.sentence));
+      var panel = explain(code, asof, d.compare_date);
+      panel.id = pid;
+      panel.hidden = true;
+      body.appendChild(panel);
+      btn.addEventListener("click", function () {
+        var open = btn.getAttribute("aria-expanded") === "true";
+        btn.setAttribute("aria-expanded", open ? "false" : "true");
+        panel.hidden = open;
+      });
       li.appendChild(body);
       li.setAttribute("aria-label", (r.flag === 1 ? "İşaret var: " : r.flag === 0 ? "İşaret yok: " : "Veri yok: ") + r.title);
       list.appendChild(li);

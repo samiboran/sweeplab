@@ -61,6 +61,14 @@
     return svg;
   }
 
+  var TL_EXPLAIN = {
+    gram_altin: ["1 gram altının TL karşılığı.", "Ons altın fiyatı (dolar) × dolar/TL ÷ 31,1035 (1 ons = 31,1035 gram). Kuyumcu satış fiyatı değildir; işçilik ve makas içermez.", "Yahoo Finance: COMEX altın vadeli (GC=F) ve USD/TRY"],
+    gram_gumus: ["1 gram gümüşün TL karşılığı.", "Ons gümüş fiyatı (dolar) × dolar/TL ÷ 31,1035. Banka ve kuyumcu fiyatları makas nedeniyle farklı olabilir.", "Yahoo Finance: COMEX gümüş vadeli (SI=F) ve USD/TRY"],
+    dolar: ["1 ABD dolarının TL karşılığı (piyasa kuru).", "Günlük kapanış kuru. Banka ve döviz bürosu kurları alış-satış makası nedeniyle farklıdır.", "Yahoo Finance: USD/TRY (TRY=X)"],
+    bist100_usd: ["BIST 100 endeksinin dolar cinsinden değeri.", "BIST 100 ÷ dolar/TL. Grafikte başlangıç günü 100 kabul edilir; böylece TL'deki değer kaybından arındırılmış performans görülür.", "Yahoo Finance: XU100.IS (gecikmeli olabilir) ve USD/TRY"]
+  };
+  var CHG_NOTE = "1 gün: bir önceki kapanışa göre. 7 ve 30 gün: o kadar takvim günü önceki son kapanışa göre. Yılbaşı: geçen yılın son kapanışına göre. 200g ort. farkı: son 200 işlem gününün ortalamasına göre uzaklık. Grafikte siyah çizgi kapanış, kırmızı çizgi 200 günlük ortalama.";
+
   function render(d) {
     var box = document.getElementById("tl");
     box.textContent = "";
@@ -68,11 +76,30 @@
     (d.assets || []).forEach(function (a) {
       var item = el("div", "tl-item");
       var head = el("div", "tl-head");
-      head.appendChild(el("h3", null, a.label));
+      var h3 = el("h3");
+      var btn = el("button", "tl-q", a.label);
+      btn.type = "button";
+      btn.setAttribute("aria-expanded", "false");
+      h3.appendChild(btn);
+      head.appendChild(h3);
+      var info = TL_EXPLAIN[a.id];
+      var panel = el("div", "explain");
+      panel.hidden = true;
+      if (info) {
+        [["Nedir? ", info[0]], ["Nasıl hesaplanıyor? ", info[1]], ["Kaynak: ", info[2]], ["Değişimler: ", CHG_NOTE]].forEach(function (x) {
+          var p = el("p"); p.appendChild(el("strong", null, x[0])); p.appendChild(document.createTextNode(x[1])); panel.appendChild(p);
+        });
+      }
+      btn.addEventListener("click", function () {
+        var open = btn.getAttribute("aria-expanded") === "true";
+        btn.setAttribute("aria-expanded", open ? "false" : "true");
+        panel.hidden = open;
+      });
       if (a.status) { item.appendChild(head); item.appendChild(el("p", "mute small", "Veri yok.")); box.appendChild(item); return; }
       var v = a.last == null ? pct(a.chg_ytd) : num(a.last, a.id === "dolar" ? 2 : 2) + " " + (a.unit === "TL/gram" ? "TL" : a.unit === "TL" ? "TL" : "");
       head.appendChild(el("span", "tl-val", a.last == null ? pct(a.chg_ytd) + " yılbaşından" : v));
       item.appendChild(head);
+      item.appendChild(panel);
       var dl = el("dl", "tl-chg");
       [["1 gün", a.chg_1g], ["7 gün", a.chg_7g], ["30 gün", a.chg_30g], ["Yılbaşı", a.chg_ytd], ["200g ort. farkı", a.vs_ma200]].forEach(function (c) {
         var w = el("div");

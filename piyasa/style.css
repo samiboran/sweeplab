@@ -126,3 +126,14 @@ header.masthead nav a+a{margin-left:16px}
 .res .sum{font-size:17px;margin:0 0 6px}
 .res .notice{margin:14px 0}
 .res table{margin-top:16px}
+
+/* ---- rule explanations ---- */
+ol.rules button.rtitle{appearance:none;background:none;border:0;padding:0;font:inherit;font-weight:600;color:var(--ink);cursor:pointer;text-align:left;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;text-decoration-color:var(--rule)}
+ol.rules button.rtitle:hover,ol.rules button.rtitle:focus-visible,ol.rules button.rtitle[aria-expanded="true"]{color:var(--red);text-decoration-color:var(--red)}
+ol.rules button.rtitle:focus-visible{outline:1px solid var(--red);outline-offset:3px}
+.explain{flex-basis:100%;margin:10px 0 4px;padding:2px 0 2px 14px;border-left:1px solid var(--red);font-size:15px;line-height:1.55;color:#222}
+.explain p{margin:0 0 6px}
+.explain strong{font-weight:600}
+.tl-q{appearance:none;background:none;border:0;padding:0;font:inherit;font-weight:600;color:var(--ink);cursor:pointer;text-align:left;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;text-decoration-color:var(--rule)}
+.tl-q:hover,.tl-q:focus-visible,.tl-q[aria-expanded="true"]{color:var(--red);text-decoration-color:var(--red)}
+.tl-item .explain{margin-top:10px}

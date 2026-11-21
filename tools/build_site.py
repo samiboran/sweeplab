@@ -8,7 +8,7 @@ to SITE_OUT (default data/site, in the workflow feed/data/site on the data-feed 
   archive/YYYY-MM-DD.json  one record per data date (never rewritten)
 
 Public output = level, per-rule 0/1 flags, rounded public-data values, % changes.
-Licensed inputs (ICE BofA HY OAS, Nasdaq 100, ICE DXY) leave this file only as a
+Licensed inputs (ICE BofA HY OAS, Nasdaq Composite, ICE DXY) leave this file only as a
 0/1 flag and a direction word. Every number inside an answer sentence is inserted
 here by a template; nothing is free-written.
 
@@ -218,7 +218,7 @@ def rule_sentence(code, s):
     if code == "K2":
         return f"VIX oynaklık endeksi {tr_num(v['vix'])}" + (" (18 ve üzeri)." if f else " (18'in altında).")
     if code == "K3":
-        return f"Nasdaq 100 endeksi 20 günde {v['ndx_20g_yon']}" + ("; eşik aşıldı." if f else "; eşik aşılmadı.")
+        return f"Nasdaq Bileşik endeksi 20 günde {v['ndx_20g_yon']}" + ("; eşik aşıldı." if f else "; eşik aşılmadı.")
     if code == "N1":
         x = v["gold_20g_pct"]
         g = f"Altın 20 günde %{tr_num(abs(x))} {'geriledi' if x < 0 else 'yükseldi' if x > 0 else 'değişmedi'}"
@@ -233,7 +233,7 @@ def rule_sentence(code, s):
 RULE_TITLES = {
     "L1": "Stablecoin arzı", "L2": "Fed net likiditesi", "L3": "Reel faiz",
     "D1": "Dolar endeksi", "K1": "Kredi risk primi", "K2": "Oynaklık (VIX)",
-    "K3": "Nasdaq 100", "N1": "Altın ve dolar", "P1": "Petrol",
+    "K3": "Nasdaq Bileşik", "N1": "Altın ve dolar", "P1": "Petrol",
 }
 
 
