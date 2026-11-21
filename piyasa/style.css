@@ -1,0 +1,29 @@
+/* Piyasa Hava Durumu — base styles. White, near-black, one red accent. */
+@font-face{font-family:"Inter";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/inter-latin-ext-400-normal.woff2) format("woff2");unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Inter";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/inter-latin-400-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Inter";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/inter-latin-ext-600-normal.woff2) format("woff2");unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Inter";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/inter-latin-600-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Inter";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/inter-latin-ext-700-normal.woff2) format("woff2");unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Inter";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/inter-latin-700-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
+:root{--bg:#fff;--ink:#111;--mute:#6b6b6b;--rule:#e4e4e4;--red:#d7261e;--w:44rem}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 "Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-feature-settings:"tnum" 1}
+.wrap{max-width:var(--w);margin:0 auto;padding:0 20px}
+a{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover,a:focus-visible{color:var(--red)}
+header.masthead{padding:28px 0 18px;border-bottom:1px solid var(--ink)}
+.brand{font-weight:700;letter-spacing:.02em;font-size:15px;text-decoration:none}
+.label{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin:0 0 10px}
+h1{font-weight:700;font-size:30px;line-height:1.2;letter-spacing:-.01em;margin:36px 0 8px}
+.dot{display:inline-block;width:.62em;height:.62em;border-radius:50%;background:var(--red);vertical-align:.08em;margin-right:.35em}
+section{padding:28px 0;border-top:1px solid var(--rule)}
+section:first-of-type{border-top:0}
+p{margin:0 0 12px}
+.big{font-size:44px;font-weight:700;line-height:1.05;letter-spacing:-.02em}
+.mute{color:var(--mute)}
+hr.accent{border:0;border-top:1px solid var(--red);width:48px;margin:20px 0}
+footer{border-top:1px solid var(--ink);margin-top:40px;padding:20px 0 40px;font-size:13px;color:var(--mute)}
+footer p{margin:0 0 6px}
+@media (min-width:900px){h1{font-size:40px}.big{font-size:56px}}
