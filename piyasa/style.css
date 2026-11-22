@@ -348,3 +348,10 @@ html[data-ui-lang="en"] [data-lang="en"]{display:block}
 .band-x{flex-wrap:wrap;column-gap:6px;row-gap:0}}
 .frame{margin:6px 0 10px;font-size:13px;line-height:1.5;color:var(--mute);max-width:62ch}
 .frame a{color:inherit}
+/* Home "Daha fazlası": one line per page instead of five sections */
+ul.more{list-style:none;margin:0;padding:0}
+ul.more li{padding:8px 0;border-top:1px solid var(--rule)}
+ul.more li:first-child{border-top:0}
+ul.more li .small{display:block;margin-top:2px}
+hr.rule-top{border:0;border-top:1px solid var(--rule);margin:28px 0 20px}
+.tl-link.top{margin:0 0 18px;font-size:17px;font-weight:600}

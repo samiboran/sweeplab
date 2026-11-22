@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src 'self' https://raw.githubusercontent.com; style-src 'self'; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Yöntem — Piyasa Hava Durumu</title>
 <meta name="description" content="Piyasa Hava Durumu makro hava seviyesinin dokuz kuralı, veri kaynakları ve sürüm kuralı, düz Türkçe ile.">
@@ -29,6 +29,7 @@
 <script src="i18n.js"></script>
 <script src="i18n-pages.js"></script>
 <script src="config.js" defer></script>
+<script src="yontem-stats.js" defer></script>
 </head>
 <body>
 <div class="wrap">
@@ -75,6 +76,21 @@
     </section>
 
     <section>
+      <h2 id="esikler">Eşikler neden bu değerler?</h2>
+      <p>Eşikler geçmiş veriye göre en iyi sonucu verecek şekilde ayarlanmadı. Piyasada yaygın kullanılan, yuvarlak ve anlaşılır değerler seçildi, sonra donduruldu. Amaç "geçmişi en iyi açıklayan" değil, önceden bilinen ve değişmeyen bir ölçü.</p>
+      <ul>
+        <li><strong>20 gün:</strong> yaklaşık bir aylık işlem süresi. Tek günlük oynamaları süzer, birkaç aylık eğilimi beklemez.</li>
+        <li><strong>VIX 18:</strong> VIX'in uzun dönem ortalaması 18–20 civarındadır; 18'in üstü piyasada gerginliğin ortalamanın üstünde olduğunu gösterir.</li>
+        <li><strong>Dolar endeksi %1, Nasdaq %3, altın %3:</strong> bu varlıkların bir ayda "olağan oynama" sayılabilecek aralığının biraz üstü.</li>
+        <li><strong>Reel faiz 0,15 puan, kredi primi 0,25 puan:</strong> bir ayda dikkat çeken ama nadir olmayan bir sıkılaşma.</li>
+        <li><strong>Petrol +%10 / −%15:</strong> petrol daha oynak olduğu için daha geniş eşik.</li>
+        <li><strong>Seviye sınırları (0–2, 3–4, 5+):</strong> dokuz kuraldan yarısından fazlası işaret verince KIRMIZI.</li>
+      </ul>
+      <p>Bir eşik değişirse kural sürümü değişir (v1.1, v2…); eski günler eski sürümle kalır.</p>
+      <p id="dagilim" class="mute" data-noi18n>Seviye dağılımı yükleniyor…</p>
+    </section>
+
+    <section>
       <h2>Sürüm ve kayıt</h2>
       <p>Kurallar sabittir. Bir eşik değişirse yeni bir sürüm (v1.1, v2 …) yayımlanır; daha önce yayımlanmış skorlar yeniden yazılmaz. 21 Kasım 2026'dan önceki günler sonradan hesaplanmıştır ve "geriye dönük" olarak işaretlenir; o tarihten sonraki günler "canlı" kayıttır.</p>
       <p>Bir veri 3 iş gününden eskiyse (haftalık Fed verisi için 10 gün) ya da derleme başarısız olursa sayfa "güncellenmedi" yazar ve son iyi veriyi gösterir.</p>
@@ -87,16 +103,16 @@
     </section>
 
     <section>
-      <h2 id="sicil">Sicil: KIRMIZI işaretleri ne kadar isabetli?</h2>
-      <p>Bir kuralın değeri, yanıldığı günlerle birlikte görülünce anlaşılır. Sicil bu yüzden yanlış alarmları da listeler. Kontrol sabittir ve kurallar gibi sürümlüdür:</p>
+      <h2 id="sicil">Sicil: KIRMIZI günlerinden sonra ne oldu?</h2>
+      <p>Bir kuralın değeri, yanıldığı günlerle birlikte görülünce anlaşılır. Sicil bu yüzden arkasından düşüş gelmeyen KIRMIZI günlerini de listeler. Kontrol sabittir ve kurallar gibi sürümlüdür:</p>
       <ul>
         <li><strong>İşaret:</strong> yayımlanan seviyenin KIRMIZI'ya geçtiği gün.</li>
-        <li><strong>Teyit edildi:</strong> sonraki 20 gün içinde Nasdaq Bileşik endeksi, işaret günündeki kapanışının en az %5 altında kapandı.</li>
-        <li><strong>Yanlış alarm:</strong> 20 gün geçti ve bu düşüş olmadı.</li>
+        <li><strong>Düşüş geldi:</strong> sonraki 20 gün içinde Nasdaq Bileşik endeksi, işaret günündeki kapanışının en az %5 altında kapandı.</li>
+        <li><strong>Düşüş gelmedi:</strong> 20 gün geçti ve bu düşüş olmadı.</li>
         <li><strong>Bekliyor:</strong> 20 gün henüz dolmadı.</li>
-        <li><strong>Kaçırılan düşüş:</strong> Nasdaq Bileşik son 20 günün en yüksek kapanışından en az %10 aşağıda kapandı ve bu 20 günün hiçbirinde seviye KIRMIZI değildi.</li>
+        <li><strong>KIRMIZI'sız düşüş:</strong> Nasdaq Bileşik son 20 günün en yüksek kapanışından en az %10 aşağıda kapandı ve bu 20 günün hiçbirinde seviye KIRMIZI değildi.</li>
       </ul>
-      <p>Canlı sicil 21 Kasım 2026'dan sonra yayımlanan kayıtlarla başlar. Daha önceki günler sonradan hesaplandığı için ayrı ve "bilgi amaçlı" gösterilir. Nasdaq Bileşik lisanslı bir endeks olduğundan değerleri yayımlanmaz; yalnız sonuç kelimesi yayımlanır. Bu kontrol bir isabet ölçüsüdür; gelecek hakkında bir şey söylemez ve tavsiye değildir.</p>
+      <p>Canlı sicil 21 Kasım 2026'dan sonra yayımlanan kayıtlarla başlar. Daha önceki günler sonradan hesaplandığı için ayrı ve "bilgi amaçlı" gösterilir. Nasdaq Bileşik lisanslı bir endeks olduğundan değerleri yayımlanmaz; yalnız sonuç kelimesi yayımlanır. Bu kontrol yalnız geçmişi kaydeder; gelecek hakkında bir şey söylemez ve tavsiye değildir.</p>
     </section>
 
     <section>
@@ -172,6 +188,21 @@
     </section>
 
     <section>
+      <h2 id="en-esikler">Why these thresholds?</h2>
+      <p>The thresholds were not tuned to fit past data. Common, round, easy-to-read levels were chosen and then frozen. The aim is a measure that is known in advance and does not change, not one that "best explains the past".</p>
+      <ul>
+        <li><strong>20 days:</strong> about one month of trading. It filters one-day noise without waiting for multi-month trends.</li>
+        <li><strong>VIX 18:</strong> the long-run VIX average is around 18–20; above 18 means tension is above average.</li>
+        <li><strong>Dollar index 1%, Nasdaq 3%, gold 3%:</strong> a little beyond what counts as a normal one-month move for these assets.</li>
+        <li><strong>Real yield 0.15 points, credit spread 0.25 points:</strong> a tightening that stands out within a month but is not rare.</li>
+        <li><strong>Oil +10% / −15%:</strong> oil is more volatile, so the band is wider.</li>
+        <li><strong>Level bands (0–2, 3–4, 5+):</strong> RED when more than half of the nine rules signal.</li>
+      </ul>
+      <p>If a threshold changes, the rules version changes (v1.1, v2…); past days keep the version they were published with.</p>
+      <p id="en-dagilim" class="mute">Loading level distribution…</p>
+    </section>
+
+    <section>
       <h2>Versions and record</h2>
       <p>The rules are fixed. If a threshold changes, a new version (v1.1, v2 …) is published; scores already published are never rewritten. Days before 21 November 2026 were computed afterwards and are marked "retro"; days after that date are the "live" record.</p>
       <p>If an input is older than 3 business days (10 days for the weekly Fed data) or the build fails, the page says "not updated" and shows the last good data.</p>
@@ -184,16 +215,16 @@
     </section>
 
     <section>
-      <h2 id="en-sicil">Track record: how accurate are RED signals?</h2>
-      <p>A rule's value shows only together with the days it was wrong, so the track record lists false alarms too. The check is fixed and versioned like the rules:</p>
+      <h2 id="en-sicil">Track record: what happened after RED days?</h2>
+      <p>A rule's value shows only together with the days it was wrong, so the track record also lists RED days that were not followed by a fall. The check is fixed and versioned like the rules:</p>
       <ul>
         <li><strong>Signal:</strong> the day the published level switched to RED.</li>
-        <li><strong>Confirmed:</strong> within the next 20 days the Nasdaq Composite closed at least 5% below its close on the signal day.</li>
-        <li><strong>False alarm:</strong> 20 days passed without that fall.</li>
+        <li><strong>Fall followed:</strong> within the next 20 days the Nasdaq Composite closed at least 5% below its close on the signal day.</li>
+        <li><strong>No fall followed:</strong> 20 days passed without that fall.</li>
         <li><strong>Pending:</strong> 20 days have not passed yet.</li>
-        <li><strong>Missed fall:</strong> the Nasdaq Composite closed at least 10% below its highest close of the last 20 days and the level was not RED on any of those 20 days.</li>
+        <li><strong>Fall without RED:</strong> the Nasdaq Composite closed at least 10% below its highest close of the last 20 days and the level was not RED on any of those 20 days.</li>
       </ul>
-      <p>The live record starts with records published after 21 November 2026. Earlier days were computed afterwards and are shown separately "for information". The Nasdaq Composite is a licensed index, so its values are not published; only the result word is. This check measures accuracy; it says nothing about the future and is not advice.</p>
+      <p>The live record starts with records published after 21 November 2026. Earlier days were computed afterwards and are shown separately "for information". The Nasdaq Composite is a licensed index, so its values are not published; only the result word is. This check only records the past; it says nothing about the future and is not advice.</p>
     </section>
 
     <section>

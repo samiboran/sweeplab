@@ -17,8 +17,8 @@
   var D = {
     // masthead, nav, footer
     "İstatistik yalan söylemez": "Statistics don't lie",
-    "Seviye, dokuz piyasa göstergesinden kaçının stres işareti verdiğini özetler; ne yapılacağını söylemez ve geçmişte yanlış alarm da vermiştir (":
-      "The level summarises how many of nine market indicators show stress; it does not say what to do, and it has given false alarms before (",
+    "Seviye, dokuz piyasa göstergesinden kaçının stres işareti verdiğini özetler; ne yapılacağını söylemez ve KIRMIZI günlerinin hepsini bir düşüş izlemedi (":
+      "The level summarises how many of nine market indicators show stress; it does not say what to do, and not every RED day was followed by a fall (",
     "Sicil": "Track record",
     "). Makro veriler ABD kaynaklıdır ve bir iş günü gecikmeli gelir.": "). Macro inputs come from US sources and arrive one business day late.",
     "Site": "Site", "Hesapla": "Calculator", "Arşiv": "Archive", "Yöntem": "Method", "Bugün": "Today",
@@ -55,7 +55,14 @@
     "Dünya": "World", "Dünyada durum ne?": "How is the world doing?",
     "Japonya, Kore, Çin, Hong Kong, Tayvan, Brezilya, emtialar ve günün başlıkları. Sayfa yalnız açılınca yüklenir.":
       "Japan, Korea, China, Hong Kong, Taiwan, Brazil, commodities and the day's headlines. Loaded only when opened.",
-    "Sor": "Ask",
+    "Sor": "Ask", "Sorular": "Questions", "Daha fazlası": "More",
+    "Dünyada bu hafta": "This week in the world",
+    "Benim pozisyonum ne durumda? Maliyetini gir, başa baş fiyatını gör": "How is my position doing? Enter your cost, see your breakeven price",
+    "Borsa İstanbul, ABD ve kriptoda günün hareketlileri.": "Today's movers on Borsa Istanbul, in the US and in crypto.",
+    "Asya, Brezilya, emtialar ve günün başlıkları.": "Asia, Brazil, commodities and today's headlines.",
+    "Geçmiş yıllarda bu hafta ne oldu (pazartesi ve cuma).": "What happened this week in past years (Mondays and Fridays).",
+    "20, 50 ve 200 günlük ortalamaya göre konum.": "Position versus the 20-, 50- and 200-day averages.",
+    "2–3 varlık aynı grafikte ya da oran olarak.": "2–3 assets on one chart, or as a ratio.",
     "Cevaplar her sabah verilerle birlikte hazırlanır; sayılar doğrudan veriden gelir.":
       "Answers are prepared every morning with the data; every number comes straight from the data.",
     "Dünya özeti": "World summary",
