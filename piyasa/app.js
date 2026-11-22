@@ -21,6 +21,14 @@
     return m ? (+m[3]) + " " + MONTHS[+m[2] - 1] + " " + m[1] : "—";
   }
   function safeLevel(x) { return WORD[x] ? x : null; }
+  var I18N = window.PHD_I18N || { en: false };
+  var EN = I18N.en;
+  // English mode: use the build's *_en fields; mark those nodes so i18n.js leaves them alone.
+  function enText(node, tr, en) {
+    if (EN && typeof en === "string" && en) { node.textContent = en; node.setAttribute("data-noi18n", ""); }
+    else node.textContent = tr == null ? "" : String(tr);
+    return node;
+  }
 
   // Plain-language explanations per rule (same thresholds as yontem.html; static text).
   var EXPLAIN = {
@@ -89,6 +97,7 @@
     var n = $("notice");
     n.hidden = true;
     n.textContent = "";
+    n.removeAttribute("data-noi18n");
     if (archived) {
       n.hidden = false;
       n.textContent = "Arşiv kaydı: " + trDate(d.publish_date) + ". O gün yayımlandığı gibi gösteriliyor; yeniden hesaplanmadı." +
@@ -100,7 +109,7 @@
         ". Yeni veri gelene kadar seviye değişmez.";
     } else if (d.level_held && d.held_note) {
       n.hidden = false;
-      n.textContent = d.held_note;
+      enText(n, d.held_note, d.held_note_en);
     }
 
     var list = $("rules");
@@ -111,14 +120,14 @@
       var li = el("li", r.flag === 1 ? "on" : r.flag === 0 ? "off" : "na");
       li.appendChild(el("span", "mark"));
       var body = el("span", "body");
-      var btn = el("button", "rtitle", r.title);
+      var btn = enText(el("button", "rtitle"), r.title, r.title_en);
       btn.type = "button";
       btn.setAttribute("aria-expanded", "false");
       var pid = "acik-" + idx;
       btn.setAttribute("aria-controls", pid);
       body.appendChild(btn);
-      body.appendChild(el("span", "rgroup", r.group));
-      body.appendChild(el("span", "rtext", r.sentence));
+      body.appendChild(enText(el("span", "rgroup"), r.group, r.group_en));
+      body.appendChild(enText(el("span", "rtext"), r.sentence, r.sentence_en));
       var panel = explain(code, asof, d.compare_date);
       panel.id = pid;
       panel.hidden = true;
@@ -154,7 +163,10 @@
     qs.textContent = "";
     if (timer) clearTimeout(timer);
     $("answer").textContent = "";
-    (d.answers || []).forEach(function (q) {
+    var ans = (EN && Array.isArray(d.answers_en) && d.answers_en.length) ? d.answers_en : (d.answers || []);
+    if (EN && ans === d.answers_en) qs.setAttribute("data-noi18n", ""); else qs.removeAttribute("data-noi18n");
+    answersEn = EN && ans === d.answers_en;
+    ans.forEach(function (q) {
       var b = el("button", "q", q.q);
       b.type = "button";
       b.setAttribute("aria-pressed", "false");
@@ -166,13 +178,15 @@
       (d.rules_version || "—") + " · Üretildi " + String(d.generated_at || "—").replace("T", " ").replace("Z", " UTC");
   }
 
-  var timer = null;
+  var timer = null, answersEn = false;
   function ask(q, btn) {
     Array.prototype.forEach.call(document.querySelectorAll(".q"), function (b) { b.setAttribute("aria-pressed", "false"); });
     btn.setAttribute("aria-pressed", "true");
     var box = $("answer");
     box.textContent = "";
-    box.appendChild(el("p", "aq", q.q));
+    var aq = el("p", "aq", q.q);
+    if (answersEn) aq.setAttribute("data-noi18n", "");
+    box.appendChild(aq);
     var lines = (q.a || []).slice();
     if (timer) clearTimeout(timer);
     (function next() {
@@ -180,14 +194,16 @@
         if (window.PHDCharts) window.PHDCharts.attach(q.id, box);
         if (q.link === "yontem.html") {
           var p = el("p", "line");
-          var a = el("a", null, "Yöntem sayfası");
+          var a = el("a", null, EN ? "Method page" : "Yöntem sayfası");
           a.href = "yontem.html";
           p.appendChild(a);
           box.appendChild(p);
         }
         return;
       }
-      box.appendChild(el("p", "line", lines.shift()));
+      var ln = el("p", "line", lines.shift());
+      if (answersEn) ln.setAttribute("data-noi18n", "");
+      box.appendChild(ln);
       timer = setTimeout(next, reduce ? 0 : 260);
     })();
   }
