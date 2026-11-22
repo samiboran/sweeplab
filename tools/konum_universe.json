@@ -1,0 +1,41 @@
+{
+  "_note": "S9 'Ortalamalara göre konum' sabit evren. Alfabetik/varlık sınıfına göre gösterilir; asla 'en altta olana göre' sıralanmaz. BIST tekil hisse yok. Üç ayda bir gözden geçirilir.",
+  "set_date": "2026-11-22",
+  "review": "üç ayda bir",
+  "groups": [
+    {"id": "tr", "title": "Türkiye", "items": [
+      {"id": "XU100", "name": "BIST 100 (TL)", "src": "tl", "file": "XU100"},
+      {"id": "XU100_USD", "name": "BIST 100 (dolar bazında)", "src": "tl_ratio", "file": "XU100", "div": "USDTRY"},
+      {"id": "GRAM_ALTIN", "name": "Gram altın (TL)", "src": "tl_gram", "file": "GOLD_USD"},
+      {"id": "GRAM_GUMUS", "name": "Gram gümüş (TL)", "src": "tl_gram", "file": "SILVER_USD"},
+      {"id": "USDTRY", "name": "Dolar/TL", "src": "tl", "file": "USDTRY"}
+    ]},
+    {"id": "us_etf", "title": "ABD endeks fonları", "items": [
+      {"id": "QQQ", "name": "QQQ (Nasdaq 100 fonu)", "src": "us"},
+      {"id": "RSP", "name": "RSP (S&P 500 eşit ağırlık fonu)", "src": "us"},
+      {"id": "SMH", "name": "SMH (yarı iletken fonu)", "src": "us"},
+      {"id": "SPY", "name": "SPY (S&P 500 fonu)", "src": "us"}
+    ]},
+    {"id": "emtia", "title": "Emtia fonları", "items": [
+      {"id": "GLD", "name": "GLD (altın fonu)", "src": "us"},
+      {"id": "SLV", "name": "SLV (gümüş fonu)", "src": "us"}
+    ]},
+    {"id": "kripto", "title": "Kripto", "items": [
+      {"id": "BTC", "name": "Bitcoin", "src": "crypto"},
+      {"id": "ETH", "name": "Ethereum", "src": "crypto"}
+    ]},
+    {"id": "us_big", "title": "ABD büyük şirketler", "items": [
+      {"id": "AAPL", "name": "Apple", "src": "us"},
+      {"id": "AMZN", "name": "Amazon", "src": "us"},
+      {"id": "AVGO", "name": "Broadcom", "src": "us"},
+      {"id": "BRK-B", "name": "Berkshire Hathaway", "src": "us"},
+      {"id": "GOOGL", "name": "Alphabet", "src": "us"},
+      {"id": "LLY", "name": "Eli Lilly", "src": "us"},
+      {"id": "META", "name": "Meta", "src": "us"},
+      {"id": "MSFT", "name": "Microsoft", "src": "us"},
+      {"id": "NVDA", "name": "Nvidia", "src": "us"},
+      {"id": "TSLA", "name": "Tesla", "src": "us"},
+      {"id": "TSM", "name": "TSMC", "src": "us"}
+    ]}
+  ]
+}
