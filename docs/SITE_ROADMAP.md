@@ -360,3 +360,4 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
   kaynaksız / https olmayan / tekrar eden girdi atlanır). Telegram kanalı ve X paylaşımı: site adı ve alan
   adı belli olunca (Boran kararı).
 - **2026-11-22 (zamanlanmış çalışma, kontrol)** — Bütün maddeler işaretli; çelişki taraması temiz (yasak kelime yok, `piyasa/`'da puanlama kodu yok, HY OAS yalnız yön kelimesi). Yapılacak iş kalmadı — zamanlanmış inşa görevi devre dışı bırakılabilir.
+- **2026-11-22 (Boran ile canlı, 7.)** — Geri bildirim bağlantısı: altbilgide "Öneri ve hata bildir" (`config.js` → `feedback.email`; boşsa görünmez). Yalnız `mailto:` açar (form, izleyici, çerez yok), konu + sayfa yolu hazır gelir, TR/EN. Adres Boran'ın site için açacağı e-posta — ⏸ Boran.

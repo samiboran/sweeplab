@@ -23,6 +23,7 @@
       "© Piyasa Hava Durumu (Market Weather) — derived data may be reused with attribution (CC BY 4.0)",
     "Veri uçları (JSON/CSV)": "Data endpoints (JSON/CSV)",
     "Daha derin araçlar": "Deeper tools",
+    "Öneri ve hata bildir": "Suggestions & bug reports",
     "Yükleniyor…": "Loading…", "Veri yükleniyor…": "Loading data…", "—": "—",
     // home
     "Piyasa bandı: 1 günlük değişim": "Market band: 1-day change",
