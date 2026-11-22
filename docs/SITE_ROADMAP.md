@@ -328,3 +328,7 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
 - **2026-11-22 (Boran ile canlı, 4.)** — B2 Grafikte karşılaştır yapıldı (ekran görüntüleri
   `docs/site-preview/cmp-*`; gerçek data-feed tl_1d verisiyle, Brent/WTI ilk Actions çalışmasında gelir).
   `compare.json` tl.json'u hiçbir durumda bozmayacak şekilde ayrı try içinde yazılır. 110 Python testi geçti.
+- **2026-11-22 (Boran isteği)** — SweepLab terminali kökten ayrıldı: `index.html` → `terminal/index.html`
+  (göreli yollar `../strategies/`, `../data/market/`; `noindex`), kök `index.html` artık
+  `piyasa/`'ya yönlendiriyor (`noindex`, canonical piyasa). Terminal adresi:
+  https://samiboran.github.io/sweeplab/terminal/ — panel/, bot/ etkilenmedi.
