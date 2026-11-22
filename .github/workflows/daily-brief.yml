@@ -54,6 +54,7 @@ jobs:
           TL_RAW_DIR: feed/data/research/tl_1d
           SITE_OUT: feed/data/site
           NOTEBOOK: feed/data/derivs/notebook_daily.json
+          TARIHTE_EXTRA: feed/data/research/tarihte_extra.json
         run: python3 tools/build_week.py || echo "hafta failed"
       - name: Chart data (derived -> data/site/charts.json, non-fatal)
         env:
