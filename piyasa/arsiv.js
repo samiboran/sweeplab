@@ -11,6 +11,15 @@
   var TITLES = { L1: "Stablecoin arzı", L2: "Fed net likiditesi", L3: "Reel faiz", D1: "Dolar endeksi",
     K1: "Kredi risk primi", K2: "Oynaklık (VIX)", K3: "Nasdaq Bileşik", N1: "Altın ve dolar", P1: "Petrol" };
   var ISO = /^\d{4}-\d{2}-\d{2}$/;
+  var I = window.PHD_I18N, EN = !!(I && I.en);
+  function L(tr, en) { return EN ? en : tr; }
+  var MONTHS_EN = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  if (EN) {
+    WORD = { YESIL: "GREEN", SARI: "YELLOW", KIRMIZI: "RED" };
+    TITLES = { L1: "Stablecoin supply", L2: "Fed net liquidity", L3: "Real yield", D1: "Dollar index",
+      K1: "Credit risk premium", K2: "Volatility (VIX)", K3: "Nasdaq Composite", N1: "Gold and the dollar", P1: "Oil" };
+  }
+  var RESULT_EN = { "teyit edildi": "confirmed", "yanlış alarm": "false alarm", "bekliyor": "pending", "kaçırılan": "missed" };
 
   function $(id) { return document.getElementById(id); }
   function el(tag, cls, text) {
@@ -21,8 +30,9 @@
   }
   function trDate(iso) {
     var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
-    return m ? (+m[3]) + " " + MONTHS[+m[2] - 1] + " " + m[1] : "—";
+    return m ? (+m[3]) + " " + (EN ? MONTHS_EN : MONTHS)[+m[2] - 1] + " " + m[1] : "—";
   }
+  if (EN) ["days-body", "days-note", "sicil-sum", "sicil-live", "sicil-retro", "sicil-meta"].forEach(function (id) { var e = $(id); if (e) e.setAttribute("data-noi18n", ""); });
   function get(path) {
     return fetch(DATA + path, { cache: "no-cache", credentials: "omit", referrerPolicy: "no-referrer" })
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r; });
@@ -54,7 +64,7 @@
       var tr = el("tr", r.mode === "live" ? "live" : "retro");
       var td = el("td", "d");
       var a = el("a", null, trDate(r.date));
-      a.href = "./?tarih=" + encodeURIComponent(r.date);
+      a.href = "./?tarih=" + encodeURIComponent(r.date) + (EN ? "&lang=en" : "");
       td.appendChild(a);
       tr.appendChild(td);
       tr.appendChild(levelCell(r.level));
@@ -63,20 +73,27 @@
       CODES.forEach(function (c) {
         var on = r[c] === "1", na = r[c] !== "0" && r[c] !== "1";
         var m = el("span", "fm" + (on ? " on" : na ? " na" : ""));
-        m.title = c + " " + TITLES[c] + ": " + (on ? "işaret var" : na ? "veri yok" : "işaret yok");
+        m.title = c + " " + TITLES[c] + ": " + (on ? L("işaret var", "signal") : na ? L("veri yok", "no data") : L("işaret yok", "no signal"));
         flags.appendChild(m);
       });
-      var sr = el("span", "sr", CODES.filter(function (c) { return r[c] === "1"; }).map(function (c) { return TITLES[c]; }).join(", ") || "işaret yok");
+      var sr = el("span", "sr", CODES.filter(function (c) { return r[c] === "1"; }).map(function (c) { return TITLES[c]; }).join(", ") || L("işaret yok", "no signal"));
       flags.appendChild(sr);
       tr.appendChild(flags);
       tr.appendChild(el("td", "v", r.rules_version || "—"));
-      tr.appendChild(el("td", "m", r.mode === "live" ? "canlı" : "geriye dönük"));
+      tr.appendChild(el("td", "m", r.mode === "live" ? L("canlı", "live") : L("geriye dönük", "retro")));
       body.appendChild(tr);
     });
-    $("days-note").textContent = rows.length ? "Son kayıt: " + trDate(rows[rows.length - 1].date) + "." : "Kayıt yok.";
+    $("days-note").textContent = rows.length ? L("Son kayıt: ", "Latest record: ") + trDate(rows[rows.length - 1].date) + "." : L("Kayıt yok.", "No records.");
   }
 
   function resultText(e) {
+    if (EN) {
+      if (e.kind === "kaçırılan") return "The Nasdaq Composite fell at least 10% from its 20-day high; the level was never RED in that period.";
+      if (e.result === "teyit edildi") return "Within " + e.days_to_confirm + " days the Nasdaq Composite closed at least 5% below its close on the signal day.";
+      if (e.result === "yanlış alarm") return "Within 20 days the Nasdaq Composite did not close 5% below its close on the signal day.";
+      if (e.result === "bekliyor") return "The 20-day window is not over; as of " + trDate(e.checked_until) + " the drop threshold has not been seen.";
+      return "No comparison data for this day.";
+    }
     if (e.kind === "kaçırılan") return "Nasdaq Bileşik son 20 günün zirvesinden en az %10 geriledi; bu sürede seviye hiç KIRMIZI olmadı.";
     if (e.result === "teyit edildi") return e.days_to_confirm + " gün içinde Nasdaq Bileşik, işaret günündeki kapanışının en az %5 altında kapandı.";
     if (e.result === "yanlış alarm") return "20 gün içinde Nasdaq Bileşik işaret günündeki kapanışının %5 altına inmedi.";
@@ -89,14 +106,14 @@
     if (!list.length) return;
     var t = el("table", "sicil");
     var th = el("thead"), hr = el("tr");
-    ["Tarih", "Olay", "Sonuç", "Açıklama"].forEach(function (h) { var c = el("th", null, h); c.scope = "col"; hr.appendChild(c); });
+    (EN ? ["Date", "Event", "Result", "Explanation"] : ["Tarih", "Olay", "Sonuç", "Açıklama"]).forEach(function (h) { var c = el("th", null, h); c.scope = "col"; hr.appendChild(c); });
     th.appendChild(hr); t.appendChild(th);
     var tb = el("tbody");
     list.slice().reverse().forEach(function (e) {
       var tr = el("tr", e.result === "yanlış alarm" || e.kind === "kaçırılan" ? "miss" : "");
       tr.appendChild(el("td", "d", trDate(e.date)));
-      tr.appendChild(el("td", null, e.kind === "kaçırılan" ? "Düşüş (seviye " + (WORD[e.level] || "—") + ")" : "KIRMIZI'ya geçiş"));
-      tr.appendChild(el("td", "r", e.result));
+      tr.appendChild(el("td", null, e.kind === "kaçırılan" ? L("Düşüş (seviye ", "Drop (level ") + (WORD[e.level] || "—") + ")" : L("KIRMIZI'ya geçiş", "Switch to RED")));
+      tr.appendChild(el("td", "r", EN ? (RESULT_EN[e.result] || RESULT_EN[e.kind] || e.result) : e.result));
       tr.appendChild(el("td", "x", resultText(e)));
       tb.appendChild(tr);
     });
@@ -109,7 +126,12 @@
     var live = all.filter(function (e) { return e.mode === "live"; });
     var retro = all.filter(function (e) { return e.mode !== "live"; });
     var sm = s.summary_live || {};
-    $("sicil-sum").textContent = live.length
+    $("sicil-sum").textContent = EN ? (live.length
+      ? "Live record (since " + trDate(s.freeze_date) + "): " + (sm.canli_sinyal || 0) + " switches to RED — " +
+        (sm.canli_teyit || 0) + " confirmed, " + (sm.canli_yanlis_alarm || 0) + " false alarms, " +
+        (sm.canli_bekliyor || 0) + " pending; " + (sm.canli_kacirilan || 0) + " missed drops."
+      : "The live record started after " + trDate(s.freeze_date) + "; no live signal has been evaluated yet.")
+      : live.length
       ? "Canlı kayıt (" + trDate(s.freeze_date) + "'ten beri): " + (sm.canli_sinyal || 0) + " KIRMIZI geçişi — " +
         (sm.canli_teyit || 0) + " teyit edildi, " + (sm.canli_yanlis_alarm || 0) + " yanlış alarm, " +
         (sm.canli_bekliyor || 0) + " bekliyor; " + (sm.canli_kacirilan || 0) + " kaçırılan düşüş."
@@ -117,11 +139,11 @@
     sicilTable(live, $("sicil-live"));
     sicilTable(retro, $("sicil-retro"));
     $("sicil-retro-wrap").hidden = !retro.length;
-    $("sicil-meta").textContent = "Değerlendirme verisi: " + trDate(s.data_until) + " · Kural sürümü " + (s.rules_version || "—");
+    $("sicil-meta").textContent = L("Değerlendirme verisi: ", "Evaluation data: ") + trDate(s.data_until) + L(" · Kural sürümü ", " · Rules ") + (s.rules_version || "—");
   }
 
   get("history.csv").then(function (r) { return r.text(); }).then(function (t) { renderDays(parseCsv(t)); })
-    .catch(function () { $("days-note").textContent = "Arşiv dosyasına şu an ulaşılamadı."; });
+    .catch(function () { $("days-note").textContent = L("Arşiv dosyasına şu an ulaşılamadı.", "The archive file could not be reached right now."); });
   get("sicil.json").then(function (r) { return r.json(); }).then(renderSicil)
-    .catch(function () { $("sicil-sum").textContent = "Sicil dosyasına şu an ulaşılamadı."; });
+    .catch(function () { $("sicil-sum").textContent = L("Sicil dosyasına şu an ulaşılamadı.", "The track-record file could not be reached right now."); });
 })();

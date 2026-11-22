@@ -7,7 +7,7 @@
 
 Tek dosyalık, sunucusuz, tamamen tarayıcıda çalışan bir forex/emtia backtest aracı. TradingView'ın görsel deneyimine yakın bir arayüzde **kendi OHLC verinizi** yükleyip, **kendi strateji kodunuzu** yazıp, sonuçları **istatistiksel dürüstlük** süzgecinden geçirerek test edersiniz.
 
-**Canlı demo:** https://samiboran.github.io/sweeplab/
+**Canlı demo:** https://samiboran.github.io/sweeplab/terminal/ (kök adres artık Piyasa Hava Durumu sitesine yönlenir: https://samiboran.github.io/sweeplab/piyasa/)
 
 Çekirdek soru şu: *Gördüğünüz kazanç gerçek bir edge mi, yoksa şans mı?* SweepLab her testin yanında aynı parametrelerle bir rastgele kontrol grubu çalıştırır ve sonucu açıkça etiketler.
 
