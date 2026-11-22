@@ -8,8 +8,11 @@ Inputs (data-feed, private side):
   bist  : data/research/bist_1d/<SYM>.csv  date,open,high,low,close,volume  (fetched here, Yahoo .IS)
   abd   : data/research/us_1d/<SYM>.csv    (research-data.yml, after the US close)
   kripto: data/research/candles_1d/<C>.csv ts,open,high,low,close,vol      (research-data.yml, OKX)
-Timing: runs in daily-brief (~06:00 UTC) — BIST and US sessions of the previous day are
-closed, the UTC crypto day is closed. Bars dated today (UTC) are dropped as incomplete.
+Timing: runs in daily-brief (~06:00 UTC) and in intraday.yml (~15:30 UTC after the BIST
+close, and after research-data ~22:30 UTC after the US close). A bar dated today (UTC) is
+used only once that market's session is over (config "closed_after_utc", weekdays);
+otherwise it is dropped as incomplete. Crypto has no close: its UTC day bar is never used
+before midnight UTC.
 "Neden?" is never written here: the page merges movers_news.json when a separate task
 provides it (schema: docs/MOVERS_NEWS_SCHEMA.md); causes are never invented.
 """
@@ -209,10 +212,22 @@ def public(r, with_reasons=False):
     return out
 
 
-def build_market(m, cfg, today, series=None, idx=None):
+def cutoff(m, today, now_dt=None):
+    """First date NOT used: today, or tomorrow once today's session is closed (weekdays only)."""
+    ca = m.get("closed_after_utc")
+    if now_dt and ca and now_dt.date() == today and today.weekday() < 5:
+        hh, mm = (int(x) for x in ca.split(":"))
+        if (now_dt.hour, now_dt.minute) >= (hh, mm):
+            return today + dt.timedelta(days=1)
+    return today
+
+
+def build_market(m, cfg, today, series=None, idx=None, now_dt=None):
     if series is None:
         series, idx = market_series(m)
     crypto = m["src"] == "candles_1d"
+    stale_ref = today
+    today = cutoff(m, today, now_dt)
     idays = sorted(d for d in (idx or {}) if d < today.isoformat())
     idx_chg = round((idx[idays[-1]] / idx[idays[-2]] - 1) * 100, 1) if len(idays) >= 2 else None
     idx_asof = idays[-1] if idays else None
@@ -230,7 +245,7 @@ def build_market(m, cfg, today, series=None, idx=None):
         last = max(r["asof"] for r in rows)
         rows = [r for r in rows if r["asof"] == last]
     asof = rows[0]["asof"] if rows else idx_asof
-    stale = asof is None or (today - dt.date.fromisoformat(asof)).days > cfg["stale_days"]
+    stale = asof is None or (stale_ref - dt.date.fromisoformat(asof)).days > cfg["stale_days"]
     lists = [r for r in rows if r["sembol"] not in set(m.get("exclude_from_lists", []))]
     n = cfg["top_n"]
     up = sorted([r for r in lists if r["chg_1g"] > 0], key=lambda r: (-r["chg_1g"], r["sembol"]))[:n]
@@ -244,14 +259,16 @@ def build_market(m, cfg, today, series=None, idx=None):
             "anomaliler": [] if stale else [public(r, True) for r in an]}
 
 
-def build(cfg, today=None, now=None, inputs=None):
-    today = today or dt.datetime.now(dt.timezone.utc).date()
-    now = now or dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+def build(cfg, today=None, now=None, inputs=None, now_dt=None):
+    if today is None:
+        now_dt = now_dt or dt.datetime.now(dt.timezone.utc)
+        today = now_dt.date()
+    now = now or (now_dt or dt.datetime.now(dt.timezone.utc)).replace(microsecond=0).isoformat().replace("+00:00", "Z")
     a = cfg["anomaly"]
     markets = []
     for m in cfg["markets"]:
         s, i = (inputs or {}).get(m["id"], (None, None))
-        markets.append(build_market(m, cfg, today, s, i))
+        markets.append(build_market(m, cfg, today, s, i, now_dt))
     return {"schema": "phd.movers/1", "schema_version": 1, "source": SOURCE, "site_url": SITE_URL,
             "generated_at": now, "attribution": ATTRIBUTION, "license": LICENSE,
             "universe_set_date": cfg.get("set_date"),

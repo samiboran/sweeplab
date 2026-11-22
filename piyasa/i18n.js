@@ -227,6 +227,8 @@
             .replace(" TL tarafı bugünün verisini gösterir.", " The lira side shows today's data."); }],
     [/^(.+) için kayıt bulunamadı\. Arşiv sayfasında kayıtlı günler listelenir\.$/, function (m) { return "No record for " + m[1] + ". The Archive page lists recorded days."; }],
     [/^(İşaret var|İşaret yok|Veri yok): (.+)$/, function (m) { return ({ "İşaret var": "Signal", "İşaret yok": "No signal", "Veri yok": "No data" })[m[1]] + ": " + (D[m[2]] || m[2]); }],
+    [/^1 günlük değişim · (.+?) itibarıyla \(~15 dk gecikmeli\)( · Altın, gümüş ve petrole dokununca görünüm değişir)?$/, function (m) {
+      return "1-day change · as of " + m[1] + " (~15 min delayed)" + (m[2] ? " · Tap gold, silver or oil to switch the view" : ""); }],
     [/^1 günlük değişim · (.+?) kapanışı( · Altın, gümüş ve petrole dokununca görünüm değişir)?$/, function (m) {
       return "1-day change · " + m[1] + " close" + (m[2] ? " · Tap gold, silver or oil to switch the view" : ""); }],
     [/^(.+)\. Dokun: (.+)$/, function (m) {

@@ -1,0 +1,101 @@
+# Piyasa Hava Durumu — public showcase deploy (docs/DEPLOY_PLAN.md), reusable.
+# Called by daily-brief (09:00 İstanbul) and intraday (10:30, 18:30, after the US close).
+# Only the static site (piyasa/) and derived data (data-feed:data/site/) leave the repo.
+# Each job is skipped unless its secrets exist; values are never printed.
+name: site-deploy
+on:
+  workflow_call:
+permissions:
+  contents: read
+jobs:
+  site-deploy-check:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      repo: ${{ steps.c.outputs.repo }}
+      cloudflare: ${{ steps.c.outputs.cloudflare }}
+    steps:
+      - id: c
+        env:
+          T1: ${{ secrets.SITE_DEPLOY_TOKEN }}
+          T2: ${{ secrets.SITE_DEPLOY_REPO }}
+          C1: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          C2: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -n "$T1" ] && [ -n "$T2" ]; then echo "repo=true" >> "$GITHUB_OUTPUT"; else echo "repo=false" >> "$GITHUB_OUTPUT"; fi
+          if [ -n "$C1" ] && [ -n "$C2" ]; then echo "cloudflare=true" >> "$GITHUB_OUTPUT"; else echo "cloudflare=false" >> "$GITHUB_OUTPUT"; fi
+
+  deploy-repo:   # option C: separate public repo (SITE_DEPLOY_TOKEN + SITE_DEPLOY_REPO)
+    needs: [site-deploy-check]
+    if: ${{ !cancelled() && needs.site-deploy-check.outputs.repo == 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            piyasa
+            tools
+      - uses: actions/checkout@v4
+        with:
+          ref: data-feed
+          path: feed
+          sparse-checkout: data/site
+      - name: Assemble showcase (piyasa/ + data/site/ only)
+        run: |
+          set -e
+          rm -rf dist && mkdir -p dist/data
+          cp -R piyasa/. dist/
+          if [ -d feed/data/site ]; then cp -R feed/data/site dist/data/site; fi
+          if [ -f dist/data/site/today.json ]; then
+            SITE_BASE="${{ vars.SITE_BASE }}" python3 tools/build_static.py dist || echo "static snapshots failed"; fi
+          if grep -rIlE 'ghp_|github_pat_|xox[bp]-|BEGIN [A-Z ]*PRIVATE KEY|[0-9]{8,10}:[A-Za-z0-9_-]{35}' dist; then
+            echo "secret-like string found in showcase; aborting"; exit 1; fi
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ secrets.SITE_DEPLOY_REPO }}
+          token: ${{ secrets.SITE_DEPLOY_TOKEN }}
+          path: target
+      - name: Push to showcase repo
+        working-directory: target
+        run: |
+          cp -R ../dist/. .
+          git config user.name "piyasa-bot"
+          git config user.email "piyasa-bot@users.noreply.github.com"
+          git add -A
+          git commit -m "site $(date -u +%F)" || echo "no changes"
+          git push
+
+  deploy-cloudflare:   # option A (recommended): Cloudflare Pages direct upload
+    needs: [site-deploy-check]
+    if: ${{ !cancelled() && needs.site-deploy-check.outputs.cloudflare == 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            piyasa
+            tools
+      - uses: actions/checkout@v4
+        with:
+          ref: data-feed
+          path: feed
+          sparse-checkout: data/site
+      - name: Assemble showcase (piyasa/ + data/site/ only)
+        run: |
+          set -e
+          rm -rf dist && mkdir -p dist/data
+          cp -R piyasa/. dist/
+          if [ -d feed/data/site ]; then cp -R feed/data/site dist/data/site; fi
+          if [ -f dist/data/site/today.json ]; then
+            SITE_BASE="${{ vars.SITE_BASE }}" python3 tools/build_static.py dist || echo "static snapshots failed"; fi
+          if grep -rIlE 'ghp_|github_pat_|xox[bp]-|BEGIN [A-Z ]*PRIVATE KEY|[0-9]{8,10}:[A-Za-z0-9_-]{35}' dist; then
+            echo "secret-like string found in showcase; aborting"; exit 1; fi
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=${{ vars.CLOUDFLARE_PAGES_PROJECT || 'piyasa-hava-durumu' }} --branch=main

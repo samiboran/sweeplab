@@ -1,0 +1,65 @@
+# Piyasa Hava Durumu — intraday refresh of the fast-moving parts only (Boran, 22 Kasım).
+# The macro level, world tables, weekly edition and Telegram stay on the 09:00 daily-brief.
+#   10:30 İstanbul (07:30 UTC)  BIST open + 30 min: top band (gold, silver, USD/TRY, oil, BIST 100)
+#   18:30 İstanbul (15:30 UTC)  after the BIST close: band + BIST movers with today's closed session
+#   after research-data (~01:30 İstanbul): US close → US movers (research-data pulls the US candles)
+# Weekdays only. GitHub may start scheduled runs 10–30 min late. Yahoo data is ~15 min delayed.
+name: intraday
+on:
+  schedule:
+    - cron: "30 7 * * 1-5"
+    - cron: "30 15 * * 1-5"
+  workflow_run:
+    workflows: [research-data]
+    types: [completed]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: data-feed-push
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: data-feed
+          path: feed
+      - name: TL layer + top band (derived -> data/site/tl.json, compare.json; non-fatal)
+        env:
+          TL_RAW_DIR: feed/data/research/tl_1d
+          SITE_OUT: feed/data/site
+          NOTEBOOK: feed/data/derivs/notebook_daily.json
+        run: python3 tools/fetch_tl.py || echo "tl layer failed"
+      - name: Günün hareketlileri (closed sessions only; derived -> data/site/movers.json; non-fatal)
+        env:
+          SITE_OUT: feed/data/site
+          BIST_RAW_DIR: feed/data/research/bist_1d
+          US_DIR: feed/data/research/us_1d
+          RESEARCH_DIR: feed/data/research/candles_1d
+          TL_RAW_DIR: feed/data/research/tl_1d
+        run: python3 tools/build_movers.py || echo "movers failed"
+      - name: Data catalogue (data/site/index.json, non-fatal)
+        env:
+          SITE_OUT: feed/data/site
+        run: python3 tools/build_catalog.py || echo "catalog failed"
+      - name: Store on data-feed
+        working-directory: feed
+        run: |
+          git config user.name "derivs-bot"
+          git config user.email "derivs-bot@users.noreply.github.com"
+          git add data/site/ data/research/tl_1d/ 2>/dev/null || true
+          if [ -d data/research/bist_1d ]; then git add data/research/bist_1d/; fi
+          git commit -m "intraday $(date -u +'%F %H:%M') UTC" || echo "no changes"
+          for i in 1 2 3; do git pull --rebase -q origin data-feed && git push origin HEAD:data-feed && break; sleep 5; done
+
+  site-deploy:
+    needs: [refresh]
+    if: ${{ !cancelled() }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/site-deploy.yml
+    secrets: inherit
