@@ -109,14 +109,14 @@
 
     <section>
       <h2 id="tl">tl.json ve konum.json</h2>
-      <p><code>tl.json → assets[]</code>: <code>id, label, unit, asof, last, chg_1g, chg_7g, chg_30g, chg_ytd, chg_1y, date_1y, val_1y, vs_ma200, stale, series</code> (yüzdeler 2 ondalık). <code>prices</code>: hesaplayıcı için güncel yuvarlanmış fiyatlar. <code>band</code>: üst banttaki alternatif görünümler (<code>ons_altin</code>, <code>ons_gumus</code>, <code>brent</code>, <code>wti</code>): <code>label, unit, asof, last, chg_1g, stale</code>.</p>
+      <p><code>tl.json → assets[]</code>: <code>id, label, unit, asof, last, chg_1g, chg_7g, chg_30g, chg_ytd, chg_1y, date_1y, val_1y, vs_ma200, stale, series</code> (yüzdeler 2 ondalık). <code>prices</code>: hesaplayıcı için güncel yuvarlanmış fiyatlar. <code>band</code>: üst banttaki alternatif görünümler (<code>ons_altin</code>, <code>ons_gumus</code>, <code>brent</code>, <code>wti</code>): <code>label, unit, asof, last, chg_1g, stale</code>. <code>makas_ref.usd</code>: TCMB dolar efektif alış/satış kuru ve aradaki yüzde fark (<code>alis, satis, pct, tarih</code>; kaynak TCMB, kamuya açık), hesaplayıcıdaki makas referansı.</p>
       <p><code>konum.json → groups[].satirlar[]</code>: <code>id, ad, asof, ust20, ust50, ust200</code> (1 = üstünde, 0 = altında, null = yeterli geçmiş yok), <code>fark200</code> (200 günlük ortalamaya % uzaklık, 1 ondalık), <code>eski</code>. Grup içinde alfabetik; bir sıralama değildir.</p>
     </section>
 
     <section>
       <h2 id="dunya">dunya.json</h2>
       <p><code>markets[]</code>: <code>id, baslik, endeksler[], sirketler[]</code>. Endeks/fon satırı: <code>id, ad, tur</code> (endeks | fon), <code>asof, seviye</code> (yuvarlanmış son kapanış), <code>chg_1g, chg_7g, chg_30g, chg_ytd</code> (% , 1 ondalık), <code>ust20, ust50, ust200</code> (0/1/null), <code>fark200, eski</code>. Şirket satırı aynı alanlar, <code>seviye</code> yok, <code>kod</code> borsa kodu; alfabetik.</p>
-      <p><code>emtia[]</code>: <code>grup, satirlar[]</code> (endeks satırı + <code>birim</code>). <code>referans_metaller[]</code>: <code>ad, aciklama, durum</code> ("günlük serbest veri yok"; fiyat yok). <code>basliklar</code>: <code>konular[].basliklar[]</code> = <code>baslik, kaynak, url, zaman</code> (UTC) — haber metni yok; <code>kaynaklar[]</code> (akış ve son durum), <code>bekleyen[]</code>.</p>
+      <p><code>emtia[]</code>: <code>grup, satirlar[]</code> (endeks satırı + <code>birim</code>). <code>referans_metaller[]</code>: <code>ad, aciklama, durum</code> ("günlük serbest veri yok"; fiyat yok). <code>basliklar</code>: <code>konular[].basliklar[]</code> = <code>baslik, kaynak, url, zaman, dil</code> (UTC; <code>dil</code> başlığın dili: en/pt/tr) — haber metni yok; <code>kaynaklar[]</code> (akış ve son durum), <code>bekleyen[]</code>.</p>
     </section>
 
     <section>

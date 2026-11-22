@@ -158,6 +158,12 @@
     var p2 = function (n) { return (n < 10 ? "0" : "") + n; };
     return t.getUTCDate() + " " + MONTHS[t.getUTCMonth()].slice(0, 3) + " " + p2(t.getUTCHours()) + ":" + p2(t.getUTCMinutes());
   }
+  function istanbulDay(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(String(iso || ""));
+    if (!m) return "";
+    var t = new Date(Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4] + 3, +m[5]));
+    return isNaN(t.getTime()) ? "" : t.toISOString().slice(0, 10);
+  }
   function band(d) {
     var host = document.getElementById("band");
     if (!host) return;
@@ -206,8 +212,12 @@
     host.textContent = "";
     host.appendChild(ul);
     // Updated at 09:00, 10:30, 18:30 and after the US close (İstanbul): show the update time, not a "close".
-    var gen = istanbulTime(d.generated_at);
-    var when = gen ? " · " + gen + " itibarıyla (~15 dk gecikmeli)" : (last ? " · " + shortDate(last) + " kapanışı" : "");
+    // Time only when the newest price is from today (İstanbul); otherwise (night, weekend, holiday) the close date.
+    var gen = istanbulTime(d.generated_at), genDay = istanbulDay(d.generated_at);
+    // Reference day = gram gold's bar (the dollar can carry thin weekend quotes and would make Sunday look "live").
+    var ref = (src.a.gram_altin && src.a.gram_altin.asof) || last;
+    var when = gen && ref && ref === genDay ? " · " + gen + " itibarıyla (~15 dk gecikmeli)"
+      : (ref ? " · " + shortDate(ref) + " kapanışı" : "");
     var note = el("p", "band-n", "1 günlük değişim" + when +
       (toggles ? " · Altın, gümüş ve petrole dokununca görünüm değişir" : ""));
     var cmp = el("a", "band-cmp", "Grafikte karşılaştır");

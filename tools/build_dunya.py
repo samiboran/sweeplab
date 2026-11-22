@@ -192,7 +192,7 @@ def parse_feed(raw):
         name = local(node.tag)
         if name not in ("item", "entry"):
             continue
-        title = link = when = None
+        title = link = when = guid = None
         for ch in node:
             n = local(ch.tag)
             if n == "title":
@@ -203,9 +203,16 @@ def parse_feed(raw):
                         link = ch.get("href")
                 elif (ch.text or "").strip():
                     link = ch.text.strip()
+            elif n in ("guid", "id") and (ch.text or "").strip():
+                guid = ch.text.strip()
             elif n in ("pubDate", "published", "updated", "date") and when is None:
                 when = parse_time(ch.text)
-        out.append((clean_title(title), (link or "").strip(), when))
+        link = (link or "").strip()
+        if (not link or link.endswith("=")) and guid and guid.startswith("https://") and not guid.endswith("="):
+            link = guid          # some feeds (EIA) ship a link with an empty id; the guid carries the full URL
+        elif link.endswith("="):
+            link = ""            # an incomplete link is dropped rather than published
+        out.append((clean_title(title), link, when))
     return out
 
 
@@ -220,6 +227,7 @@ def fetch_feed(url):
 
 def build_headlines(hcfg, now, fetch=fetch_feed):
     max_age = dt.timedelta(days=hcfg.get("max_age_days", 4))
+    excl = [w.lower() for w in hcfg.get("exclude_words", [])]
     items, sources = [], []
     for f in hcfg["feeds"]:
         st = {"kaynak": f["source"], "konu": f["topic"], "url": f["url"], "sartlar": f.get("terms", "")}
@@ -235,7 +243,9 @@ def build_headlines(hcfg, now, fetch=fetch_feed):
                     continue
                 if when > now + dt.timedelta(hours=2) or now - when > max_age:
                     continue
-                got.append({"baslik": title, "kaynak": f["source"], "url": link,
+                if any(w in title.lower() for w in excl):      # off-topic items in economy feeds (lotteries)
+                    continue
+                got.append({"baslik": title, "kaynak": f["source"], "url": link, "dil": f.get("lang", "en"),
                             "zaman": when.replace(microsecond=0).isoformat().replace("+00:00", "Z"),
                             "konu": f["topic"]})
             got.sort(key=lambda x: x["zaman"], reverse=True)
