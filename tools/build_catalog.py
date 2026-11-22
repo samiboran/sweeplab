@@ -39,8 +39,8 @@ ENDPOINTS = [
     ("og.png", None, None, "her gün ~06:00", CC, "Günün başlık kartı (1200×630)."),
     ("dunya.json", "phd.dunya/1", 1, "her gün ~06:00", VIEW,
      "Bölge endeks/fonları ve büyük şirketler (değişim + ortalamalara göre yer), emtialar, referans metaller, günün başlıkları (yalnız başlık + kaynak + saat + bağlantı)."),
-    ("movers.json", "phd.movers/1", 1, "planlı (S10c)", VIEW, "Günün hareketlileri ve kural tabanlı anomaliler."),
-    ("movers_news.json", "phd.movers_news/1", 1, "planlı (S10c)", VIEW,
+    ("movers.json", "phd.movers/1", 1, "her gün ~06:00", VIEW, "Günün hareketlileri (BIST, ABD, kripto) ve kural tabanlı anomaliler; yalnız yüzde ve oranlar."),
+    ("movers_news.json", "phd.movers_news/1", 1, "ayrı görev (henüz yok)", VIEW,
      "Hareketlilere eşleştirilen haber başlıkları (yalnız başlık + kaynak + saat + bağlantı)."),
 ]
 

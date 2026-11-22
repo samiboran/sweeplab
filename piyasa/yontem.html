@@ -117,6 +117,14 @@
     </section>
 
     <section>
+      <h2 id="hareket">Günün hareketlileri ve anomaliler</h2>
+      <p>Her sabah üç pazar için bir önceki işlem gününün özeti: Borsa İstanbul (belirleme tarihli, büyük ve likit hisselerden oluşan sabit liste; resmî BIST 100 bileşimi değildir), ABD (araştırma listesindeki hisseler, fonlar hariç) ve kripto (en büyük ~30 coin, OKX). Her pazarda 1 günlük yüzde değişime göre en çok yükselen ve en çok düşen 5 isim, göreli hacimleri (o günün hacmi ÷ önceki 20 günün ortalaması) ve pazarın kendi endeksinin hareketi gösterilir. Bu bir haber özetidir; öneri ya da sıralı bir liste değildir.</p>
+      <p><strong>Likidite tabanı:</strong> son 20 günün ortalama işlem hacmi (kapanış × adet) BIST'te 250 milyon TL'nin, ABD'de 200 milyon doların altında olan ya da fiyatı 5 doların altındaki ABD hissesi hiçbir listede gösterilmez. Kripto evreni zaten en büyük coinlerden oluşur. Son kapanışı pazarın son gününden eski olan isim "günün hareketlisi" olarak gösterilmez.</p>
+      <p><strong>Olağandışı hareket kuralları</strong> (her biri ayrı gerekçe satırı üretir): hacim 20 günlük ortalamanın en az 3 katı; açılış boşluğu (açılışın önceki kapanışa uzaklığı) hisselerde en az ±%5, kriptoda en az ±%8; günlük kapanış değişimi önceki 14 günün ortalama gerçek aralığının (ATR) en az 3 katı; son 52 haftanın (252 işlem günü) en yükseği ya da en düşüğü; kendi endeksine ters yönde ve 3 puandan fazla farkla hareket. Olağandışı listesi alfabetik dizilir.</p>
+      <p><strong>"Neden?" sütunu:</strong> yalnız kaynaklı haber başlığı eşleşirse dolar (başlık, kaynak, saat, bağlantı); aksi halde "haber eşleştirmesi bekleniyor" yazar. Hareketin nedeni tahmin edilmez. Zamanlama: BIST ve ABD seansları kapandıktan, kripto UTC günü bittikten sonra, İstanbul saatiyle ~09:00'da. BIST verisi gecikmeli olabilir. Girdiler Yahoo Finance ve OKX (kişisel kullanım şartlı).</p>
+    </section>
+
+    <section>
       <h2>Kaynaklar</h2>
       <p>FRED (ABD Merkez Bankası St. Louis şubesi: Fed bilançosu, reel faiz, VIX, yüksek getirili tahvil risk primi, Nasdaq Bileşik), DefiLlama (stablecoin arzı), Yahoo Finance (altın ve petrol vadelileri, dolar endeksi), OKX (BTC ve ETH günlük kapanışları). Ham veriler yayımlanmaz; yalnız türetilmiş değerler, yüzde değişimler ve 0/1 işaretleri yayımlanır. Dosyaların listesi, alanları ve lisansı: <a href="veri.html">Veri uçları</a>.</p>
     </section>

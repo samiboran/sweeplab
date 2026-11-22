@@ -72,6 +72,14 @@ jobs:
           SITE_OUT: feed/data/site
           WORLD_RAW_DIR: feed/data/research/world_1d
         run: python3 tools/build_dunya.py || echo "dunya failed"
+      - name: Günün hareketlileri ve anomaliler (BIST via Yahoo .IS + research US/crypto; derived -> data/site/movers.json, non-fatal)
+        env:
+          SITE_OUT: feed/data/site
+          BIST_RAW_DIR: feed/data/research/bist_1d
+          US_DIR: feed/data/research/us_1d
+          RESEARCH_DIR: feed/data/research/candles_1d
+          TL_RAW_DIR: feed/data/research/tl_1d
+        run: python3 tools/build_movers.py || echo "movers failed"
       - name: Sicil / track record (derived words only -> data/site/sicil.json, non-fatal)
         env:
           SITE_OUT: feed/data/site
@@ -108,6 +116,7 @@ jobs:
           if [ -d data/site ]; then git add data/site/; fi
           if [ -d data/research/tl_1d ]; then git add data/research/tl_1d/; fi
           if [ -d data/research/world_1d ]; then git add data/research/world_1d/; fi
+          if [ -d data/research/bist_1d ]; then git add data/research/bist_1d/; fi
           git commit -m "daily brief $(date -u +%F)" || echo "no changes"
           git push origin HEAD:data-feed
 

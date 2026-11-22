@@ -63,8 +63,8 @@
         <tr><td><code>hafta/{YYYY-MM-DD}.json</code></td><td>phd.hafta/1</td><td>pzt ve cuma ~06:00</td><td>yalnızca görüntüleme</td><td>Geçmiş haftalık baskılar.</td></tr>
         <tr><td><code>og.png</code></td><td>—</td><td>her gün ~06:00</td><td>CC BY 4.0</td><td>Günün başlık kartı.</td></tr>
         <tr><td><code>dunya.json</code></td><td>phd.dunya/1</td><td>her gün ~06:00</td><td>yalnızca görüntüleme</td><td>Bölge endeksleri, büyük şirketler, emtialar, başlıklar.</td></tr>
-        <tr><td><code>movers.json</code></td><td>phd.movers/1</td><td>planlı</td><td>yalnızca görüntüleme</td><td>Günün hareketlileri ve anomaliler (yakında).</td></tr>
-        <tr><td><code>movers_news.json</code></td><td>phd.movers_news/1</td><td>planlı</td><td>yalnızca görüntüleme</td><td>Hareketlilere eşleşen başlıklar (yakında).</td></tr>
+        <tr><td><code>movers.json</code></td><td>phd.movers/1</td><td>her gün ~06:00</td><td>yalnızca görüntüleme</td><td>Günün hareketlileri (BIST, ABD, kripto) ve anomaliler.</td></tr>
+        <tr><td><code>movers_news.json</code></td><td>phd.movers_news/1</td><td>ayrı görev</td><td>yalnızca görüntüleme</td><td>Hareketlilere eşleşen başlıklar (yakında).</td></tr>
         </tbody>
       </table>
       </div>
@@ -114,10 +114,15 @@
     </section>
 
     <section>
+      <h2 id="movers">movers.json</h2>
+      <p><code>markets[]</code> (<code>bist</code>, <code>abd</code>, <code>kripto</code>): <code>asof</code>, <code>eski</code>, <code>endeks {ad, chg_1g, asof}</code>, <code>evren</code> (gösterilebilir isim sayısı), <code>likidite_disi</code>, <code>yukselenler[]</code> ve <code>dusenler[]</code> (<code>sembol, chg_1g, rel_hacim, neden</code>), <code>anomaliler[]</code> (ek olarak <code>tur[]</code>: <code>hacim, bosluk, atr, zirve, dip, ters</code> ve düz Türkçe <code>gerekce[]</code>). Fiyat seviyesi yoktur. <code>neden</code> her zaman <code>"haber eşleştirmesi bekleniyor"</code>; kaynaklı başlıklar ayrı <code>movers_news.json</code> dosyasından gelir (şema: depo içinde <code>docs/MOVERS_NEWS_SCHEMA.md</code>).</p>
+    </section>
+
+    <section>
       <h2 id="lisans">Lisans</h2>
       <ul>
         <li><strong>CC BY 4.0</strong> — yalnız kamu kaynaklı girdilerden türetilen alanlar ve bizim ölçümümüz: makro hava seviyesi, ham skor, L1–L3 ve P1 işaretleri, <code>history.csv</code>, <code>sicil.json</code>, makro skor geçmişi.</li>
-        <li><strong>Yalnızca görüntüleme</strong> — lisanslı ya da kişisel kullanım şartlı girdilerden türetilen alanlar: K1 (ICE BofA HY OAS), K2 (Cboe VIX), K3 (Nasdaq), D1 ve N1 (ICE dolar endeksi, Yahoo altın vadelisi) ile <code>tl.json</code>, <code>konum.json</code>, <code>hafta.json</code>, kripto serileri, <code>dunya.json</code> ve planlı <code>movers.json</code>. Atıfla gösterebilirsin; yeniden dağıtım ya da ticari kullanım için girdi kaynağının şartları geçerlidir.</li>
+        <li><strong>Yalnızca görüntüleme</strong> — lisanslı ya da kişisel kullanım şartlı girdilerden türetilen alanlar: K1 (ICE BofA HY OAS), K2 (Cboe VIX), K3 (Nasdaq), D1 ve N1 (ICE dolar endeksi, Yahoo altın vadelisi) ile <code>tl.json</code>, <code>konum.json</code>, <code>hafta.json</code>, kripto serileri, <code>dunya.json</code> ve <code>movers.json</code>. Atıfla gösterebilirsin; yeniden dağıtım ya da ticari kullanım için girdi kaynağının şartları geçerlidir.</li>
       </ul>
       <p><strong>Atıf biçimi:</strong> <code>Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0</code> — mümkünse sayfaya bağlantıyla.</p>
       <p><strong>Kararlılık:</strong> Bir şemaya alan eklemek sürümü değiştirmez. Alan kaldırmak ya da anlamını değiştirmek yeni şema sürümüdür (<code>…/2</code>); eski sürüm en az 90 gün yan yana yayımlanır.</p>

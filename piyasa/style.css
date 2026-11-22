@@ -278,3 +278,28 @@ button.band-t{appearance:none;background:none;border:0;padding:0;margin:0;font:i
 button.band-t .band-k{text-decoration:underline dotted;text-underline-offset:3px;text-decoration-color:var(--mute)}
 button.band-t:hover .band-k,button.band-t:focus-visible .band-k{color:var(--red);text-decoration-color:var(--red)}
 button.band-t:focus-visible{outline:1px solid var(--red);outline-offset:3px}
+/* ---- hareket (S10c) ---- */
+.mv-m{padding:26px 0 8px}
+.mv-m .meta{margin:-4px 0 14px}
+.mv-grid{display:grid;grid-template-columns:1fr;gap:18px}
+@media (min-width:700px){.mv-grid{grid-template-columns:1fr 1fr;gap:28px}}
+.mv-h{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:0 0 6px}
+table.mv{width:100%;border-collapse:collapse;font-size:14px}
+table.mv th,table.mv td{padding:7px 0;border-bottom:1px solid var(--rule);white-space:nowrap}
+table.mv thead th{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);border-bottom:1px solid var(--ink)}
+table.mv .l{text-align:left}
+table.mv .r{text-align:right}
+table.mv tbody th{font-weight:600}
+table.mv td.v{font-weight:600}
+table.mv td.v.neg,.mv-a .neg{color:var(--red)}
+table.mv tr.mv-nr td{white-space:normal;font-size:13px;padding-top:0}
+details.mv-an{margin:18px 0 10px}
+details.mv-an summary{cursor:pointer;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;list-style:none;display:inline-block;border-bottom:1px solid var(--ink);min-height:28px}
+details.mv-an summary::-webkit-details-marker{display:none}
+details.mv-an[open] summary{margin-bottom:10px}
+ul.plain.mv-list li{display:block}
+.mv-a{margin:0 0 2px;font-size:15px}
+.mv-a .v{font-weight:600}
+.mv-g{margin:0;font-size:14px;color:#333}
+.mv-news{font-size:13px;margin-top:4px}
+.mv-news p{margin:0 0 4px}
