@@ -359,3 +359,4 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
   data-feed `data/research/tarihte_extra.json` dosyasına ekler (PR gerekmez; `build_week.load_extra`:
   kaynaksız / https olmayan / tekrar eden girdi atlanır). Telegram kanalı ve X paylaşımı: site adı ve alan
   adı belli olunca (Boran kararı).
+- **2026-11-22 (zamanlanmış çalışma, kontrol)** — Bütün maddeler işaretli; çelişki taraması temiz (yasak kelime yok, `piyasa/`'da puanlama kodu yok, HY OAS yalnız yön kelimesi). Yapılacak iş kalmadı — zamanlanmış inşa görevi devre dışı bırakılabilir.
