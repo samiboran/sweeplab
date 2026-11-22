@@ -1,5 +1,5 @@
 {
- "built_utc": "2026-11-22T22:54:24+00:00",
+ "built_utc": "2026-11-22T23:46:24+00:00",
  "status": {
   "WALCL": "OK 20 (2026-07-08..2026-11-18)",
   "WTREGEN": "OK 20 (2026-07-08..2026-11-18)",
@@ -14,9 +14,9 @@
   "defillama_stables": "OK 141",
   "cot_btc": "OK 30 (2026-04-28..2026-11-17)",
   "cot_eth": "OK 30 (2026-04-28..2026-11-17)",
-  "yahoo:GC=F": "OK 250",
-  "yahoo:CL=F": "OK 250",
-  "yahoo:BZ=F": "OK 250",
+  "yahoo:GC=F": "OK 251",
+  "yahoo:CL=F": "OK 251",
+  "yahoo:BZ=F": "OK 251",
   "cot_gold": "OK 30 (2026-04-28..2026-11-17)",
   "gld_tonnes": "ERR RuntimeError: no 'Tonnes' column; file starts: %PDF-1.5\r | %\u00e2\u00e3\u00cf\u00d3\r | 2 0 obj\r | <<\r | /Type /XObject\r | /Subtype /Image\r | /Width 1489\r | /Height 680\r | /ColorSpace /DeviceGray\r | /BitsPerComponent 8\r | /Interpolate false\r | /Filt",
   "net_liquidity": "OK 20 weeks"
@@ -13233,12 +13233,12 @@
     "gld_tonnes": null,
     "gld_asof": null,
     "gld_7d_chg_t": null,
-    "wti": 83.410004,
+    "wti": 83.980003,
     "wti_asof": "2026-11-20",
-    "wti_1d_pct": 0.240361,
-    "brent": 89.949997,
+    "wti_1d_pct": 0.925375,
+    "brent": 92.57,
     "brent_asof": "2026-11-20",
-    "brent_1d_pct": -2.207008
+    "brent_1d_pct": 0.64144
    },
    "corr": {
     "btc_spx": 0.649254,
@@ -13449,12 +13449,12 @@
     "gld_tonnes": null,
     "gld_asof": null,
     "gld_7d_chg_t": null,
-    "wti": 83.410004,
+    "wti": 83.980003,
     "wti_asof": "2026-11-20",
-    "wti_1d_pct": 0.240361,
-    "brent": 89.949997,
+    "wti_1d_pct": 0.925375,
+    "brent": 92.57,
     "brent_asof": "2026-11-20",
-    "brent_1d_pct": -2.207008
+    "brent_1d_pct": 0.64144
    },
    "corr": {
     "btc_spx": 0.640518,
