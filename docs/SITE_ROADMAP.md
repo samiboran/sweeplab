@@ -30,7 +30,7 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
 - [x] B2 **Boran isteği (22 Kasım): Grafikte karşılaştır** — `piyasa/karsilastir.html`: 2–3 varlığı aynı grafikte (aralık başı = 100) ya da 1.÷2. oranı (ör. altın/gümüş oranı); aralık 1A/3A/6A/YB/1Y/2Y; hazır seçimler; paylaşılabilir bağlantı (`?a=&b=&c=&mod=&ara=`); sürükle/tekerlek/iki parmakla yakınlaştır. Veri `fetch_tl.py` → `data/site/compare.json` (~2 yıl günlük; BIST 100 ve fonlar yalnız 100'e endeksli). Ana sayfada "Grafik" bölümü ve banttan bağlantı. Türkçe/İngilizce.
 - [x] B3 **Boran isteği (22 Kasım): Günün özeti** — ayrı zamanlanmış Claude görevi her sabah (~09:45 İstanbul) izinli kaynaklardan en çok 8 haberi kendi cümleleriyle 2–3 cümlede özetler (TR + EN, kaynak bağlantısı, yorum/tavsiye yok) → data-feed `data/site/ozet.json` + `ozet/YYYY-MM-DD.json`; push öncesi `tools/check_ozet.py`. Ana sayfada "Günün özeti" bölümü (`piyasa/ozet.js`; 2 günden eskiyse gizli). Şema: `docs/OZET_SCHEMA.md`.
 - [x] S13b-1 İngilizce ikinci aşama (1. kısım): `hesapla.html` ve `arsiv.html` tam İngilizce — sayfa betikleri `?lang=en`de cümleleri doğrudan İngilizce üretir (sayılar `en-US`, girişte `1,234.56` da okunur), statik metinler yalnız bu sayfalarda yüklenen `piyasa/i18n-pages.js` sözlüğünden (`PHD_I18N.add`; ana sayfa hafif kalır). Arşivde tarih bağlantıları `lang=en`i korur.
-- [ ] S13b-2 İngilizce ikinci aşama (2. kısım): hafta.html, dunya.html ve yontem.html'in tam İngilizcesi (bugün bu sayfalarda "yalnız Türkçe" notu var; sayı/tarih biçimi İngilizce); hafta/dunya build'lerinin `_en` cümleleri; arşivdeki eski günler için İngilizce cümle yok (yeniden yazılmaz, yalnız yeni günler).
+- [x] S13b-2 İngilizce ikinci aşama (2. kısım): hafta.html, dunya.html ve yontem.html'in tam İngilizcesi (bugün bu sayfalarda "yalnız Türkçe" notu var; sayı/tarih biçimi İngilizce); hafta/dunya build'lerinin `_en` cümleleri; arşivdeki eski günler için İngilizce cümle yok (yeniden yazılmaz, yalnız yeni günler).
 - [x] S11 İzleyicisiz ölçüm: config.js'ten beslenen google-site-verification (ve Bing) meta yer tutucusu; DEPLOY_PLAN.md'de Search Console ve (A seçilirse) Cloudflare çerezsiz Web Analytics rehberi. Üçüncü taraf analitik yok.
 - [x] S12 PARK — gelir modeli (yalnız gerçek kitle olunca; kod/cüzdan/hesap yok): `docs/MONETIZATION_PLAN.md` — (1) Türkiye pazarı türetilmiş verinin ücretli API katmanı, (2) x402 / Cloudflare Monetization Gateway (insanlar ve arama motorları ücretsiz), (3) önkoşullar: özel motor, Yahoo/FRED-kısıtlı girdilerin lisanslı kaynaklarla değişimi, alan adı, Cloudflare, Türkiye'de hukuki/vergi kontrolü (SPK, MASAK, kripto varlık kanunu) — sermaye piyasası avukatıyla. Riskler ve yeniden bakma tetikleyicileri.
 
@@ -345,3 +345,11 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
   hesapla + i18n testleri geçti. Not: kök terminalin `terminal/`'e taşınması Boran'ın isteğiydi (bu
   PR'da); zamanlanmış görevdeki "kök index.html terminali" kuralı bu karar için güncellenmeli.
   Sıradaki: S13b-2.
+- **2026-11-22 (Boran ile canlı, 5.)** — S13b-2 tamam: site baştan sona Türkçe/İngilizce.
+  `build_week.py` İngilizce cümleler (`sentence_en`, `this_week_sentence_en`, `title_en`, `headline_en`,
+  `week_label_en`, `method_en`, takvim `name_en`), `tarihte.json` girdilerine `title_en/text_en/topic_en`
+  (14 girdi çevrildi; yeni girdilerde zorunlu, `_doc`'ta yazılı). `hafta.js` İngilizce alanları kullanır.
+  Dünya sayfası `i18n-pages.js` sözlüğü + kalıp/ifade kurallarıyla (`PHD_I18N.add(dict, patterns, phrases)`).
+  `yontem.html` iki dilli bloklar (`data-lang="tr|en"`; `#k1` → `#en-k1`). `veri.html` Türkçe + mevcut
+  İngilizce bölüm (notta belirtiliyor). Mobil arşivde 5 px yatay taşma düzeltildi (`.tablewrap{position:relative}`).
+  Haber başlıkları kaynağın kendi dilinde kalır. Bütün maddeler tamam → zamanlanmış inşa görevi kapatılabilir.

@@ -27,6 +27,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
 <script src="i18n.js"></script>
+<script src="i18n-pages.js"></script>
 <script src="config.js" defer></script>
 </head>
 <body>
@@ -40,6 +41,7 @@
     <h1>Makro hava nasıl ölçülüyor?</h1>
     <p class="mute">Kural sürümü v1 · dondurulma 21 Kasım 2026</p>
     <hr class="accent">
+    <div data-lang="tr">
 
     <section>
       <h2>Kısaca</h2>
@@ -136,6 +138,104 @@
       <h2>Kaynaklar</h2>
       <p>FRED (ABD Merkez Bankası St. Louis şubesi: Fed bilançosu, reel faiz, VIX, yüksek getirili tahvil risk primi, Nasdaq Bileşik), DefiLlama (stablecoin arzı), Yahoo Finance (altın ve petrol vadelileri, dolar endeksi), OKX (BTC ve ETH günlük kapanışları). Ham veriler yayımlanmaz; yalnız türetilmiş değerler, yüzde değişimler ve 0/1 işaretleri yayımlanır. Dosyaların listesi, alanları ve lisansı: <a href="veri.html">Veri uçları</a>.</p>
     </section>
+    </div>
+    <div data-lang="en" lang="en">
+    <section>
+      <h2>In short</h2>
+      <p>Every morning nine simple rules are checked. Each rule either signals (1 point) or not (0 points). Most rules compare today with the data 20 days earlier. A total of 0–2 is <strong>GREEN</strong>, 3–4 is <strong>YELLOW</strong>, 5 or more is <strong>RED</strong>.</p>
+      <p>One-day jumps do not change the level: it changes only when two days in a row point to the same new level. Otherwise the previous level is kept and the page says so.</p>
+      <p>This page describes the market; it gives no buy, sell or timing recommendation.</p>
+    </section>
+
+    <section>
+      <h2>The nine rules</h2>
+      <dl>
+        <dt id="en-l1">Liquidity — Stablecoin supply</dt>
+        <dd>Signals if the total supply of dollar stablecoins fell over the last 7 days.</dd>
+        <dt id="en-l2">Liquidity — Fed net liquidity</dt>
+        <dd>Signals if the Federal Reserve balance sheet minus the Treasury account and reverse repo fell over 20 days.</dd>
+        <dt id="en-l3">Liquidity — Real yield</dt>
+        <dd>Signals if the US 10-year inflation-indexed bond yield rose at least 15 basis points over 20 days.</dd>
+        <dt id="en-d1">Dollar — Dollar index</dt>
+        <dd>Signals if the dollar index rose at least 1% over 20 days. The index is licensed, so only its direction is published.</dd>
+        <dt id="en-k1">Credit / risk — Credit spread</dt>
+        <dd>Signals if the spread on US high-yield corporate bonds widened at least 25 basis points over 20 days. Licensed data: only the signal and direction are published.</dd>
+        <dt id="en-k2">Credit / risk — Volatility (VIX)</dt>
+        <dd>Signals if the VIX volatility index is 18 or above.</dd>
+        <dt id="en-k3">Credit / risk — Nasdaq Composite</dt>
+        <dd>Signals if the Nasdaq Composite fell at least 3% over 20 days. Licensed index: only the signal and direction are published.</dd>
+        <dt id="en-n1">Dash for cash — Gold and dollar</dt>
+        <dd>Signals if gold fell at least 3% over 20 days while the dollar index rose. When even gold, seen as a safe haven, falls, demand for cash may be rising.</dd>
+        <dt id="en-p1">Oil</dt>
+        <dd>Signals as "inflation impulse" if crude oil (WTI) rose at least 10% over 20 days, or as "demand weakness" if it fell at least 15% while the credit spread widened. These labels are possible readings, not certain causes: oil can also fall on more supply or a fading geopolitical premium. If the comparison day was near the 60-day high, the page adds that context.</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>Versions and record</h2>
+      <p>The rules are fixed. If a threshold changes, a new version (v1.1, v2 …) is published; scores already published are never rewritten. Days before 21 November 2026 were computed afterwards and are marked "retro"; days after that date are the "live" record.</p>
+      <p>If an input is older than 3 business days (10 days for the weekly Fed data) or the build fails, the page says "not updated" and shows the last good data.</p>
+    </section>
+
+    <section>
+      <h2 id="en-arsiv">Archive</h2>
+      <p>Every day's record (level, raw score, the nine rule flags, rules version, retro or live) is listed on the <a href="arsiv.html">Archive</a> page. "Pick a date" on the home page opens a past day's record in the same layout, exactly as published that day; it is never recomputed. Records are append-only. If a bug is found, the fix is documented and written inside the record together with the previous value (done once in November 2026, for scoring an incomplete data day).</p>
+      <p>The page shows days from October 2026; the retro rows of August–September 2026 remain in the file.</p>
+    </section>
+
+    <section>
+      <h2 id="en-sicil">Track record: how accurate are RED signals?</h2>
+      <p>A rule's value shows only together with the days it was wrong, so the track record lists false alarms too. The check is fixed and versioned like the rules:</p>
+      <ul>
+        <li><strong>Signal:</strong> the day the published level switched to RED.</li>
+        <li><strong>Confirmed:</strong> within the next 20 days the Nasdaq Composite closed at least 5% below its close on the signal day.</li>
+        <li><strong>False alarm:</strong> 20 days passed without that fall.</li>
+        <li><strong>Pending:</strong> 20 days have not passed yet.</li>
+        <li><strong>Missed fall:</strong> the Nasdaq Composite closed at least 10% below its highest close of the last 20 days and the level was not RED on any of those 20 days.</li>
+      </ul>
+      <p>The live record starts with records published after 21 November 2026. Earlier days were computed afterwards and are shown separately "for information". The Nasdaq Composite is a licensed index, so its values are not published; only the result word is. This check measures accuracy; it says nothing about the future and is not advice.</p>
+    </section>
+
+    <section>
+      <h2 id="en-tl">The lira side and the calculator</h2>
+      <p>Gold per gram in TRY = gold price per ounce (USD) × USD/TRY ÷ 31.1035. Silver per gram is calculated the same way. BIST 100 in dollars = BIST 100 ÷ USD/TRY; the chart starts at 100. Changes: versus the previous close, the last close 7 and 30 calendar days earlier, the previous year's last close (year to date) and the average of the last 200 trading days.</p>
+      <p>The calculator runs entirely in your browser. The cost and amount you enter are sent nowhere; they are stored in this device's browser only if "Remember on this device" is ticked. Results are plain arithmetic.</p>
+      <p>Inputs for this section come from Yahoo Finance (USD/TRY, gold and silver futures, BIST 100; BIST data may be delayed). Yahoo data is for personal use; it will be replaced by a licensed or public source before any commercial use.</p>
+    </section>
+
+    <section>
+      <h2 id="en-konum">Position versus moving averages</h2>
+      <p>This is a factual position table: for each asset it shows whether the last close is above or below the 20-, 50- and 200-day simple moving average (the arithmetic mean of the last N closes) and its % distance from the 200-day average. It is not a recommendation, ranking or signal.</p>
+      <p>The universe is fixed and dated (Türkiye: BIST 100, gold and silver per gram, USD/TRY; US index and commodity funds; Bitcoin, Ethereum; large US companies). No single BIST stocks. Rows are grouped by asset class and alphabetical within a group; nothing is ranked by "most below". The universe is reviewed quarterly.</p>
+      <p>Price levels are not published. A row whose last close is older than 7 calendar days is shown in grey as "stale" and left out of the group summary. Inputs: Yahoo Finance (funds, companies, BIST 100, USD/TRY, gold/silver futures) and OKX (crypto) — personal-use terms; to be replaced by a licensed source before any commercial use. Fund prices exclude dividends.</p>
+    </section>
+
+    <section>
+      <h2 id="en-dunya">World</h2>
+      <p>The "How is the world doing?" page is a factual market table: for Japan, South Korea, China, Hong Kong, Taiwan and Brazil, the main index and a dollar country fund (ETF), each market's 8–9 largest companies, commodities and the day's headlines. Each row shows the last close (not for companies), the last trading day, the 7-day, 30-day and year-to-date % change and the position versus the 20-, 50- and 200-day simple average. The order is fixed by region and asset class and lists are alphabetical; nothing is ranked as "top gainer" or "best".</p>
+      <p>Company lists were chosen once by approximate market value on the date they were set, are published with that date and reviewed quarterly. Exchanges close in different time zones and on different holidays; each row's date is its own closing day, and rows older than 7 calendar days are shown in grey as "stale". Commodities are front-month futures closes (gold, silver, platinum, palladium, copper, Brent and WTI oil, natural gas, wheat, soybeans, corn). Rhodium, iridium, ruthenium and osmium have no free daily data, so no price is shown; only a short description.</p>
+      <p><strong>Today's headlines</strong> consist only of the headline, source, time and link; no article text or images are copied. Sources are official feeds: Korea.net (Korean government news service: science/technology and business), gov.br (Brazilian government, economy), Agência Brasil (Brazilian public news agency, economy), the US Energy Information Administration (EIA, "Today in Energy") and Samsung Newsroom (company press room). At most 10 headlines, at most 3 per feed, last 4 days. China and Japan stay empty until an official feed with suitable terms is chosen. Headlines are in the source's own language and are not the site's opinion.</p>
+      <p>Price inputs come from Yahoo Finance (personal-use terms); index levels are subject to index providers' licences. That is why <code>dunya.json</code> is "display only" and will be replaced by a licensed source before any commercial use.</p>
+    </section>
+
+    <section>
+      <h2 id="en-karsilastir">Compare on a chart</h2>
+      <p>The compare page uses daily closes for roughly the last 2 years. In the "Together" view each selected asset is drawn with the first day of the chosen range set to 100, so a line's last value is its % change over the range. In the "Ratio" view asset 1 is divided by asset 2 (e.g. gold ounce ÷ silver ounce = how many ounces of silver one ounce of gold buys). If both assets are published as prices the real ratio is shown; if one is a rebased series (BIST 100, funds) the ratio also starts at 100. Days without a common close (e.g. crypto weekend closes versus exchanges) are skipped in the ratio. Gold/silver per gram in TRY = ounce price × USD/TRY ÷ 31.1035. Inputs: Yahoo Finance (personal-use terms).</p>
+    </section>
+
+    <section>
+      <h2 id="en-hareket">Today's movers and anomalies</h2>
+      <p>Every morning, a summary of the previous trading day for three markets: Borsa Istanbul (a fixed, dated list of large and liquid stocks; not the official BIST 100 composition), the United States (stocks on the research list, funds excluded) and crypto (the ~30 largest coins, OKX). For each market: the 5 biggest gainers and losers by 1-day % change, their relative volume (the day's volume ÷ the average of the previous 20 days) and the market's own index move. This is a news summary; not a recommendation or a ranked list.</p>
+      <p><strong>Liquidity floor:</strong> stocks whose average turnover (close × shares) over the last 20 days is below TRY 250 million on BIST or USD 200 million in the US, and US stocks priced under $5, never appear in any list. The crypto universe already consists of the largest coins. A name whose last close is older than the market's latest day is never shown as a "mover of the day".</p>
+      <p><strong>Unusual-move rules</strong> (each produces its own reason line): volume at least 3× its 20-day average; an opening gap (the open's distance from the previous close) of at least ±5% for stocks and ±8% for crypto; a daily close-to-close move of at least 3× the average true range (ATR) of the previous 14 days; a new 52-week (252 trading days) high or low; moving opposite to its own index by more than 3 points. The unusual list is alphabetical.</p>
+      <p><strong>The "Why?" column</strong> is filled only when a sourced headline matches (headline, source, time, link); otherwise it says "waiting for news matching". Causes are never guessed. Timing: after the BIST and US sessions close and the UTC crypto day ends, around 09:00 Istanbul time. BIST data may be delayed. Inputs: Yahoo Finance and OKX (personal-use terms).</p>
+    </section>
+
+    <section>
+      <h2>Sources</h2>
+      <p>FRED (Federal Reserve Bank of St. Louis: Fed balance sheet, real yield, VIX, high-yield credit spread, Nasdaq Composite), DefiLlama (stablecoin supply), Yahoo Finance (gold and oil futures, dollar index), OKX (BTC and ETH daily closes). Raw data is not published; only derived values, % changes and 0/1 flags. Files, fields and licences: <a href="veri.html">Data endpoints</a>.</p>
+    </section>
+    </div>
   </main>
   <footer>
     <p>Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.</p>
