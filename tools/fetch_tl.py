@@ -274,6 +274,49 @@ def derive(data, today, crypto=None):
     return {"assets": assets, "prices": prices, "band": band, "status": "ok" if core_ok else "güncellenmedi"}
 
 
+# ---------------------------------------------------------------- compare.json (Karşılaştır sayfası)
+COMPARE_DAYS = 740          # ~2 years of calendar days
+# id, label, unit, kind ("fiyat": real level published; "endeks": rebased to 100 at the first day)
+COMPARE = [("gram_altin", "Gram altın", "TL"), ("gram_gumus", "Gram gümüş", "TL"),
+           ("ons_altin", "Ons altın", "$"), ("ons_gumus", "Ons gümüş", "$"), ("dolar", "Dolar/TL", "TL"),
+           ("brent", "Brent petrol", "$"), ("wti", "WTI petrol", "$"), ("btc", "Bitcoin", "$"), ("eth", "Ether", "$"),
+           ("bist100_tl", "BIST 100 (TL)", None), ("bist100_usd", "BIST 100 (dolar bazında)", None),
+           ("spy", "S&P 500 fonu (SPY)", None), ("qqq", "Nasdaq 100 fonu (QQQ)", None)]
+
+
+def sig(v, n=5):
+    if v == 0:
+        return 0
+    from math import floor, log10
+    return round(v, max(0, n - 1 - int(floor(log10(abs(v))))))
+
+
+def compare_series(data, today):
+    """Union-of-dates table. Licensed index levels (BIST 100) and fund prices are rebased to 100."""
+    usd, gold, silver, xu = (data.get(k) or {} for k in ("USDTRY", "GOLD_USD", "SILVER_USD", "XU100"))
+    src = {"gram_altin": combine(gold, usd, lambda g, u: g * u / OZ_GRAM) if gold and usd else {},
+           "gram_gumus": combine(silver, usd, lambda s, u: s * u / OZ_GRAM) if silver and usd else {},
+           "ons_altin": gold, "ons_gumus": silver, "dolar": usd,
+           "brent": data.get("BRENT_USD") or {}, "wti": data.get("WTI_USD") or {},
+           "btc": data.get("BTC_USD") or {}, "eth": data.get("ETH_USD") or {},
+           "bist100_tl": xu, "bist100_usd": combine(xu, usd, lambda x, u: x / u) if xu and usd else {},
+           "spy": data.get("SPY") or {}, "qqq": data.get("QQQ") or {}}
+    cut = (dt.date.fromisoformat(today) - dt.timedelta(days=COMPARE_DAYS)).isoformat()
+    tdy = dt.date.fromisoformat(today).isoformat()
+    keep = {k: {d: v for d, v in s.items() if cut <= d < tdy} for k, s in src.items()}
+    dates = sorted(set(d for s in keep.values() for d in s))
+    assets = []
+    for aid, label, unit in COMPARE:
+        s = keep.get(aid) or {}
+        if len(s) < 20:
+            continue
+        first = s[min(s)]
+        vals = [None if d not in s else sig(s[d] if unit else s[d] / first * 100) for d in dates]
+        assets.append({"id": aid, "label": label, "unit": unit or "endeks, ilk gün = 100",
+                       "kind": "fiyat" if unit else "endeks", "asof": max(s), "v": vals})
+    return {"dates": dates, "assets": assets}
+
+
 def main():
     now = dt.datetime.now(dt.timezone.utc).replace(microsecond=0)
     data = update_raw()
@@ -291,6 +334,20 @@ def main():
         json.dump(rec, fh, ensure_ascii=False, separators=(",", ":"))
     os.replace(tmp, path)
     print(f"tl.json: {d['status']}, {len(d['assets'])} varlık")
+    try:
+        c = compare_series(data, now.date().isoformat())
+        crec = {"schema": "phd.compare/1", "schema_version": 1, "source": SOURCE, "site_url": SITE_URL,
+                "generated_at": rec["generated_at"], "attribution": ATTRIBUTION, "license": rec["license"],
+                "note": "Günlük kapanışlar, son ~2 yıl. BIST 100 ve fonlar yalnız 100'e endeksli seri olarak "
+                        "yayımlanır (seviye değil). Girdi kaynağı Yahoo Finance (kişisel kullanım şartlı).",
+                "disclaimer": "Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.", **c}
+        cp = os.path.join(SITE_OUT, "compare.json")
+        with open(cp + ".tmp", "w", encoding="utf-8") as fh:
+            json.dump(crec, fh, ensure_ascii=False, separators=(",", ":"))
+        os.replace(cp + ".tmp", cp)
+        print(f"compare.json: {len(c['assets'])} varlık, {len(c['dates'])} gün")
+    except Exception as e:      # never break tl.json
+        print(f"compare.json failed: {type(e).__name__}: {e}")
     if not any(v.startswith("OK") for v in status.values()):
         sys.exit(1)
 

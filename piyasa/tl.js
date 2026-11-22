@@ -197,8 +197,13 @@
     if (!ul.firstChild) return;
     host.textContent = "";
     host.appendChild(ul);
-    host.appendChild(el("p", "band-n", "1 günlük değişim" + (last ? " · " + shortDate(last) + " kapanışı" : "") +
-      (toggles ? " · Altın, gümüş ve petrole dokununca görünüm değişir" : "")));
+    var note = el("p", "band-n", "1 günlük değişim" + (last ? " · " + shortDate(last) + " kapanışı" : "") +
+      (toggles ? " · Altın, gümüş ve petrole dokununca görünüm değişir" : ""));
+    var cmp = el("a", "band-cmp", "Grafikte karşılaştır");
+    cmp.href = "karsilastir.html" + (/[?&]lang=en\b/.test(location.search) ? "?lang=en" : "");
+    host.appendChild(note);
+    note.appendChild(document.createTextNode(" · "));
+    note.appendChild(cmp);
     host.hidden = false;
   }
 

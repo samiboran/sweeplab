@@ -181,6 +181,25 @@
     "Grafik kütüphanesi:": "Chart library:", "Grafik şu an yüklenemedi.": "The chart could not be loaded right now.",
     "OKX USDT vadeli günlük mumları (UTC günü). Kripto 7/24 işlem gördüğü için açılış boşluğu nadirdir. Mum hacmi kontrat cinsinden olduğundan işlem hacmi tabanı uygulanmaz; evren zaten en büyük ~30 coinden oluşur.":
       "OKX USDT perpetual daily candles (UTC day). Crypto trades 24/7, so opening gaps are rare. Candle volume is in contracts, so no turnover floor is applied; the universe is already the ~30 largest coins.",
+    // karşılaştır
+    "Grafik": "Chart", "Grafikte karşılaştır": "Compare on a chart",
+    "Altın, gümüş, dolar/TL, petrol, BIST 100, Bitcoin ve ABD fonlarından 2–3 tanesini aynı grafikte gör ya da birbirine oranla (ör. altın/gümüş oranı).":
+      "See 2–3 of gold, silver, USD/TRY, oil, BIST 100, Bitcoin and US funds on one chart, or as a ratio (e.g. the gold/silver ratio).",
+    "Bu sayfa grafik için JavaScript kullanır.": "This page uses JavaScript for the chart.",
+    "1. varlık": "Asset 1", "2. varlık": "Asset 2", "3. varlık (isteğe bağlı)": "Asset 3 (optional)",
+    "Görünüm": "View", "Birlikte (başlangıç = 100)": "Together (start = 100)", "Oran (1. ÷ 2.)": "Ratio (1 ÷ 2)",
+    "Aralık": "Range", "1 ay": "1M", "3 ay": "3M", "6 ay": "6M", "2 yıl": "2Y", "Hazır:": "Presets:",
+    "Altın / gümüş oranı": "Gold / silver ratio", "Gram altın ve dolar/TL": "Gold per gram and USD/TRY",
+    "BIST 100: TL ve dolar": "BIST 100: lira and dollar", "Altın, Bitcoin, S&P 500": "Gold, Bitcoin, S&P 500",
+    "Brent / altın oranı": "Brent / gold ratio", "Karşılaştırma grafiği": "Comparison chart",
+    "Sürükle: kaydır · tekerlek ya da iki parmak: yakınlaştır · çift tıkla: sığdır. \"Birlikte\" görünümünde her seri aralığın ilk günü 100 kabul edilerek çizilir; böylece farklı birimlerdeki varlıkların yüzde hareketi yan yana görülür. BIST 100 ve fonlar yalnız endekslenmiş seri olarak yayımlanır.":
+      "Drag: pan · wheel or two fingers: zoom · double-click: fit. In the \"Together\" view each series starts at 100 on the first day of the range, so % moves of assets in different units sit side by side. BIST 100 and funds are published as rebased series only.",
+    "Oran için iki farklı varlık seç.": "Pick two different assets for a ratio.", "En az bir varlık seç.": "Pick at least one asset.",
+    "Bu iki varlığın ortak günü yok.": "These two assets have no common days.",
+    "Karşılaştırma verisi henüz yayımlanmadı ya da yüklenemedi.": "Comparison data is not published yet or could not be loaded.",
+    "Günlük kapanışlar, son ~2 yıl. BIST 100 ve fonlar yalnız 100'e endeksli seri olarak yayımlanır (seviye değil). Girdi kaynağı Yahoo Finance (kişisel kullanım şartlı).":
+      "Daily closes, last ~2 years. BIST 100 and funds are published only as series rebased to 100 (not levels). Input source: Yahoo Finance (personal-use terms).",
+    "Grafik kütüphanesi: ": "Chart library: ",
     // other pages: a notice is shown instead of a full translation
     "Hesaplayıcı": "Calculator"
   };
@@ -236,7 +255,19 @@
   ];
   var LVL = { "YEŞİL": "GREEN", "SARI": "YELLOW", "KIRMIZI": "RED" };
 
+  var PHRASES = [["BIST 100 (dolar bazında)", "BIST 100 (in dollars)"], ["S&P 500 fonu (SPY)", "S&P 500 fund (SPY)"],
+                 ["Nasdaq 100 fonu (QQQ)", "Nasdaq 100 fund (QQQ)"], ["BIST 100 (TL)", "BIST 100 (TRY)"],
+                 ["Gram altın", "Gold (gram)"], ["Gram gümüş", "Silver (gram)"], ["Ons altın", "Gold (ounce)"], ["Ons gümüş", "Silver (ounce)"],
+                 ["Dolar/TL", "USD/TRY"], ["Brent petrol", "Brent oil"], ["WTI petrol", "WTI oil"],
+                 [" oranı:", " ratio:"], [" (başlangıç = 100):", " (start = 100):"], [" (endeks)", " (index)"],
+                 ["Endekslenmiş seri olduğu için oranın seviyesi değil, yönü anlamlıdır.", "Rebased series: the ratio's direction matters, not its level."],
+                 ["Günlük kapanışlar · son veri ", "Daily closes · latest data "]];
+  function phrases(s) {
+    for (var i = 0; i < PHRASES.length; i++) if (s.indexOf(PHRASES[i][0]) >= 0) s = s.split(PHRASES[i][0]).join(PHRASES[i][1]);
+    return s;
+  }
   function fmt(s) {
+    s = phrases(s);
     // Turkish percent "−%4,4" / "+%7,9" / "%0,0" -> "−4.4%"; numbers "5.715" / "4,2" -> "5,715" / "4.2"; months
     s = s.replace(/([+−-]?)⁠?%(\d[\d.,]*\d|\d)/g, function (_, sg, n) { return sg + enNum(n) + "%"; });
     s = s.replace(/(^|[^\d.,%])(\d{1,3}(?:\.\d{3})+(?:,\d+)?|\d+,\d+)(?![\d%])/g, function (_, pre, n) { return pre + enNum(n); });
@@ -311,7 +342,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   "use strict";
   var I = window.PHD_I18N;
-  var full = /(^|\/)(index|konum|hareket)\.html$|\/$/.test(location.pathname) || !/\.html$/.test(location.pathname);
+  var full = /(^|\/)(index|konum|hareket|karsilastir)\.html$|\/$/.test(location.pathname) || !/\.html$/.test(location.pathname);
   var nav = document.querySelector("header.masthead nav");
   if (nav) {
     var a = document.createElement("a");

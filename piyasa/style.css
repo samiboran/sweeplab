@@ -304,3 +304,27 @@ ul.plain.mv-list li{display:block}
 .mv-news{font-size:13px;margin-top:4px}
 .mv-news p{margin:0 0 4px}
 header.masthead nav a.lang{font-weight:600;letter-spacing:.08em}
+/* ---- karşılaştır ---- */
+.cmp-sel{display:grid;grid-template-columns:1fr;gap:4px 16px}
+.cmp-sel label{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-top:10px}
+.cmp-sel select{width:100%;font:inherit;font-size:16px;padding:8px 0;border:0;border-bottom:1px solid var(--ink);border-radius:0;background:var(--bg);color:var(--ink);min-height:40px}
+.cmp-sel select:focus{outline:none;border-bottom-color:var(--red)}
+.cmp-sel select:disabled{color:var(--mute);border-bottom-color:var(--rule)}
+@media (min-width:700px){.cmp-sel{grid-template-columns:repeat(3,1fr);grid-auto-flow:column;grid-template-rows:auto auto}}
+.cmp-mode{border:0;padding:0;margin:18px 0 0;display:flex;flex-wrap:wrap;gap:6px 22px}
+.cmp-mode legend{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);padding:0;margin-bottom:6px;width:100%}
+.cmp-mode label{display:inline-flex;align-items:center;gap:6px;font-size:16px;min-height:32px}
+.cmp-mode input{accent-color:var(--red)}
+.cmp-range{display:flex;flex-wrap:wrap;gap:0;margin:18px 0 0;border-bottom:1px solid var(--rule)}
+.cmp-range .rbtn{font:inherit;font-size:13px;font-weight:600;letter-spacing:.04em;background:none;border:0;border-bottom:2px solid transparent;padding:8px 12px 6px;margin-bottom:-1px;color:var(--mute);cursor:pointer;min-height:40px}
+.cmp-range .rbtn:first-child{padding-left:0}
+.cmp-range .rbtn[aria-pressed=true]{color:var(--ink);border-bottom-color:var(--red)}
+.cmp-range .rbtn:hover,.cmp-range .rbtn:focus-visible{color:var(--red);outline:none}
+.cmp-presets{margin:14px 0 0;line-height:2}
+.cmp-presets .label{display:inline;margin:0 6px 0 0}
+button.preset{font:inherit;font-size:13px;background:none;border:0;padding:0;color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:var(--rule);cursor:pointer}
+button.preset:hover,button.preset:focus-visible{color:var(--red);text-decoration-color:var(--red);outline:none}
+.cmp-chart{margin:18px 0 8px}
+.cmp-chart .chart-host{touch-action:pan-y}
+.key.k-dash{background:transparent;border-top:2px dashed #8a8a8a;height:0}
+.cmp-sum{font-size:17px;line-height:1.5;margin:8px 0 12px}

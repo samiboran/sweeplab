@@ -31,6 +31,8 @@ ENDPOINTS = [
      "Gram altın, gram gümüş, dolar/TL, BIST 100 (dolar bazında): değişimler ve küçük grafik serisi."),
     ("konum.json", "phd.konum/1", 1, "her gün ~06:00", VIEW,
      "Sabit evrende 20/50/200 günlük ortalamaya göre konum (0/1) ve 200 güne yüzde uzaklık."),
+    ("compare.json", "phd.compare/1", 1, "her gün ~06:00", VIEW,
+     "Karşılaştır sayfası: ~2 yıl günlük kapanış (altın/gümüş gram ve ons, dolar/TL, Brent, WTI, BTC, ETH); BIST 100 ve fonlar yalnız 100'e endeksli."),
     ("charts.json", "phd.charts/1", 1, "her gün ~06:00", MIXED,
      "BTC/ETH günlük kapanış + 50/200 gün ortalaması (görüntüleme) ve makro skor geçmişi (CC BY 4.0)."),
     ("hafta.json", "phd.hafta/1", 1, "pazartesi ve cuma ~06:00", VIEW,
