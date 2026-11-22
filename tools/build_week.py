@@ -27,6 +27,8 @@ RAW_DIR = os.environ.get("TL_RAW_DIR", "data/research/tl_1d")
 SITE_OUT = os.environ.get("SITE_OUT", "data/site")
 NOTEBOOK = os.environ.get("NOTEBOOK", "data/derivs/notebook_daily.json")
 TARIHTE = os.environ.get("TARIHTE", os.path.join(os.path.dirname(os.path.abspath(__file__)), "tarihte.json"))
+# Extra entries added by the daily-digest scheduled task on data-feed (no PR needed); same schema.
+TARIHTE_EXTRA = os.environ.get("TARIHTE_EXTRA", "")
 YEARS = 10
 OZ_GRAM = 31.1035
 SOURCE = "Piyasa Hava Durumu"
@@ -294,6 +296,26 @@ def calendar_items(notebook, week_start, week_end):
     return sorted(out, key=lambda x: x["date"])
 
 
+def load_extra(path, base):
+    """Entries from the data-feed file; skipped if unsourced, malformed or a duplicate (same date + title)."""
+    if not path or not os.path.exists(path):
+        return []
+    try:
+        extra = json.load(open(path, encoding="utf-8")).get("entries", [])
+    except Exception:
+        return []
+    seen = {(e.get("date"), e.get("title")) for e in base}
+    out = []
+    for e in extra:
+        if not isinstance(e, dict) or not all(e.get(k) for k in ("date", "precision", "title", "text", "source", "url")):
+            continue
+        if not str(e["url"]).startswith("https://") or (e["date"], e["title"]) in seen:
+            continue
+        seen.add((e["date"], e["title"]))
+        out.append(e)
+    return out
+
+
 def build(edition, today, raw_dir, notebook, tarihte, now_utc):
     ws, we = week_bounds(today)
     rng = range_label(ws, we)
@@ -317,6 +339,7 @@ def build(edition, today, raw_dir, notebook, tarihte, now_utc):
         entries = json.load(open(tarihte, encoding="utf-8")).get("entries", [])
     except Exception:
         entries = []
+    entries = entries + load_extra(TARIHTE_EXTRA, entries)
     week_no = today.isocalendar()[1]
     history, first = pick_entries(entries, ws, we, week_no)
     title = "Dünyada bu Pazartesi" if edition == "pazartesi" else "Dünyada bu Cuma"

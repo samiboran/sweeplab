@@ -92,3 +92,17 @@ def test_curated_entries_all_sourced():
     d = json.load(open(os.path.join(os.path.dirname(__file__), "..", "tools", "tarihte.json"), encoding="utf-8"))
     for e in d["entries"]:
         assert e["url"].startswith("https://") and e["source"] and e["precision"] in ("day", "year")
+
+
+def test_extra_entries_from_feed(tmp_path):
+    import json as _json
+    base = [{"date": "2008-11-23", "title": "A"}]
+    p = tmp_path / "extra.json"
+    p.write_text(_json.dumps({"entries": [
+        {"date": "1999-11-24", "precision": "day", "title": "B", "text": "t", "source": "s", "url": "https://x.org/"},
+        {"date": "2008-11-23", "precision": "day", "title": "A", "text": "t", "source": "s", "url": "https://x.org/"},
+        {"date": "2000-11-24", "precision": "day", "title": "C", "text": "t", "source": "s", "url": "http://x.org/"},
+        {"date": "2001-11-24", "precision": "day", "title": "D", "text": "t", "source": "s"}]}))
+    out = bw.load_extra(str(p), base)
+    assert [e["title"] for e in out] == ["B"]          # duplicate, http and unsourced entries dropped
+    assert bw.load_extra(str(tmp_path / "missing.json"), base) == []

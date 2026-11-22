@@ -353,3 +353,10 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
   `yontem.html` iki dilli bloklar (`data-lang="tr|en"`; `#k1` → `#en-k1`). `veri.html` Türkçe + mevcut
   İngilizce bölüm (notta belirtiliyor). Mobil arşivde 5 px yatay taşma düzeltildi (`.tablewrap{position:relative}`).
   Haber başlıkları kaynağın kendi dilinde kalır. Bütün maddeler tamam → zamanlanmış inşa görevi kapatılabilir.
+- **2026-11-22 (Boran ile canlı, 6.)** — İnşa bitti; zamanlanmış inşa görevi kapatılıyor. Süren işler:
+  günlük veri + Pazartesi/Cuma baskıları GitHub Actions'ta (daily-brief) değişmeden çalışır; "Günün özeti"
+  ayrı görevle her sabah. "Tarihte bu hafta" kaynaklı girdileri artık özet görevi her perşembe
+  data-feed `data/research/tarihte_extra.json` dosyasına ekler (PR gerekmez; `build_week.load_extra`:
+  kaynaksız / https olmayan / tekrar eden girdi atlanır). Telegram kanalı ve X paylaşımı: site adı ve alan
+  adı belli olunca (Boran kararı).
+- **2026-11-22 (zamanlanmış çalışma, kontrol)** — Bütün maddeler işaretli; çelişki taraması temiz (yasak kelime yok, `piyasa/`'da puanlama kodu yok, HY OAS yalnız yön kelimesi). Yapılacak iş kalmadı — zamanlanmış inşa görevi devre dışı bırakılabilir.
