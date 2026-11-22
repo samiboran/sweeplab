@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Veri uçları — Piyasa Hava Durumu</title>
+<meta name="description" content="Piyasa Hava Durumu verisini uygulamanıza ya da botunuza çekin: sabit yollar, sürümlü JSON şemaları, alanlar, güncelleme saati, lisans ve atıf biçimi. Türkçe + English.">
+<link rel="canonical" href="https://samiboran.github.io/sweeplab/piyasa/veri.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Piyasa Hava Durumu">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:title" content="Veri uçları — Piyasa Hava Durumu">
+<meta property="og:description" content="Piyasa Hava Durumu verisini uygulamanıza ya da botunuza çekin: sabit yollar, sürümlü JSON şemaları, alanlar, güncelleme saati, lisans ve atıf biçimi. Türkçe + English.">
+<meta property="og:url" content="https://samiboran.github.io/sweeplab/piyasa/veri.html">
+<meta property="og:image" content="https://samiboran.github.io/sweeplab/piyasa/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Piyasa Hava Durumu marka kartı">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://samiboran.github.io/sweeplab/piyasa/og.png">
+<meta name="twitter:title" content="Veri uçları — Piyasa Hava Durumu">
+<meta name="twitter:description" content="Piyasa Hava Durumu verisini uygulamanıza ya da botunuza çekin: sabit yollar, sürümlü JSON şemaları, alanlar, güncelleme saati, lisans ve atıf biçimi. Türkçe + English.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<script src="config.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div class="brandbox"><a class="brand" href="./">Piyasa Hava Durumu</a><span class="tagline" data-cfg="tagline">İstatistik yalan söylemez</span></div>
+    <nav aria-label="Site"><a href="./">Bugün</a><a href="arsiv.html">Arşiv</a><a href="yontem.html">Yöntem</a></nav>
+  </header>
+  <main class="prose">
+    <p class="label kick">Veri</p>
+    <h1>Veri uçları</h1>
+    <p class="mute">Şema sürümü 1 · Türkçe, ardından kısa English bölümü</p>
+    <hr class="accent">
+
+    <section>
+      <h2 id="kisaca">Kısaca</h2>
+      <p>Sitede gördüğün her şey aynı zamanda makinece okunur dosya olarak yayımlanır. Bot, uygulama ya da tablo yazılımın bu dosyaları doğrudan çekebilir. Ücretsizdir, kayıt ya da anahtar gerekmez.</p>
+      <p>Şu anki adres: <code>https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/</code> + yol (ör. <code>https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/today.json</code>). Site son barındırıcısına taşındığında aynı yollar <code>&lt;site&gt;/data/site/</code> altında kalır; yol adları değişmez.</p>
+      <p>Önce <code>index.json</code> dosyasını oku: hangi ucun bugün var olduğunu, şema sürümünü ve lisans sınıfını listeler.</p>
+    </section>
+
+    <section>
+      <h2 id="uclar">Uçlar</h2>
+      <div class="tablewrap">
+      <table class="days veri">
+        <thead><tr><th>Yol</th><th>Şema</th><th>Güncelleme (UTC)</th><th>Lisans</th><th>İçerik</th></tr></thead>
+        <tbody>
+        <tr><td><code>index.json</code></td><td>phd.index/1</td><td>her gün ~06:00</td><td>—</td><td>Bu katalog: tüm uçlar, şema sürümleri, var/yok.</td></tr>
+        <tr><td><code>today.json</code></td><td>phd.today/1</td><td>her gün ~06:00</td><td>karışık</td><td>Bugünün makro havası.</td></tr>
+        <tr><td><code>history.csv</code></td><td>phd.history/1</td><td>her gün ~06:00</td><td>CC BY 4.0</td><td>Her günün seviyesi ve 9 kural işareti (yalnız ekleme).</td></tr>
+        <tr><td><code>archive/{YYYY-MM-DD}.json</code></td><td>phd.today/1</td><td>her gün ~06:00</td><td>karışık</td><td>Bir günün yayımlandığı haliyle kaydı.</td></tr>
+        <tr><td><code>sicil.json</code></td><td>phd.sicil/1</td><td>her gün ~06:00</td><td>CC BY 4.0</td><td>KIRMIZI geçişlerinin sonucu (kelime).</td></tr>
+        <tr><td><code>tl.json</code></td><td>phd.tl/1</td><td>her gün ~06:00</td><td>yalnızca görüntüleme</td><td>Gram altın, gram gümüş, dolar/TL, BIST 100 (dolar bazında).</td></tr>
+        <tr><td><code>konum.json</code></td><td>phd.konum/1</td><td>her gün ~06:00</td><td>yalnızca görüntüleme</td><td>20/50/200 günlük ortalamaya göre konum.</td></tr>
+        <tr><td><code>charts.json</code></td><td>phd.charts/1</td><td>her gün ~06:00</td><td>karışık</td><td>BTC/ETH serisi (görüntüleme) + makro skor geçmişi (CC BY 4.0).</td></tr>
+        <tr><td><code>hafta.json</code></td><td>phd.hafta/1</td><td>pzt ve cuma ~06:00</td><td>yalnızca görüntüleme</td><td>Dünyada bu Pazartesi / Cuma.</td></tr>
+        <tr><td><code>hafta/{YYYY-MM-DD}.json</code></td><td>phd.hafta/1</td><td>pzt ve cuma ~06:00</td><td>yalnızca görüntüleme</td><td>Geçmiş haftalık baskılar.</td></tr>
+        <tr><td><code>og.png</code></td><td>—</td><td>her gün ~06:00</td><td>CC BY 4.0</td><td>Günün başlık kartı.</td></tr>
+        <tr><td><code>dunya.json</code></td><td>phd.dunya/1</td><td>planlı</td><td>yalnızca görüntüleme</td><td>Bölge endeksleri, emtialar, başlıklar (yakında).</td></tr>
+        <tr><td><code>movers.json</code></td><td>phd.movers/1</td><td>planlı</td><td>yalnızca görüntüleme</td><td>Günün hareketlileri ve anomaliler (yakında).</td></tr>
+        <tr><td><code>movers_news.json</code></td><td>phd.movers_news/1</td><td>planlı</td><td>yalnızca görüntüleme</td><td>Hareketlilere eşleşen başlıklar (yakında).</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="small mute">Saatler GitHub'ın zamanlanmış çalışma kuyruğuna bağlıdır; çoğu gün 06:00–07:00 UTC (İstanbul 09:00–10:00). Ham veri (mumlar, endeks seviyeleri) yayımlanmaz.</p>
+    </section>
+
+    <section>
+      <h2 id="ortak">Her dosyada ortak alanlar</h2>
+      <dl>
+        <dt><code>source</code>, <code>site_url</code></dt><dd>"Piyasa Hava Durumu" ve sitenin adresi.</dd>
+        <dt><code>schema</code>, <code>schema_version</code></dt><dd>Şema kimliği (ör. <code>phd.today/1</code>) ve sürümü.</dd>
+        <dt><code>generated_at</code></dt><dd>Dosyanın üretildiği an, UTC, ISO 8601.</dd>
+        <dt><code>rules_version</code></dt><dd>Makro hava kural sürümü (ör. <code>v1</code>); yayımlanmış skorlar yeni sürümle yeniden yazılmaz.</dd>
+        <dt><code>license</code>, <code>attribution</code></dt><dd>Lisans sınıfı ve kullanılması gereken atıf metni.</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2 id="today">today.json ve archive/</h2>
+      <dl>
+        <dt><code>status</code></dt><dd><code>"güncel"</code> ya da <code>"güncellenmedi"</code>. İkincisinde <code>last_good_date</code> son iyi veri günüdür; seviye değişmez.</dd>
+        <dt><code>mode</code></dt><dd><code>"retro"</code> (kural dondurulmadan önceki günler, geriye dönük hesaplandı) ya da <code>"live"</code> (o sabah yayımlandı).</dd>
+        <dt><code>data_date</code>, <code>publish_date</code>, <code>compare_date</code></dt><dd>Verinin ait olduğu kapanış günü, yayım günü ve 20 gün önceki karşılaştırma günü.</dd>
+        <dt><code>level</code>, <code>raw_level</code>, <code>raw_score</code>, <code>max_score</code>, <code>level_held</code></dt><dd>Yayımlanan seviye (<code>YESIL</code>/<code>SARI</code>/<code>KIRMIZI</code>), filtresiz seviye, ham skor (0–9) ve iki gün kuralı yüzünden seviyenin korunup korunmadığı.</dd>
+        <dt><code>rules[]</code></dt><dd>Her kural için <code>code</code> (L1…P1), <code>group</code>, <code>title</code>, <code>flag</code> (0/1, veri yoksa null) ve tek cümlelik <code>sentence</code>.</dd>
+        <dt><code>values</code></dt><dd>Yuvarlanmış değerler. Lisanslı girdilerde yalnız yön kelimesi: <code>dxy_20g_yon</code>, <code>hy_oas_20g_yon</code>, <code>ndx_20g_yon</code>.</dd>
+        <dt><code>inputs_asof</code></dt><dd>Her girdinin tarihi.</dd>
+        <dt><code>answers[]</code></dt><dd>Sitedeki hazır soruların cevap satırları; tüm sayılar koddan gelir.</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2 id="history">history.csv</h2>
+      <p>Sütunlar: <code>date, rules_version, mode, raw_score, raw_level, level, level_held, L1, L2, L3, D1, K1, K2, K3, N1, P1, p1_label, generated_at</code>. İlk satır başlıktır; kaynak, lisans ve atıf bilgisi <code>index.json</code> içindedir. Dosya yalnız ekleme yapılır; belgelenmiş bir hata düzeltmesi dışında satır değişmez.</p>
+    </section>
+
+    <section>
+      <h2 id="tl">tl.json ve konum.json</h2>
+      <p><code>tl.json → assets[]</code>: <code>id, label, unit, asof, last, chg_1g, chg_7g, chg_30g, chg_ytd, chg_1y, date_1y, val_1y, vs_ma200, stale, series</code> (yüzdeler 2 ondalık). <code>prices</code>: hesaplayıcı için güncel yuvarlanmış fiyatlar.</p>
+      <p><code>konum.json → groups[].satirlar[]</code>: <code>id, ad, asof, ust20, ust50, ust200</code> (1 = üstünde, 0 = altında, null = yeterli geçmiş yok), <code>fark200</code> (200 günlük ortalamaya % uzaklık, 1 ondalık), <code>eski</code>. Grup içinde alfabetik; bir sıralama değildir.</p>
+    </section>
+
+    <section>
+      <h2 id="lisans">Lisans</h2>
+      <ul>
+        <li><strong>CC BY 4.0</strong> — yalnız kamu kaynaklı girdilerden türetilen alanlar ve bizim ölçümümüz: makro hava seviyesi, ham skor, L1–L3 ve P1 işaretleri, <code>history.csv</code>, <code>sicil.json</code>, makro skor geçmişi.</li>
+        <li><strong>Yalnızca görüntüleme</strong> — lisanslı ya da kişisel kullanım şartlı girdilerden türetilen alanlar: K1 (ICE BofA HY OAS), K2 (Cboe VIX), K3 (Nasdaq), D1 ve N1 (ICE dolar endeksi, Yahoo altın vadelisi) ile <code>tl.json</code>, <code>konum.json</code>, <code>hafta.json</code>, kripto serileri ve planlı <code>dunya.json</code>/<code>movers.json</code>. Atıfla gösterebilirsin; yeniden dağıtım ya da ticari kullanım için girdi kaynağının şartları geçerlidir.</li>
+      </ul>
+      <p><strong>Atıf biçimi:</strong> <code>Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0</code> — mümkünse sayfaya bağlantıyla.</p>
+      <p><strong>Kararlılık:</strong> Bir şemaya alan eklemek sürümü değiştirmez. Alan kaldırmak ya da anlamını değiştirmek yeni şema sürümüdür (<code>…/2</code>); eski sürüm en az 90 gün yan yana yayımlanır.</p>
+      <p>Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.</p>
+    </section>
+
+    <section lang="en">
+      <h2 id="english">In English</h2>
+      <p>Piyasa Hava Durumu publishes a daily Turkish-market data set: a macro "weather" level (GREEN/YELLOW/RED from nine 0/1 rules), the TL side (gram gold and silver in TRY, USD/TRY, BIST 100 in USD) and moving-average positions. All files live under <code>https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/</code> (later <code>&lt;site&gt;/data/site/</code>; paths never change). Start with <code>index.json</code>. Updated daily around 06:00 UTC. Fields derived from public sources are CC BY 4.0; fields derived from licensed or personal-use inputs (ICE, Cboe, Nasdaq, Yahoo Finance, OKX) are display-only. Attribution: "Source: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa)". Not investment advice.</p>
+    </section>
+  </main>
+  <footer>
+    <p>Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.</p>
+    <p>Şema sürümü 1</p>
+    <p>© Piyasa Hava Durumu — türetilmiş veriler kaynak gösterilerek kullanılabilir (CC BY 4.0)</p>
+  </footer>
+</div>
+</body>
+</html>

@@ -29,6 +29,10 @@ SCHEMA_VERSION = 1
 SOURCE = "Piyasa Hava Durumu"
 SITE_URL = "https://samiboran.github.io/sweeplab/piyasa/"
 LICENSE = "CC BY 4.0 (yalnızca kamu kaynaklı türetilmiş alanlar)"
+# S10: fields from licensed inputs (ICE BofA HY OAS, Nasdaq, ICE DXY, Cboe VIX) are view-only.
+LICENSE_NOTE = ("Yalnızca görüntüleme: K1, K2, K3, D1 ve N1 kurallarının işaret/yön/değer alanları "
+                "(lisanslı girdiler: ICE BofA, Nasdaq, ICE, Cboe) ve Yahoo kaynaklı altın/petrol yüzdeleri. Ayrıntı: veri.html")
+SCHEMA = "phd.today/1"
 ATTRIBUTION = "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0"
 DISCLAIMER = "Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır."
 LOOKBACK = 20
@@ -330,7 +334,7 @@ def answers(rec, prev):
 def provenance(generated_at):
     return {"source": SOURCE, "site_url": SITE_URL, "rules_version": RULES_VERSION,
             "generated_at": generated_at, "license": LICENSE, "attribution": ATTRIBUTION,
-            "schema_version": SCHEMA_VERSION}
+            "schema_version": SCHEMA_VERSION, "schema": SCHEMA, "license_note": LICENSE_NOTE}
 
 
 def build_record(s, level, held, mode, generated_at, publish_date, inputs_asof):

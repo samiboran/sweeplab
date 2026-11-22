@@ -86,7 +86,7 @@ def build(raw_path, history_path, now=None):
             crypto[coin] = {"asof": s[-1][0], "unit": "USDT", "series": s}
     m, bounds = macro(history_path)
     return {"schema": "phd.charts/1", "schema_version": 1, "source": SOURCE, "site_url": SITE_URL,
-            "generated_at": now, "attribution": ATTRIBUTION, "license": "CC BY 4.0 (türetilmiş değerler)",
+            "generated_at": now, "attribution": ATTRIBUTION, "license": "macro: CC BY 4.0; crypto: yalnızca görüntüleme (OKX girdisi). Ayrıntı: veri.html",
             "fields": {"crypto": "[tarih, kapanış, 50g ort., 200g ort.]",
                        "macro": "[tarih, ham skor, yayımlanan seviye, mod, kural sürümü]"},
             "crypto": crypto, "macro": m, "version_boundaries": bounds}

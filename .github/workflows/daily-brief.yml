@@ -60,6 +60,13 @@ jobs:
           SITE_OUT: feed/data/site
           RESEARCH_DIR: feed/data/research/candles_1d
         run: python3 tools/build_charts.py || echo "charts failed"
+      - name: Ortalamalara göre konum (derived 0/1 + % to 200-day -> data/site/konum.json, non-fatal)
+        env:
+          SITE_OUT: feed/data/site
+          US_DIR: feed/data/research/us_1d
+          RESEARCH_DIR: feed/data/research/candles_1d
+          TL_RAW_DIR: feed/data/research/tl_1d
+        run: python3 tools/build_konum.py || echo "konum failed"
       - name: Sicil / track record (derived words only -> data/site/sicil.json, non-fatal)
         env:
           SITE_OUT: feed/data/site
@@ -77,6 +84,10 @@ jobs:
         run: |
           python3 -m pip install --quiet --break-system-packages pillow 2>/dev/null || python3 -m pip install --quiet pillow || true
           python3 tools/build_og.py || echo "og card failed"
+      - name: Data catalogue (data/site/index.json, non-fatal)
+        env:
+          SITE_OUT: feed/data/site
+        run: python3 tools/build_catalog.py || echo "catalog failed"
       - name: Z-scores, alarms, Telegram
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
