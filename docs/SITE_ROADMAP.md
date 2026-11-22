@@ -23,10 +23,15 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
 - [x] S8 Marka kancaları: `piyasa/config.js` (başlık, "İstatistik yalan söylemez" — her sayfanın başlığında, Altınkulak bağlantısı "Daha derin araçlar" altbilgide, X + Telegram yer tutucuları boşsa gizli, S11 doğrulama kodu alanları). og:image: `tools/build_og.py` her sabah `data/site/og.png` (1200×630, Inter, tek kırmızı vurgu; Pillow yoksa sabit `piyasa/og.png` marka kartı kopyalanır), ana sayfa `summary_large_image`; diğer sayfalar sabit kart.
 - [x] S9 "Ortalamalara göre konum" tablosu (data/research/us_1d ve candles_1d'de 2026-11-13'ten yeni satır varsa; yoksa ⏸ "research-data PR bekleniyor"): sabit geniş evren (SPY, QQQ, SMH, GLD, SLV, BIST 100, BTC, ETH, mevcut büyükler), 20/50/200 gün ort. üstü/altı + 200 güne % uzaklık; alfabetik veya varlık sınıfına göre (en altta olana göre SIRALAMA YOK). BIST tekil hisse yok. Eylem kelimesi yok. yontem.html notu.
 - [x] S10 Makinece okunur Türkçe veri uçları: `data/site/` altında sabit, sürümlü JSON şeması (today.json, history.csv, tl.json, dunya.json, movers.json), `piyasa/veri.html` (Türkçe + kısa İngilizce): alanlar, güncelleme saati, lisans (yalnız kamu kaynaklı türetilmiş alanlar CC BY 4.0; lisanslı girdi alanları "yalnızca görüntüleme"), atıf biçimi. Uç yolları son barındırıcıda da aynı kalır.
-- [ ] S10b "Dünya" bölümü — isteğe bağlı (`piyasa/dunya.html`, soru "Dünyada durum ne?", JSON yalnız açılınca): a) bölge tabloları (S9 biçimi; Japonya, Kore, Çin, Hong Kong, Tayvan, Brezilya; eksik endeksler için ETF'ler; her pazar için tarihli sabit 5–10 büyük şirket listesi, alfabetik); b) emtialar (GC, SI, PL, PA, HG, CL, BZ, NG + ücretsiz veri varsa buğday/soya/mısır; rodyum vb. "günlük serbest veri yok" referans tablosu — fiyat uydurulmaz); c) "Günün başlıkları": yalnız başlık + kaynak + saat + bağlantı, en çok ~10, şartları izin veren resmi RSS'lerden; d) `data/site/dunya.json`, kendi adımı. **+ Boran isteği (21 Kasım):** geniş ekranda (≥ 1200 px) ana sayfanın sağ boşluğuna kısa bir "Dünya" sütunu (Japonya, Kore, Çin… 1g değişim + "Günün başlıkları" ilk 5 başlık); yalnız geniş ekranda ve dunya.json gelince yüklenir; telefonda soru düğmesi olarak kalır. **+ Boran (21 Kasım):** "Günün başlıkları"na büyük şirket haberleri, teknoloji, emtia ve değerli madenler başlıkları; Midas ("Midas'ın Kulakları", getmidas.com) ana başlıkları yalnız kullanım şartları/robots izin veriyorsa ve resmi bir akış (RSS/API) varsa — yalnız başlık + kaynak + saat + bağlantı; izin yoksa ⏸ ve Boran'a sorulacak.
-- [ ] S10c "Günün hareketlileri ve anomaliler" — isteğe bağlı (`piyasa/hareket.html`, soru "Bugün piyasada neler oldu?"): a) evren config'i (BIST 100, research-data ABD listesi, en büyük ~30 kripto; likidite tabanı); b) pazar başına en çok yükselen/düşen 5 (% değişim, göreli hacim, endeks hareketi); c) kural tabanlı anomaliler (hacim ≥ 3× 20g ort., açılış boşluğu ≥ ±%5 hisse / ±%8 kripto, hareket ≥ 3× ATR(14), 52 hafta zirve/dip, endeksine ters > 3 puan) + düz Türkçe gerekçe; d) "Neden?" sütunu: "haber eşleştirmesi bekleniyor"; `movers_news.json` şeması docs/'ta; neden uydurulmaz; e) haber dili, uyarı, veri tarihi; `data/site/movers.json` kendi adımı (zamanlama belgelenir).
-- [ ] S11 İzleyicisiz ölçüm: config.js'ten beslenen google-site-verification (ve Bing) meta yer tutucusu; DEPLOY_PLAN.md'de Search Console ve (A seçilirse) Cloudflare çerezsiz Web Analytics rehberi. Üçüncü taraf analitik yok.
-- [ ] S12 PARK — gelir modeli (yalnız gerçek kitle olunca; kod/cüzdan/hesap yok): `docs/MONETIZATION_PLAN.md` — (1) Türkiye pazarı türetilmiş verinin ücretli API katmanı, (2) x402 / Cloudflare Monetization Gateway (insanlar ve arama motorları ücretsiz), (3) önkoşullar: özel motor, Yahoo/FRED-kısıtlı girdilerin lisanslı kaynaklarla değişimi, alan adı, Cloudflare, Türkiye'de hukuki/vergi kontrolü (SPK, MASAK, kripto varlık kanunu) — sermaye piyasası avukatıyla. Riskler ve yeniden bakma tetikleyicileri.
+- [x] S10b "Dünya" bölümü — isteğe bağlı (`piyasa/dunya.html`, soru "Dünyada durum ne?", JSON yalnız açılınca): a) bölge tabloları (S9 biçimi; Japonya, Kore, Çin, Hong Kong, Tayvan, Brezilya; eksik endeksler için ETF'ler; her pazar için tarihli sabit 5–10 büyük şirket listesi, alfabetik); b) emtialar (GC, SI, PL, PA, HG, CL, BZ, NG + ücretsiz veri varsa buğday/soya/mısır; rodyum vb. "günlük serbest veri yok" referans tablosu — fiyat uydurulmaz); c) "Günün başlıkları": yalnız başlık + kaynak + saat + bağlantı, en çok ~10, şartları izin veren resmi RSS'lerden; d) `data/site/dunya.json`, kendi adımı. **+ Boran isteği (21 Kasım):** geniş ekranda (≥ 1200 px) ana sayfanın sağ boşluğuna kısa bir "Dünya" sütunu (Japonya, Kore, Çin… 1g değişim + "Günün başlıkları" ilk 5 başlık); yalnız geniş ekranda ve dunya.json gelince yüklenir; telefonda soru düğmesi olarak kalır. **+ Boran (21 Kasım):** "Günün başlıkları"na büyük şirket haberleri, teknoloji, emtia ve değerli madenler başlıkları; Midas ("Midas'ın Kulakları", getmidas.com) ana başlıkları yalnız kullanım şartları/robots izin veriyorsa ve resmi bir akış (RSS/API) varsa — yalnız başlık + kaynak + saat + bağlantı; izin yoksa ⏸ ve Boran'a sorulacak.
+- [x] S10c "Günün hareketlileri ve anomaliler" — isteğe bağlı (`piyasa/hareket.html`, soru "Bugün piyasada neler oldu?"): a) evren config'i (BIST 100, research-data ABD listesi, en büyük ~30 kripto; likidite tabanı); b) pazar başına en çok yükselen/düşen 5 (% değişim, göreli hacim, endeks hareketi); c) kural tabanlı anomaliler (hacim ≥ 3× 20g ort., açılış boşluğu ≥ ±%5 hisse / ±%8 kripto, hareket ≥ 3× ATR(14), 52 hafta zirve/dip, endeksine ters > 3 puan) + düz Türkçe gerekçe; d) "Neden?" sütunu: "haber eşleştirmesi bekleniyor"; `movers_news.json` şeması docs/'ta; neden uydurulmaz; e) haber dili, uyarı, veri tarihi; `data/site/movers.json` kendi adımı (zamanlama belgelenir).
+- [x] B1 **Boran isteği (22 Kasım): üst piyasa bandı** — ana sayfada başlığın altında sabit (kaymayan) rakam bandı: gram altın, dolar/TL, gram gümüş, Brent petrol, BIST 100 ($), Bitcoin — son değer + 1 günlük değişim; altın/gümüş/petrole dokununca görünüm değişir (gram TL ⇄ ons $, Brent ⇄ WTI). Telefonda yana kaydırılır, geniş ekranda 3 sütun. Veri tl.json (`band` alanı; fetch_tl'e BZ=F, CL=F eklendi).
+- [x] S13 **Boran isteği (22 Kasım): dil seçeneği (Türkçe / English)** — yabancı ziyaretçi için başlıkta "TR · EN" seçici. a) Sayfa metinleri için `piyasa/i18n.js` sözlüğü (statik metinler, etiketler, ay adları, sayı biçimi `en-US`); b) veriden gelen cümleler (kural cümleleri, soru-cevaplar, hafta/dünya özetleri) için build adımları her cümlenin İngilizce şablonunu da üretir (`sentence_en`, `answers_en`; sayılar yine koddan); c) seçim `?lang=en` + "bu cihazda hatırla" (localStorage, try/catch), `hreflang` etiketleri, `lang` niteliği; d) yontem/veri sayfalarının İngilizce sürümü (`en/` altında statik); e) yasak kelime listesi İngilizce için de (buy, sell, opportunity, cheap, target…). Testler.
+- [x] B2 **Boran isteği (22 Kasım): Grafikte karşılaştır** — `piyasa/karsilastir.html`: 2–3 varlığı aynı grafikte (aralık başı = 100) ya da 1.÷2. oranı (ör. altın/gümüş oranı); aralık 1A/3A/6A/YB/1Y/2Y; hazır seçimler; paylaşılabilir bağlantı (`?a=&b=&c=&mod=&ara=`); sürükle/tekerlek/iki parmakla yakınlaştır. Veri `fetch_tl.py` → `data/site/compare.json` (~2 yıl günlük; BIST 100 ve fonlar yalnız 100'e endeksli). Ana sayfada "Grafik" bölümü ve banttan bağlantı. Türkçe/İngilizce.
+- [x] B3 **Boran isteği (22 Kasım): Günün özeti** — ayrı zamanlanmış Claude görevi her sabah (~09:45 İstanbul) izinli kaynaklardan en çok 8 haberi kendi cümleleriyle 2–3 cümlede özetler (TR + EN, kaynak bağlantısı, yorum/tavsiye yok) → data-feed `data/site/ozet.json` + `ozet/YYYY-MM-DD.json`; push öncesi `tools/check_ozet.py`. Ana sayfada "Günün özeti" bölümü (`piyasa/ozet.js`; 2 günden eskiyse gizli). Şema: `docs/OZET_SCHEMA.md`.
+- [ ] S13b İngilizce ikinci aşama: hafta.html, dunya.html, arsiv.html, hesapla.html ve yontem.html'in tam İngilizcesi (bugün bu sayfalarda "yalnız Türkçe" notu var; sayı/tarih biçimi İngilizce); hafta/dunya build'lerinin `_en` cümleleri; arşivdeki eski günler için İngilizce cümle yok (yeniden yazılmaz, yalnız yeni günler).
+- [x] S11 İzleyicisiz ölçüm: config.js'ten beslenen google-site-verification (ve Bing) meta yer tutucusu; DEPLOY_PLAN.md'de Search Console ve (A seçilirse) Cloudflare çerezsiz Web Analytics rehberi. Üçüncü taraf analitik yok.
+- [x] S12 PARK — gelir modeli (yalnız gerçek kitle olunca; kod/cüzdan/hesap yok): `docs/MONETIZATION_PLAN.md` — (1) Türkiye pazarı türetilmiş verinin ücretli API katmanı, (2) x402 / Cloudflare Monetization Gateway (insanlar ve arama motorları ücretsiz), (3) önkoşullar: özel motor, Yahoo/FRED-kısıtlı girdilerin lisanslı kaynaklarla değişimi, alan adı, Cloudflare, Türkiye'de hukuki/vergi kontrolü (SPK, MASAK, kripto varlık kanunu) — sermaye piyasası avukatıyla. Riskler ve yeniden bakma tetikleyicileri.
 
 ## Kararlar
 
@@ -78,6 +83,19 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
 - **Kural girdisi:** `notebook_daily.json` 60 günlük pencere tutuyor; bu yüzden
   `history.csv` ve `archive/` yalnız ekleme yapılan ayrı dosyalar (HISTORY kuralı).
 
+- **Dünya (S10b):** `tools/build_dunya.py` + tarihli sabit evren `tools/dunya_config.json`
+  (2026-11-22; üç ayda bir gözden geçirme). Ham kapanışlar data-feed `data/research/world_1d/`
+  (özel taraf); yayımlanan yalnız `data/site/dunya.json`: endeks/fon/emtia için yuvarlanmış
+  seviye, % değişimler, 0/1 ortalama işaretleri, 200 güne % uzaklık; **şirketlerde fiyat yok**.
+  Workflow ~06:00 UTC'de Asya seansları açıkken çalıştığı için **bugün tarihli çubuklar atılır**
+  (yarım gün değeri yayımlanmaz) — tablolar son tamamlanmış seansı gösterir. Başlıklar: yalnız
+  başlık + kaynak + saat + https bağlantı; DTD'li akış reddedilir, en çok 2 MB, en çok 10 başlık /
+  akış başına 3 / son 4 gün. Akışlar: Korea.net (bilim-teknoloji, iş dünyası), gov.br ekonomi
+  (CC BY-ND 3.0 → türev yok, yalnız başlık), Agência Brasil ekonomi, EIA Today in Energy (kamu
+  malı), Samsung Newsroom. Çin ve Japonya için şartları uygun resmî akış seçilmedi (boş + not).
+  **Midas:** resmî RSS/API bulunamadı, site "Tüm hakları saklıdır" → eklenmedi (⏸ Boran).
+  `dunya.json` "yalnızca görüntüleme" (Yahoo kişisel kullanım + endeks sağlayıcı lisansları).
+
 ## Güvenlik kontrol listesi
 
 - [x] `piyasa/` ve `data/site/` içinde sır/token/API anahtarı yok (her push öncesi tarama)
@@ -89,7 +107,9 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
 - [x] Üçüncü taraf izleyici/analitik yok, çerez yok
 - [x] S7 Telegram: token yalnız env'den, hata mesajında URL yok; kanal kimliği sırrı yoksa adım atlanır
 - [x] S8 config.js: bağlantılar yalnız `https://` ise ve textContent/DOM API ile; `rel="noopener noreferrer"`
+- [x] S13 i18n.js: çeviri yalnız nodeValue/setAttribute ile (HTML ayrıştırma yok), dil tercihi yalnız `?lang=en` bağlantısında (çerez/depolama yok); yontem.html CSP `script-src 'self'` oldu (dil seçici için); S11 doğrulama kodu sıkı biçim kontrolüyle statik meta olarak yazılır
 - [x] S9/S10 sayfaları (konum.html, veri.html) aynı CSP; konum.js yalnız textContent/DOM API; veri.html betiksiz içerik
+- [x] S10b sayfaları (dunya.html, ana sayfa geniş ekran sütunu `dunya-side.js`) aynı CSP; yalnız textContent/DOM API; başlık bağlantıları yalnız `https://` + `rel="noopener noreferrer"`; RSS ayrıştırıcı DTD/varlık reddeder, boyut sınırı var
 - [x] S6 sayfaları (arsiv.html, statik `arsiv/*.html`) aynı CSP; statik sayfalarda `script-src 'none'`; statik üretici tüm veri metnini `html.escape` ile yazar (testli)
 
 ## Notlar
@@ -260,3 +280,51 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
   istenirse ayrı `history.meta.json` eklenebilir. **Kalan:** S6b'nin "Tarihte bu hafta"
   kaynaklı girdi görevi bu çalışmada da yapılmadı (kaynak doğrulaması gerekiyor).
   Sıradaki: S10b (Dünya), S10c.
+- **2026-11-22 (zamanlanmış çalışma, 2.)** — S10b tamam. `tools/build_dunya.py` (kendi
+  hata-toleranslı workflow adımı; `world_1d` "Store data" adımına eklendi) + 16 test;
+  `piyasa/dunya.html` + `dunya.js` (ana sayfada "Dünyada durum ne?" bağlantısı, JSON yalnız
+  sayfa açılınca), ana sayfada ≥ 1200 px sağ sütun (`dunya-side.js`: bölge endekslerinin son
+  günlük değişimi + ilk 5 başlık; telefonda yüklenmez). yontem.html#dunya, veri.html#dunya,
+  index.json kaydı ("her gün"), sitemap, build_static sayfa listesi, ana sayfa JSON-LD.
+  100 Python testi + hesapla testi geçti. **Doğrulanamadı:** bu ortamdan Yahoo ve RSS
+  adreslerine erişim yok → semboller (özellikle `^TOPX`, `000300.SS`, `^HSTECH` — isteğe
+  bağlı, yoksa tablodan düşer) ve akışlar ilk Actions çalışmasında doğrulanacak; sonuç
+  `dunya.json → missing` ve `basliklar.kaynaklar[].durum` alanlarında ve adım logunda.
+  Ekran görüntüleri (`docs/site-preview/s10b-*`) **örnek veriyle** (sayfada "Önizleme: örnek
+  veri" uyarısı görünür; altın/gümüş gerçek tl_1d verisi). Lighthouse bu çalışmada ölçülmedi.
+  **Kalan:** S6b "Tarihte bu hafta" kaynaklı girdi görevi; Midas izni (Boran). Sıradaki: S10c.
+- **2026-11-22 (Boran ile canlı)** — Altınkulak bağlantısı gizlendi (config.js `deeper.url` boş;
+  Altınkulak doğrulanınca geri yazılacak). B1 üst piyasa bandı yapıldı (ekran görüntüleri
+  `docs/site-preview/band-home-390.png`, `band-home-1440.png`; petrol ve ons değerleri ilk Actions
+  çalışmasında gelir — önizlemede petrol örnek değerle). Boran'ın dil seçeneği isteği S13 olarak eklendi.
+  Sol boşluk bilerek boş bırakıldı (Boran: üst band yeterli).
+- **2026-11-22 (Boran ile canlı, 2.)** — S10c tamam. `tools/build_movers.py` + `tools/movers_config.json`
+  (tarihli sabit evren: 44 büyük/likit BIST hissesi — resmî BIST 100 bileşimi değil, Actions'ta
+  Yahoo `.IS` ile çekilir, `data/research/bist_1d/` özel tarafta; ABD araştırma listesi fonlar hariç;
+  OKX ~30 coin) → `data/site/movers.json`: pazar başına endeksin 1g hareketi, en çok yükselen/düşen 5
+  (yüzde + göreli hacim), kural tabanlı anomaliler (hacim ≥ 3×, açılış boşluğu ±%5 / ±%8, ≥ 3× ATR(14),
+  52 hafta zirve/dip, endeksine ters > 3 puan) düz Türkçe gerekçeyle; fiyat yok; likidite tabanı
+  (20g ort. işlem hacmi BIST 250 mn TL, ABD 200 mn $ + 5 $ alt fiyat); bugünün tamamlanmamış mumu ve
+  güncellenmeyen isimler dışarıda. "Neden?" asla yazılmaz: `docs/MOVERS_NEWS_SCHEMA.md` şemasıyla ayrı
+  görev `movers_news.json` üretirse sayfa birleştirir. `piyasa/hareket.html` (ana sayfada "Bugün
+  piyasada neler oldu?"), yontem.html#hareket, veri.html#movers, index.json kaydı, sitemap. Kendi
+  hata-toleranslı adımı (zamanlama: daily-brief ~06:00 UTC — BIST/ABD seansları ve kripto UTC günü
+  kapanmış). 6 yeni test; 107 Python testi geçti. Ekran görüntüleri `docs/site-preview/s10c-*`
+  (gerçek data-feed verisiyle; BIST bu ortamdan çekilemedi → ilk Actions çalışmasında doğrulanacak).
+- **2026-11-22 (Boran ile canlı, 3.)** — S13 (ilk aşama), S11, S12 tamam.
+  **S13:** `piyasa/i18n.js` her sayfada ilk betik: Türkçe varsayılan, `?lang=en` ile İngilizce
+  (çerez/depolama yok; seçim bağlantıyla taşınır, iç bağlantılar `lang=en`'i korur), başlıkta
+  "EN/TR" bağlantısı, `hreflang` etiketleri. Statik ve sonradan yazılan metinler sözlük + kalıp
+  cümleler + Türkçe→İngilizce sayı/tarih biçimiyle çevrilir. `build_site.py` artık her kural için
+  `title_en`, `group_en`, `sentence_en`, ayrıca `headline_en`, `level_en`, `held_note_en`,
+  `answers_en` üretir (aynı sayılar, koddan; testte Türkçe cümledeki her sayının İngilizcede de
+  olduğu ve yasak kelime olmadığı denetlenir). Ana sayfa, Konum ve Hareket tamamen İngilizce;
+  diğer sayfalarda "yalnız Türkçe" notu (S13b). Ekran görüntüleri `docs/site-preview/s13-*`.
+  **S11:** `config.js → verification` + `build_static.verification_meta()` (deploy sırasında ana
+  sayfaya statik meta; değer biçimi doğrulanır) + DEPLOY_PLAN.md'de Search Console / Bing / Cloudflare
+  rehberi (Cloudflare Web Analytics CSP istisnası gerektirdiği için Boran'ın kararı).
+  **S12:** `docs/MONETIZATION_PLAN.md` (park). Testler: 109 Python + hesapla + i18n.
+  Kalan: S13b, S6b "Tarihte bu hafta" kaynaklı girdi görevi, ⏸ Boran adımları.
+- **2026-11-22 (Boran ile canlı, 4.)** — B2 Grafikte karşılaştır yapıldı (ekran görüntüleri
+  `docs/site-preview/cmp-*`; gerçek data-feed tl_1d verisiyle, Brent/WTI ilk Actions çalışmasında gelir).
+  `compare.json` tl.json'u hiçbir durumda bozmayacak şekilde ayrı try içinde yazılır. 110 Python testi geçti.

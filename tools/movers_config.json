@@ -1,0 +1,32 @@
+{
+  "_doc": "Günün hareketlileri ve anomaliler (S10c) sabit evreni. Private engine config. BIST listesi resmî BIST 100 bileşimi DEĞİLDİR: belirleme tarihinde büyük ve likit bilinen hisselerden oluşan sabit bir listedir; Actions'ta Yahoo'dan alınamayan sembol loglanır ve atlanır. Üç ayda bir gözden geçirilir. Likidite tabanı: son 20 günün ortalama işlem hacmi (kapanış × adet) bu değerin altındaysa isim hiçbir listede gösterilmez. Piyasa değeri için serbest günlük veri olmadığından taban yalnız işlem hacmine dayanır.",
+  "set_date": "2026-11-22",
+  "review": "üç ayda bir (sonraki: Şubat 2027)",
+  "markets": [
+    {"id": "bist", "title": "Borsa İstanbul", "src": "yahoo", "currency": "TL",
+     "index": {"name": "BIST 100", "tl_file": "XU100"},
+     "min_turnover_20d": 250000000,
+     "note": "BIST verisi gecikmeli olabilir; kapanış sonrası değerler kullanılır.",
+     "symbols": ["AEFES.IS", "AKBNK.IS", "AKSEN.IS", "ALARK.IS", "ARCLK.IS", "ASELS.IS", "ASTOR.IS", "BIMAS.IS",
+                 "BRSAN.IS", "CCOLA.IS", "CIMSA.IS", "DOAS.IS", "EKGYO.IS", "ENJSA.IS", "ENKAI.IS", "EREGL.IS",
+                 "FROTO.IS", "GARAN.IS", "GUBRF.IS", "HALKB.IS", "HEKTS.IS", "ISCTR.IS", "KCHOL.IS", "KONTR.IS",
+                 "KRDMD.IS", "MAVI.IS", "MGROS.IS", "OYAKC.IS", "PETKM.IS", "PGSUS.IS", "SAHOL.IS", "SASA.IS",
+                 "SISE.IS", "SOKM.IS", "TAVHL.IS", "TCELL.IS", "THYAO.IS", "TOASO.IS", "TTKOM.IS", "TUPRS.IS",
+                 "ULKER.IS", "VAKBN.IS", "VESTL.IS", "YKBNK.IS"]},
+    {"id": "abd", "title": "ABD", "src": "us_1d", "currency": "USD",
+     "index": {"name": "S&P 500 fonu (SPY)", "us_file": "SPY"},
+     "min_turnover_20d": 200000000,
+     "min_price": 5,
+     "exclude": ["SPY", "QQQ", "RSP", "SMH", "GLD", "SLV", "COPX", "CPER"],
+     "note": "Evren: araştırma listesindeki ABD hisseleri (fonlar hariç)."},
+    {"id": "kripto", "title": "Kripto", "src": "candles_1d", "currency": "USD",
+     "index": {"name": "Bitcoin", "crypto_file": "BTC"},
+     "min_turnover_20d": null,
+     "exclude_from_lists": ["BTC"],
+     "note": "OKX USDT vadeli günlük mumları (UTC günü). Kripto 7/24 işlem gördüğü için açılış boşluğu nadirdir. Mum hacmi kontrat cinsinden olduğundan işlem hacmi tabanı uygulanmaz; evren zaten en büyük ~30 coinden oluşur."}
+  ],
+  "anomaly": {"rel_vol": 3.0, "gap_stock": 5.0, "gap_crypto": 8.0, "atr_mult": 3.0, "atr_n": 14,
+              "high_low_days": 252, "vs_index_pp": 3.0},
+  "top_n": 5,
+  "stale_days": 4
+}

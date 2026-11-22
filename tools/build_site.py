@@ -330,6 +330,133 @@ def answers(rec, prev):
     ]
 
 
+# ---------------------------------------------------------------- English (S13): same facts, same numbers
+LEVEL_EN = {"YESIL": "GREEN", "SARI": "YELLOW", "KIRMIZI": "RED"}
+GROUPS_EN = {"L": "Liquidity", "D": "Dollar", "K": "Credit / risk", "N": "Dash for cash", "P": "Oil"}
+RULE_TITLES_EN = {
+    "L1": "Stablecoin supply", "L2": "Fed net liquidity", "L3": "Real yield",
+    "D1": "Dollar index", "K1": "Credit spread", "K2": "Volatility (VIX)",
+    "K3": "Nasdaq Composite", "N1": "Gold and dollar", "P1": "Oil",
+}
+DIR_EN = {"yükseldi": "rose", "düştü": "fell", "yatay": "was flat", "açıldı": "widened", "daraldı": "narrowed",
+          "veri yok": "has no data"}
+
+
+def en_num(v, nd=1):
+    s = f"{abs(v):,.{nd}f}"
+    return ("−" if v < 0 and round(abs(v), nd) != 0 else "") + s
+
+
+def en_date(iso):
+    d = dt.date.fromisoformat(iso)
+    return f"{d.day} {d.strftime('%B')} {d.year}"
+
+
+def _chg_en(x, nd=1, up="rose", down="fell"):
+    return f"{down if x < 0 else up} {en_num(abs(x), nd)}%" if x else "was unchanged"
+
+
+def rule_sentence_en(code, s):
+    v, f = s["values"], s["flags"][code]
+    if f is None:
+        return "No data for this rule today; no point given."
+    d = lambda w: DIR_EN.get(w, w)
+    if code == "L1":
+        x, c = v["stables_7d_pct"], v.get("stables_20g_pct")
+        t = f"Stablecoin supply {_chg_en(x)} over 7 days"
+        if c is not None:
+            t += f"; {_chg_en(c)} over 20 days"
+        return t + "."
+    if code == "L2":
+        return f"Fed net liquidity {_chg_en(v['netliq_20g_pct'], 2)} over 20 days."
+    if code == "L3":
+        x = v["real10y_20g_bp"]
+        word = "rose" if x > 0 else "fell" if x < 0 else "was unchanged"
+        return (f"10-year real yield {en_num(v['real10y'], 2)}%; it {word} {abs(x)} bp over 20 days"
+                + (" (above the 15 bp threshold)." if f else "."))
+    if code == "D1":
+        if f:
+            return "The dollar index rose more than 1% over 20 days."
+        y = v["dxy_20g_yon"]
+        return f"The dollar index {d(y)} over 20 days" + ("; below the 1% threshold." if y == "yükseldi" else ".")
+    if code == "K1":
+        if f:
+            return "The high-yield credit spread widened more than 0.25 points over 20 days: stress on the credit side."
+        y = v["hy_oas_20g_yon"]
+        return f"The high-yield credit spread {d(y)} over 20 days" + ("; below the 0.25-point threshold." if y == "açıldı" else ".")
+    if code == "K2":
+        return f"VIX volatility index {en_num(v['vix'])}" + (": above 18, the market is tense." if f else ": below 18, a calm zone.")
+    if code == "K3":
+        if f:
+            return "The Nasdaq Composite fell more than 3% over 20 days."
+        y = v["ndx_20g_yon"]
+        return f"The Nasdaq Composite {d(y)} over 20 days" + ("; below the 3% threshold." if y == "düştü" else ".")
+    if code == "N1":
+        x = v["gold_20g_pct"]
+        g = f"Gold {_chg_en(x)} over 20 days, the dollar index {d(v['dxy_20g_yon'])}"
+        return g + (": the two together count as a dash-for-cash sign." if f else ".")
+    if code == "P1":
+        x = v["wti_20g_pct"]
+        t = f"Crude oil (WTI) {_chg_en(x)} over 20 days"
+        if f and s["p1_label"] == "talep zayıflığı":
+            t += "; the credit spread is widening too. The rule counts this pair as a possible sign of weak demand"
+        elif f:
+            t += "; the rule counts this as a possible sign of inflation pressure"
+        c = v.get("wti_60g_pct")
+        if f and v.get("wti_base_near_peak") and c is not None:
+            t += (f". Context: on the comparison day ({en_date(s['base_date'])}) the price was near its 60-day high; "
+                  f"versus {v.get('wti_60g_days', 60)} days ago it is {en_num(abs(c))}% {'lower' if c < 0 else 'higher'}. "
+                  "Part of the fall reverses the earlier spike; supply and geopolitics may also play a role")
+        return t + "."
+    raise KeyError(code)
+
+
+def trend_sentence_en(name, t):
+    if not t or t.get("close") is None or t.get("dist200_pct") is None:
+        return f"No trend data for {name}."
+    d200, d50 = t["dist200_pct"], t.get("dist50_pct")
+    rel = lambda x: f"{en_num(abs(x))}% {'below' if x < 0 else 'above'}"
+    out = f"{name} daily close ${en_num(t['close'], 0 if t['close'] >= 1000 else 2)}; {rel(d200)} its 200-day average"
+    if d50 is not None:
+        out += f", {rel(d50)} its 50-day average"
+    return out + "."
+
+
+def answers_en(rec, prev):
+    lvl, sc = LEVEL_EN[rec["level"]], rec["raw_score"]
+    a1 = [f"Macro weather as of {en_date(rec['publish_date'])}: {lvl}.",
+          f"{sc} of the nine rules give a signal (raw score {sc}/9)."]
+    if rec["level_held"]:
+        a1.append(rec["held_note_en"])
+    a1.append(f"Data as of the {en_date(rec['data_date'])} close.")
+    on = [x for x in rec["rules"] if x["flag"] == 1]
+    a2 = [x["sentence_en"] for x in on] or ["No rule gives a signal today."]
+    if prev:
+        a3 = []
+        pf = {k: prev.get(k) for k in RULE_CODES}
+        for x in rec["rules"]:
+            old = pf.get(x["code"])
+            if old is not None and x["flag"] is not None and int(old) != x["flag"]:
+                a3.append(f"{x['title_en']}: {'started to signal' if x['flag'] else 'signal went off'}.")
+        ps = int(prev["raw_score"])
+        a3.insert(0, f"Raw score {ps} → {sc}." if ps != sc else f"Raw score unchanged ({sc}).")
+        if prev.get("level") != rec["level"]:
+            a3.append(f"Published level {LEVEL_EN.get(prev['level'], prev['level'])} → {lvl}.")
+    else:
+        a3 = ["No previous day to compare with."]
+    a4 = [trend_sentence_en("BTC", rec["trend"].get("btc")), trend_sentence_en("ETH", rec["trend"].get("eth"))]
+    a5 = ["The score is built from nine rules on liquidity, the dollar, credit/risk, dash for cash and oil; each rule is 1 point.",
+          "0–2 GREEN, 3–4 YELLOW, 5 or more RED. The level does not change without a second-day confirmation.",
+          "The rules are fixed and versioned; published scores are never changed afterwards."]
+    return [
+        {"id": "hava", "q": "What is the macro weather today?", "a": a1},
+        {"id": "isaretler", "q": "Which rules are signalling?", "a": a2},
+        {"id": "degisim", "q": "What changed since yesterday?", "a": a3},
+        {"id": "kripto", "q": "Where are BTC and ETH versus their averages?", "a": a4},
+        {"id": "yontem", "q": "How is this measured?", "a": a5, "link": "yontem.html"},
+    ]
+
+
 # ---------------------------------------------------------------- records / IO
 def provenance(generated_at):
     return {"source": SOURCE, "site_url": SITE_URL, "rules_version": RULES_VERSION,
@@ -346,12 +473,18 @@ def build_record(s, level, held, mode, generated_at, publish_date, inputs_asof):
            "held_note": (f"Ham skor {level_word(s['raw_level'])} seviyesine işaret ediyor; "
                          f"değişim için ikinci gün onayı bekleniyor.") if held else None,
            "headline": f"{tr_date(publish_date)} — Makro hava: {level_word(level)}",
+           "level_en": LEVEL_EN[level],
+           "held_note_en": (f"The raw score points to {LEVEL_EN[s['raw_level']]}; "
+                            "a second-day confirmation is needed before the level changes.") if held else None,
+           "headline_en": f"{en_date(publish_date)} — Macro weather: {LEVEL_EN[level]}",
            "groups": {}, "rules": [], "values": s["values"], "trend": s["trend"],
            "inputs_asof": inputs_asof, "disclaimer": DISCLAIMER}
     for code in RULE_CODES:
         f = s["flags"][code]
         rec["rules"].append({"code": code, "group": GROUPS[code[0]], "title": RULE_TITLES[code],
                              "flag": f, "sentence": rule_sentence(code, s),
+                             "title_en": RULE_TITLES_EN[code], "group_en": GROUPS_EN[code[0]],
+                             "sentence_en": rule_sentence_en(code, s),
                              **({"label": s["p1_label"]} if code == "P1" and s["p1_label"] else {})})
         grp = rec["groups"].setdefault(GROUPS[code[0]], {"points": 0, "max": 0})
         grp["points"] += f or 0
@@ -521,6 +654,7 @@ def build(notebook, site, now=None):
                            publish_date if is_latest else s["date"], inputs_asof(row))
         hrow = history_row(rec)
         rec["answers"] = answers(rec, prev_hist)
+        rec["answers_en"] = answers_en(rec, prev_hist)
         write_json(os.path.join(site, "archive", f"{s['date']}.json"), rec, overwrite=False)
         new_rows.append(hrow)
         prev_pub, prev_raw, prev_hist = level, s["raw_level"], hrow

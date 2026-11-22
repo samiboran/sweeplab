@@ -108,3 +108,34 @@ def test_one_year_ago_value_and_change():
 def test_no_one_year_value_when_history_is_short():
     st = tl.stats(series("2026-06-01", 100, lambda i: 1.0))
     assert st["chg_1y"] is None and st["date_1y"] is None
+
+
+def test_band_alternates():
+    import datetime as _dt
+    days = [(_dt.date(2026, 1, 1) + _dt.timedelta(days=i)).isoformat() for i in range(30)]
+    usd = {d: 40.0 for d in days}
+    gold = {d: 3000.0 + i for i, d in enumerate(days)}
+    brent = {d: 70.0 for d in days[:-1]}
+    brent[days[-1]] = 63.0
+    d = tl.derive({"USDTRY": usd, "GOLD_USD": gold, "BRENT_USD": brent}, days[-1])
+    b = d["band"]
+    assert b["ons_altin"]["last"] == 3029.0 and b["ons_altin"]["unit"] == "$"
+    assert b["brent"]["chg_1g"] == -10.0
+    assert "wti" not in b and "ons_gumus" not in b      # missing inputs are simply left out
+    assert all(set(v) <= {"label", "unit", "asof", "last", "chg_1g", "stale"} for v in b.values())
+
+
+def test_compare_series_rebases_indices_and_keeps_prices():
+    import datetime as _dt
+    days = [(_dt.date(2026, 1, 1) + _dt.timedelta(days=i)).isoformat() for i in range(60)]
+    usd = {d: 40.0 + i * 0.1 for i, d in enumerate(days)}
+    gold = {d: 3000.0 for d in days}
+    xu = {d: 10000.0 + i for i, d in enumerate(days)}
+    c = tl.compare_series({"USDTRY": usd, "GOLD_USD": gold, "XU100": xu}, "2026-03-01")
+    by = {a["id"]: a for a in c["assets"]}
+    assert by["ons_altin"]["kind"] == "fiyat" and by["ons_altin"]["v"][0] == 3000.0
+    assert by["bist100_tl"]["kind"] == "endeks" and by["bist100_tl"]["v"][0] == 100.0   # no index level published
+    assert all(v is None or v < 1000 for v in by["bist100_tl"]["v"])
+    assert "brent" not in by                                     # missing input -> left out
+    assert len(c["dates"]) == len(by["dolar"]["v"])
+    assert c["dates"][-1] < "2026-03-01"                          # today's (incomplete) bar excluded

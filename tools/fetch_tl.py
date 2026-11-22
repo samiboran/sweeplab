@@ -10,7 +10,8 @@ Publishes DERIVED, rounded values only:
 Sources (Yahoo Finance chart API, personal-use terms — to be replaced by a licensed
 or public source before any monetization):
   TRY=X (USD/TRY), GC=F (COMEX gold, USD/oz), SI=F (COMEX silver, USD/oz), XU100.IS,
-  BTC-USD, ETH-USD (for the 1-year view; the calculator prefers OKX closes from the notebook)
+  BTC-USD, ETH-USD (for the 1-year view; the calculator prefers OKX closes from the notebook),
+  BZ=F, CL=F (Brent / WTI oil, top band only: last value + 1-day change)
 First run (or a store that is not daily) backfills daily bars from 2000 via
 period1/period2 (range=max returns MONTHLY bars); later runs fetch 1 year and merge. Each symbol is independent: a failure is logged and the rest continue.
 BIST 100 index level is published only as the current rounded level (needed by the
@@ -27,7 +28,9 @@ UA = {"User-Agent": "Mozilla/5.0 (piyasa-hava-durumu; github actions)"}
 SYMBOLS = {"USDTRY": "TRY=X", "GOLD_USD": "GC=F", "SILVER_USD": "SI=F", "XU100": "XU100.IS",
            "BTC_USD": "BTC-USD", "ETH_USD": "ETH-USD",
            # long history for 'Dünyada bu Pazartesi/Cuma' (fund prices, not licensed index levels)
-           "SPY": "SPY", "QQQ": "QQQ"}
+           "SPY": "SPY", "QQQ": "QQQ",
+           # top band alternates (ons altın/gümüş come from GOLD_USD/SILVER_USD)
+           "BRENT_USD": "BZ=F", "WTI_USD": "CL=F"}
 SOURCE = "Piyasa Hava Durumu"
 SITE_URL = "https://samiboran.github.io/sweeplab/piyasa/"
 ATTRIBUTION = "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0"
@@ -258,8 +261,60 @@ def derive(data, today, crypto=None):
             prices[k + "_usd"], prices[k + "_asof"] = v["usd"], v["asof"]
         elif y:
             prices[k + "_usd"], prices[k + "_asof"] = round(y["last"], 2), y["asof"]
+    # top band: alternate views shown on tap (ons gold/silver in USD, Brent/WTI oil) — last + 1g only
+    band = {}
+    for key, label, unit, src, nd in (("ons_altin", "Ons altın", "$", gold, 2), ("ons_gumus", "Ons gümüş", "$", silver, 2),
+                                      ("brent", "Brent petrol", "$", data.get("BRENT_USD") or {}, 2),
+                                      ("wti", "WTI petrol", "$", data.get("WTI_USD") or {}, 2)):
+        s = stats(src)
+        if s and s["chg_1g"] is not None:
+            band[key] = {"label": label, "unit": unit, "asof": s["asof"], "last": round(s["last"], nd),
+                         "chg_1g": s["chg_1g"], "stale": weekday_age(s["asof"], today) > 3}
     core_ok = all(a.get("asof") and not a.get("stale") for a in assets if a["id"] in ("gram_altin", "dolar"))
-    return {"assets": assets, "prices": prices, "status": "ok" if core_ok else "güncellenmedi"}
+    return {"assets": assets, "prices": prices, "band": band, "status": "ok" if core_ok else "güncellenmedi"}
+
+
+# ---------------------------------------------------------------- compare.json (Karşılaştır sayfası)
+COMPARE_DAYS = 740          # ~2 years of calendar days
+# id, label, unit, kind ("fiyat": real level published; "endeks": rebased to 100 at the first day)
+COMPARE = [("gram_altin", "Gram altın", "TL"), ("gram_gumus", "Gram gümüş", "TL"),
+           ("ons_altin", "Ons altın", "$"), ("ons_gumus", "Ons gümüş", "$"), ("dolar", "Dolar/TL", "TL"),
+           ("brent", "Brent petrol", "$"), ("wti", "WTI petrol", "$"), ("btc", "Bitcoin", "$"), ("eth", "Ether", "$"),
+           ("bist100_tl", "BIST 100 (TL)", None), ("bist100_usd", "BIST 100 (dolar bazında)", None),
+           ("spy", "S&P 500 fonu (SPY)", None), ("qqq", "Nasdaq 100 fonu (QQQ)", None)]
+
+
+def sig(v, n=5):
+    if v == 0:
+        return 0
+    from math import floor, log10
+    return round(v, max(0, n - 1 - int(floor(log10(abs(v))))))
+
+
+def compare_series(data, today):
+    """Union-of-dates table. Licensed index levels (BIST 100) and fund prices are rebased to 100."""
+    usd, gold, silver, xu = (data.get(k) or {} for k in ("USDTRY", "GOLD_USD", "SILVER_USD", "XU100"))
+    src = {"gram_altin": combine(gold, usd, lambda g, u: g * u / OZ_GRAM) if gold and usd else {},
+           "gram_gumus": combine(silver, usd, lambda s, u: s * u / OZ_GRAM) if silver and usd else {},
+           "ons_altin": gold, "ons_gumus": silver, "dolar": usd,
+           "brent": data.get("BRENT_USD") or {}, "wti": data.get("WTI_USD") or {},
+           "btc": data.get("BTC_USD") or {}, "eth": data.get("ETH_USD") or {},
+           "bist100_tl": xu, "bist100_usd": combine(xu, usd, lambda x, u: x / u) if xu and usd else {},
+           "spy": data.get("SPY") or {}, "qqq": data.get("QQQ") or {}}
+    cut = (dt.date.fromisoformat(today) - dt.timedelta(days=COMPARE_DAYS)).isoformat()
+    tdy = dt.date.fromisoformat(today).isoformat()
+    keep = {k: {d: v for d, v in s.items() if cut <= d < tdy} for k, s in src.items()}
+    dates = sorted(set(d for s in keep.values() for d in s))
+    assets = []
+    for aid, label, unit in COMPARE:
+        s = keep.get(aid) or {}
+        if len(s) < 20:
+            continue
+        first = s[min(s)]
+        vals = [None if d not in s else sig(s[d] if unit else s[d] / first * 100) for d in dates]
+        assets.append({"id": aid, "label": label, "unit": unit or "endeks, ilk gün = 100",
+                       "kind": "fiyat" if unit else "endeks", "asof": max(s), "v": vals})
+    return {"dates": dates, "assets": assets}
 
 
 def main():
@@ -279,6 +334,20 @@ def main():
         json.dump(rec, fh, ensure_ascii=False, separators=(",", ":"))
     os.replace(tmp, path)
     print(f"tl.json: {d['status']}, {len(d['assets'])} varlık")
+    try:
+        c = compare_series(data, now.date().isoformat())
+        crec = {"schema": "phd.compare/1", "schema_version": 1, "source": SOURCE, "site_url": SITE_URL,
+                "generated_at": rec["generated_at"], "attribution": ATTRIBUTION, "license": rec["license"],
+                "note": "Günlük kapanışlar, son ~2 yıl. BIST 100 ve fonlar yalnız 100'e endeksli seri olarak "
+                        "yayımlanır (seviye değil). Girdi kaynağı Yahoo Finance (kişisel kullanım şartlı).",
+                "disclaimer": "Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.", **c}
+        cp = os.path.join(SITE_OUT, "compare.json")
+        with open(cp + ".tmp", "w", encoding="utf-8") as fh:
+            json.dump(crec, fh, ensure_ascii=False, separators=(",", ":"))
+        os.replace(cp + ".tmp", cp)
+        print(f"compare.json: {len(c['assets'])} varlık, {len(c['dates'])} gün")
+    except Exception as e:      # never break tl.json
+        print(f"compare.json failed: {type(e).__name__}: {e}")
     if not any(v.startswith("OK") for v in status.values()):
         sys.exit(1)
 

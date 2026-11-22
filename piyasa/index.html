@@ -8,6 +8,8 @@
 <title>Piyasa Hava Durumu — günlük makro hava, gram altın, dolar/TL</title>
 <meta name="description" content="Türk yatırımcı için sakin, günlük piyasa verisi: likidite, dolar, kredi, nakde kaçış ve petrol kurallarından derlenen makro hava seviyesi. Yatırım tavsiyesi değildir.">
 <link rel="canonical" href="https://samiboran.github.io/sweeplab/piyasa/">
+<link rel="alternate" hreflang="tr" href="https://samiboran.github.io/sweeplab/piyasa/">
+<link rel="alternate" hreflang="en" href="https://samiboran.github.io/sweeplab/piyasa/?lang=en">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Piyasa Hava Durumu">
 <meta property="og:locale" content="tr_TR">
@@ -25,13 +27,16 @@
 <link rel="preload" href="fonts/inter-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
+<script src="i18n.js"></script>
 <script src="config.js" defer></script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://samiboran.github.io/sweeplab/piyasa/#site","name":"Piyasa Hava Durumu","url":"https://samiboran.github.io/sweeplab/piyasa/","inLanguage":"tr","description":"Türk yatırımcı için günlük makro hava ve TL tarafı verisi. Yatırım tavsiyesi değildir.","publisher":{"@type":"Organization","name":"Piyasa Hava Durumu","url":"https://samiboran.github.io/sweeplab/piyasa/"}},{"@type":"Dataset","name":"Piyasa Hava Durumu — günlük makro hava","description":"Her sabah yayımlanan makro hava seviyesi (YEŞİL/SARI/KIRMIZI), dokuz kuralın 0/1 işaretleri, yuvarlanmış kamu verisi değerleri, gram altın/gümüş TL ve dolar/TL değişimleri. Yalnız türetilmiş veri; lisanslı girdiler yalnız işaret ve yön olarak.","inLanguage":"tr","url":"https://samiboran.github.io/sweeplab/piyasa/","license":"https://creativecommons.org/licenses/by/4.0/","isAccessibleForFree":true,"creator":{"@type":"Organization","name":"Piyasa Hava Durumu","url":"https://samiboran.github.io/sweeplab/piyasa/"},"isBasedOn":["https://fred.stlouisfed.org/","https://defillama.com/stablecoins"],"temporalCoverage":"2026-08-30/..","distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/today.json"},{"@type":"DataDownload","encodingFormat":"text/csv","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/history.csv"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/tl.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/konum.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/index.json"}]}]}
+{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://samiboran.github.io/sweeplab/piyasa/#site","name":"Piyasa Hava Durumu","url":"https://samiboran.github.io/sweeplab/piyasa/","inLanguage":"tr","description":"Türk yatırımcı için günlük makro hava ve TL tarafı verisi. Yatırım tavsiyesi değildir.","publisher":{"@type":"Organization","name":"Piyasa Hava Durumu","url":"https://samiboran.github.io/sweeplab/piyasa/"}},{"@type":"Dataset","name":"Piyasa Hava Durumu — günlük makro hava","description":"Her sabah yayımlanan makro hava seviyesi (YEŞİL/SARI/KIRMIZI), dokuz kuralın 0/1 işaretleri, yuvarlanmış kamu verisi değerleri, gram altın/gümüş TL ve dolar/TL değişimleri. Yalnız türetilmiş veri; lisanslı girdiler yalnız işaret ve yön olarak.","inLanguage":"tr","url":"https://samiboran.github.io/sweeplab/piyasa/","license":"https://creativecommons.org/licenses/by/4.0/","isAccessibleForFree":true,"creator":{"@type":"Organization","name":"Piyasa Hava Durumu","url":"https://samiboran.github.io/sweeplab/piyasa/"},"isBasedOn":["https://fred.stlouisfed.org/","https://defillama.com/stablecoins"],"temporalCoverage":"2026-08-30/..","distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/today.json"},{"@type":"DataDownload","encodingFormat":"text/csv","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/history.csv"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/tl.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/konum.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/dunya.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/movers.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/index.json"}]}]}
 </script>
 <script src="app.js" defer></script>
 <script src="tl.js" defer></script>
+<script src="ozet.js" defer></script>
 <script src="charts.js" defer></script>
+<script src="dunya-side.js" defer></script>
 </head>
 <body>
 <div class="wrap">
@@ -39,6 +44,7 @@
     <div class="brandbox"><a class="brand" href="./">Piyasa Hava Durumu</a><span class="tagline" data-cfg="tagline">İstatistik yalan söylemez</span></div>
     <nav aria-label="Site"><a href="arsiv.html">Arşiv</a><a href="yontem.html">Yöntem</a></nav>
   </header>
+  <div class="band" id="band" aria-label="Piyasa bandı: 1 günlük değişim" role="region" hidden></div>
   <main id="main">
     <p class="label" id="kicker">Makro hava</p>
     <h1 id="headline"><span class="dot" aria-hidden="true"></span><span id="headline-text"><!--S:headline-->Veri yükleniyor…<!--/S--></span></h1>
@@ -69,6 +75,12 @@
       <p class="tl-link"><a href="hesapla.html">Benim pozisyonum ne durumda?</a></p>
     </section>
 
+    <section id="s-ozet" aria-labelledby="l-ozet" hidden>
+      <p class="label" id="l-ozet">Günün özeti</p>
+      <div id="ozet"></div>
+      <p class="mute small" id="ozet-meta"></p>
+    </section>
+
     <section aria-labelledby="l-hafta">
       <p class="label" id="l-hafta">Bu hafta</p>
       <p class="hafta-link"><a href="hafta.html" id="hafta-link">Dünyada bu hafta: geçmiş yıllarda bu hafta ne oldu?</a></p>
@@ -81,6 +93,24 @@
       <p class="mute small">BIST 100, gram altın, dolar/TL, ABD fonları, Bitcoin, Ethereum ve büyük şirketler: 20, 50 ve 200 günlük ortalamaya göre konum.</p>
     </section>
 
+    <section aria-labelledby="l-cmp">
+      <p class="label" id="l-cmp">Grafik</p>
+      <p class="konum-link"><a href="karsilastir.html">Grafikte karşılaştır</a></p>
+      <p class="mute small">Altın, gümüş, dolar/TL, petrol, BIST 100, Bitcoin ve ABD fonlarından 2–3 tanesini aynı grafikte gör ya da birbirine oranla (ör. altın/gümüş oranı).</p>
+    </section>
+
+    <section aria-labelledby="l-hareket">
+      <p class="label" id="l-hareket">Günün hareketlileri</p>
+      <p class="konum-link"><a href="hareket.html">Bugün piyasada neler oldu?</a></p>
+      <p class="mute small">Borsa İstanbul, ABD ve kriptoda en çok yükselen ve düşen isimler, olağandışı hacim ve hareketler.</p>
+    </section>
+
+    <section aria-labelledby="l-dunya">
+      <p class="label" id="l-dunya">Dünya</p>
+      <p class="konum-link"><a href="dunya.html">Dünyada durum ne?</a></p>
+      <p class="mute small">Japonya, Kore, Çin, Hong Kong, Tayvan, Brezilya, emtialar ve günün başlıkları. Sayfa yalnız açılınca yüklenir.</p>
+    </section>
+
     <section aria-labelledby="l-sor">
       <p class="label" id="l-sor">Sor</p>
       <div class="questions" id="questions"></div>
@@ -88,6 +118,7 @@
       <p class="mute small">Cevaplar her sabah verilerle birlikte hazırlanır; sayılar doğrudan veriden gelir.</p>
     </section>
   </main>
+  <aside class="dside" id="dunya-side" aria-label="Dünya özeti" hidden></aside>
   <footer>
     <p>Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.</p>
     <p><a href="veri.html">Veri uçları (JSON/CSV)</a></p>

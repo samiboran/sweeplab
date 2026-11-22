@@ -1,0 +1,138 @@
+{
+  "_doc": "Dünya bölümü (S10b) sabit evreni. Private engine config: symbols are fetched in GitHub Actions (Yahoo Finance, personal-use terms). Company lists = approximately the largest companies by market capitalisation on the set date; shown alphabetically, never as picks. Review quarterly (next: 2027-02).",
+  "set_date": "2026-11-22",
+  "review": "üç ayda bir (sonraki gözden geçirme: Şubat 2027)",
+  "markets": [
+    {"id": "japonya", "title": "Japonya",
+     "indices": [
+       {"id": "N225", "sym": "^N225", "name": "Nikkei 225", "kind": "endeks"},
+       {"id": "TOPIX", "sym": "^TOPX", "alts": ["1306.T"], "name": "TOPIX", "kind": "endeks", "optional": true},
+       {"id": "EWJ", "sym": "EWJ", "name": "iShares MSCI Japan (EWJ, USD)", "kind": "fon"}],
+     "companies": [
+       {"sym": "6501.T", "name": "Hitachi"},
+       {"sym": "6758.T", "name": "Sony Group"},
+       {"sym": "6861.T", "name": "Keyence"},
+       {"sym": "7203.T", "name": "Toyota Motor"},
+       {"sym": "8035.T", "name": "Tokyo Electron"},
+       {"sym": "8306.T", "name": "Mitsubishi UFJ Financial"},
+       {"sym": "8316.T", "name": "Sumitomo Mitsui Financial"},
+       {"sym": "9983.T", "name": "Fast Retailing"},
+       {"sym": "9984.T", "name": "SoftBank Group"}]},
+    {"id": "kore", "title": "Güney Kore",
+     "indices": [
+       {"id": "KS11", "sym": "^KS11", "name": "KOSPI", "kind": "endeks"},
+       {"id": "EWY", "sym": "EWY", "name": "iShares MSCI South Korea (EWY, USD)", "kind": "fon"}],
+     "companies": [
+       {"sym": "000270.KS", "name": "Kia"},
+       {"sym": "000660.KS", "name": "SK Hynix"},
+       {"sym": "005380.KS", "name": "Hyundai Motor"},
+       {"sym": "005930.KS", "name": "Samsung Electronics"},
+       {"sym": "012450.KS", "name": "Hanwha Aerospace"},
+       {"sym": "068270.KS", "name": "Celltrion"},
+       {"sym": "105560.KS", "name": "KB Financial Group"},
+       {"sym": "207940.KS", "name": "Samsung Biologics"},
+       {"sym": "373220.KS", "name": "LG Energy Solution"}]},
+    {"id": "cin", "title": "Çin",
+     "indices": [
+       {"id": "SSEC", "sym": "000001.SS", "name": "Şanghay Bileşik", "kind": "endeks"},
+       {"id": "CSI300", "sym": "000300.SS", "name": "CSI 300", "kind": "endeks", "optional": true},
+       {"id": "FXI", "sym": "FXI", "name": "iShares China Large-Cap (FXI, USD)", "kind": "fon"},
+       {"id": "KWEB", "sym": "KWEB", "name": "KraneShares China Internet (KWEB, USD)", "kind": "fon"}],
+     "companies": [
+       {"sym": "300750.SZ", "name": "CATL"},
+       {"sym": "600519.SS", "name": "Kweichow Moutai"},
+       {"sym": "600941.SS", "name": "China Mobile (A)"},
+       {"sym": "601288.SS", "name": "Agricultural Bank of China"},
+       {"sym": "601398.SS", "name": "ICBC"},
+       {"sym": "601857.SS", "name": "PetroChina"},
+       {"sym": "601939.SS", "name": "China Construction Bank"},
+       {"sym": "601988.SS", "name": "Bank of China"}]},
+    {"id": "hongkong", "title": "Hong Kong",
+     "indices": [
+       {"id": "HSI", "sym": "^HSI", "name": "Hang Seng", "kind": "endeks"},
+       {"id": "HSTECH", "sym": "^HSTECH", "alts": ["HSTECH.HK", "3033.HK"], "name": "Hang Seng TECH", "kind": "endeks", "optional": true}],
+     "companies": [
+       {"sym": "0005.HK", "name": "HSBC Holdings"},
+       {"sym": "0700.HK", "name": "Tencent"},
+       {"sym": "0939.HK", "name": "China Construction Bank (H)"},
+       {"sym": "0941.HK", "name": "China Mobile"},
+       {"sym": "1299.HK", "name": "AIA Group"},
+       {"sym": "1810.HK", "name": "Xiaomi"},
+       {"sym": "3690.HK", "name": "Meituan"},
+       {"sym": "9988.HK", "name": "Alibaba Group"}]},
+    {"id": "tayvan", "title": "Tayvan",
+     "indices": [
+       {"id": "TWII", "sym": "^TWII", "name": "TAIEX", "kind": "endeks"},
+       {"id": "EWT", "sym": "EWT", "name": "iShares MSCI Taiwan (EWT, USD)", "kind": "fon"}],
+     "companies": [
+       {"sym": "2308.TW", "name": "Delta Electronics"},
+       {"sym": "2317.TW", "name": "Hon Hai (Foxconn)"},
+       {"sym": "2330.TW", "name": "TSMC"},
+       {"sym": "2382.TW", "name": "Quanta Computer"},
+       {"sym": "2454.TW", "name": "MediaTek"},
+       {"sym": "2881.TW", "name": "Fubon Financial"},
+       {"sym": "2882.TW", "name": "Cathay Financial"},
+       {"sym": "2891.TW", "name": "CTBC Financial"}]},
+    {"id": "brezilya", "title": "Brezilya",
+     "indices": [
+       {"id": "BVSP", "sym": "^BVSP", "name": "Ibovespa", "kind": "endeks"},
+       {"id": "EWZ", "sym": "EWZ", "name": "iShares MSCI Brazil (EWZ, USD)", "kind": "fon"}],
+     "companies": [
+       {"sym": "ABEV3.SA", "name": "Ambev"},
+       {"sym": "BBAS3.SA", "name": "Banco do Brasil"},
+       {"sym": "BBDC4.SA", "name": "Bradesco"},
+       {"sym": "BPAC11.SA", "name": "BTG Pactual"},
+       {"sym": "ITUB4.SA", "name": "Itaú Unibanco"},
+       {"sym": "PETR4.SA", "name": "Petrobras"},
+       {"sym": "VALE3.SA", "name": "Vale"},
+       {"sym": "WEGE3.SA", "name": "WEG"}]}
+  ],
+  "commodities": [
+    {"group": "Değerli metaller", "items": [
+      {"id": "GC", "sym": "GC=F", "name": "Altın", "unit": "USD/ons"},
+      {"id": "SI", "sym": "SI=F", "name": "Gümüş", "unit": "USD/ons"},
+      {"id": "PL", "sym": "PL=F", "name": "Platin", "unit": "USD/ons"},
+      {"id": "PA", "sym": "PA=F", "name": "Paladyum", "unit": "USD/ons"}]},
+    {"group": "Sanayi metali", "items": [
+      {"id": "HG", "sym": "HG=F", "name": "Bakır", "unit": "USD/libre"}]},
+    {"group": "Enerji", "items": [
+      {"id": "BZ", "sym": "BZ=F", "name": "Brent petrol", "unit": "USD/varil"},
+      {"id": "CL", "sym": "CL=F", "name": "WTI petrol", "unit": "USD/varil"},
+      {"id": "NG", "sym": "NG=F", "name": "Doğal gaz (Henry Hub)", "unit": "USD/MMBtu"}]},
+    {"group": "Tarım", "items": [
+      {"id": "ZC", "sym": "ZC=F", "name": "Mısır", "unit": "ABD senti/buşel"},
+      {"id": "ZS", "sym": "ZS=F", "name": "Soya fasulyesi", "unit": "ABD senti/buşel"},
+      {"id": "ZW", "sym": "ZW=F", "name": "Buğday", "unit": "ABD senti/buşel"}]}
+  ],
+  "reference_metals": [
+    {"name": "Rodyum", "desc": "Platin grubu metal; benzinli araç katalitik konvertörlerinde kullanılır. Üretimin büyük kısmı Güney Afrika'dan gelir."},
+    {"name": "İridyum", "desc": "Çok yoğun, korozyona dayanıklı platin grubu metal; buji uçları, elektroliz (hidrojen) elektrotları ve kristal büyütme potalarında kullanılır."},
+    {"name": "Rutenyum", "desc": "Platin grubu metal; sabit disk kaplamaları, elektronik dirençler ve kimyasal katalizörlerde kullanılır."},
+    {"name": "Osmiyum", "desc": "Bilinen en yoğun element; çok küçük hacimlerde, özel alaşımlarda kullanılır."}
+  ],
+  "headlines": {
+    "max_total": 10,
+    "max_per_feed": 3,
+    "max_age_days": 4,
+    "topics": ["Çin", "Japonya / Kore teknoloji", "Brezilya", "Emtia ve madenler", "Büyük şirketler"],
+    "feeds": [
+      {"id": "koreanet-scitech", "topic": "Japonya / Kore teknoloji", "source": "Korea.net (Kore Kültür ve Enformasyon Servisi)",
+       "url": "https://www.korea.net/koreanet/rss/news/5", "terms": "Resmî hükümet haber servisi RSS'i; şart belirtilmemiş, yalnız başlık + bağlantı."},
+      {"id": "koreanet-business", "topic": "Japonya / Kore teknoloji", "source": "Korea.net (Kore Kültür ve Enformasyon Servisi)",
+       "url": "https://www.korea.net/koreanet/rss/news/4", "terms": "Resmî hükümet haber servisi RSS'i; yalnız başlık + bağlantı."},
+      {"id": "govbr-economia", "topic": "Brezilya", "source": "gov.br (Brezilya Hükümeti)",
+       "url": "https://www.gov.br/pt-br/noticias/financas-impostos-e-gestao-publica/RSS", "terms": "Site içeriği CC BY-ND 3.0; yalnız başlık + bağlantı (türev yok)."},
+      {"id": "agenciabrasil-economia", "topic": "Brezilya", "source": "Agência Brasil (EBC)",
+       "url": "https://agenciabrasil.ebc.com.br/rss/economia/feed.xml", "terms": "Kamu haber ajansı; yalnız başlık + bağlantı. Akış Actions'tan doğrulanacak."},
+      {"id": "eia-today", "topic": "Emtia ve madenler", "source": "ABD Enerji Enformasyon İdaresi (EIA)",
+       "url": "https://www.eia.gov/rss/todayinenergy.xml", "terms": "ABD federal hükümeti yayını (kamu malı); yalnız başlık + bağlantı."},
+      {"id": "samsung-newsroom", "topic": "Büyük şirketler", "source": "Samsung Newsroom",
+       "url": "https://news.samsung.com/global/feed", "terms": "Şirketin resmî basın odası akışı; yalnız başlık + bağlantı."}
+    ],
+    "waiting": [
+      {"topic": "Çin", "note": "Şartları başlık listelemeye açıkça izin veren resmî bir akış henüz seçilmedi."},
+      {"topic": "Japonya / Kore teknoloji", "note": "Japonya için şartları uygun resmî akış henüz seçilmedi (Kore akışları kullanılıyor)."},
+      {"topic": "Midas'ın Kulakları", "note": "getmidas.com'da resmî RSS/API bulunamadı; site 'Tüm hakları saklıdır' diyor. Boran'ın onayı/izin yazışması olmadan eklenmeyecek."}
+    ]
+  }
+}

@@ -45,3 +45,14 @@ def test_snapshots_and_sitemap(tmp_path):
     assert "https://example.org/arsiv/2026-10-21.html" in sm and "2026-09-30" not in sm
     assert "Sitemap: https://example.org/sitemap.xml" in (dist / "robots.txt").read_text(encoding="utf-8")
     assert "arsiv/2026-10-21.html" in (dist / "arsiv.html").read_text(encoding="utf-8")
+
+
+def test_verification_meta(tmp_path):
+    import build_static as bst
+    c = tmp_path / "config.js"
+    c.write_text('window.PHD_CONFIG = {verification: { google: "abcDEF123_-xyz", bing: "" }};')
+    assert bst.verification_meta(str(c)) == '<meta name="google-site-verification" content="abcDEF123_-xyz">'
+    c.write_text('window.PHD_CONFIG = {verification: { google: "\\"><script>", bing: "0123456789ABCDEF" }};')
+    assert bst.verification_meta(str(c)) == '<meta name="msvalidate.01" content="0123456789ABCDEF">'
+    c.write_text('window.PHD_CONFIG = {verification: { google: "", bing: "" }};')
+    assert bst.verification_meta(str(c)) == ""

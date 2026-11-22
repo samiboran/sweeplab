@@ -197,3 +197,22 @@ def test_sentences_explain_thresholds_in_words_and_add_context():
     assert "olası talep zayıflığı" in texts["P1"]
     # 20-day base equals the 60-row high -> spike-reversal context is stated
     assert "zirvesine yakındı" in texts["P1"] and s["flags"]["P1"] == 1
+
+
+def test_english_sentences_same_numbers_no_action_words():
+    import re as _re
+    s = bs.score_row(_rows_with(BASE_1030, ROW_1119), 20)
+    rec = bs.build_record(s, "KIRMIZI", True, "retro", "2026-11-21T06:00:00Z", "2026-11-21", {})
+    rec["answers_en"] = bs.answers_en(rec, None)
+    assert rec["headline_en"].endswith("Macro weather: RED") and rec["held_note_en"]
+    for r in rec["rules"]:
+        assert r["sentence_en"] and r["title_en"] and r["group_en"]
+        assert not _re.search(r"[çğıöşüÇĞİÖŞÜ]", r["sentence_en"]), r["sentence_en"]
+        # every number in the Turkish sentence also appears in the English one (format differs: , vs .)
+        nums_tr = [n.replace(".", "").replace(",", ".") for n in _re.findall(r"\d[\d.,]*", r["sentence"]) if n.strip(".,")]
+        nums_en = [n.replace(",", "") for n in _re.findall(r"\d[\d.,]*", r["sentence_en"])]
+        for n in nums_tr:
+            assert n.rstrip(".") in [m.rstrip(".") for m in nums_en], (n, r["sentence"], r["sentence_en"])
+    text = json.dumps(rec["answers_en"] + [r["sentence_en"] for r in rec["rules"]]).lower()
+    for w in ("buy", "sell", "opportunity", "cheap", "target", "don't miss", "recommend"):
+        assert w not in text

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://raw.githubusercontent.com; base-uri 'self'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Grafikte karşılaştır — Piyasa Hava Durumu</title>
+<meta name="description" content="Gram altın, ons altın, gümüş, dolar/TL, petrol, BIST 100, Bitcoin ve ABD fonlarından 2 ya da 3 tanesini aynı grafikte karşılaştır ya da birbirine oranını gör. Yatırım tavsiyesi değildir.">
+<link rel="canonical" href="https://samiboran.github.io/sweeplab/piyasa/karsilastir.html">
+<link rel="alternate" hreflang="tr" href="https://samiboran.github.io/sweeplab/piyasa/karsilastir.html">
+<link rel="alternate" hreflang="en" href="https://samiboran.github.io/sweeplab/piyasa/karsilastir.html?lang=en">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Piyasa Hava Durumu">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:title" content="Grafikte karşılaştır — Piyasa Hava Durumu">
+<meta property="og:description" content="Gram altın, ons altın, gümüş, dolar/TL, petrol, BIST 100, Bitcoin ve ABD fonlarından 2 ya da 3 tanesini aynı grafikte karşılaştır ya da birbirine oranını gör. Yatırım tavsiyesi değildir.">
+<meta property="og:url" content="https://samiboran.github.io/sweeplab/piyasa/karsilastir.html">
+<meta property="og:image" content="https://samiboran.github.io/sweeplab/piyasa/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Piyasa Hava Durumu marka kartı">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://samiboran.github.io/sweeplab/piyasa/og.png">
+<meta name="twitter:title" content="Grafikte karşılaştır — Piyasa Hava Durumu">
+<meta name="twitter:description" content="Gram altın, ons altın, gümüş, dolar/TL, petrol, BIST 100, Bitcoin ve ABD fonlarından 2 ya da 3 tanesini aynı grafikte karşılaştır ya da birbirine oranını gör. Yatırım tavsiyesi değildir.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<script src="i18n.js"></script>
+<script src="config.js" defer></script>
+<script src="karsilastir.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div class="brandbox"><a class="brand" href="./">Piyasa Hava Durumu</a><span class="tagline" data-cfg="tagline">İstatistik yalan söylemez</span></div>
+    <nav aria-label="Site"><a href="./">Bugün</a><a href="arsiv.html">Arşiv</a><a href="yontem.html">Yöntem</a></nav>
+  </header>
+  <main>
+    <p class="label kicker">Grafik</p>
+    <h1>Grafikte karşılaştır</h1>
+    <p class="meta" id="c-meta">Yükleniyor…</p>
+    <noscript><p class="notice">Bu sayfa grafik için JavaScript kullanır.</p></noscript>
+    <hr class="accent">
+    <form class="cmp" id="cmp" autocomplete="off">
+      <div class="cmp-sel">
+        <label for="a1">1. varlık</label><select id="a1"></select>
+        <label for="a2">2. varlık</label><select id="a2"></select>
+        <label for="a3">3. varlık (isteğe bağlı)</label><select id="a3"></select>
+      </div>
+      <fieldset class="cmp-mode">
+        <legend>Görünüm</legend>
+        <label><input type="radio" name="mod" value="birlikte" checked> Birlikte (başlangıç = 100)</label>
+        <label><input type="radio" name="mod" value="oran"> Oran (1. ÷ 2.)</label>
+      </fieldset>
+      <div class="cmp-range" role="group" aria-label="Aralık" id="ranges"></div>
+    </form>
+    <p class="cmp-presets small" id="presets"></p>
+    <figure class="chart cmp-chart">
+      <div class="chart-host" id="c-host" role="img" aria-label="Karşılaştırma grafiği"></div>
+      <p class="chart-legend" id="c-legend"></p>
+    </figure>
+    <p class="cmp-sum" id="c-sum" aria-live="polite"></p>
+    <p class="mute small">Sürükle: kaydır · tekerlek ya da iki parmak: yakınlaştır · çift tıkla: sığdır. "Birlikte" görünümünde her seri aralığın ilk günü 100 kabul edilerek çizilir; böylece farklı birimlerdeki varlıkların yüzde hareketi yan yana görülür. BIST 100 ve fonlar yalnız endekslenmiş seri olarak yayımlanır.</p>
+    <p class="mute small" id="c-note"></p>
+    <p class="mute small chart-credit">Grafik kütüphanesi: <a href="https://www.tradingview.com/" rel="noopener noreferrer">TradingView Lightweight Charts</a></p>
+  </main>
+  <footer>
+    <p>Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.</p>
+    <p id="foot-meta">—</p>
+    <p>© Piyasa Hava Durumu — türetilmiş veriler kaynak gösterilerek kullanılabilir (CC BY 4.0)</p>
+  </footer>
+</div>
+</body>
+</html>
