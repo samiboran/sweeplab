@@ -67,6 +67,11 @@ jobs:
           RESEARCH_DIR: feed/data/research/candles_1d
           TL_RAW_DIR: feed/data/research/tl_1d
         run: python3 tools/build_konum.py || echo "konum failed"
+      - name: Dünya (regions, companies, commodities, official-feed headlines; derived -> data/site/dunya.json, non-fatal)
+        env:
+          SITE_OUT: feed/data/site
+          WORLD_RAW_DIR: feed/data/research/world_1d
+        run: python3 tools/build_dunya.py || echo "dunya failed"
       - name: Sicil / track record (derived words only -> data/site/sicil.json, non-fatal)
         env:
           SITE_OUT: feed/data/site
@@ -102,6 +107,7 @@ jobs:
           git add data/derivs/
           if [ -d data/site ]; then git add data/site/; fi
           if [ -d data/research/tl_1d ]; then git add data/research/tl_1d/; fi
+          if [ -d data/research/world_1d ]; then git add data/research/world_1d/; fi
           git commit -m "daily brief $(date -u +%F)" || echo "no changes"
           git push origin HEAD:data-feed
 
