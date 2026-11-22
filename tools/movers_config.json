@@ -1,4 +1,5 @@
 {
+  "_doc_closed_after_utc": "Bu UTC saatinden sonra (hafta içi) o günün çubuğu tamamlanmış sayılır: BIST 18:00 İstanbul kapanışı (+kapanış seansı) → 15:20 UTC; ABD 16:00 New York kapanışı → yaz 20:00, kış 21:00 UTC → 21:10 UTC. Kriptoda kapanış yok; UTC günü bitmeden çubuk kullanılmaz.",
   "_doc": "Günün hareketlileri ve anomaliler (S10c) sabit evreni. Private engine config. BIST listesi resmî BIST 100 bileşimi DEĞİLDİR: belirleme tarihinde büyük ve likit bilinen hisselerden oluşan sabit bir listedir; Actions'ta Yahoo'dan alınamayan sembol loglanır ve atlanır. Üç ayda bir gözden geçirilir. Likidite tabanı: son 20 günün ortalama işlem hacmi (kapanış × adet) bu değerin altındaysa isim hiçbir listede gösterilmez. Piyasa değeri için serbest günlük veri olmadığından taban yalnız işlem hacmine dayanır.",
   "set_date": "2026-11-22",
   "review": "üç ayda bir (sonraki: Şubat 2027)",
@@ -6,6 +7,7 @@
     {"id": "bist", "title": "Borsa İstanbul", "src": "yahoo", "currency": "TL",
      "index": {"name": "BIST 100", "tl_file": "XU100"},
      "min_turnover_20d": 250000000,
+     "closed_after_utc": "15:20",
      "note": "BIST verisi gecikmeli olabilir; kapanış sonrası değerler kullanılır.",
      "symbols": ["AEFES.IS", "AKBNK.IS", "AKSEN.IS", "ALARK.IS", "ARCLK.IS", "ASELS.IS", "ASTOR.IS", "BIMAS.IS",
                  "BRSAN.IS", "CCOLA.IS", "CIMSA.IS", "DOAS.IS", "EKGYO.IS", "ENJSA.IS", "ENKAI.IS", "EREGL.IS",
@@ -16,6 +18,7 @@
     {"id": "abd", "title": "ABD", "src": "us_1d", "currency": "USD",
      "index": {"name": "S&P 500 fonu (SPY)", "us_file": "SPY"},
      "min_turnover_20d": 200000000,
+     "closed_after_utc": "21:10",
      "min_price": 5,
      "exclude": ["SPY", "QQQ", "RSP", "SMH", "GLD", "SLV", "COPX", "CPER"],
      "note": "Evren: araştırma listesindeki ABD hisseleri (fonlar hariç)."},

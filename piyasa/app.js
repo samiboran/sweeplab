@@ -166,7 +166,8 @@
     var ans = (EN && Array.isArray(d.answers_en) && d.answers_en.length) ? d.answers_en : (d.answers || []);
     if (EN && ans === d.answers_en) qs.setAttribute("data-noi18n", ""); else qs.removeAttribute("data-noi18n");
     answersEn = EN && ans === d.answers_en;
-    ans.forEach(function (q) {
+    // The rules list above already says which rules signal; keep only questions that add something.
+    ans.filter(function (q) { return q && q.id !== "isaretler"; }).forEach(function (q) {
       var b = el("button", "q", q.q);
       b.type = "button";
       b.setAttribute("aria-pressed", "false");

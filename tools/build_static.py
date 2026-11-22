@@ -239,7 +239,7 @@ def build(dist, data=None, base=None):
     if os.path.exists(sp):
         s = json.load(open(sp, encoding="utf-8")).get("summary_live", {})
         doc = fill(doc, "sicil-sum", e(f"Canlı kayıt: {s.get('canli_sinyal', 0)} KIRMIZI geçişi, "
-                                       f"{s.get('canli_teyit', 0)} teyit, {s.get('canli_yanlis_alarm', 0)} yanlış alarm, "
+                                       f"{s.get('canli_teyit', 0)} ardından düşüş geldi, {s.get('canli_yanlis_alarm', 0)} düşüş gelmedi, "
                                        f"{s.get('canli_bekliyor', 0)} bekliyor."))
     open(ap, "w", encoding="utf-8").write(doc)
 

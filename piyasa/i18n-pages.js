@@ -27,8 +27,8 @@
     "Sicil": "Track record",
     "KIRMIZI işaretlerinden sonra ne oldu?": "What happened after RED signals?",
     "Sicil yükleniyor…": "Loading track record…",
-    "Kontrol: KIRMIZI'ya geçilen günden sonraki 20 gün içinde Nasdaq Bileşik, o günkü kapanışının en az %5 altında kapandıysa \"teyit edildi\", kapanmadıysa \"yanlış alarm\". Seviye KIRMIZI değilken 20 günde %10'luk düşüş olursa \"kaçırılan düşüş\" yazılır. Bu, kuralların ne kadar isabetli olduğunu dürüstçe göstermek içindir; gelecek hakkında bir şey söylemez.":
-      "Check: if within 20 days of a switch to RED the Nasdaq Composite closed at least 5% below that day's close, the signal is \"confirmed\"; otherwise it is a \"false alarm\". A 10% drop within 20 days while the level was not RED is listed as a \"missed drop\". This shows honestly how accurate the rules have been; it says nothing about the future.",
+    "Kontrol: KIRMIZI'ya geçilen günden sonraki 20 gün içinde Nasdaq Bileşik, o günkü kapanışının en az %5 altında kapandıysa \"düşüş geldi\", kapanmadıysa \"düşüş gelmedi\" yazılır. Seviye KIRMIZI değilken 20 günde %10'luk düşüş olursa \"KIRMIZI'sız düşüş\" yazılır. Amaç geçmişi olduğu gibi göstermektir; gelecek hakkında bir şey söylemez.":
+      "Check: if within 20 days of a switch to RED the Nasdaq Composite closed at least 5% below that day's close, the entry says \"fall followed\"; otherwise \"no fall followed\". A 10% drop within 20 days while the level was not RED is listed as \"fall without RED\". The aim is to show the past as it was; it says nothing about the future.",
     "Geriye dönük sicil (bilgi amaçlı, Ekim 2026'dan)": "Retro track record (for information, from October 2026)",
     "Bu günler kurallar donmadan önce, sonradan hesaplandı. Canlı sicile sayılmaz.":
       "These days were computed afterwards, before the rules were frozen. They do not count towards the live record.",

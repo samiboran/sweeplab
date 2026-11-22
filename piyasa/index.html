@@ -41,14 +41,28 @@
 <body>
 <div class="wrap">
   <header class="masthead">
-    <div class="brandbox"><a class="brand" href="./">Piyasa Hava Durumu</a><span class="tagline" data-cfg="tagline">İstatistik yalan söylemez</span></div>
-    <nav aria-label="Site"><a href="arsiv.html">Arşiv</a><a href="yontem.html">Yöntem</a></nav>
+    <div class="brandbox"><a class="brand" href="./">Piyasa Hava Durumu</a></div>
+    <nav aria-label="Site"><a href="hesapla.html">Hesapla</a><a href="arsiv.html">Arşiv</a><a href="yontem.html">Yöntem</a></nav>
   </header>
   <div class="band" id="band" aria-label="Piyasa bandı: 1 günlük değişim" role="region" hidden></div>
   <main id="main">
+    <section aria-labelledby="l-tl">
+      <p class="label" id="l-tl">TL tarafı</p>
+      <p class="tl-link top"><a href="hesapla.html">Benim pozisyonum ne durumda? Maliyetini gir, başa baş fiyatını gör</a></p>
+      <div id="tl" class="tl"><p class="mute small">TL verisi yükleniyor…</p></div>
+    </section>
+
+    <section id="s-ozet" aria-labelledby="l-ozet" hidden>
+      <p class="label" id="l-ozet">Günün özeti</p>
+      <div id="ozet"></div>
+      <p class="mute small" id="ozet-meta"></p>
+    </section>
+
+    <hr class="rule-top">
     <p class="label" id="kicker">Makro hava</p>
     <h1 id="headline"><span class="dot" aria-hidden="true"></span><span id="headline-text"><!--S:headline-->Veri yükleniyor…<!--/S--></span></h1>
     <p class="meta" id="meta"><!--S:meta--><!--/S--></p>
+    <p class="frame">Seviye, dokuz piyasa göstergesinden kaçının stres işareti verdiğini özetler; ne yapılacağını söylemez ve KIRMIZI günlerinin hepsini bir düşüş izlemedi (<a href="arsiv.html#sicil">Sicil</a>). Makro veriler ABD kaynaklıdır ve bir iş günü gecikmeli gelir.</p>
     <div class="datepick" id="datepick">
       <label for="tarih" class="label">Tarih seç</label>
       <input type="date" id="tarih" min="2026-10-01" aria-describedby="tarih-not">
@@ -69,53 +83,22 @@
       </details>
     </section>
 
-    <section aria-labelledby="l-tl">
-      <p class="label" id="l-tl">TL tarafı</p>
-      <div id="tl" class="tl"><p class="mute small">TL verisi yükleniyor…</p></div>
-      <p class="tl-link"><a href="hesapla.html">Benim pozisyonum ne durumda?</a></p>
-    </section>
-
-    <section id="s-ozet" aria-labelledby="l-ozet" hidden>
-      <p class="label" id="l-ozet">Günün özeti</p>
-      <div id="ozet"></div>
-      <p class="mute small" id="ozet-meta"></p>
-    </section>
-
-    <section aria-labelledby="l-hafta">
-      <p class="label" id="l-hafta">Bu hafta</p>
-      <p class="hafta-link"><a href="hafta.html" id="hafta-link">Dünyada bu hafta: geçmiş yıllarda bu hafta ne oldu?</a></p>
-      <p class="mute small">Her pazartesi ve cuma: aynı haftanın son 10 yıldaki seyri, haftanın veri takvimi ve ekonomi tarihinden notlar.</p>
-    </section>
-
-    <section aria-labelledby="l-konum">
-      <p class="label" id="l-konum">Ortalamalar</p>
-      <p class="konum-link"><a href="konum.html">Fiyatlar ortalamalarına göre nerede?</a></p>
-      <p class="mute small">BIST 100, gram altın, dolar/TL, ABD fonları, Bitcoin, Ethereum ve büyük şirketler: 20, 50 ve 200 günlük ortalamaya göre konum.</p>
-    </section>
-
-    <section aria-labelledby="l-cmp">
-      <p class="label" id="l-cmp">Grafik</p>
-      <p class="konum-link"><a href="karsilastir.html">Grafikte karşılaştır</a></p>
-      <p class="mute small">Altın, gümüş, dolar/TL, petrol, BIST 100, Bitcoin ve ABD fonlarından 2–3 tanesini aynı grafikte gör ya da birbirine oranla (ör. altın/gümüş oranı).</p>
-    </section>
-
-    <section aria-labelledby="l-hareket">
-      <p class="label" id="l-hareket">Günün hareketlileri</p>
-      <p class="konum-link"><a href="hareket.html">Bugün piyasada neler oldu?</a></p>
-      <p class="mute small">Borsa İstanbul, ABD ve kriptoda en çok yükselen ve düşen isimler, olağandışı hacim ve hareketler.</p>
-    </section>
-
-    <section aria-labelledby="l-dunya">
-      <p class="label" id="l-dunya">Dünya</p>
-      <p class="konum-link"><a href="dunya.html">Dünyada durum ne?</a></p>
-      <p class="mute small">Japonya, Kore, Çin, Hong Kong, Tayvan, Brezilya, emtialar ve günün başlıkları. Sayfa yalnız açılınca yüklenir.</p>
-    </section>
-
     <section aria-labelledby="l-sor">
-      <p class="label" id="l-sor">Sor</p>
+      <p class="label" id="l-sor">Sorular</p>
       <div class="questions" id="questions"></div>
       <div class="answer" id="answer" aria-live="polite"></div>
       <p class="mute small">Cevaplar her sabah verilerle birlikte hazırlanır; sayılar doğrudan veriden gelir.</p>
+    </section>
+
+    <section aria-labelledby="l-daha">
+      <p class="label" id="l-daha">Daha fazlası</p>
+      <ul class="more">
+        <li><a href="hareket.html">Bugün piyasada neler oldu?</a> <span class="mute small">Borsa İstanbul, ABD ve kriptoda günün hareketlileri.</span></li>
+        <li><a href="dunya.html">Dünyada durum ne?</a> <span class="mute small">Asya, Brezilya, emtialar ve günün başlıkları.</span></li>
+        <li><a href="hafta.html" id="hafta-link">Dünyada bu hafta</a> <span class="mute small">Geçmiş yıllarda bu hafta ne oldu (pazartesi ve cuma).</span></li>
+        <li><a href="konum.html">Fiyatlar ortalamalarına göre nerede?</a> <span class="mute small">20, 50 ve 200 günlük ortalamaya göre konum.</span></li>
+        <li><a href="karsilastir.html">Grafikte karşılaştır</a> <span class="mute small">2–3 varlık aynı grafikte ya da oran olarak.</span></li>
+      </ul>
     </section>
   </main>
   <aside class="dside" id="dunya-side" aria-label="Dünya özeti" hidden></aside>

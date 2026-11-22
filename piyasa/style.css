@@ -340,3 +340,18 @@ button.preset:hover,button.preset:focus-visible{color:var(--red);text-decoration
 html[data-ui-lang="en"] [data-lang="tr"]{display:none}
 html[data-ui-lang="en"] [data-lang="en"]{display:block}
 .tablewrap{position:relative}
+/* Mobile band: 2-column grid instead of a hidden horizontal scroll (reviewers saw values cut off) */
+@media (max-width:699px){.band-list{display:grid;grid-template-columns:1fr 1fr;row-gap:8px;overflow:visible;scroll-snap-type:none}
+.band-i,.band-i:first-child{padding:0 0 0 12px;border-left:1px solid var(--rule);flex-wrap:wrap;column-gap:6px;row-gap:0;white-space:normal}
+.band-i:nth-child(2n+1){padding-left:0;border-left:0}
+.band-i .band-k,.band-x .band-k{flex-basis:100%}
+.band-x{flex-wrap:wrap;column-gap:6px;row-gap:0}}
+.frame{margin:6px 0 10px;font-size:13px;line-height:1.5;color:var(--mute);max-width:62ch}
+.frame a{color:inherit}
+/* Home "Daha fazlası": one line per page instead of five sections */
+ul.more{list-style:none;margin:0;padding:0}
+ul.more li{padding:8px 0;border-top:1px solid var(--rule)}
+ul.more li:first-child{border-top:0}
+ul.more li .small{display:block;margin-top:2px}
+hr.rule-top{border:0;border-top:1px solid var(--rule);margin:28px 0 20px}
+.tl-link.top{margin:0 0 18px;font-size:17px;font-weight:600}
