@@ -1,6 +1,6 @@
 {
  "_doc": "Curated economic-history entries for 'Dünyada bu Pazartesi / Dünyada bu Cuma'. Every entry needs a source URL that states the fact; never add an unsourced entry. precision 'day' = shown in the week containing month-day; 'year' = 'İlkler' rotation (one per edition). Added 2026-11-21; scheduled runs add sourced entries for the next two weeks.",
- "updated": "2026-11-21",
+ "updated": "2026-11-22",
  "entries": [
   {"date": "2008-11-23", "precision": "day", "topic": "Bankacılık",
    "title": "ABD hükümeti Citigroup'u kurtarma paketi açıkladı",
@@ -41,6 +41,22 @@
   {"date": "1926", "precision": "year", "topic": "İlkler",
    "title": "Cumhuriyetin ilk şeker fabrikaları",
    "text": "Uşak ve Alpullu şeker fabrikaları 1926'da üretime başlayarak Cumhuriyet döneminin ilk şeker fabrikaları oldu.",
-   "source": "Atatürk Ansiklopedisi", "url": "https://ataturkansiklopedisi.gov.tr/bilgi/seker-sanayinin-kurulmasi-ve-gelisimi/"}
+   "source": "Atatürk Ansiklopedisi", "url": "https://ataturkansiklopedisi.gov.tr/bilgi/seker-sanayinin-kurulmasi-ve-gelisimi/"},
+  {"date": "2010-11-28", "precision": "day", "topic": "Borç krizleri",
+   "title": "İrlanda için AB–IMF destek programı",
+   "text": "Avrupa Birliği ve IMF, İrlanda ile toplam 85 milyar euroluk bir finansman programında anlaştı; IMF'nin payı 22,5 milyar euro oldu. İrlanda, Yunanistan'dan sonra euro bölgesinde dış destek alan ikinci ülke oldu.",
+   "source": "IMF", "url": "https://www.imf.org/external/np/tr/2010/tr112810.htm"},
+  {"date": "2011-11-30", "precision": "day", "topic": "Merkez bankaları",
+   "title": "Altı merkez bankasından ortak dolar likiditesi adımı",
+   "text": "Fed, Avrupa Merkez Bankası, İngiltere, Japonya, Kanada ve İsviçre merkez bankaları, küresel para piyasalarındaki baskıya karşı dolar swap hatlarının fiyatını 50 baz puan düşürdüklerini ortak açıklamayla duyurdu.",
+   "source": "Federal Reserve", "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20111130a.htm"},
+  {"date": "2015-11-30", "precision": "day", "topic": "Para sistemi",
+   "title": "Çin yuanı IMF'nin SDR sepetine alındı",
+   "text": "IMF İcra Kurulu, Çin yuanının (renminbi) 1 Ekim 2016'dan itibaren dolar, euro, yen ve sterlinle birlikte Özel Çekme Hakkı (SDR) para sepetine girmesine karar verdi.",
+   "source": "IMF", "url": "https://www.imf.org/en/news/articles/2015/09/14/01/49/pr15540"},
+  {"date": "1866", "precision": "year", "topic": "İlkler",
+   "title": "Osmanlı'nın ilk menkul kıymet borsası: Dersaadet Tahvilat Borsası",
+   "text": "İstanbul'da 1866'da kurulan Dersaadet Tahvilat Borsası, Osmanlı'da menkul kıymetlerin işlem gördüğü ilk organize piyasa oldu; Borsa İstanbul kendi tarihçesini bu borsaya dayandırır.",
+   "source": "Borsa İstanbul", "url": "https://www.borsaistanbul.com/dosyalar/25yil/index.html"}
  ]
 }
