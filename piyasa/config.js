@@ -3,7 +3,9 @@
 window.PHD_CONFIG = Object.freeze({
   title: "Piyasa Hava Durumu",
   tagline: "İstatistik yalan söylemez",
-  deeper: { label: "Daha derin araçlar", name: "Altınkulak", url: "https://samiboran.github.io/altinkulak/" },
+  // Boran (22 Kasım): Altınkulak henüz bitmedi ve sinyalleri doğrulanmadı — bağlantı gizli.
+  // Altınkulak doğrulanınca url'yi geri yazın: "https://samiboran.github.io/altinkulak/"
+  deeper: { label: "Daha derin araçlar", name: "Altınkulak", url: "" },
   x: "",          // ör. "https://x.com/kullaniciadi" — boşsa gösterilmez
   telegram: "",   // ör. "https://t.me/kanaladi" — herkese açık kanal açılınca (S7)
   verification: { google: "", bing: "" }   // S11: Search Console / Bing doğrulama kodu
