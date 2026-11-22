@@ -4,7 +4,7 @@
  "source": "Piyasa Hava Durumu",
  "site_url": "https://samiboran.github.io/sweeplab/piyasa/",
  "docs": "https://samiboran.github.io/sweeplab/piyasa/veri.html",
- "generated_at": "2026-11-22T09:03:16Z",
+ "generated_at": "2026-11-22T12:25:56Z",
  "attribution": "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0",
  "license": "karışık (alan düzeyinde; veri.html)",
  "base_url_now": "https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/",
@@ -70,6 +70,15 @@
    "exists": true
   },
   {
+   "path": "compare.json",
+   "schema": "phd.compare/1",
+   "schema_version": 1,
+   "update_utc": "her gün ~06:00",
+   "license": "yalnızca görüntüleme",
+   "description": "Karşılaştır sayfası: ~2 yıl günlük kapanış (altın/gümüş gram ve ons, dolar/TL, Brent, WTI, BTC, ETH); BIST 100 ve fonlar yalnız 100'e endeksli.",
+   "exists": true
+  },
+  {
    "path": "charts.json",
    "schema": "phd.charts/1",
    "schema_version": 1,
@@ -112,25 +121,46 @@
    "path": "dunya.json",
    "schema": "phd.dunya/1",
    "schema_version": 1,
-   "update_utc": "planlı (S10b)",
+   "update_utc": "her gün ~06:00",
    "license": "yalnızca görüntüleme",
-   "description": "Bölge endeksleri, emtialar, günün başlıkları.",
-   "exists": false
+   "description": "Bölge endeks/fonları ve büyük şirketler (değişim + ortalamalara göre yer), emtialar, referans metaller, günün başlıkları (yalnız başlık + kaynak + saat + bağlantı).",
+   "exists": true
   },
   {
    "path": "movers.json",
    "schema": "phd.movers/1",
    "schema_version": 1,
-   "update_utc": "planlı (S10c)",
+   "update_utc": "her gün ~06:00",
    "license": "yalnızca görüntüleme",
-   "description": "Günün hareketlileri ve kural tabanlı anomaliler.",
+   "description": "Günün hareketlileri (BIST, ABD, kripto) ve kural tabanlı anomaliler; yalnız yüzde ve oranlar.",
+   "exists": true
+  },
+  {
+   "path": "ozet.json",
+   "schema": "phd.ozet/1",
+   "schema_version": 1,
+   "update_utc": "her gün ~07:00 (ayrı görev)",
+   "license": "yalnızca görüntüleme",
+   "description": "Günün özeti: en çok 8 haber, kendi cümlelerimizle 2–3 cümle + kaynak bağlantısı (TR + EN).",
    "exists": false
+  },
+  {
+   "path": "ozet/{YYYY-MM-DD}.json",
+   "schema": "phd.ozet/1",
+   "schema_version": 1,
+   "update_utc": "her gün ~07:00 (ayrı görev)",
+   "license": "yalnızca görüntüleme",
+   "description": "Geçmiş günlerin özetleri (yalnız ekleme).",
+   "exists": false,
+   "first": null,
+   "last": null,
+   "count": 0
   },
   {
    "path": "movers_news.json",
    "schema": "phd.movers_news/1",
    "schema_version": 1,
-   "update_utc": "planlı (S10c)",
+   "update_utc": "ayrı görev (henüz yok)",
    "license": "yalnızca görüntüleme",
    "description": "Hareketlilere eşleştirilen haber başlıkları (yalnız başlık + kaynak + saat + bağlantı).",
    "exists": false
