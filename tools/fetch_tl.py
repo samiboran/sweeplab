@@ -270,7 +270,7 @@ def main():
     d = derive(data, now.date().isoformat(), crypto_refs(NOTEBOOK))
     rec = {"schema": "phd.tl/1", "schema_version": 1, "source": SOURCE, "site_url": SITE_URL,
            "generated_at": now.isoformat().replace("+00:00", "Z"), "attribution": ATTRIBUTION,
-           "license": "CC BY 4.0 (türetilmiş değerler)", "note": DATA_NOTE, "rules_version": "v1",
+           "license": "Yalnızca görüntüleme (atıfla). Girdiler Yahoo Finance/OKX kişisel kullanım şartlı; CC BY 4.0 kapsamında değil. Ayrıntı: veri.html", "note": DATA_NOTE, "rules_version": "v1",
            "inputs": {k: ("ok" if v.startswith("OK") else "hata") for k, v in status.items()}, **d}
     os.makedirs(SITE_OUT, exist_ok=True)
     path = os.path.join(SITE_OUT, "tl.json")

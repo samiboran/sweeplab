@@ -261,7 +261,7 @@ def build(edition, today, raw_dir, notebook, tarihte, now_utc):
     title = "Dünyada bu Pazartesi" if edition == "pazartesi" else "Dünyada bu Cuma"
     return {"schema": "phd.hafta/1", "schema_version": 1, "source": SOURCE, "site_url": SITE_URL,
             "generated_at": now_utc.replace(microsecond=0).isoformat().replace("+00:00", "Z"),
-            "attribution": ATTRIBUTION, "license": "CC BY 4.0 (türetilmiş değerler)",
+            "attribution": ATTRIBUTION, "license": "Yalnızca görüntüleme (atıfla). Girdiler Yahoo Finance/OKX kişisel kullanım şartlı; CC BY 4.0 kapsamında değil. Ayrıntı: veri.html",
             "edition": edition, "title": title, "issue_date": today.isoformat(),
             "headline": f"{title} — {tr_date(today.isoformat())}",
             "week_start": ws, "week_end": we, "week_label": rng, "years": YEARS,

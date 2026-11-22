@@ -3,6 +3,8 @@
   <url><loc>https://samiboran.github.io/sweeplab/piyasa/</loc><changefreq>daily</changefreq></url>
   <url><loc>https://samiboran.github.io/sweeplab/piyasa/arsiv.html</loc><changefreq>daily</changefreq></url>
   <url><loc>https://samiboran.github.io/sweeplab/piyasa/hafta.html</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://samiboran.github.io/sweeplab/piyasa/konum.html</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://samiboran.github.io/sweeplab/piyasa/veri.html</loc><changefreq>monthly</changefreq></url>
   <url><loc>https://samiboran.github.io/sweeplab/piyasa/hesapla.html</loc><changefreq>monthly</changefreq></url>
   <url><loc>https://samiboran.github.io/sweeplab/piyasa/yontem.html</loc><changefreq>monthly</changefreq></url>
 </urlset>

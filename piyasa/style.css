@@ -201,3 +201,30 @@ table.sicil tr.miss td.r{color:var(--red);font-weight:600}
 .prose ul{padding-left:1.1em;margin:0 0 12px}.prose li{margin:0 0 6px}
 table.days td.m{white-space:nowrap}
 @media (max-width:600px){table.days th:nth-child(5),table.days td.v{display:none}table.days td.m{font-size:12px}}
+/* ---- konum (S9) ---- */
+.k-intro .fm{margin:0 2px 0 0}
+.fm.up{background:var(--ink)}
+.kg{padding:22px 0 6px}
+.k-ozet{font-size:15px;color:#333;margin:0 0 8px}
+table.konum{width:100%;border-collapse:collapse;font-size:14px}
+table.konum th,table.konum td{padding:8px 6px 8px 0;border-bottom:1px solid var(--rule);text-align:center;white-space:nowrap}
+table.konum thead th{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);border-bottom:1px solid var(--ink)}
+table.konum .l{text-align:left;white-space:normal}
+table.konum tbody th{font-weight:400}
+table.konum .r{text-align:right}
+table.konum td.v{font-weight:600}
+table.konum td.v.neg{color:var(--red)}
+table.konum td.d{color:var(--mute);font-size:12px}
+table.konum tr.stale td,table.konum tr.stale th{color:var(--mute)}
+.konum-link{font-size:19px;margin:0 0 6px}
+@media (max-width:420px){table.konum{font-size:13px}table.konum th,table.konum td{padding-right:4px}}
+/* ---- veri (S10) ---- */
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.86em;word-break:break-word}
+table.veri td{font-size:13px}
+table.veri td:first-child code{white-space:nowrap}
+table.konum{table-layout:fixed}
+table.konum th:nth-child(2),table.konum th:nth-child(3),table.konum th:nth-child(4){width:2.9em}
+table.konum th:nth-child(5){width:4.6em}
+table.konum th:nth-child(6){width:4.4em}
+table.konum td.d,table.konum thead th:nth-child(6){padding-left:8px;padding-right:0}
+@media (max-width:600px){table.veri thead{display:none}table.veri,table.veri tbody,table.veri tr,table.veri td{display:block;width:100%}table.veri tr{padding:10px 0;border-bottom:1px solid var(--rule)}table.veri td{border:0;padding:1px 0}table.veri td:first-child{font-weight:600}table.veri td:nth-child(2),table.veri td:nth-child(3),table.veri td:nth-child(4){display:inline;width:auto;color:var(--mute);font-size:12px}table.veri td:nth-child(3)::before,table.veri td:nth-child(4)::before{content:" · "}}

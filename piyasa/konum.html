@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://raw.githubusercontent.com; base-uri 'self'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Ortalamalara göre konum — Piyasa Hava Durumu</title>
+<meta name="description" content="BIST 100, gram altın, dolar/TL, ABD endeks fonları, Bitcoin, Ethereum ve büyük ABD şirketlerinin 20, 50 ve 200 günlük ortalamalarına göre konumu. Olgusal tablo; yatırım tavsiyesi değildir.">
+<link rel="canonical" href="https://samiboran.github.io/sweeplab/piyasa/konum.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Piyasa Hava Durumu">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:title" content="Ortalamalara göre konum — Piyasa Hava Durumu">
+<meta property="og:description" content="BIST 100, gram altın, dolar/TL, ABD endeks fonları, Bitcoin, Ethereum ve büyük ABD şirketlerinin 20, 50 ve 200 günlük ortalamalarına göre konumu. Olgusal tablo; yatırım tavsiyesi değildir.">
+<meta property="og:url" content="https://samiboran.github.io/sweeplab/piyasa/konum.html">
+<meta property="og:image" content="https://samiboran.github.io/sweeplab/piyasa/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Piyasa Hava Durumu marka kartı">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://samiboran.github.io/sweeplab/piyasa/og.png">
+<meta name="twitter:title" content="Ortalamalara göre konum — Piyasa Hava Durumu">
+<meta name="twitter:description" content="BIST 100, gram altın, dolar/TL, ABD endeks fonları, Bitcoin, Ethereum ve büyük ABD şirketlerinin 20, 50 ve 200 günlük ortalamalarına göre konumu. Olgusal tablo; yatırım tavsiyesi değildir.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<script src="config.js" defer></script>
+<script src="konum.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div class="brandbox"><a class="brand" href="./">Piyasa Hava Durumu</a><span class="tagline" data-cfg="tagline">İstatistik yalan söylemez</span></div>
+    <nav aria-label="Site"><a href="./">Bugün</a><a href="arsiv.html">Arşiv</a><a href="yontem.html">Yöntem</a></nav>
+  </header>
+  <main>
+    <p class="label kicker">Konum tablosu</p>
+    <h1 id="k-title">Ortalamalara göre konum</h1>
+    <p class="meta" id="k-meta">Yükleniyor…</p>
+    <noscript><p class="notice">Bu sayfa günlük veriyi JavaScript ile yükler. Tablonun nasıl hesaplandığı <a href="yontem.html#konum">Yöntem</a> sayfasında.</p></noscript>
+    <hr class="accent">
+    <p class="mute small k-intro">Her satırda son kapanışın 20, 50 ve 200 günlük basit ortalamaya göre yeri. <span class="fm up" aria-hidden="true"></span> üstünde, <span class="fm" aria-hidden="true"></span> altında. Fark: son kapanışın 200 günlük ortalamaya yüzde uzaklığı. Varlık sınıfına göre gruplu, grup içinde alfabetik; bir sıralama değildir.</p>
+    <div id="k-groups"></div>
+    <p class="mute small" id="k-note"></p>
+    <p class="small"><a href="yontem.html#konum">Bu tablo nasıl hesaplanıyor?</a></p>
+  </main>
+  <footer>
+    <p>Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.</p>
+    <p id="foot-meta">—</p>
+    <p>© Piyasa Hava Durumu — türetilmiş veriler kaynak gösterilerek kullanılabilir (CC BY 4.0)</p>
+  </footer>
+</div>
+</body>
+</html>

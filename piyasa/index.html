@@ -27,7 +27,7 @@
 <link rel="stylesheet" href="style.css">
 <script src="config.js" defer></script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://samiboran.github.io/sweeplab/piyasa/#site","name":"Piyasa Hava Durumu","url":"https://samiboran.github.io/sweeplab/piyasa/","inLanguage":"tr","description":"Türk yatırımcı için günlük makro hava ve TL tarafı verisi. Yatırım tavsiyesi değildir.","publisher":{"@type":"Organization","name":"Piyasa Hava Durumu","url":"https://samiboran.github.io/sweeplab/piyasa/"}},{"@type":"Dataset","name":"Piyasa Hava Durumu — günlük makro hava","description":"Her sabah yayımlanan makro hava seviyesi (YEŞİL/SARI/KIRMIZI), dokuz kuralın 0/1 işaretleri, yuvarlanmış kamu verisi değerleri, gram altın/gümüş TL ve dolar/TL değişimleri. Yalnız türetilmiş veri; lisanslı girdiler yalnız işaret ve yön olarak.","inLanguage":"tr","url":"https://samiboran.github.io/sweeplab/piyasa/","license":"https://creativecommons.org/licenses/by/4.0/","isAccessibleForFree":true,"creator":{"@type":"Organization","name":"Piyasa Hava Durumu","url":"https://samiboran.github.io/sweeplab/piyasa/"},"isBasedOn":["https://fred.stlouisfed.org/","https://defillama.com/stablecoins"],"temporalCoverage":"2026-08-30/..","distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/today.json"},{"@type":"DataDownload","encodingFormat":"text/csv","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/history.csv"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/tl.json"}]}]}
+{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://samiboran.github.io/sweeplab/piyasa/#site","name":"Piyasa Hava Durumu","url":"https://samiboran.github.io/sweeplab/piyasa/","inLanguage":"tr","description":"Türk yatırımcı için günlük makro hava ve TL tarafı verisi. Yatırım tavsiyesi değildir.","publisher":{"@type":"Organization","name":"Piyasa Hava Durumu","url":"https://samiboran.github.io/sweeplab/piyasa/"}},{"@type":"Dataset","name":"Piyasa Hava Durumu — günlük makro hava","description":"Her sabah yayımlanan makro hava seviyesi (YEŞİL/SARI/KIRMIZI), dokuz kuralın 0/1 işaretleri, yuvarlanmış kamu verisi değerleri, gram altın/gümüş TL ve dolar/TL değişimleri. Yalnız türetilmiş veri; lisanslı girdiler yalnız işaret ve yön olarak.","inLanguage":"tr","url":"https://samiboran.github.io/sweeplab/piyasa/","license":"https://creativecommons.org/licenses/by/4.0/","isAccessibleForFree":true,"creator":{"@type":"Organization","name":"Piyasa Hava Durumu","url":"https://samiboran.github.io/sweeplab/piyasa/"},"isBasedOn":["https://fred.stlouisfed.org/","https://defillama.com/stablecoins"],"temporalCoverage":"2026-08-30/..","distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/today.json"},{"@type":"DataDownload","encodingFormat":"text/csv","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/history.csv"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/tl.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/konum.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/index.json"}]}]}
 </script>
 <script src="app.js" defer></script>
 <script src="tl.js" defer></script>
@@ -75,6 +75,12 @@
       <p class="mute small">Her pazartesi ve cuma: aynı haftanın son 10 yıldaki seyri, haftanın veri takvimi ve ekonomi tarihinden notlar.</p>
     </section>
 
+    <section aria-labelledby="l-konum">
+      <p class="label" id="l-konum">Ortalamalar</p>
+      <p class="konum-link"><a href="konum.html">Fiyatlar ortalamalarına göre nerede?</a></p>
+      <p class="mute small">BIST 100, gram altın, dolar/TL, ABD fonları, Bitcoin, Ethereum ve büyük şirketler: 20, 50 ve 200 günlük ortalamaya göre konum.</p>
+    </section>
+
     <section aria-labelledby="l-sor">
       <p class="label" id="l-sor">Sor</p>
       <div class="questions" id="questions"></div>
@@ -84,6 +90,7 @@
   </main>
   <footer>
     <p>Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.</p>
+    <p><a href="veri.html">Veri uçları (JSON/CSV)</a></p>
     <p id="foot-meta"><!--S:foot-->Kural sürümü v1<!--/S--></p>
     <p>© Piyasa Hava Durumu — türetilmiş veriler kaynak gösterilerek kullanılabilir (CC BY 4.0)</p>
   </footer>
