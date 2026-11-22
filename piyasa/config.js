@@ -2,7 +2,8 @@
    Boş bırakılan bağlantılar sayfada gösterilmez. Metinler textContent ile yazılır. */
 window.PHD_CONFIG = Object.freeze({
   title: "Piyasa Hava Durumu",
-  tagline: "İstatistik yalan söylemez",
+  // Boran (22 Kasım): "İstatistik yalan söylemez" sloganı kaldırıldı (iddialı bulundu). Boşsa gösterilmez.
+  tagline: "",
   // Boran (22 Kasım): Altınkulak henüz bitmedi ve sinyalleri doğrulanmadı — bağlantı gizli.
   // Altınkulak doğrulanınca url'yi geri yazın: "https://samiboran.github.io/altinkulak/"
   deeper: { label: "Daha derin araçlar", name: "Altınkulak", url: "" },
@@ -39,7 +40,7 @@ window.PHD_CONFIG = Object.freeze({
     return a;
   }
   function apply() {
-    document.querySelectorAll("[data-cfg=tagline]").forEach(function (el) { el.textContent = C.tagline; });
+    document.querySelectorAll("[data-cfg=tagline]").forEach(function (el) { el.textContent = C.tagline; el.hidden = !C.tagline; });
     var foot = document.querySelector("footer");
     if (!foot || foot.querySelector(".brand-links")) return;
     var p = document.createElement("p");

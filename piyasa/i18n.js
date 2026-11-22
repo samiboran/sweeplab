@@ -17,7 +17,11 @@
   var D = {
     // masthead, nav, footer
     "İstatistik yalan söylemez": "Statistics don't lie",
-    "Site": "Site", "Arşiv": "Archive", "Yöntem": "Method", "Bugün": "Today",
+    "Seviye, dokuz piyasa göstergesinden kaçının stres işareti verdiğini özetler; ne yapılacağını söylemez ve geçmişte yanlış alarm da vermiştir (":
+      "The level summarises how many of nine market indicators show stress; it does not say what to do, and it has given false alarms before (",
+    "Sicil": "Track record",
+    "). Makro veriler ABD kaynaklıdır ve bir iş günü gecikmeli gelir.": "). Macro inputs come from US sources and arrive one business day late.",
+    "Site": "Site", "Hesapla": "Calculator", "Arşiv": "Archive", "Yöntem": "Method", "Bugün": "Today",
     "Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.": "Not investment advice. Data for information only.",
     "© Piyasa Hava Durumu — türetilmiş veriler kaynak gösterilerek kullanılabilir (CC BY 4.0)":
       "© Piyasa Hava Durumu (Market Weather) — derived data may be reused with attribution (CC BY 4.0)",

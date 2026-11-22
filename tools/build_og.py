@@ -105,7 +105,7 @@ def render(today, out):
         text(d, (m, 390), L["note"], fonts(400, 30), RED)
     d.line([(m, 520), (W - m, 520)], fill=RULE, width=1)
     text(d, (m, 545), L["foot"], fonts(400, 24), MUTE)
-    tag, tf = "İstatistik yalan söylemez", fonts(400, 24)
+    tag, tf = "Yatırım tavsiyesi değildir", fonts(400, 24)
     tw = sum((tf[0] if in_latin_subset(r[0]) else tf[1]).getlength(r) for r in runs(tag))
     text(d, (W - m - tw, 545), tag, tf, MUTE)
     img.save(out, "PNG", optimize=True)
