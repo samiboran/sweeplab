@@ -23,7 +23,7 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
 - [x] S8 Marka kancaları: `piyasa/config.js` (başlık, "İstatistik yalan söylemez" — her sayfanın başlığında, Altınkulak bağlantısı "Daha derin araçlar" altbilgide, X + Telegram yer tutucuları boşsa gizli, S11 doğrulama kodu alanları). og:image: `tools/build_og.py` her sabah `data/site/og.png` (1200×630, Inter, tek kırmızı vurgu; Pillow yoksa sabit `piyasa/og.png` marka kartı kopyalanır), ana sayfa `summary_large_image`; diğer sayfalar sabit kart.
 - [x] S9 "Ortalamalara göre konum" tablosu (data/research/us_1d ve candles_1d'de 2026-11-13'ten yeni satır varsa; yoksa ⏸ "research-data PR bekleniyor"): sabit geniş evren (SPY, QQQ, SMH, GLD, SLV, BIST 100, BTC, ETH, mevcut büyükler), 20/50/200 gün ort. üstü/altı + 200 güne % uzaklık; alfabetik veya varlık sınıfına göre (en altta olana göre SIRALAMA YOK). BIST tekil hisse yok. Eylem kelimesi yok. yontem.html notu.
 - [x] S10 Makinece okunur Türkçe veri uçları: `data/site/` altında sabit, sürümlü JSON şeması (today.json, history.csv, tl.json, dunya.json, movers.json), `piyasa/veri.html` (Türkçe + kısa İngilizce): alanlar, güncelleme saati, lisans (yalnız kamu kaynaklı türetilmiş alanlar CC BY 4.0; lisanslı girdi alanları "yalnızca görüntüleme"), atıf biçimi. Uç yolları son barındırıcıda da aynı kalır.
-- [ ] S10b "Dünya" bölümü — isteğe bağlı (`piyasa/dunya.html`, soru "Dünyada durum ne?", JSON yalnız açılınca): a) bölge tabloları (S9 biçimi; Japonya, Kore, Çin, Hong Kong, Tayvan, Brezilya; eksik endeksler için ETF'ler; her pazar için tarihli sabit 5–10 büyük şirket listesi, alfabetik); b) emtialar (GC, SI, PL, PA, HG, CL, BZ, NG + ücretsiz veri varsa buğday/soya/mısır; rodyum vb. "günlük serbest veri yok" referans tablosu — fiyat uydurulmaz); c) "Günün başlıkları": yalnız başlık + kaynak + saat + bağlantı, en çok ~10, şartları izin veren resmi RSS'lerden; d) `data/site/dunya.json`, kendi adımı. **+ Boran isteği (21 Kasım):** geniş ekranda (≥ 1200 px) ana sayfanın sağ boşluğuna kısa bir "Dünya" sütunu (Japonya, Kore, Çin… 1g değişim + "Günün başlıkları" ilk 5 başlık); yalnız geniş ekranda ve dunya.json gelince yüklenir; telefonda soru düğmesi olarak kalır. **+ Boran (21 Kasım):** "Günün başlıkları"na büyük şirket haberleri, teknoloji, emtia ve değerli madenler başlıkları; Midas ("Midas'ın Kulakları", getmidas.com) ana başlıkları yalnız kullanım şartları/robots izin veriyorsa ve resmi bir akış (RSS/API) varsa — yalnız başlık + kaynak + saat + bağlantı; izin yoksa ⏸ ve Boran'a sorulacak.
+- [x] S10b "Dünya" bölümü — isteğe bağlı (`piyasa/dunya.html`, soru "Dünyada durum ne?", JSON yalnız açılınca): a) bölge tabloları (S9 biçimi; Japonya, Kore, Çin, Hong Kong, Tayvan, Brezilya; eksik endeksler için ETF'ler; her pazar için tarihli sabit 5–10 büyük şirket listesi, alfabetik); b) emtialar (GC, SI, PL, PA, HG, CL, BZ, NG + ücretsiz veri varsa buğday/soya/mısır; rodyum vb. "günlük serbest veri yok" referans tablosu — fiyat uydurulmaz); c) "Günün başlıkları": yalnız başlık + kaynak + saat + bağlantı, en çok ~10, şartları izin veren resmi RSS'lerden; d) `data/site/dunya.json`, kendi adımı. **+ Boran isteği (21 Kasım):** geniş ekranda (≥ 1200 px) ana sayfanın sağ boşluğuna kısa bir "Dünya" sütunu (Japonya, Kore, Çin… 1g değişim + "Günün başlıkları" ilk 5 başlık); yalnız geniş ekranda ve dunya.json gelince yüklenir; telefonda soru düğmesi olarak kalır. **+ Boran (21 Kasım):** "Günün başlıkları"na büyük şirket haberleri, teknoloji, emtia ve değerli madenler başlıkları; Midas ("Midas'ın Kulakları", getmidas.com) ana başlıkları yalnız kullanım şartları/robots izin veriyorsa ve resmi bir akış (RSS/API) varsa — yalnız başlık + kaynak + saat + bağlantı; izin yoksa ⏸ ve Boran'a sorulacak.
 - [ ] S10c "Günün hareketlileri ve anomaliler" — isteğe bağlı (`piyasa/hareket.html`, soru "Bugün piyasada neler oldu?"): a) evren config'i (BIST 100, research-data ABD listesi, en büyük ~30 kripto; likidite tabanı); b) pazar başına en çok yükselen/düşen 5 (% değişim, göreli hacim, endeks hareketi); c) kural tabanlı anomaliler (hacim ≥ 3× 20g ort., açılış boşluğu ≥ ±%5 hisse / ±%8 kripto, hareket ≥ 3× ATR(14), 52 hafta zirve/dip, endeksine ters > 3 puan) + düz Türkçe gerekçe; d) "Neden?" sütunu: "haber eşleştirmesi bekleniyor"; `movers_news.json` şeması docs/'ta; neden uydurulmaz; e) haber dili, uyarı, veri tarihi; `data/site/movers.json` kendi adımı (zamanlama belgelenir).
 - [ ] S11 İzleyicisiz ölçüm: config.js'ten beslenen google-site-verification (ve Bing) meta yer tutucusu; DEPLOY_PLAN.md'de Search Console ve (A seçilirse) Cloudflare çerezsiz Web Analytics rehberi. Üçüncü taraf analitik yok.
 - [ ] S12 PARK — gelir modeli (yalnız gerçek kitle olunca; kod/cüzdan/hesap yok): `docs/MONETIZATION_PLAN.md` — (1) Türkiye pazarı türetilmiş verinin ücretli API katmanı, (2) x402 / Cloudflare Monetization Gateway (insanlar ve arama motorları ücretsiz), (3) önkoşullar: özel motor, Yahoo/FRED-kısıtlı girdilerin lisanslı kaynaklarla değişimi, alan adı, Cloudflare, Türkiye'de hukuki/vergi kontrolü (SPK, MASAK, kripto varlık kanunu) — sermaye piyasası avukatıyla. Riskler ve yeniden bakma tetikleyicileri.
@@ -78,6 +78,19 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
 - **Kural girdisi:** `notebook_daily.json` 60 günlük pencere tutuyor; bu yüzden
   `history.csv` ve `archive/` yalnız ekleme yapılan ayrı dosyalar (HISTORY kuralı).
 
+- **Dünya (S10b):** `tools/build_dunya.py` + tarihli sabit evren `tools/dunya_config.json`
+  (2026-11-22; üç ayda bir gözden geçirme). Ham kapanışlar data-feed `data/research/world_1d/`
+  (özel taraf); yayımlanan yalnız `data/site/dunya.json`: endeks/fon/emtia için yuvarlanmış
+  seviye, % değişimler, 0/1 ortalama işaretleri, 200 güne % uzaklık; **şirketlerde fiyat yok**.
+  Workflow ~06:00 UTC'de Asya seansları açıkken çalıştığı için **bugün tarihli çubuklar atılır**
+  (yarım gün değeri yayımlanmaz) — tablolar son tamamlanmış seansı gösterir. Başlıklar: yalnız
+  başlık + kaynak + saat + https bağlantı; DTD'li akış reddedilir, en çok 2 MB, en çok 10 başlık /
+  akış başına 3 / son 4 gün. Akışlar: Korea.net (bilim-teknoloji, iş dünyası), gov.br ekonomi
+  (CC BY-ND 3.0 → türev yok, yalnız başlık), Agência Brasil ekonomi, EIA Today in Energy (kamu
+  malı), Samsung Newsroom. Çin ve Japonya için şartları uygun resmî akış seçilmedi (boş + not).
+  **Midas:** resmî RSS/API bulunamadı, site "Tüm hakları saklıdır" → eklenmedi (⏸ Boran).
+  `dunya.json` "yalnızca görüntüleme" (Yahoo kişisel kullanım + endeks sağlayıcı lisansları).
+
 ## Güvenlik kontrol listesi
 
 - [x] `piyasa/` ve `data/site/` içinde sır/token/API anahtarı yok (her push öncesi tarama)
@@ -90,6 +103,7 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
 - [x] S7 Telegram: token yalnız env'den, hata mesajında URL yok; kanal kimliği sırrı yoksa adım atlanır
 - [x] S8 config.js: bağlantılar yalnız `https://` ise ve textContent/DOM API ile; `rel="noopener noreferrer"`
 - [x] S9/S10 sayfaları (konum.html, veri.html) aynı CSP; konum.js yalnız textContent/DOM API; veri.html betiksiz içerik
+- [x] S10b sayfaları (dunya.html, ana sayfa geniş ekran sütunu `dunya-side.js`) aynı CSP; yalnız textContent/DOM API; başlık bağlantıları yalnız `https://` + `rel="noopener noreferrer"`; RSS ayrıştırıcı DTD/varlık reddeder, boyut sınırı var
 - [x] S6 sayfaları (arsiv.html, statik `arsiv/*.html`) aynı CSP; statik sayfalarda `script-src 'none'`; statik üretici tüm veri metnini `html.escape` ile yazar (testli)
 
 ## Notlar
@@ -260,3 +274,16 @@ veri) yayımlanır; puanlama kodu (`tools/`), ham girdiler (`data/derivs`,
   istenirse ayrı `history.meta.json` eklenebilir. **Kalan:** S6b'nin "Tarihte bu hafta"
   kaynaklı girdi görevi bu çalışmada da yapılmadı (kaynak doğrulaması gerekiyor).
   Sıradaki: S10b (Dünya), S10c.
+- **2026-11-22 (zamanlanmış çalışma, 2.)** — S10b tamam. `tools/build_dunya.py` (kendi
+  hata-toleranslı workflow adımı; `world_1d` "Store data" adımına eklendi) + 16 test;
+  `piyasa/dunya.html` + `dunya.js` (ana sayfada "Dünyada durum ne?" bağlantısı, JSON yalnız
+  sayfa açılınca), ana sayfada ≥ 1200 px sağ sütun (`dunya-side.js`: bölge endekslerinin son
+  günlük değişimi + ilk 5 başlık; telefonda yüklenmez). yontem.html#dunya, veri.html#dunya,
+  index.json kaydı ("her gün"), sitemap, build_static sayfa listesi, ana sayfa JSON-LD.
+  100 Python testi + hesapla testi geçti. **Doğrulanamadı:** bu ortamdan Yahoo ve RSS
+  adreslerine erişim yok → semboller (özellikle `^TOPX`, `000300.SS`, `^HSTECH` — isteğe
+  bağlı, yoksa tablodan düşer) ve akışlar ilk Actions çalışmasında doğrulanacak; sonuç
+  `dunya.json → missing` ve `basliklar.kaynaklar[].durum` alanlarında ve adım logunda.
+  Ekran görüntüleri (`docs/site-preview/s10b-*`) **örnek veriyle** (sayfada "Önizleme: örnek
+  veri" uyarısı görünür; altın/gümüş gerçek tl_1d verisi). Lighthouse bu çalışmada ölçülmedi.
+  **Kalan:** S6b "Tarihte bu hafta" kaynaklı girdi görevi; Midas izni (Boran). Sıradaki: S10c.
