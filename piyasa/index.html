@@ -34,6 +34,7 @@
 </script>
 <script src="app.js" defer></script>
 <script src="tl.js" defer></script>
+<script src="ozet.js" defer></script>
 <script src="charts.js" defer></script>
 <script src="dunya-side.js" defer></script>
 </head>
@@ -72,6 +73,12 @@
       <p class="label" id="l-tl">TL tarafı</p>
       <div id="tl" class="tl"><p class="mute small">TL verisi yükleniyor…</p></div>
       <p class="tl-link"><a href="hesapla.html">Benim pozisyonum ne durumda?</a></p>
+    </section>
+
+    <section id="s-ozet" aria-labelledby="l-ozet" hidden>
+      <p class="label" id="l-ozet">Günün özeti</p>
+      <div id="ozet"></div>
+      <p class="mute small" id="ozet-meta"></p>
     </section>
 
     <section aria-labelledby="l-hafta">

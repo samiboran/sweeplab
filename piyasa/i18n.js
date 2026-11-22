@@ -200,6 +200,9 @@
     "Günlük kapanışlar, son ~2 yıl. BIST 100 ve fonlar yalnız 100'e endeksli seri olarak yayımlanır (seviye değil). Girdi kaynağı Yahoo Finance (kişisel kullanım şartlı).":
       "Daily closes, last ~2 years. BIST 100 and funds are published only as series rebased to 100 (not levels). Input source: Yahoo Finance (personal-use terms).",
     "Grafik kütüphanesi: ": "Chart library: ",
+    // günün özeti
+    "Günün özeti": "Today's digest", "Merkez bankaları": "Central banks", "Dünya ekonomisi": "World economy",
+    "Altın ve emtia": "Gold and commodities", "Şirketler": "Companies", "Asya": "Asia", "Latin Amerika": "Latin America",
     // other pages: a notice is shown instead of a full translation
     "Hesaplayıcı": "Calculator"
   };
@@ -261,7 +264,9 @@
                  ["Dolar/TL", "USD/TRY"], ["Brent petrol", "Brent oil"], ["WTI petrol", "WTI oil"],
                  [" oranı:", " ratio:"], [" (başlangıç = 100):", " (start = 100):"], [" (endeks)", " (index)"],
                  ["Endekslenmiş seri olduğu için oranın seviyesi değil, yönü anlamlıdır.", "Rebased series: the ratio's direction matters, not its level."],
-                 ["Günlük kapanışlar · son veri ", "Daily closes · latest data "]];
+                 ["Günlük kapanışlar · son veri ", "Daily closes · latest data "],
+                 [" sabahı hazırlandı · Olgusal özet, kendi cümlelerimizle; haberlerin hakları kaynaklarına aittir.",
+                  " morning · Factual digest in our own words; news rights belong to their sources."]];
   function phrases(s) {
     for (var i = 0; i < PHRASES.length; i++) if (s.indexOf(PHRASES[i][0]) >= 0) s = s.split(PHRASES[i][0]).join(PHRASES[i][1]);
     return s;

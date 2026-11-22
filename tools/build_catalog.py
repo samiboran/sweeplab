@@ -42,6 +42,9 @@ ENDPOINTS = [
     ("dunya.json", "phd.dunya/1", 1, "her gün ~06:00", VIEW,
      "Bölge endeks/fonları ve büyük şirketler (değişim + ortalamalara göre yer), emtialar, referans metaller, günün başlıkları (yalnız başlık + kaynak + saat + bağlantı)."),
     ("movers.json", "phd.movers/1", 1, "her gün ~06:00", VIEW, "Günün hareketlileri (BIST, ABD, kripto) ve kural tabanlı anomaliler; yalnız yüzde ve oranlar."),
+    ("ozet.json", "phd.ozet/1", 1, "her gün ~07:00 (ayrı görev)", VIEW,
+     "Günün özeti: en çok 8 haber, kendi cümlelerimizle 2–3 cümle + kaynak bağlantısı (TR + EN)."),
+    ("ozet/{YYYY-MM-DD}.json", "phd.ozet/1", 1, "her gün ~07:00 (ayrı görev)", VIEW, "Geçmiş günlerin özetleri (yalnız ekleme)."),
     ("movers_news.json", "phd.movers_news/1", 1, "ayrı görev (henüz yok)", VIEW,
      "Hareketlilere eşleştirilen haber başlıkları (yalnız başlık + kaynak + saat + bağlantı)."),
 ]
