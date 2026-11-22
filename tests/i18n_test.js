@@ -31,4 +31,16 @@ assert.strictEqual(t("2026-11-22 06:27:32 UTC"), "2026-11-22 06:27:32 UTC"); // 
 const words = /\b(buy|sell|opportunity|cheap|target|don't miss|recommend(ed|ation)?)\b/i;
 const strings = (src.match(/"(?:[^"\\]|\\.)*"/g) || []).join(" ").replace(/Not a ranking or a recommendation/g, "");
 assert.ok(!words.test(strings), "action word in i18n.js strings");
+// S13b: page dictionary is merged only in English mode and never overrides the core dictionary
+const pages = fs.readFileSync(__dirname + "/../piyasa/i18n-pages.js", "utf8");
+vm.runInNewContext(pages, en);
+assert.strictEqual(t("Arşiv ve sicil"), "Archive and track record");
+assert.strictEqual(t("Dolar"), "Dollar");
+vm.runInNewContext(pages, tr);
+assert.strictEqual(tr.PHD_I18N.t("Arşiv ve sicil"), "Arşiv ve sicil");
+for (const f of ["i18n-pages.js", "hesapla.js", "arsiv.js"]) {
+  const txt = fs.readFileSync(__dirname + "/../piyasa/" + f, "utf8");
+  const strs = (txt.match(/"(?:[^"\\]|\\.)*"/g) || []).join(" ");
+  assert.ok(!words.test(strs), "action word in " + f);
+}
 console.log("i18n: ok");

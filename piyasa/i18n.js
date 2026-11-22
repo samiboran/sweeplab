@@ -295,7 +295,9 @@
     return lead + fmt(s) + trail;
   }
 
-  window.PHD_I18N = Object.freeze({ lang: LANG, en: EN, t: function (s) { return EN ? tr(String(s)) : String(s); } });
+  // add(): page dictionaries (i18n-pages.js) load right after this file, before the body is parsed
+  function add(o) { if (EN && o) Object.keys(o).forEach(function (k) { if (!Object.prototype.hasOwnProperty.call(D, k)) D[k] = o[k]; }); }
+  window.PHD_I18N = Object.freeze({ lang: LANG, en: EN, add: add, t: function (s) { return EN ? tr(String(s)) : String(s); } });
   if (!EN) return;
 
   var done = new WeakMap();
@@ -317,6 +319,7 @@
     done.set(n, n.nodeValue);
   }
   function attrs(e) {
+    if (e.closest && e.closest("[data-noi18n]")) return;
     ["aria-label", "title", "placeholder", "alt"].forEach(function (a) {
       var v = e.getAttribute && e.getAttribute(a);
       if (v) { var t = once(v); if (t !== v) e.setAttribute(a, t); }
@@ -347,7 +350,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   "use strict";
   var I = window.PHD_I18N;
-  var full = /(^|\/)(index|konum|hareket|karsilastir)\.html$|\/$/.test(location.pathname) || !/\.html$/.test(location.pathname);
+  var full = /(^|\/)(index|konum|hareket|karsilastir|hesapla|arsiv)\.html$|\/$/.test(location.pathname) || !/\.html$/.test(location.pathname);
   var nav = document.querySelector("header.masthead nav");
   if (nav) {
     var a = document.createElement("a");
