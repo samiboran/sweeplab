@@ -65,7 +65,12 @@ def test_build_editions(tmp_path):
     tarihte = os.path.join(os.path.dirname(__file__), "..", "tools", "tarihte.json")
     rec = bw.build("cuma", dt.date(2026, 11, 27), str(raw), str(nb), tarihte, now)
     assert rec["title"] == "Dünyada bu Cuma" and rec["week_label"] == "23–29 Kasım"
-    assert rec["calendar"] == [{"date": "2026-11-25", "day_label": "25 Kasım", "name": "Fed faiz kararı (FOMC)"}]
+    assert rec["calendar"] == [{"date": "2026-11-25", "day_label": "25 Kasım", "name": "Fed faiz kararı (FOMC)",
+                                "day_label_en": "25 November", "name_en": "Fed rate decision (FOMC)"}]
+    assert rec["title_en"] == "The world this Friday" and rec["week_label_en"] == "23–29 November"
+    for a in rec["assets"]:
+        assert a["sentence_en"] and "%" in a["sentence_en"] or "not enough" in a["sentence_en"]
+        assert not any(w in a["sentence_en"].lower() for w in ("buy", "sell", "opportunity", "target"))
     assert all(a["summary"]["n"] == 10 for a in rec["assets"])
     assert all("this_week" in a for a in rec["assets"])
     assert all(e["url"].startswith("https://") for e in rec["tarihte"])

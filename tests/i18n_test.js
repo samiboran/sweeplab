@@ -3,7 +3,7 @@ const fs = require("fs"), vm = require("vm"), assert = require("assert");
 const src = fs.readFileSync(__dirname + "/../piyasa/i18n.js", "utf8");
 function load(search) {
   const ctx = { location: { search, pathname: "/piyasa/index.html", href: "http://x/piyasa/index.html" + search },
-    document: { documentElement: { lang: "" }, querySelector: () => null, addEventListener: () => {} },
+    document: { documentElement: { lang: "", setAttribute() {} }, querySelector: () => null, addEventListener: () => {} },
     MutationObserver: function () { this.observe = () => {}; }, WeakMap, Set, Object, RegExp, String, Array, URL };
   ctx.window = ctx;
   vm.runInNewContext(src, ctx);
@@ -36,9 +36,12 @@ const pages = fs.readFileSync(__dirname + "/../piyasa/i18n-pages.js", "utf8");
 vm.runInNewContext(pages, en);
 assert.strictEqual(t("Arşiv ve sicil"), "Archive and track record");
 assert.strictEqual(t("Dolar"), "Dollar");
+assert.strictEqual(t("6/10 yıl yükseliş"), "6/10 years up");
+assert.strictEqual(t("Japonya: endeks ve fonlar"), "Japan: indices and funds");
+assert.strictEqual(t("Altın (USD/ons)"), "Gold (USD/oz)");
 vm.runInNewContext(pages, tr);
 assert.strictEqual(tr.PHD_I18N.t("Arşiv ve sicil"), "Arşiv ve sicil");
-for (const f of ["i18n-pages.js", "hesapla.js", "arsiv.js"]) {
+for (const f of ["i18n-pages.js", "hesapla.js", "arsiv.js", "hafta.js"]) {
   const txt = fs.readFileSync(__dirname + "/../piyasa/" + f, "utf8");
   const strs = (txt.match(/"(?:[^"\\]|\\.)*"/g) || []).join(" ");
   assert.ok(!words.test(strs), "action word in " + f);

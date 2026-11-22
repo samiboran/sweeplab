@@ -296,7 +296,15 @@
   }
 
   // add(): page dictionaries (i18n-pages.js) load right after this file, before the body is parsed
-  function add(o) { if (EN && o) Object.keys(o).forEach(function (k) { if (!Object.prototype.hasOwnProperty.call(D, k)) D[k] = o[k]; }); }
+  // add(dict, patterns, phrases): patterns = [[RegExp, fn(match)]], phrases = [[tr, en]] (substring swaps)
+  function add(o, pats, phr) {
+    if (!EN) return;
+    if (o) Object.keys(o).forEach(function (k) { if (!Object.prototype.hasOwnProperty.call(D, k)) D[k] = o[k]; });
+    (pats || []).forEach(function (x) { P.push(x); });
+    (phr || []).forEach(function (x) { PHRASES.push(x); });
+  }
+  // Long prose pages carry both languages: <div data-lang="tr"> / <div data-lang="en"> (see style.css)
+  document.documentElement.setAttribute("data-ui-lang", LANG);
   window.PHD_I18N = Object.freeze({ lang: LANG, en: EN, add: add, t: function (s) { return EN ? tr(String(s)) : String(s); } });
   if (!EN) return;
 
@@ -312,7 +320,7 @@
   function textNode(n) {
     var p = n.parentNode;
     if (!p || /^(SCRIPT|STYLE|NOSCRIPT)$/.test(p.nodeName)) return;
-    if (p.closest && p.closest("[data-noi18n]")) return;      // already English (from *_en data fields)
+    if (p.closest && p.closest("[data-noi18n],[data-lang=en]")) return;      // already English
     if (done.get(n) === n.nodeValue) return;
     var t = once(n.nodeValue);
     if (t !== n.nodeValue) n.nodeValue = t;
@@ -350,7 +358,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   "use strict";
   var I = window.PHD_I18N;
-  var full = /(^|\/)(index|konum|hareket|karsilastir|hesapla|arsiv)\.html$|\/$/.test(location.pathname) || !/\.html$/.test(location.pathname);
+  var full = /(^|\/)(index|konum|hareket|karsilastir|hesapla|arsiv|hafta|dunya|yontem)\.html$|\/$/.test(location.pathname) || !/\.html$/.test(location.pathname);
   var nav = document.querySelector("header.masthead nav");
   if (nav) {
     var a = document.createElement("a");
@@ -365,6 +373,11 @@ document.addEventListener("DOMContentLoaded", function () {
     nav.appendChild(a);
   }
   if (!I.en) return;
+  // bilingual prose pages: #k1 -> #en-k1 when the English block is shown
+  if (location.hash && /^#[a-z0-9-]+$/i.test(location.hash)) {
+    var tgt = document.getElementById("en-" + location.hash.slice(1));
+    if (tgt) setTimeout(function () { tgt.scrollIntoView(); }, 0);
+  }
   Array.prototype.forEach.call(document.querySelectorAll("a[href]"), function (x) {
     var h = x.getAttribute("href");
     if (!h || /^(https?:|mailto:|#)/.test(h) || x.classList.contains("lang")) return;
@@ -377,7 +390,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (main) {
       var p = document.createElement("p");
       p.className = "notice";
-      p.textContent = "This page is available in Turkish only for now. Numbers and dates are shown in English format.";
+      p.textContent = /veri\.html$/.test(location.pathname)
+        ? "This page is in Turkish; an English summary is at the end (\"In English\")."
+        : "This page is available in Turkish only for now. Numbers and dates are shown in English format.";
       main.insertBefore(p, main.firstChild);
     }
   }

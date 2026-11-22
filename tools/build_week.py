@@ -187,6 +187,59 @@ def this_week_sentence(label, chg, rows, asof):
     return out
 
 
+# ---------------------------------------------------------------- English (S13b): same facts, same numbers
+MONTHS_EN = ["January", "February", "March", "April", "May", "June", "July", "August",
+             "September", "October", "November", "December"]
+LABEL_EN = {"gram_altin": "Gold per gram (TRY)", "gram_gumus": "Silver per gram (TRY)", "dolar": "USD/TRY",
+            "bist100_usd": "BIST 100 (in dollars)", "spy": "S&P 500 fund (SPY)",
+            "qqq": "Nasdaq 100 tech fund (QQQ)", "btc": "Bitcoin (USD)"}
+CAL_NAMES_EN = {"FOMC": "Fed rate decision (FOMC)", "CPI": "US inflation data (CPI)", "NFP": "US non-farm payrolls"}
+DISCLAIMER_EN = "Past years' moves are historical information only; they say nothing about the future. Not investment advice."
+METHOD_EN = ("Same calendar window every year: % change from the last close before the window to the last close "
+             "inside it. Funds: price change excluding dividends.")
+
+
+def en_pct(v, nd=1):
+    if round(v, nd) == 0:
+        return f"{0:.{nd}f}%"
+    return ("+" if v > 0 else "−") + f"{abs(v):,.{nd}f}%"
+
+
+def en_date(iso, year=True):
+    d = dt.date.fromisoformat(iso)
+    return f"{d.day} {MONTHS_EN[d.month - 1]}" + (f" {d.year}" if year else "")
+
+
+def range_label_en(start, end):
+    s, e = dt.date.fromisoformat(start), dt.date.fromisoformat(end)
+    if s.month == e.month:
+        return f"{s.day}–{e.day} {MONTHS_EN[s.month - 1]}"
+    return f"{s.day} {MONTHS_EN[s.month - 1]} – {e.day} {MONTHS_EN[e.month - 1]}"
+
+
+def history_sentence_en(label, rng, s):
+    if not s:
+        return f"{label}: not enough history."
+    return (f"{label}: in the {rng} week of the last {s['n']} years it rose {s['up']} times and fell {s['down']} times; "
+            f"median {en_pct(s['median'])}. Strongest {s['best']['year']} ({en_pct(s['best']['chg'])}), "
+            f"weakest {s['worst']['year']} ({en_pct(s['worst']['chg'])}).")
+
+
+def this_week_sentence_en(label, chg, rows, asof):
+    if chg is None:
+        return f"{label}: no close yet this week."
+    higher = sum(1 for r in rows if r["chg"] > chg)
+    out = f"{label}: {en_pct(chg)} so far this week (as of the {en_date(asof, False)} close)."
+    n = len(rows)
+    if n and higher == n:
+        out += f" Weaker than the same week in each of the last {n} years."
+    elif n and higher == 0:
+        out += f" Stronger than the same week in each of the last {n} years."
+    elif n:
+        out += f" In {higher} of the last {n} years the same week closed higher."
+    return out
+
+
 # ---------------------------------------------------------------- editions
 def week_bounds(today):
     mon = today - dt.timedelta(days=today.weekday())
@@ -214,11 +267,15 @@ def pick_entries(entries, week_start, week_end, week_no):
     day.sort(key=lambda e: e["md"])
     out = [{"date": e["date"], "day_label": tr_date(e["md"], False), "year": int(e["date"][:4]),
             "topic": e.get("topic"), "title": e["title"], "text": e["text"],
+            "day_label_en": en_date(e["md"], False), "topic_en": e.get("topic_en"),
+            "title_en": e.get("title_en"), "text_en": e.get("text_en"),
             "source": e["source"], "url": e["url"]} for e in day]
     first = None
     if firsts:
         f = firsts[week_no % len(firsts)]
         first = {"year_label": f.get("year_label") or f["date"][:4], "title": f["title"], "text": f["text"],
+                 "year_label_en": f.get("year_label_en") or f.get("year_label") or f["date"][:4],
+                 "title_en": f.get("title_en"), "text_en": f.get("text_en"),
                  "source": f["source"], "url": f["url"]}
     return out, first
 
@@ -232,7 +289,8 @@ def calendar_items(notebook, week_start, week_end):
     for k, days in cal.items():
         for d in days:
             if week_start <= d <= week_end:
-                out.append({"date": d, "day_label": tr_date(d, False), "name": CAL_NAMES.get(k, k)})
+                out.append({"date": d, "day_label": tr_date(d, False), "name": CAL_NAMES.get(k, k),
+                            "day_label_en": en_date(d, False), "name_en": CAL_NAMES_EN.get(k, k)})
     return sorted(out, key=lambda x: x["date"])
 
 
@@ -244,6 +302,8 @@ def build(edition, today, raw_dir, notebook, tarihte, now_utc):
         rows = same_week_history(series, ws, we, today.year)
         item = {"id": aid, "label": label, "years": rows, "summary": summarize(rows)}
         item["sentence"] = history_sentence(label, rng, item["summary"])
+        item["label_en"] = LABEL_EN.get(aid, label)
+        item["sentence_en"] = history_sentence_en(item["label_en"], range_label_en(ws, we), item["summary"])
         if edition == "cuma":
             dates = sorted(series)
             chg = window_change(series, dates, ws, today.isoformat()) if series else None
@@ -251,6 +311,7 @@ def build(edition, today, raw_dir, notebook, tarihte, now_utc):
             item["this_week"] = None if chg is None else round(chg, 2)
             item["this_week_asof"] = asof
             item["this_week_sentence"] = this_week_sentence(label, chg, rows, asof or today.isoformat())
+            item["this_week_sentence_en"] = this_week_sentence_en(item["label_en"], chg, rows, asof or today.isoformat())
         assets.append(item)
     try:
         entries = json.load(open(tarihte, encoding="utf-8")).get("entries", [])
@@ -259,6 +320,7 @@ def build(edition, today, raw_dir, notebook, tarihte, now_utc):
     week_no = today.isocalendar()[1]
     history, first = pick_entries(entries, ws, we, week_no)
     title = "Dünyada bu Pazartesi" if edition == "pazartesi" else "Dünyada bu Cuma"
+    title_en = "The world this Monday" if edition == "pazartesi" else "The world this Friday"
     return {"schema": "phd.hafta/1", "schema_version": 1, "source": SOURCE, "site_url": SITE_URL,
             "generated_at": now_utc.replace(microsecond=0).isoformat().replace("+00:00", "Z"),
             "attribution": ATTRIBUTION, "license": "Yalnızca görüntüleme (atıfla). Girdiler Yahoo Finance/OKX kişisel kullanım şartlı; CC BY 4.0 kapsamında değil. Ayrıntı: veri.html",
@@ -268,7 +330,9 @@ def build(edition, today, raw_dir, notebook, tarihte, now_utc):
             "method": ("Her yıl aynı takvim aralığı: aralıktan önceki son kapanıştan aralıktaki son kapanışa "
                        "yüzde değişim. Fonlarda temettü hariç fiyat değişimi."),
             "assets": assets, "calendar": calendar_items(notebook, ws, we),
-            "tarihte": history, "ilk": first, "disclaimer": DISCLAIMER}
+            "tarihte": history, "ilk": first, "disclaimer": DISCLAIMER,
+            "title_en": title_en, "headline_en": f"{title_en} — {en_date(today.isoformat())}",
+            "week_label_en": range_label_en(ws, we), "method_en": METHOD_EN, "disclaimer_en": DISCLAIMER_EN}
 
 
 def should_build(today, site, force):
