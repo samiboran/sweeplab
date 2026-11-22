@@ -8,7 +8,9 @@ window.PHD_CONFIG = Object.freeze({
   deeper: { label: "Daha derin araçlar", name: "Altınkulak", url: "" },
   x: "",          // ör. "https://x.com/kullaniciadi" — boşsa gösterilmez
   telegram: "",   // ör. "https://t.me/kanaladi" — herkese açık kanal açılınca (S7)
-  verification: { google: "", bing: "" }   // S11: Search Console / Bing doğrulama kodu
+  // S11: Search Console / Bing doğrulama kodu (yalnız kodun kendisi, ör. "AbC123…"). Deploy sırasında
+  // tools/build_static.py ana sayfanın <head> kısmına statik <meta> olarak ekler. Rehber: docs/DEPLOY_PLAN.md
+  verification: { google: "", bing: "" }
 });
 
 (function () {

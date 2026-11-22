@@ -136,3 +136,39 @@ Ne bozulur, nasıl korunur:
 - İkisi de yalnız `contents: read` yetkisiyle çalışır ve yalnız `piyasa/` +
   `data/site/` kopyalar. Ham veri (`data/derivs`, `data/research`) ve kod
   (`tools/`) hedefe gitmez.
+
+## Ölçüm — izleyicisiz (S11) ⏸ Boran
+
+Sitede üçüncü taraf analitik betiği ve çerez **yoktur**. Ziyaretçi ve arama verisini görmenin iki
+yolu var; ikisi de sitenin koduna izleyici eklemez.
+
+### 1) Google Search Console (önerilen, hemen yapılabilir)
+
+Hangi aramalarla bulunduğunu, kaç kez gösterildiğini ve tıklandığını, dizine alınma sorunlarını
+gösterir. Sitenin son adresi (alan adı ya da Cloudflare Pages adresi) belli olunca:
+
+1. https://search.google.com/search-console → **Mülk ekle** → **URL öneki** → sitenin tam adresi
+   (ör. `https://piyasahavadurumu.com/`). Alan adı Cloudflare'deyse **Alan** türü ve DNS TXT kaydı
+   daha kalıcıdır (Cloudflare → DNS → Kayıt ekle → TXT → Google'ın verdiği değer); o zaman 2–3. adım gerekmez.
+2. Doğrulama yöntemi olarak **HTML etiketi**ni seç. Verilen satırdaki `content="…"` değerini kopyala
+   (yalnız tırnak içindeki kod).
+3. `piyasa/config.js` → `verification: { google: "BURAYA_KOD", bing: "" }` → commit + PR. Deploy işi
+   `tools/build_static.py` ile kodu ana sayfanın `<head>` kısmına statik `<meta name="google-site-verification">`
+   olarak ekler (betikle eklenen etiketi Google görmez; bu yüzden statik). Deploy bitince Search Console'da **Doğrula**.
+4. Search Console → **Site haritaları** → `sitemap.xml` ekle.
+5. Bing için: https://www.bing.com/webmasters → **Search Console'dan içe aktar** (en kolayı) ya da
+   HTML meta etiketi → kodu `verification.bing` alanına yaz (etiket adı `msvalidate.01`).
+
+GitHub Pages önizlemesi (`samiboran.github.io/sweeplab/piyasa/`) kökte olmadığı için robots.txt ve
+alan doğrulaması orada tam çalışmaz; son barındırıcıya geçince yapılmalı.
+
+### 2) Cloudflare Web Analytics (yalnız A seçilirse, isteğe bağlı)
+
+Çerez kullanmaz, kişisel veri tutmaz, sayfa görüntüleme ve hız ölçer. Cloudflare Pages projesinde:
+**Workers & Pages → proje → Metrics → Web Analytics → Enable**. Cloudflare bu durumda sayfalara
+kendi küçük betiğini (`static.cloudflareinsights.com/beacon.min.js`) ekler. Sitemizin CSP'si bu betiği
+şu an **engeller**; açmaya karar verirsen tüm sayfalardaki CSP'ye `script-src`'ye
+`https://static.cloudflareinsights.com`, `connect-src`'ye `https://cloudflareinsights.com` eklenmeli
+(bu bir karar: "üçüncü taraf betik yok" ilkesinden bilinçli istisna olur). Daha temiz alternatif:
+betik eklemeden **Cloudflare → Analytics & Logs → Traffic** (sunucu tarafı istek sayıları; DNS proxy
+açıksa ücretsiz planda vardır) — sitede hiçbir değişiklik gerekmez.

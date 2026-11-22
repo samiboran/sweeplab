@@ -179,6 +179,25 @@ def sitemap(base, days, lastmod):
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "\n".join(urls) + "\n</urlset>\n")
 
 
+VERIFY_KEY = re.compile(r"^[A-Za-z0-9_-]{8,100}$")
+
+
+def verification_meta(config_js):
+    """S11: site-verification <meta> tags from piyasa/config.js (verification: {google, bing}).
+    Static tags in <head> are what Search Console / Bing check; values are validated strictly."""
+    try:
+        src = open(config_js, encoding="utf-8").read()
+    except OSError:
+        return ""
+    tags = []
+    for key, name in (("google", "google-site-verification"), ("bing", "msvalidate.01")):
+        m = re.search(r"verification\s*:\s*\{[^}]*\b" + key + r'\s*:\s*"([^"]*)"', src)
+        v = m.group(1) if m else ""
+        if v and VERIFY_KEY.match(v):
+            tags.append(f'<meta name="{name}" content="{v}">')
+    return "\n".join(tags)
+
+
 def build(dist, data=None, base=None):
     base = base or os.environ.get("SITE_BASE") or PREVIEW_BASE
     if not base.endswith("/"):
@@ -223,6 +242,14 @@ def build(dist, data=None, base=None):
                                        f"{s.get('canli_teyit', 0)} teyit, {s.get('canli_yanlis_alarm', 0)} yanlış alarm, "
                                        f"{s.get('canli_bekliyor', 0)} bekliyor."))
     open(ap, "w", encoding="utf-8").write(doc)
+
+    # S11: verification meta (home page only is enough for both services)
+    vm = verification_meta(os.path.join(dist, "config.js"))
+    if vm:
+        doc = open(ip, encoding="utf-8").read()
+        if "google-site-verification" not in doc and "msvalidate.01" not in doc:
+            doc = doc.replace("<meta charset=\"utf-8\">", "<meta charset=\"utf-8\">\n" + vm, 1)
+            open(ip, "w", encoding="utf-8").write(doc)
 
     # base URL + own data path in every page
     for root, _, files in os.walk(dist):
