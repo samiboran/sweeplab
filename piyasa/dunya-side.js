@@ -38,6 +38,8 @@
       box.appendChild(t);
       var heads = [];
       ((d.basliklar || {}).konular || []).forEach(function (k) { heads = heads.concat(k.basliklar || []); });
+      // Home sidebar: only headlines a Turkish/English reader can follow; dunya.html lists all languages.
+      heads = heads.filter(function (h) { return !h.dil || h.dil === "en" || h.dil === "tr"; });
       heads.sort(function (a, b) { return String(b.zaman).localeCompare(String(a.zaman)); });
       if (heads.length) {
         box.appendChild(el("p", "label more", "Günün başlıkları"));

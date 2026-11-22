@@ -67,11 +67,25 @@ class Headlines(unittest.TestCase):
         flat = [i for t in h["konular"] for i in t["basliklar"]]
         self.assertEqual([i["baslik"] for i in flat], ["Chip exports & output rise", "Natural gas storage report"])
         for i in flat:
-            self.assertEqual(set(i), {"baslik", "kaynak", "url", "zaman"})
+            self.assertEqual(set(i), {"baslik", "kaynak", "url", "zaman", "dil"})
             self.assertTrue(i["url"].startswith("https://"))
         self.assertNotIn("BODY", json.dumps(h))
         self.assertEqual(flat[0]["zaman"], "2026-11-21T01:00:00Z")
         self.assertEqual([t["konu"] for t in h["konular"]], cfg["topics"])
+
+    def test_lottery_excluded_lang_and_guid_fallback(self):
+        rss = b"""<?xml version="1.0"?><rss><channel>
+<item><title>Mega-Sena acumula e premio vai para R$ 45 milhoes</title><link>https://a/1</link><pubDate>Fri, 21 Nov 2026 01:00:00 GMT</pubDate></item>
+<item><title>CMN amplia controle</title><link>https://a/2</link><pubDate>Fri, 21 Nov 2026 02:00:00 GMT</pubDate></item>
+<item><title>Oil flows</title><link>https://www.eia.gov/todayinenergy/detail.php?id=</link><guid>https://www.eia.gov/todayinenergy/detail.php?id=66784</guid><pubDate>Fri, 21 Nov 2026 03:00:00 GMT</pubDate></item>
+<item><title>No id</title><link>https://www.eia.gov/x.php?id=</link><pubDate>Fri, 21 Nov 2026 03:00:00 GMT</pubDate></item>
+</channel></rss>"""
+        cfg = {"feeds": [{"id": "b", "lang": "pt", "topic": "Brezilya", "source": "AB", "url": "https://b/"}],
+               "topics": ["Brezilya"], "exclude_words": ["mega-sena"], "max_per_feed": 5}
+        flat = bd.build_headlines(cfg, NOW, fetch=lambda u: rss)["konular"][0]["basliklar"]
+        self.assertEqual([i["baslik"] for i in flat], ["Oil flows", "CMN amplia controle"])
+        self.assertEqual(flat[0]["url"], "https://www.eia.gov/todayinenergy/detail.php?id=66784")
+        self.assertTrue(all(i["dil"] == "pt" for i in flat))
 
     def test_failing_feed_is_recorded_not_fatal(self):
         cfg = {"feeds": [{"id": "x", "topic": "Çin", "source": "X", "url": "https://x/"}], "topics": ["Çin"]}

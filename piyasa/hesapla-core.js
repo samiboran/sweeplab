@@ -32,8 +32,17 @@
   /* Breakeven ounce price in USD for a TL cost per gram at a given USD/TRY. */
   function breakevenOunceUsd(costTlPerGram, usdtry) { return costTlPerGram * OZ / usdtry; }
 
-  /* cost: average cost per unit in `ccy` ("TL" | "USD"); amount: units held. */
-  function compute(asset, cost, ccy, amount, p) {
+  /* Spread % from the two prices a dealer quotes: sell (what you pay) and buy (what you get). */
+  function spreadFromPrices(sell, buy) {
+    sell = +sell; buy = +buy;
+    if (!(sell > 0) || !(buy > 0) || buy > sell) return null;
+    return (sell - buy) / sell * 100;
+  }
+
+  /* cost: average cost per unit in `ccy` ("TL" | "USD"); amount: units held.
+     spreadPct (optional, 0–50): dealer spread / commission taken when selling; the market price
+     must be this much higher for the cash you receive to cover your cost. */
+  function compute(asset, cost, ccy, amount, p, spreadPct) {
     var a = ASSETS[asset];
     var px = prices(asset, p || {});
     cost = +cost; amount = +amount;
@@ -50,6 +59,16 @@
       scenarios: []
     };
     r.pl = r.value - r.costTotal;
+    var sp = +spreadPct;
+    if (sp > 0 && sp < 50) {
+      var k = 1 - sp / 100;
+      r.spreadPct = sp;
+      r.netValue = r.value * k;
+      r.netPl = r.netValue - r.costTotal;
+      r.netPlPct = (r.netValue / r.costTotal - 1) * 100;
+      r.netBreakeven = cost / k;                       // market price at which the cash received = cost
+      r.netToBreakevenPct = (r.netBreakeven / cur - 1) * 100;
+    }
     [0, 10, 20].forEach(function (k) {
       var u = px.usdtry * (1 + k / 100);
       var s = { shockPct: k, usdtry: u };
@@ -69,7 +88,8 @@
     return r;
   }
 
-  var api = { ASSETS: ASSETS, OZ: OZ, prices: prices, compute: compute, breakevenOunceUsd: breakevenOunceUsd };
+  var api = { ASSETS: ASSETS, OZ: OZ, prices: prices, compute: compute, breakevenOunceUsd: breakevenOunceUsd,
+              spreadFromPrices: spreadFromPrices };
   if (typeof module === "object" && module.exports) module.exports = api;
   else root.PHDCalc = api;
 })(this);

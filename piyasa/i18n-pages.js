@@ -13,6 +13,13 @@
     "Varlık": "Asset", "Gram altın": "Gold (gram)", "Gram gümüş": "Silver (gram)", "Dolar": "Dollar",
     "BIST 100 (puan)": "BIST 100 (points)", "Maliyet para birimi": "Cost currency",
     "Ortalama maliyet (birim başına)": "Average cost (per unit)", "Miktar": "Amount",
+    "Makas / komisyon (%) — isteğe bağlı": "Spread / commission (%) — optional",
+    "örn. 2": "e.g. 2", "örn. 3000": "e.g. 3000", "örn. 2940": "e.g. 2940",
+    "Kuyumcu, banka ya da aracı kurum alış ve satış fiyatını farklı verir; bozdururken eline geçen tutar piyasa fiyatından düşüktür. Kendi aldığın yerin makasını gir.":
+      "Jewellers, banks and brokers quote two different prices; when you cash out, you receive less than the market price. Enter your own dealer's spread.",
+    "Makası bilmiyor musun? Fiyatlardan hesapla": "Don't know the spread? Work it out from prices",
+    "Satış fiyatı (senin ödediğin)": "Ask price (what you pay)",
+    "Alış fiyatı (bozdurunca aldığın)": "Bid price (what you get when you cash out)",
     "Bu cihazda hatırla": "Remember on this device", "Hesapla": "Calculate",
     "Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır. Hesap sonuçları yalnız aritmetiktir.":
       "Not investment advice. Data for information only. Results are plain arithmetic.",

@@ -90,6 +90,24 @@
       : "Makro hava verisi yok";
     document.title = lvl ? "Makro hava: " + WORD[lvl] + " — Piyasa Hava Durumu" : document.title;
 
+    // One line under the band so the level is visible on the first screen (the full block is further down).
+    var ml = $("macro-line");
+    if (ml && lvl && !archived) {
+      ml.textContent = "";
+      ml.setAttribute("data-noi18n", "");
+      var LV_EN = { YESIL: "GREEN", SARI: "YELLOW", KIRMIZI: "RED" };
+      ml.appendChild(el("span", "dot lv-" + lvl.toLowerCase()));
+      var mm = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(d.data_date || ""));
+      var MEN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      var dd = mm ? (+mm[3]) + " " + (EN ? MEN[+mm[2] - 1] : MONTHS[+mm[2] - 1].slice(0, 3)) : "";
+      ml.appendChild(document.createTextNode((EN ? "Macro weather: " + LV_EN[lvl] : "Makro hava: " + WORD[lvl]) +
+        (dd ? (EN ? " · US data of " + dd : " · " + dd + " ABD verisi") : "") + " · "));
+      var ma = el("a", null, EN ? "what it means" : "ne anlatıyor?");
+      ma.href = "#kicker";
+      ml.appendChild(ma);
+      ml.hidden = false;
+    }
+
     var mode = d.mode === "live" ? "canlı" : d.mode === "retro" ? "geriye dönük" : "—";
     $("meta").textContent = "Veri: " + trDate(d.data_date) + " kapanışı · Kural sürümü " +
       (d.rules_version || "—") + " · Kayıt: " + mode;

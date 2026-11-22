@@ -111,6 +111,8 @@
     {"name": "Osmiyum", "desc": "Bilinen en yoğun element; çok küçük hacimlerde, özel alaşımlarda kullanılır."}
   ],
   "headlines": {
+    "_doc_lang": "lang: başlığın dili (yoksa en). Ana sayfa yan sütunu yalnız en/tr başlıkları gösterir; dunya.html hepsini gösterir. exclude_words: ekonomi akışlarındaki konu dışı (piyango) başlıkları ayıklar, büyük/küçük harf duyarsız.",
+    "exclude_words": ["Mega-Sena", "Lotofácil", "Lotomania", "Quina", "Dupla Sena", "Timemania", "Dia de Sorte", "+Milionária", "loteria"],
     "max_total": 10,
     "max_per_feed": 3,
     "max_age_days": 4,
@@ -120,9 +122,9 @@
        "url": "https://www.korea.net/koreanet/rss/news/5", "terms": "Resmî hükümet haber servisi RSS'i; şart belirtilmemiş, yalnız başlık + bağlantı."},
       {"id": "koreanet-business", "topic": "Japonya / Kore teknoloji", "source": "Korea.net (Kore Kültür ve Enformasyon Servisi)",
        "url": "https://www.korea.net/koreanet/rss/news/4", "terms": "Resmî hükümet haber servisi RSS'i; yalnız başlık + bağlantı."},
-      {"id": "govbr-economia", "topic": "Brezilya", "source": "gov.br (Brezilya Hükümeti)",
+      {"id": "govbr-economia", "lang": "pt", "topic": "Brezilya", "source": "gov.br (Brezilya Hükümeti)",
        "url": "https://www.gov.br/pt-br/noticias/financas-impostos-e-gestao-publica/RSS", "terms": "Site içeriği CC BY-ND 3.0; yalnız başlık + bağlantı (türev yok)."},
-      {"id": "agenciabrasil-economia", "topic": "Brezilya", "source": "Agência Brasil (EBC)",
+      {"id": "agenciabrasil-economia", "lang": "pt", "topic": "Brezilya", "source": "Agência Brasil (EBC)",
        "url": "https://agenciabrasil.ebc.com.br/rss/economia/feed.xml", "terms": "Kamu haber ajansı; yalnız başlık + bağlantı. Akış Actions'tan doğrulanacak."},
       {"id": "eia-today", "topic": "Emtia ve madenler", "source": "ABD Enerji Enformasyon İdaresi (EIA)",
        "url": "https://www.eia.gov/rss/todayinenergy.xml", "terms": "ABD federal hükümeti yayını (kamu malı); yalnız başlık + bağlantı."},

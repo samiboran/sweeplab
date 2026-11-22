@@ -14,7 +14,7 @@
   function L(tr, en) { return EN ? en : tr; }
 
   function $(id) { return document.getElementById(id); }
-  if (EN) ["sonuc", "fiyat-meta", "foot-meta", "maliyet-label", "miktar-label", "maliyet", "miktar"].forEach(function (id) { var e = $(id); if (e) e.setAttribute("data-noi18n", ""); });
+  if (EN) ["sonuc", "fiyat-meta", "foot-meta", "maliyet-label", "miktar-label", "maliyet", "miktar", "makas-ref"].forEach(function (id) { var e = $(id); if (e) e.setAttribute("data-noi18n", ""); });
   function el(tag, cls, text) {
     var e = document.createElement(tag);
     if (cls) e.className = cls;
@@ -55,7 +55,7 @@
   function save() {
     try {
       if ($("hatirla").checked) {
-        localStorage.setItem(KEY, JSON.stringify({ a: $("varlik").value, c: ccy(), m: $("maliyet").value, q: $("miktar").value }));
+        localStorage.setItem(KEY, JSON.stringify({ a: $("varlik").value, c: ccy(), m: $("maliyet").value, q: $("miktar").value, s: $("makas").value }));
       } else {
         localStorage.removeItem(KEY);
       }
@@ -69,6 +69,7 @@
       Array.prototype.forEach.call(document.querySelectorAll('input[name="ccy"]'), function (r) { r.checked = r.value === s.c; });
       $("maliyet").value = String(s.m || "").slice(0, 32);
       $("miktar").value = String(s.q || "").slice(0, 32);
+      $("makas").value = String(s.s || "").slice(0, 8);
       $("hatirla").checked = true;
     } catch (e) { /* ignore */ }
   }
@@ -114,7 +115,9 @@
     if (!P) return;
     var cost = parse($("maliyet").value), qty = parse($("miktar").value);
     if (a === "bist100" && cost > 0) qty = qty / cost;           // TL invested -> index units
-    var r = C.compute(a, cost, c, qty, P);
+    var spread = parse($("makas").value);
+    var r = C.compute(a, cost, c, qty, P, spread > 0 ? spread : 0);
+    if (spread >= 50) $("makas").setAttribute("aria-invalid", "true"); else $("makas").removeAttribute("aria-invalid");
     if (!r) {
       if (show || $("maliyet").value || $("miktar").value) {
         var msg;
@@ -171,8 +174,18 @@
     row(tb, L("Kâr / zarar", "Profit / loss"), (r.pl < 0 ? "−" : "+") + money(Math.abs(r.pl), r.ccy), r.pl < 0 ? "neg" : null);
     row(tb, L("Maliyetine dönmek için fiyat", "Breakeven price"), a === "bist100" ? num(r.breakeven, 0) + L(" puan", " points") : money(r.breakeven, r.ccy));
     row(tb, L("Gereken yükseliş", "Rise needed"), r.toBreakevenPct <= 0 ? L("Yok (maliyetin üzerindesin)", "None (above your cost)") : signedPct(r.toBreakevenPct));
+    if (r.spreadPct) {
+      var spTxt = EN ? num(r.spreadPct, 2) + "%" : "%" + num(r.spreadPct, 2);
+      row(tb, L("Bozdurunca eline geçen (makas ", "Cash received (spread ") + spTxt + ")", a === "bist100" ? money(r.netValue, "TL") : money(r.netValue, r.ccy));
+      row(tb, L("Makas sonrası kâr / zarar", "Profit / loss after spread"), (r.netPl < 0 ? "−" : "+") + money(Math.abs(r.netPl), r.ccy) + " (" + signedPct(r.netPlPct) + ")", r.netPl < 0 ? "neg" : null);
+      row(tb, L("Makas dahil maliyetine dönmek için fiyat", "Breakeven price incl. spread"), a === "bist100" ? num(r.netBreakeven, 0) + L(" puan", " points") : money(r.netBreakeven, r.ccy));
+      row(tb, L("Makas dahil gereken yükseliş", "Rise needed incl. spread"), r.netToBreakevenPct <= 0 ? L("Yok", "None") : signedPct(r.netToBreakevenPct));
+    }
     t.appendChild(tb);
     out.appendChild(t);
+    if (r.spreadPct) out.appendChild(el("p", "mute small", L(
+      "Makas satırları, piyasa fiyatı yerine bozdururken eline geçecek fiyatla hesaplanır. Makası sen girdin; gerçek makas yere ve saate göre değişir.",
+      "The spread rows use the price you would actually receive when selling instead of the market price. You entered the spread; real spreads vary by dealer and time.")));
 
     if (a === "bist100") return;
     out.appendChild(el("p", "label kicker", L("Dolar/TL değişirse", "If USD/TRY changes")));
@@ -212,12 +225,27 @@
     P = d && d.prices ? d.prices : null;
     var meta = P ? L("Dolar/TL ", "USD/TRY ") + num(+P.usdtry, 4) + L(" · fiyat tarihi ", " · price date ") + trDate(P.usdtry_asof) : L("Güncel fiyat alınamadı.", "Current prices could not be loaded.");
     $("fiyat-meta").textContent = meta;
+    var mr = d && d.makas_ref && d.makas_ref.usd;
+    if (mr && typeof mr.pct === "number" && /^\d{4}-\d{2}-\d{2}$/.test(mr.tarih || "")) {
+      var refEl = $("makas-ref");
+      refEl.textContent = EN
+        ? "Reference: Central Bank (TCMB) banknote buying/selling rates for the US dollar differ by " + num(mr.pct, 2) + "% (TCMB rates of " + trDate(mr.tarih) + ", published around 15:30). Banks and dealers usually apply a wider spread. There is no free daily spread data for gold and silver; check your own dealer."
+        : "Referans: TCMB dolar efektif alış ve satış kuru arasındaki fark %" + num(mr.pct, 2) + " (TCMB'nin " + trDate(mr.tarih) + " kuru, ~15:30'da açıklanır). Bankalar ve döviz büroları genellikle daha geniş makas uygular. Altın ve gümüş için serbest günlük makas verisi yok; kendi aldığın yerin fiyatlarına bak.";
+      refEl.hidden = false;
+    }
     $("foot-meta").textContent = L("Fiyat tarihi: ", "Price date: ") + (P ? trDate(P.usdtry_asof) : "—") + L(" · Kaynak: Piyasa Hava Durumu türetilmiş verisi", " · Source: Piyasa Hava Durumu derived data");
     update();
   }
 
-  ["varlik", "maliyet", "miktar", "hatirla"].forEach(function (id) {
+  ["varlik", "maliyet", "miktar", "makas", "hatirla"].forEach(function (id) {
     $(id).addEventListener(id === "varlik" || id === "hatirla" ? "change" : "input", function () { update(); });
+  });
+  // "Makası bilmiyor musun?": two dealer prices -> spread %
+  ["makas-satis", "makas-alis"].forEach(function (id) {
+    $(id).addEventListener("input", function () {
+      var sp = C.spreadFromPrices(parse($("makas-satis").value), parse($("makas-alis").value));
+      if (sp != null) { $("makas").value = num(sp, 2); update(); }
+    });
   });
   Array.prototype.forEach.call(document.querySelectorAll('input[name="ccy"]'), function (r) { r.addEventListener("change", function () { update(); }); });
   // Mobile: "next" on the cost field moves on; "done"/Enter or the button computes and closes the keyboard.

@@ -139,3 +139,24 @@ def test_compare_series_rebases_indices_and_keeps_prices():
     assert "brent" not in by                                     # missing input -> left out
     assert len(c["dates"]) == len(by["dolar"]["v"])
     assert c["dates"][-1] < "2026-03-01"                          # today's (incomplete) bar excluded
+
+
+TCMB_XML = b"""<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="isokur.xsl"?>
+<Tarih_Date Tarih="20.11.2026" Date="11/20/2026" Bulten_No="2026/219">
+<Currency CrossOrder="0" Kod="USD" CurrencyCode="USD"><Unit>1</Unit><Isim>ABD DOLARI</Isim><CurrencyName>US DOLLAR</CurrencyName>
+<ForexBuying>50.4501</ForexBuying><ForexSelling>50.5410</ForexSelling><BanknoteBuying>50.4148</BanknoteBuying><BanknoteSelling>50.6168</BanknoteSelling>
+<CrossRateUSD/><CrossRateOther/></Currency>
+</Tarih_Date>"""
+
+
+def test_tcmb_banknote_spread():
+    r = tl.parse_tcmb(TCMB_XML)
+    assert r["tarih"] == "2026-11-20" and r["alis"] == 50.4148 and r["satis"] == 50.6168
+    assert r["pct"] == round((50.6168 - 50.4148) / 50.6168 * 100, 2)
+
+
+def test_tcmb_rejects_dtd():
+    import pytest
+    with pytest.raises(ValueError):
+        tl.parse_tcmb(b'<?xml version="1.0"?><!DOCTYPE x [<!ENTITY a "b">]><Tarih_Date Date="1/1/2026"/>')

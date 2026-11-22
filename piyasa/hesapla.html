@@ -65,6 +65,17 @@
       <input type="text" id="maliyet" inputmode="decimal" enterkeyhint="next" placeholder="örn. 102,50">
       <label for="miktar" id="miktar-label">Miktar</label>
       <input type="text" id="miktar" inputmode="decimal" enterkeyhint="done" placeholder="örn. 10">
+      <label for="makas" id="makas-label">Makas / komisyon (%) — isteğe bağlı</label>
+      <input type="text" id="makas" inputmode="decimal" enterkeyhint="done" placeholder="örn. 2" aria-describedby="makas-not">
+      <p class="mute small" id="makas-not">Kuyumcu, banka ya da aracı kurum alış ve satış fiyatını farklı verir; bozdururken eline geçen tutar piyasa fiyatından düşüktür. Kendi aldığın yerin makasını gir.</p>
+      <details class="makas-yardim">
+        <summary>Makası bilmiyor musun? Fiyatlardan hesapla</summary>
+        <label for="makas-satis">Satış fiyatı (senin ödediğin)</label>
+        <input type="text" id="makas-satis" inputmode="decimal" placeholder="örn. 3000">
+        <label for="makas-alis">Alış fiyatı (bozdurunca aldığın)</label>
+        <input type="text" id="makas-alis" inputmode="decimal" placeholder="örn. 2940">
+      </details>
+      <p class="mute small" id="makas-ref" hidden></p>
       <label class="remember"><input type="checkbox" id="hatirla"> Bu cihazda hatırla</label>
       <button type="submit" class="go" id="hesapla">Hesapla</button>
     </form>

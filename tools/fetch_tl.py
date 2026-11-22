@@ -12,6 +12,7 @@ or public source before any monetization):
   TRY=X (USD/TRY), GC=F (COMEX gold, USD/oz), SI=F (COMEX silver, USD/oz), XU100.IS,
   BTC-USD, ETH-USD (for the 1-year view; the calculator prefers OKX closes from the notebook),
   BZ=F, CL=F (Brent / WTI oil, top band only: last value + 1-day change)
+TCMB today.xml (public): USD banknote buying/selling -> makas_ref, the calculator's spread reference.
 First run (or a store that is not daily) backfills daily bars from 2000 via
 period1/period2 (range=max returns MONTHLY bars); later runs fetch 1 year and merge. Each symbol is independent: a failure is logged and the rest continue.
 BIST 100 index level is published only as the current rounded level (needed by the
@@ -274,6 +275,39 @@ def derive(data, today, crypto=None):
     return {"assets": assets, "prices": prices, "band": band, "status": "ok" if core_ok else "güncellenmedi"}
 
 
+# ---------------------------------------------------------------- TCMB banknote spread (calculator reference)
+TCMB_URL = "https://www.tcmb.gov.tr/kurlar/today.xml"
+
+
+def parse_tcmb(xml_bytes):
+    """USD banknote buying/selling from TCMB today.xml -> {alis, satis, pct, tarih}. Public data (TCMB)."""
+    import xml.etree.ElementTree as ET
+    if b"<!DOCTYPE" in xml_bytes[:2000] or b"<!ENTITY" in xml_bytes:
+        raise ValueError("DTD not allowed")
+    root = ET.fromstring(xml_bytes)
+    m, d, y = root.attrib["Date"].split("/")
+    for c in root.findall("Currency"):
+        if c.attrib.get("CurrencyCode") == "USD":
+            buy, sell = float(c.findtext("BanknoteBuying")), float(c.findtext("BanknoteSelling"))
+            if not (0 < buy <= sell):
+                raise ValueError("bad rates")
+            return {"alis": round(buy, 4), "satis": round(sell, 4), "pct": round((sell - buy) / sell * 100, 2),
+                    "tarih": f"{y}-{int(m):02d}-{int(d):02d}", "kaynak": "TCMB efektif kurlar (today.xml)"}
+    raise ValueError("USD not found")
+
+
+def tcmb_ref(previous=None):
+    try:
+        with urllib.request.urlopen(urllib.request.Request(TCMB_URL, headers=UA), timeout=30) as r:
+            data = r.read(500_000)
+        ref = parse_tcmb(data)
+        status["TCMB_USD"] = f"OK {ref['tarih']} %{ref['pct']}"
+        return {"usd": ref}
+    except Exception as e:
+        status["TCMB_USD"] = f"ERR {type(e).__name__}: {str(e)[:80]}"
+        return previous          # keep the last good reference (it carries its own date)
+
+
 # ---------------------------------------------------------------- compare.json (Karşılaştır sayfası)
 COMPARE_DAYS = 740          # ~2 years of calendar days
 # id, label, unit, kind ("fiyat": real level published; "endeks": rebased to 100 at the first day)
@@ -323,6 +357,14 @@ def main():
     for k, v in status.items():
         print(f"  {k}: {v}")
     d = derive(data, now.date().isoformat(), crypto_refs(NOTEBOOK))
+    prev = None
+    try:
+        prev = json.load(open(os.path.join(SITE_OUT, "tl.json"), encoding="utf-8")).get("makas_ref")
+    except Exception:
+        pass
+    ref = tcmb_ref(prev)
+    if ref:
+        d["makas_ref"] = ref
     rec = {"schema": "phd.tl/1", "schema_version": 1, "source": SOURCE, "site_url": SITE_URL,
            "generated_at": now.isoformat().replace("+00:00", "Z"), "attribution": ATTRIBUTION,
            "license": "Yalnızca görüntüleme (atıfla). Girdiler Yahoo Finance/OKX kişisel kullanım şartlı; CC BY 4.0 kapsamında değil. Ayrıntı: veri.html", "note": DATA_NOTE, "rules_version": "v1",

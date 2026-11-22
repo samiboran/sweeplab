@@ -36,3 +36,15 @@ assert.strictEqual(C.compute("gram_altin", 100, "TL", -1, p), null);
 assert.strictEqual(C.compute("yok", 100, "TL", 1, p), null);
 assert.strictEqual(C.compute("eth", 100, "TL", 1, p), null); // no ETH price
 console.log("hesapla: ok");
+
+// spread (makas): sell 3000, buy 2940 -> 2%
+close(C.spreadFromPrices(3000, 2940), 2, 1e-9);
+assert.strictEqual(C.spreadFromPrices(2940, 3000), null);
+const rs = C.compute("gram_altin", 5800, "TL", 10, { usdtry: 50, gram_altin_tl: 6000 }, 2);
+close(rs.netValue, 60000 * 0.98, 1e-6);
+close(rs.netPl, 58800 - 58000, 1e-6);
+close(rs.netBreakeven, 5800 / 0.98, 1e-9);
+close(rs.netToBreakevenPct, (5800 / 0.98 / 6000 - 1) * 100, 1e-9);
+assert.strictEqual(C.compute("gram_altin", 5800, "TL", 10, { usdtry: 50, gram_altin_tl: 6000 }).spreadPct, undefined);
+console.log("hesapla spread: ok");
+
