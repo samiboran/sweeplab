@@ -228,3 +228,35 @@ table.konum th:nth-child(5){width:4.6em}
 table.konum th:nth-child(6){width:4.4em}
 table.konum td.d,table.konum thead th:nth-child(6){padding-left:8px;padding-right:0}
 @media (max-width:600px){table.veri thead{display:none}table.veri,table.veri tbody,table.veri tr,table.veri td{display:block;width:100%}table.veri tr{padding:10px 0;border-bottom:1px solid var(--rule)}table.veri td{border:0;padding:1px 0}table.veri td:first-child{font-weight:600}table.veri td:nth-child(2),table.veri td:nth-child(3),table.veri td:nth-child(4){display:inline;width:auto;color:var(--mute);font-size:12px}table.veri td:nth-child(3)::before,table.veri td:nth-child(4)::before{content:" · "}}
+/* ---- dünya (S10b) ---- */
+table.dunya{table-layout:auto}
+table.dunya th,table.dunya td{padding-left:8px}
+table.dunya th.l{padding-left:0}
+table.dunya td.lv{font-weight:600}
+table.dunya td.v{font-weight:600}
+table.dunya td.neg{color:var(--red)}
+table.dunya td.c7,table.dunya td.c30,table.dunya td.cy{font-size:13px}
+details.comp{margin:4px 0 8px}
+h3.dh{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:18px 0 6px}
+ul.heads{list-style:none;padding:0;margin:0 0 8px}
+ul.heads li{padding:9px 0;border-bottom:1px solid var(--rule);font-size:15px;line-height:1.45}
+ul.heads li a{text-decoration-color:var(--rule)}
+ul.heads li a:hover{text-decoration-color:var(--red)}
+ul.heads .hs{display:block;font-size:12px;color:var(--mute);margin-top:2px}
+dl.ref{margin:0}
+dl.ref dt{font-weight:600;font-size:15px;margin-top:10px}
+dl.ref dd{margin:0 0 6px;font-size:14px;color:#333}
+@media (max-width:600px){table.dunya .c7,table.dunya .m20,table.dunya .m50{display:none}table.dunya{font-size:13px}}
+@media (max-width:420px){table.dunya .c30{display:none}}
+/* wide-screen side column on the home page (≥ 1200 px only) */
+.wrap{position:relative}
+aside.dside{display:none}
+@media (min-width:1200px){aside.dside:not([hidden]){display:block;position:absolute;top:150px;left:calc(100% + 36px);width:210px;font-size:13px;border-top:1px solid var(--ink);padding-top:10px}
+aside.dside table{width:100%;border-collapse:collapse}
+aside.dside td{padding:5px 0;border-bottom:1px solid var(--rule)}
+aside.dside td.r{text-align:right;font-weight:600}
+aside.dside td.neg{color:var(--red)}
+aside.dside ul{list-style:none;padding:0;margin:0}
+aside.dside li{padding:6px 0;border-bottom:1px solid var(--rule);line-height:1.4}
+aside.dside .hs{display:block;color:var(--mute);font-size:11px}
+aside.dside .more{margin-top:10px}}
