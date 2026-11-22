@@ -103,7 +103,7 @@
 
     <section>
       <h2 id="tl">tl.json ve konum.json</h2>
-      <p><code>tl.json → assets[]</code>: <code>id, label, unit, asof, last, chg_1g, chg_7g, chg_30g, chg_ytd, chg_1y, date_1y, val_1y, vs_ma200, stale, series</code> (yüzdeler 2 ondalık). <code>prices</code>: hesaplayıcı için güncel yuvarlanmış fiyatlar.</p>
+      <p><code>tl.json → assets[]</code>: <code>id, label, unit, asof, last, chg_1g, chg_7g, chg_30g, chg_ytd, chg_1y, date_1y, val_1y, vs_ma200, stale, series</code> (yüzdeler 2 ondalık). <code>prices</code>: hesaplayıcı için güncel yuvarlanmış fiyatlar. <code>band</code>: üst banttaki alternatif görünümler (<code>ons_altin</code>, <code>ons_gumus</code>, <code>brent</code>, <code>wti</code>): <code>label, unit, asof, last, chg_1g, stale</code>.</p>
       <p><code>konum.json → groups[].satirlar[]</code>: <code>id, ad, asof, ust20, ust50, ust200</code> (1 = üstünde, 0 = altında, null = yeterli geçmiş yok), <code>fark200</code> (200 günlük ortalamaya % uzaklık, 1 ondalık), <code>eski</code>. Grup içinde alfabetik; bir sıralama değildir.</p>
     </section>
 

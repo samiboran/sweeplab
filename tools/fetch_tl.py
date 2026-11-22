@@ -10,7 +10,8 @@ Publishes DERIVED, rounded values only:
 Sources (Yahoo Finance chart API, personal-use terms — to be replaced by a licensed
 or public source before any monetization):
   TRY=X (USD/TRY), GC=F (COMEX gold, USD/oz), SI=F (COMEX silver, USD/oz), XU100.IS,
-  BTC-USD, ETH-USD (for the 1-year view; the calculator prefers OKX closes from the notebook)
+  BTC-USD, ETH-USD (for the 1-year view; the calculator prefers OKX closes from the notebook),
+  BZ=F, CL=F (Brent / WTI oil, top band only: last value + 1-day change)
 First run (or a store that is not daily) backfills daily bars from 2000 via
 period1/period2 (range=max returns MONTHLY bars); later runs fetch 1 year and merge. Each symbol is independent: a failure is logged and the rest continue.
 BIST 100 index level is published only as the current rounded level (needed by the
@@ -27,7 +28,9 @@ UA = {"User-Agent": "Mozilla/5.0 (piyasa-hava-durumu; github actions)"}
 SYMBOLS = {"USDTRY": "TRY=X", "GOLD_USD": "GC=F", "SILVER_USD": "SI=F", "XU100": "XU100.IS",
            "BTC_USD": "BTC-USD", "ETH_USD": "ETH-USD",
            # long history for 'Dünyada bu Pazartesi/Cuma' (fund prices, not licensed index levels)
-           "SPY": "SPY", "QQQ": "QQQ"}
+           "SPY": "SPY", "QQQ": "QQQ",
+           # top band alternates (ons altın/gümüş come from GOLD_USD/SILVER_USD)
+           "BRENT_USD": "BZ=F", "WTI_USD": "CL=F"}
 SOURCE = "Piyasa Hava Durumu"
 SITE_URL = "https://samiboran.github.io/sweeplab/piyasa/"
 ATTRIBUTION = "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0"
@@ -258,8 +261,17 @@ def derive(data, today, crypto=None):
             prices[k + "_usd"], prices[k + "_asof"] = v["usd"], v["asof"]
         elif y:
             prices[k + "_usd"], prices[k + "_asof"] = round(y["last"], 2), y["asof"]
+    # top band: alternate views shown on tap (ons gold/silver in USD, Brent/WTI oil) — last + 1g only
+    band = {}
+    for key, label, unit, src, nd in (("ons_altin", "Ons altın", "$", gold, 2), ("ons_gumus", "Ons gümüş", "$", silver, 2),
+                                      ("brent", "Brent petrol", "$", data.get("BRENT_USD") or {}, 2),
+                                      ("wti", "WTI petrol", "$", data.get("WTI_USD") or {}, 2)):
+        s = stats(src)
+        if s and s["chg_1g"] is not None:
+            band[key] = {"label": label, "unit": unit, "asof": s["asof"], "last": round(s["last"], nd),
+                         "chg_1g": s["chg_1g"], "stale": weekday_age(s["asof"], today) > 3}
     core_ok = all(a.get("asof") and not a.get("stale") for a in assets if a["id"] in ("gram_altin", "dolar"))
-    return {"assets": assets, "prices": prices, "status": "ok" if core_ok else "güncellenmedi"}
+    return {"assets": assets, "prices": prices, "band": band, "status": "ok" if core_ok else "güncellenmedi"}
 
 
 def main():

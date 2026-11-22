@@ -135,9 +135,76 @@
     if (d.note) box.appendChild(el("p", "mute small", d.note));
   }
 
+  // Top band (home page): last value + 1-day change from the same tl.json. Gold, silver and oil
+  // are buttons: a tap switches between two views (gram TL <-> ons $, Brent <-> WTI).
+  // Each view: [source, key, label, decimals (null = no level), unit suffix]
+  var BAND = [
+    [["a", "gram_altin", "Gram altın", 0, " TL"], ["b", "ons_altin", "Ons altın", 0, " $"]],
+    [["a", "dolar", "Dolar/TL", 2, ""]],
+    [["a", "gram_gumus", "Gram gümüş", 2, " TL"], ["b", "ons_gumus", "Ons gümüş", 2, " $"]],
+    [["b", "brent", "Brent petrol", 2, " $"], ["b", "wti", "WTI petrol", 2, " $"]],
+    [["a", "bist100_usd", "BIST 100 ($)", null, ""]],
+    [["a", "btc", "Bitcoin", 0, " $"]]
+  ];
+  function shortDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    return m ? (+m[3]) + " " + MONTHS[+m[2] - 1].slice(0, 3) : "";
+  }
+  function band(d) {
+    var host = document.getElementById("band");
+    if (!host) return;
+    var src = { a: {}, b: (d.band && typeof d.band === "object") ? d.band : {} };
+    (d.assets || []).forEach(function (a) { if (a && a.id) src.a[a.id] = a; });
+    function pick(v) {
+      var a = src[v[0]][v[1]];
+      return (a && !a.status && typeof a.chg_1g === "number") ? a : null;
+    }
+    function fill(node, v, a) {
+      node.textContent = "";
+      node.appendChild(el("span", "band-k", v[2]));
+      if (v[3] !== null && typeof a.last === "number") node.appendChild(el("span", "band-v", num(a.last, v[3]) + v[4]));
+      node.appendChild(el("span", "band-c" + (a.chg_1g < 0 ? " neg" : ""), pct(a.chg_1g)));
+    }
+    var ul = el("ul", "band-list"), last = "", toggles = 0;
+    BAND.forEach(function (views) {
+      var ok = views.filter(pick);
+      if (!ok.length) return;
+      var li = el("li", "band-i");
+      if (ok.length === 1) {
+        var span = el("span", "band-x");
+        fill(span, ok[0], pick(ok[0]));
+        li.appendChild(span);
+      } else {
+        toggles++;
+        var btn = el("button", "band-x band-t");
+        btn.type = "button";
+        var i = 0;
+        var show = function () {
+          fill(btn, ok[i], pick(ok[i]));
+          var nxt = ok[(i + 1) % ok.length][2];
+          var parts = Array.prototype.map.call(btn.childNodes, function (n) { return n.textContent; });
+          btn.setAttribute("aria-label", parts.join(" ") + ". Dokun: " + nxt);
+          btn.title = "Dokun: " + nxt;
+        };
+        btn.addEventListener("click", function () { i = (i + 1) % ok.length; show(); });
+        show();
+        li.appendChild(btn);
+      }
+      ul.appendChild(li);
+      var a0 = pick(ok[0]);
+      if (a0.asof && a0.asof > last && ok[0][1] !== "btc") last = a0.asof;
+    });
+    if (!ul.firstChild) return;
+    host.textContent = "";
+    host.appendChild(ul);
+    host.appendChild(el("p", "band-n", "1 günlük değişim" + (last ? " · " + shortDate(last) + " kapanışı" : "") +
+      (toggles ? " · Altın, gümüş ve petrole dokununca görünüm değişir" : "")));
+    host.hidden = false;
+  }
+
   fetch(DATA + "tl.json", { cache: "no-cache", credentials: "omit", referrerPolicy: "no-referrer" })
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then(function (d) { if (!d || typeof d !== "object") throw new Error("bad"); render(d); })
+    .then(function (d) { if (!d || typeof d !== "object") throw new Error("bad"); render(d); band(d); })
     .catch(function () {
       var box = document.getElementById("tl");
       box.textContent = "";

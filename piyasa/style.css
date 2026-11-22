@@ -251,7 +251,7 @@ dl.ref dd{margin:0 0 6px;font-size:14px;color:#333}
 /* wide-screen side column on the home page (≥ 1200 px only) */
 .wrap{position:relative}
 aside.dside{display:none}
-@media (min-width:1200px){aside.dside:not([hidden]){display:block;position:absolute;top:150px;left:calc(100% + 36px);width:210px;font-size:13px;border-top:1px solid var(--ink);padding-top:10px}
+@media (min-width:1200px){aside.dside:not([hidden]){display:block;position:absolute;top:214px;left:calc(100% + 36px);width:210px;font-size:13px;border-top:1px solid var(--ink);padding-top:10px}
 aside.dside table{width:100%;border-collapse:collapse}
 aside.dside td{padding:5px 0;border-bottom:1px solid var(--rule)}
 aside.dside td.r{text-align:right;font-weight:600}
@@ -260,3 +260,21 @@ aside.dside ul{list-style:none;padding:0;margin:0}
 aside.dside li{padding:6px 0;border-bottom:1px solid var(--rule);line-height:1.4}
 aside.dside .hs{display:block;color:var(--mute);font-size:11px}
 aside.dside .more{margin-top:10px}}
+/* ---- top band (piyasa bandı) ---- */
+.band{border-bottom:1px solid var(--rule);padding:10px 0 8px;font-size:13px}
+.band[hidden]{display:none}
+.band-list{list-style:none;margin:0;padding:0;display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;scrollbar-width:none}
+.band-list::-webkit-scrollbar{display:none}
+.band-i{flex:0 0 auto;display:flex;align-items:baseline;gap:6px;padding:0 14px;border-left:1px solid var(--rule);white-space:nowrap;scroll-snap-align:start}
+.band-i:first-child{padding-left:0;border-left:0}
+.band-k{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.band-v{font-weight:600}
+.band-c{font-weight:600}
+.band-c.neg{color:var(--red)}
+.band-n{margin:4px 0 0;font-size:11px;color:var(--mute)}
+@media (min-width:700px){.band-list{display:grid;grid-template-columns:repeat(3,1fr);row-gap:6px;overflow:visible}.band-i{padding:0 12px}.band-i:nth-child(3n+1){padding-left:0;border-left:0}}
+.band-x{display:flex;align-items:baseline;gap:6px}
+button.band-t{appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;cursor:pointer;min-height:28px;text-align:left}
+button.band-t .band-k{text-decoration:underline dotted;text-underline-offset:3px;text-decoration-color:var(--mute)}
+button.band-t:hover .band-k,button.band-t:focus-visible .band-k{color:var(--red);text-decoration-color:var(--red)}
+button.band-t:focus-visible{outline:1px solid var(--red);outline-offset:3px}
