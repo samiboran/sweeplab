@@ -1,0 +1,139 @@
+{
+ "schema": "phd.index/1",
+ "schema_version": 1,
+ "source": "Piyasa Hava Durumu",
+ "site_url": "https://samiboran.github.io/sweeplab/piyasa/",
+ "docs": "https://samiboran.github.io/sweeplab/piyasa/veri.html",
+ "generated_at": "2026-11-22T09:03:16Z",
+ "attribution": "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0",
+ "license": "karışık (alan düzeyinde; veri.html)",
+ "base_url_now": "https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/",
+ "base_url_note": "Yollar data/site/ köküne göredir ve sabittir; son barındırıcıda <site>/data/site/ altında aynı kalır.",
+ "stability": "Bir şemada alan eklemek sürümü değiştirmez; alan kaldırmak ya da anlamını değiştirmek yeni sürüm (…/2) demektir ve eski sürüm en az 90 gün yan yana yayımlanır.",
+ "disclaimer": "Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.",
+ "endpoints": [
+  {
+   "path": "today.json",
+   "schema": "phd.today/1",
+   "schema_version": 1,
+   "update_utc": "her gün ~06:00",
+   "license": "karışık (alan düzeyinde; veri.html)",
+   "description": "Bugünün makro havası: seviye, ham skor, 9 kuralın 0/1 işareti, yuvarlanmış kamu verisi değerleri, tazelik durumu.",
+   "exists": true
+  },
+  {
+   "path": "history.csv",
+   "schema": "phd.history/1",
+   "schema_version": 1,
+   "update_utc": "her gün ~06:00",
+   "license": "CC BY 4.0",
+   "description": "Her günün seviyesi, ham skoru ve 9 kural işareti; yalnız ekleme yapılır (retro/live).",
+   "exists": true
+  },
+  {
+   "path": "archive/{YYYY-MM-DD}.json",
+   "schema": "phd.today/1",
+   "schema_version": 1,
+   "update_utc": "her gün ~06:00",
+   "license": "karışık (alan düzeyinde; veri.html)",
+   "description": "Geçmiş bir günün yayımlandığı haliyle kaydı; yeniden yazılmaz (belgelenmiş düzeltme hariç).",
+   "exists": true,
+   "first": "2026-08-30",
+   "last": "2026-11-19",
+   "count": 82
+  },
+  {
+   "path": "sicil.json",
+   "schema": "phd.sicil/1",
+   "schema_version": 1,
+   "update_utc": "her gün ~06:00",
+   "license": "CC BY 4.0",
+   "description": "KIRMIZI geçişlerinin sonucu: teyit / yanlış alarm / kaçırılan düşüş (yalnız kelime).",
+   "exists": true
+  },
+  {
+   "path": "tl.json",
+   "schema": "phd.tl/1",
+   "schema_version": 1,
+   "update_utc": "her gün ~06:00",
+   "license": "yalnızca görüntüleme",
+   "description": "Gram altın, gram gümüş, dolar/TL, BIST 100 (dolar bazında): değişimler ve küçük grafik serisi.",
+   "exists": true
+  },
+  {
+   "path": "konum.json",
+   "schema": "phd.konum/1",
+   "schema_version": 1,
+   "update_utc": "her gün ~06:00",
+   "license": "yalnızca görüntüleme",
+   "description": "Sabit evrende 20/50/200 günlük ortalamaya göre konum (0/1) ve 200 güne yüzde uzaklık.",
+   "exists": true
+  },
+  {
+   "path": "charts.json",
+   "schema": "phd.charts/1",
+   "schema_version": 1,
+   "update_utc": "her gün ~06:00",
+   "license": "karışık (alan düzeyinde; veri.html)",
+   "description": "BTC/ETH günlük kapanış + 50/200 gün ortalaması (görüntüleme) ve makro skor geçmişi (CC BY 4.0).",
+   "exists": true
+  },
+  {
+   "path": "hafta.json",
+   "schema": "phd.hafta/1",
+   "schema_version": 1,
+   "update_utc": "pazartesi ve cuma ~06:00",
+   "license": "yalnızca görüntüleme",
+   "description": "Dünyada bu Pazartesi / Cuma: aynı haftanın son 10 yıldaki seyri, takvim, kaynaklı tarih notları.",
+   "exists": true
+  },
+  {
+   "path": "hafta/{YYYY-MM-DD}.json",
+   "schema": "phd.hafta/1",
+   "schema_version": 1,
+   "update_utc": "pazartesi ve cuma ~06:00",
+   "license": "yalnızca görüntüleme",
+   "description": "Geçmiş haftalık baskılar.",
+   "exists": true,
+   "first": "2026-11-21",
+   "last": "2026-11-21",
+   "count": 1
+  },
+  {
+   "path": "og.png",
+   "schema": null,
+   "schema_version": null,
+   "update_utc": "her gün ~06:00",
+   "license": "CC BY 4.0",
+   "description": "Günün başlık kartı (1200×630).",
+   "exists": true
+  },
+  {
+   "path": "dunya.json",
+   "schema": "phd.dunya/1",
+   "schema_version": 1,
+   "update_utc": "planlı (S10b)",
+   "license": "yalnızca görüntüleme",
+   "description": "Bölge endeksleri, emtialar, günün başlıkları.",
+   "exists": false
+  },
+  {
+   "path": "movers.json",
+   "schema": "phd.movers/1",
+   "schema_version": 1,
+   "update_utc": "planlı (S10c)",
+   "license": "yalnızca görüntüleme",
+   "description": "Günün hareketlileri ve kural tabanlı anomaliler.",
+   "exists": false
+  },
+  {
+   "path": "movers_news.json",
+   "schema": "phd.movers_news/1",
+   "schema_version": 1,
+   "update_utc": "planlı (S10c)",
+   "license": "yalnızca görüntüleme",
+   "description": "Hareketlilere eşleştirilen haber başlıkları (yalnız başlık + kaynak + saat + bağlantı).",
+   "exists": false
+  }
+ ]
+}
