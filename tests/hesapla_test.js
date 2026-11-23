@@ -48,3 +48,13 @@ close(rs.netToBreakevenPct, (5800 / 0.98 / 6000 - 1) * 100, 1e-9);
 assert.strictEqual(C.compute("gram_altin", 5800, "TL", 10, { usdtry: 50, gram_altin_tl: 6000 }).spreadPct, undefined);
 console.log("hesapla spread: ok");
 
+// several purchases: 5 g @ 5000 + 3 g @ 6000 -> 8 g @ 5375
+const av = C.averageLots([[5, 5000], [3, 6000], [0, 999], ["x", 1]]);
+assert.strictEqual(av.amount, 8); close(av.cost, 5375, 1e-9); assert.strictEqual(av.rows, 2);
+assert.strictEqual(C.averageLots([]), null);
+// custom asset (çeyrek): user-entered price, TL only, no TL scenario values
+const cq = C.compute("diger", 9000, "USD", 2, { usdtry: 50, custom_tl: 9900 });
+assert.strictEqual(cq.ccy, "TL"); close(cq.plPct, 10, 1e-9); assert.strictEqual(cq.scenarios[1].valueTl, null);
+assert.strictEqual(C.compute("diger", 9000, "TL", 2, { usdtry: 50 }), null);
+console.log("hesapla lots/custom: ok");
+

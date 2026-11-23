@@ -55,7 +55,7 @@
     "Dünya": "World", "Dünyada durum ne?": "How is the world doing?",
     "Japonya, Kore, Çin, Hong Kong, Tayvan, Brezilya, emtialar ve günün başlıkları. Sayfa yalnız açılınca yüklenir.":
       "Japan, Korea, China, Hong Kong, Taiwan, Brazil, commodities and the day's headlines. Loaded only when opened.",
-    "Sor": "Ask", "Sorular": "Questions", "Daha fazlası": "More",
+    "Senin pozisyonun": "Your position", "Sor": "Ask", "Sorular": "Questions", "Daha fazlası": "More",
     "Dünyada bu hafta": "This week in the world",
     "Benim pozisyonum ne durumda? Maliyetini gir, başa baş fiyatını gör": "How is my position doing? Enter your cost, see your breakeven price",
     "Borsa İstanbul, ABD ve kriptoda günün hareketlileri.": "Today's movers on Borsa Istanbul, in the US and in crypto.",
@@ -240,6 +240,8 @@
     [/^(İşaret var|İşaret yok|Veri yok): (.+)$/, function (m) { return ({ "İşaret var": "Signal", "İşaret yok": "No signal", "Veri yok": "No data" })[m[1]] + ": " + (D[m[2]] || m[2]); }],
     [/^1 günlük değişim · (.+?) itibarıyla \(~15 dk gecikmeli\)( · Altın, gümüş ve petrole dokununca görünüm değişir)?$/, function (m) {
       return "1-day change · as of " + m[1] + " (~15 min delayed)" + (m[2] ? " · Tap gold, silver or oil to switch the view" : ""); }],
+    [/^1 günlük değişim · (.+?) verisi( · Altın, gümüş ve petrole dokununca görünüm değişir)?$/, function (m) {
+      return "1-day change · data of " + m[1] + (m[2] ? " · Tap gold, silver or oil to switch the view" : ""); }],
     [/^1 günlük değişim · (.+?) kapanışı( · Altın, gümüş ve petrole dokununca görünüm değişir)?$/, function (m) {
       return "1-day change · " + m[1] + " close" + (m[2] ? " · Tap gold, silver or oil to switch the view" : ""); }],
     [/^(.+)\. Dokun: (.+)$/, function (m) {

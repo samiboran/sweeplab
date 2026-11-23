@@ -367,3 +367,18 @@ hr.rule-top{border:0;border-top:1px solid var(--rule);margin:28px 0 20px}
 .brandbox,.brand{white-space:nowrap}
 header.masthead nav{width:100%}}
 .res td{white-space:nowrap}
+.lotlar,.makas-yardim{margin:4px 0 8px;font-size:14px}
+.lotlar summary{cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.lot-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0}
+.lot-row input{width:100%;box-sizing:border-box}
+button.lot-add{appearance:none;background:none;border:1px solid var(--ink);padding:6px 12px;font:inherit;cursor:pointer;margin:4px 0}
+button.lot-add:hover{border-color:var(--red);color:var(--red)}
+/* "Senin pozisyonun" card (only when saved on this device) */
+.pozisyon{padding:14px 0 4px;margin:0}
+.pozisyon[hidden]{display:none}
+.poz-big{font-size:40px;font-weight:700;line-height:1.05;margin:0 0 6px;font-variant-numeric:tabular-nums}
+.poz-big.neg{color:var(--red)}
+.poz-line{margin:0 0 6px;font-size:15px}
+.poz-act{margin:6px 0 0;font-size:14px}
+button.poz-del{appearance:none;background:none;border:0;padding:0;font:inherit;color:var(--mute);text-decoration:underline;cursor:pointer}
+button.poz-del:hover{color:var(--red)}

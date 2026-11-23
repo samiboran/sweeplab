@@ -14,7 +14,7 @@
   function L(tr, en) { return EN ? en : tr; }
 
   function $(id) { return document.getElementById(id); }
-  if (EN) ["sonuc", "fiyat-meta", "foot-meta", "maliyet-label", "miktar-label", "maliyet", "miktar", "makas-ref"].forEach(function (id) { var e = $(id); if (e) e.setAttribute("data-noi18n", ""); });
+  if (EN) ["sonuc", "fiyat-meta", "foot-meta", "maliyet-label", "miktar-label", "maliyet", "miktar", "makas-ref", "lot-sum", "lot-rows"].forEach(function (id) { var e = $(id); if (e) e.setAttribute("data-noi18n", ""); });
   function el(tag, cls, text) {
     var e = document.createElement(tag);
     if (cls) e.className = cls;
@@ -53,10 +53,18 @@
     tb.appendChild(tr);
   }
 
+  // Numbers are stored language-neutral (v2), so a value saved on the Turkish page reads the same in English.
+  function nOrNull(str) { var v = parse(str); return isFinite(v) ? v : null; }
+  function show(v) {
+    if (typeof v === "number" && isFinite(v)) return EN ? String(v) : String(v).replace(".", ",");
+    return String(v == null ? "" : v).slice(0, 32);           // v1 (raw text) records
+  }
   function save() {
     try {
       if ($("hatirla").checked) {
-        localStorage.setItem(KEY, JSON.stringify({ a: $("varlik").value, c: ccy(), m: $("maliyet").value, q: $("miktar").value, s: $("makas").value }));
+        localStorage.setItem(KEY, JSON.stringify({ v: 2, a: $("varlik").value, c: ccy(), m: nOrNull($("maliyet").value), q: nOrNull($("miktar").value),
+          s: nOrNull($("makas").value), on: $("ozel-ad").value, cp: nOrNull($("ozel-fiyat").value),
+          l: lotValues().map(function (r) { return [nOrNull(r[0]), nOrNull(r[1])]; }) }));
       } else {
         localStorage.removeItem(KEY);
       }
@@ -68,32 +76,79 @@
       if (!s) return;
       if (C.ASSETS[s.a]) $("varlik").value = s.a;
       Array.prototype.forEach.call(document.querySelectorAll('input[name="ccy"]'), function (r) { r.checked = r.value === s.c; });
-      $("maliyet").value = String(s.m || "").slice(0, 32);
-      $("miktar").value = String(s.q || "").slice(0, 32);
-      $("makas").value = String(s.s || "").slice(0, 8);
+      $("maliyet").value = show(s.m);
+      $("miktar").value = show(s.q);
+      $("makas").value = show(s.s);
+      $("ozel-ad").value = String(s.on || "").slice(0, 30);
+      $("ozel-fiyat").value = show(s.cp);
+      if (Array.isArray(s.l)) s.l.slice(0, 20).forEach(function (r) { if (Array.isArray(r)) addLot(show(r[0]), show(r[1])); });
       $("hatirla").checked = true;
     } catch (e) { /* ignore */ }
   }
 
-  var UNIT_TR = EN ? { gram_altin: "gram of gold", gram_gumus: "gram of silver", dolar: "dollar", btc: "BTC", eth: "ETH", bist100: "points" }
-                   : { gram_altin: "gram altın", gram_gumus: "gram gümüş", dolar: "dolar", btc: "BTC", eth: "ETH", bist100: "puan" };
+  var UNIT_TR = EN ? { gram_altin: "gram of gold", gram_gumus: "gram of silver", dolar: "dollar", btc: "BTC", eth: "ETH", bist100: "points", diger: "unit" }
+                   : { gram_altin: "gram altın", gram_gumus: "gram gümüş", dolar: "dolar", btc: "BTC", eth: "ETH", bist100: "puan", diger: "adet" };
+
+  // today's prices + the user's own price for "Diğer" (never sent anywhere)
+  function PX() {
+    if (!P) return null;
+    var o = {};
+    Object.keys(P).forEach(function (k) { o[k] = P[k]; });
+    o.custom_tl = parse($("ozel-fiyat").value);
+    return o;
+  }
+
+  // ---- several purchases -> weighted average (all local)
+  function addLot(q, c) {
+    var host = $("lot-rows"), i = host.children.length + 1;
+    if (i > 20) return;
+    var row = el("div", "lot-row");
+    var qi = el("input"), ci = el("input");
+    qi.type = ci.type = "text"; qi.inputMode = ci.inputMode = "decimal";
+    qi.placeholder = L("Miktar", "Amount"); ci.placeholder = L("Birim fiyat", "Unit price");
+    qi.setAttribute("aria-label", L(i + ". alım: miktar", "Purchase " + i + ": amount"));
+    ci.setAttribute("aria-label", L(i + ". alım: birim fiyat", "Purchase " + i + ": unit price"));
+    qi.value = q || ""; ci.value = c || "";
+    [qi, ci].forEach(function (x) { x.addEventListener("input", applyLots); });
+    row.appendChild(qi); row.appendChild(ci);
+    host.appendChild(row);
+  }
+  function lotValues() {
+    return Array.prototype.map.call($("lot-rows").children, function (r) {
+      var x = r.querySelectorAll("input");
+      return [x[0].value, x[1].value];
+    }).filter(function (v) { return v[0] || v[1]; });
+  }
+  function applyLots() {
+    var av = C.averageLots(lotValues().map(function (v) { return [parse(v[0]), parse(v[1])]; }));
+    if (!av) { $("lot-sum").textContent = L("Her satıra bir alımın miktarını ve birim fiyatını yaz; ortalama maliyet ve toplam miktar yukarıdaki alanlara yazılır.",
+      "Enter each purchase's amount and unit price; the average cost and total amount go into the fields above."); return; }
+    var nd = av.cost >= 1000 ? 2 : 4;
+    $("maliyet").value = num(av.cost, nd);
+    $("miktar").value = num(av.amount, Number.isInteger(av.amount) ? 0 : 4);
+    $("lot-sum").textContent = L(av.rows + " alım: toplam " + num(av.amount, 4).replace(/,?0+$/, "") + ", ortalama maliyet " + num(av.cost, nd) + ". Yukarıdaki alanlara yazıldı.",
+      av.rows + " purchases: total " + num(av.amount, 4).replace(/\.?0+$/, "") + ", average cost " + num(av.cost, nd) + ". Filled in above.");
+    update();
+  }
 
   function labels(a, c) {
     if (EN) {
       var curE = c === "USD" ? "dollars" : "TL";
       if (a === "dolar") return ["On average, how many TL did you pay for 1 dollar?", "How many dollars do you have?"];
       if (a === "bist100") return ["On average, where was BIST 100 (points) when you bought?", "Amount invested (TL)"];
+      if (a === "diger") return ["On average, how many TL did you pay for 1 unit?", "How many units do you have?"];
       if (a === "btc" || a === "eth") return ["On average, how many " + curE + " did you pay for 1 " + UNIT_TR[a] + "?", "How many " + UNIT_TR[a] + " do you have?"];
       return ["On average, how many " + curE + " did you pay per gram?", "How many grams do you have?"];
     }
     var cur = c === "USD" ? "dolar" : "TL";
     if (a === "dolar") return ["1 doları ortalama kaç TL'ye aldın?", "Kaç doların var?"];
     if (a === "bist100") return ["Aldığında BIST 100 ortalama kaç puandı?", "Yatırdığın tutar (TL)"];
+    if (a === "diger") return ["1 adet için ortalama kaç TL ödedin?", "Kaç adet var?"];
     if (a === "btc" || a === "eth") return ["1 " + UNIT_TR[a] + " için ortalama kaç " + cur + " ödedin?", "Kaç " + UNIT_TR[a] + " var?"];
     return ["1 gram için ortalama kaç " + cur + " ödedin?", "Kaç gramın var?"];
   }
   function todayPrice(a, c) {
-    var px = P ? C.prices(a, P) : null;
+    var px = P ? C.prices(a, PX()) : null;
     if (!px) return null;
     return a === "dolar" || a === "bist100" || c !== "USD" ? px.tl : px.usd;
   }
@@ -103,6 +158,8 @@
     var a = $("varlik").value, A = C.ASSETS[a];
     var tlOnly = !!(A && A.tlOnly);
     $("ccy-set").hidden = tlOnly;
+    $("ozel").hidden = a !== "diger";
+    $("lotlar").hidden = a === "bist100";        // BIST: the amount field is TL invested, not units
     var c = tlOnly ? "TL" : ccy();
     var LB = labels(a, c);
     $("maliyet-label").textContent = LB[0];
@@ -123,12 +180,13 @@
     var cost = parse($("maliyet").value), qty = parse($("miktar").value);
     if (a === "bist100" && cost > 0) qty = qty / cost;           // TL invested -> index units
     var spread = parse($("makas").value);
-    var r = C.compute(a, cost, c, qty, P, spread > 0 ? spread : 0);
+    var r = C.compute(a, cost, c, qty, PX(), spread > 0 ? spread : 0);
     if (spread >= 50) $("makas").setAttribute("aria-invalid", "true"); else $("makas").removeAttribute("aria-invalid");
     if (!r) {
       if (show || $("maliyet").value || $("miktar").value) {
         var msg;
-        if (!tp) msg = L("Bu varlık için güncel fiyat yok; hesap yapılamaz.", "No current price for this asset; nothing to calculate.");
+        if (!tp && a === "diger") msg = L("Eksik: bugün 1 adetin fiyatı. Kuyumcunun ya da bankanın bozdurma fiyatını yaz.", "Missing: today's price for 1 unit. Enter your dealer's buying price.");
+        else if (!tp) msg = L("Bu varlık için güncel fiyat yok; hesap yapılamaz.", "No current price for this asset; nothing to calculate.");
         else if (!(cost > 0)) msg = L("Eksik: ", "Missing: ") + LB[0] + L(" (bugünkü fiyat: ", " (today's price: ") + num(tp, tp >= 1000 ? 0 : 2) + (a === "bist100" ? L(" puan", " points") : c === "USD" && a !== "dolar" ? " $" : " TL") + L("). Kendi ortalama maliyetini yaz.", "). Enter your own average cost.");
         else msg = L("Eksik: ", "Missing: ") + LB[1] + L(" Sıfırdan büyük bir sayı yaz.", ". Enter a number greater than zero.");
         out.appendChild(el("p", "notice", msg));
@@ -141,7 +199,8 @@
     }
     $("maliyet").removeAttribute("aria-invalid");
     $("miktar").removeAttribute("aria-invalid");
-    var unitName = UNIT_TR[a], cur = r.ccy === "USD" ? L("dolar", "dollars") : L("TL", "TL");
+    var on = String($("ozel-ad").value || "").trim().slice(0, 30);
+    var unitName = a === "diger" && on ? on : UNIT_TR[a], cur = r.ccy === "USD" ? L("dolar", "dollars") : L("TL", "TL");
     out.appendChild(el("p", "label", L("Sonuç", "Result")));
     out.appendChild(el("p", "big" + (r.plPct < 0 ? " neg" : ""), signedPct(r.plPct)));
 
@@ -196,7 +255,7 @@
       "Makas satırları, piyasa fiyatı yerine bozdururken eline geçecek fiyatla hesaplanır. Makası sen girdin; gerçek makas yere ve saate göre değişir.",
       "The spread rows use the price you would actually receive when selling instead of the market price. You entered the spread; real spreads vary by dealer and time.")));
 
-    if (a === "bist100") return;
+    if (a === "bist100" || a === "diger") return;
     out.appendChild(el("p", "label kicker", L("Dolar/TL değişirse", "If USD/TRY changes")));
     var showBe = a !== "dolar";
     var t2 = el("table"), th = el("thead"), hr = el("tr");
@@ -235,7 +294,7 @@
     // One date for the page: gram gold's last close (the dollar can carry thin weekend quotes with a later date).
     var ga = d && (d.assets || []).filter(function (x) { return x && x.id === "gram_altin"; })[0];
     PDATE = (ga && ga.asof) || (P && P.usdtry_asof) || "";
-    var meta = P ? L("Dolar/TL ", "USD/TRY ") + num(+P.usdtry, 4) + L(" · fiyatlar ", " · prices: ") + trDate(PDATE) + L(" kapanışı", " close") : L("Güncel fiyat alınamadı.", "Current prices could not be loaded.");
+    var meta = P ? L("Dolar/TL ", "USD/TRY ") + num(+P.usdtry, 4) + L(" · fiyatlar ", " · prices: data of ") + trDate(PDATE) + L(" verisi", "") : L("Güncel fiyat alınamadı.", "Current prices could not be loaded.");
     $("fiyat-meta").textContent = meta;
     var mr = d && d.makas_ref && d.makas_ref.usd;
     if (mr && typeof mr.pct === "number" && /^\d{4}-\d{2}-\d{2}$/.test(mr.tarih || "")) {
@@ -249,7 +308,8 @@
     update();
   }
 
-  ["varlik", "maliyet", "miktar", "makas", "hatirla"].forEach(function (id) {
+  $("lot-add").addEventListener("click", function () { addLot(); var r = $("lot-rows").lastChild; if (r) r.querySelector("input").focus(); });
+  ["varlik", "maliyet", "miktar", "makas", "hatirla", "ozel-ad", "ozel-fiyat"].forEach(function (id) {
     $(id).addEventListener(id === "varlik" || id === "hatirla" ? "change" : "input", function () { update(); });
   });
   // "Makası bilmiyor musun?": two dealer prices -> spread %
@@ -274,6 +334,7 @@
     }
   });
   load();
+  if (!$("lot-rows").children.length) { addLot(); addLot(); }
   fetch(DATA + "tl.json", { cache: "no-cache", credentials: "omit", referrerPolicy: "no-referrer" })
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(init)

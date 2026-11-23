@@ -33,6 +33,8 @@
 {"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://samiboran.github.io/sweeplab/piyasa/#site","name":"Piyasa Hava Durumu","url":"https://samiboran.github.io/sweeplab/piyasa/","inLanguage":"tr","description":"Türk yatırımcı için günlük makro hava ve TL tarafı verisi. Yatırım tavsiyesi değildir.","publisher":{"@type":"Organization","name":"Piyasa Hava Durumu","url":"https://samiboran.github.io/sweeplab/piyasa/"}},{"@type":"Dataset","name":"Piyasa Hava Durumu — günlük makro hava","description":"Her sabah yayımlanan makro hava seviyesi (YEŞİL/SARI/KIRMIZI), dokuz kuralın 0/1 işaretleri, yuvarlanmış kamu verisi değerleri, gram altın/gümüş TL ve dolar/TL değişimleri. Yalnız türetilmiş veri; lisanslı girdiler yalnız işaret ve yön olarak.","inLanguage":"tr","url":"https://samiboran.github.io/sweeplab/piyasa/","license":"https://creativecommons.org/licenses/by/4.0/","isAccessibleForFree":true,"creator":{"@type":"Organization","name":"Piyasa Hava Durumu","url":"https://samiboran.github.io/sweeplab/piyasa/"},"isBasedOn":["https://fred.stlouisfed.org/","https://defillama.com/stablecoins"],"temporalCoverage":"2026-08-30/..","distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/today.json"},{"@type":"DataDownload","encodingFormat":"text/csv","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/history.csv"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/tl.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/konum.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/dunya.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/movers.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/index.json"}]}]}
 </script>
 <script src="app.js" defer></script>
+<script src="hesapla-core.js" defer></script>
+<script src="pozisyon.js" defer></script>
 <script src="tl.js" defer></script>
 <script src="ozet.js" defer></script>
 <script src="charts.js" defer></script>
@@ -47,6 +49,7 @@
   <div class="band" id="band" aria-label="Piyasa bandı: 1 günlük değişim" role="region" hidden></div>
   <p class="macro-line" id="macro-line" hidden></p>
   <main id="main">
+    <section class="pozisyon" id="pozisyon" aria-label="Senin pozisyonun" hidden></section>
     <section aria-labelledby="l-tl">
       <p class="label" id="l-tl">TL tarafı</p>
       <p class="tl-link top"><a href="hesapla.html">Benim pozisyonum ne durumda? Maliyetini gir, başa baş fiyatını gör</a></p>
