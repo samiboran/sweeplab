@@ -77,7 +77,10 @@
       line += L(" · maliyetine dönmek için BIST 100 ", " · breakeven BIST 100 ") + num(r.breakeven, 0) + L(" puan", " points");
     }
     host.appendChild(el("p", "poz-line", line));
-    var when = a === "diger" ? L("Bugünkü fiyatı sen girdin; değiştiyse hesaplayıcıda güncelle.", "You entered today's price; update it in the calculator if it changed.")
+    var entered = /^\d{4}-\d{2}-\d{2}$/.test(String(saved.t || "")) ? day(saved.t) : "";
+    var when = a === "diger" ? (entered
+        ? L("Fiyatı " + entered + " tarihinde sen girdin; değiştiyse hesaplayıcıda güncelle.", "You entered the price on " + entered + "; update it in the calculator if it changed.")
+        : L("Bugünkü fiyatı sen girdin; değiştiyse hesaplayıcıda güncelle.", "You entered today's price; update it in the calculator if it changed."))
       : L("Fiyatlar ", "Prices: data of ") + day((ga && ga.asof) || P.usdtry_asof) + L(" verisi. Yatırım tavsiyesi değildir.", ". Not investment advice.");
     host.appendChild(el("p", "mute small", when));
     var act = el("p", "poz-act");

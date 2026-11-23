@@ -64,7 +64,8 @@
       if ($("hatirla").checked) {
         localStorage.setItem(KEY, JSON.stringify({ v: 2, a: $("varlik").value, c: ccy(), m: nOrNull($("maliyet").value), q: nOrNull($("miktar").value),
           s: nOrNull($("makas").value), on: $("ozel-ad").value, cp: nOrNull($("ozel-fiyat").value),
-          l: lotValues().map(function (r) { return [nOrNull(r[0]), nOrNull(r[1])]; }) }));
+          l: lotValues().map(function (r) { return [nOrNull(r[0]), nOrNull(r[1])]; }),
+          t: new Date().toISOString().slice(0, 10) }));
       } else {
         localStorage.removeItem(KEY);
       }
