@@ -1,6 +1,7 @@
 // node tests/hesapla_test.js — position calculator unit tests (S4d)
 const assert = require("assert");
 const C = require("../piyasa/hesapla-core.js");
+const at = (r, k) => r.scenarios.filter(s => s.shockPct === k)[0];
 const close = (a, b, eps) => assert.ok(Math.abs(a - b) < eps, `${a} != ${b}`);
 
 // spec: cost 102 TL/gram silver -> breakeven ounce at USDTRY 50.58 ≈ $62.7, at 60 ≈ $52.9
@@ -12,23 +13,23 @@ const r = C.compute("gram_gumus", 102, "TL", 10, p);
 close(r.plPct, (85 / 102 - 1) * 100, 1e-9);
 close(r.toBreakevenPct, (102 / 85 - 1) * 100, 1e-9);
 close(r.value, 850, 1e-9);
-close(r.scenarios[0].breakevenUsd, 62.72, 0.01);
-assert.strictEqual(r.scenarios[0].breakevenUsdUnit, "ons");
-close(r.scenarios[2].usdtry, 50.58 * 1.2, 1e-9);
+close(at(r, 0).breakevenUsd, 62.72, 0.01);
+assert.strictEqual(at(r, 0).breakevenUsdUnit, "ons");
+close(at(r, 20).usdtry, 50.58 * 1.2, 1e-9);
 // TL value with silver USD price unchanged and +10% USDTRY -> +10%
-close(r.scenarios[1].valueTl, 850 * 1.1, 1e-6);
+close(at(r, 10).valueTl, 850 * 1.1, 1e-6);
 
 // BTC priced in USD, cost entered in USD
 const b = C.compute("btc", 50000, "USD", 0.5, p);
 close(b.plPct, 20, 1e-9);
-close(b.scenarios[1].breakevenTl, 50000 * 50.58 * 1.1, 1e-6);
+close(at(b, 10).breakevenTl, 50000 * 50.58 * 1.1, 1e-6);
 // BTC with TL cost
 const bt = C.compute("btc", 3000000, "TL", 1, p);
 close(bt.price, 60000 * 50.58, 1e-6);
 
 // dolar and BIST 100 are TL-only
 assert.strictEqual(C.compute("dolar", 40, "USD", 100, p).ccy, "TL");
-assert.strictEqual(C.compute("bist100", 9000, "TL", 1, p).scenarios[1].valueTl, null);
+assert.strictEqual(at(C.compute("bist100", 9000, "TL", 1, p), 10).valueTl, null);
 
 // invalid input
 assert.strictEqual(C.compute("gram_altin", 0, "TL", 1, p), null);
@@ -54,7 +55,7 @@ assert.strictEqual(av.amount, 8); close(av.cost, 5375, 1e-9); assert.strictEqual
 assert.strictEqual(C.averageLots([]), null);
 // custom asset (çeyrek): user-entered price, TL only, no TL scenario values
 const cq = C.compute("diger", 9000, "USD", 2, { usdtry: 50, custom_tl: 9900 });
-assert.strictEqual(cq.ccy, "TL"); close(cq.plPct, 10, 1e-9); assert.strictEqual(cq.scenarios[1].valueTl, null);
+assert.strictEqual(cq.ccy, "TL"); close(cq.plPct, 10, 1e-9); assert.strictEqual(at(cq, 10).valueTl, null);
 assert.strictEqual(C.compute("diger", 9000, "TL", 2, { usdtry: 50 }), null);
 console.log("hesapla lots/custom: ok");
 
@@ -66,3 +67,7 @@ assert.deepStrictEqual(st.list.map(x => x.a), ["dolar", "gram_gumus"]); assert.s
 assert.strictEqual(C.normalizeStore(null).list.length, 0);
 console.log("hesapla store: ok");
 
+
+// falling-rate row exists
+assert.strictEqual(r.scenarios[0].shockPct, -10); close(r.scenarios[0].usdtry, 50.58 * 0.9, 1e-9);
+console.log("hesapla scenarios: ok");

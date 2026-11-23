@@ -400,3 +400,8 @@ ul.poz-rows .poz-pl.neg{color:var(--red)}
 .related{border-left:2px solid var(--red);padding:2px 0 2px 12px;margin:6px 0 8px}
 .related p{margin:0 0 8px;font-size:15px;line-height:1.5}
 .related .rel-line{font-weight:600}
+.poz-sub{font-size:15px;font-weight:400;color:var(--mute);letter-spacing:0}
+.related{border-left-color:var(--rule)}
+.macro-line a{white-space:nowrap}
+.guide-link{margin:6px 0}
+.guide-link a{color:var(--ink)}

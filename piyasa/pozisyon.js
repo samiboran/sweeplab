@@ -85,19 +85,27 @@
     if (rows.length === 1) {
       var x = rows[0];
       host.appendChild(el("p", "label", L("Senin pozisyonun · yalnız bu cihazda", "Your position · on this device only")));
-      host.appendChild(el("p", "poz-big" + (x.r.plPct < 0 ? " neg" : ""), pct(x.r.plPct)));
-      host.appendChild(el("p", "poz-line", x.line));
+      // with a spread, the headline number is what selling today would really give (spread deducted)
+      var pl1 = x.r.spreadPct ? x.r.netPlPct : x.r.plPct;
+      var big1 = el("p", "poz-big" + (pl1 < 0 ? " neg" : ""), pct(pl1));
+      if (x.r.spreadPct) big1.appendChild(el("span", "poz-sub", L(" makas dahil", " after spread")));
+      host.appendChild(big1);
+      host.appendChild(el("p", "poz-line", x.line + (x.r.spreadPct ? L(" · makassız ", " · before spread ") + pct(x.r.plPct) : "")));
     } else {
       host.appendChild(el("p", "label", L("Senin pozisyonların · yalnız bu cihazda", "Your positions · on this device only")));
       // totals in TL; a total P/L only when every cost was entered in TL (no guessing past exchange rates)
-      var valTl = 0, costTl = 0, allTl = true;
+      var valTl = 0, costTl = 0, allTl = true, anySpread = false;
       rows.forEach(function (x) {
-        valTl += x.r.ccy === "USD" ? x.r.value * u : x.r.value;
+        var v = x.r.spreadPct ? x.r.netValue : x.r.value;      // spread deducted where the user entered one
+        if (x.r.spreadPct) anySpread = true;
+        valTl += x.r.ccy === "USD" ? v * u : v;
         if (x.r.ccy === "TL") costTl += x.r.costTotal; else allTl = false;
       });
       if (allTl && costTl > 0) {
         var tp = (valTl / costTl - 1) * 100;
-        host.appendChild(el("p", "poz-big" + (tp < 0 ? " neg" : ""), pct(tp)));
+        var bigT = el("p", "poz-big" + (tp < 0 ? " neg" : ""), pct(tp));
+        if (anySpread) bigT.appendChild(el("span", "poz-sub", L(" makas dahil", " after spread")));
+        host.appendChild(bigT);
         host.appendChild(el("p", "poz-line", L("Toplam bugünkü değer ", "Total value today ") + money(valTl, "TL") + L(" · toplam maliyet ", " · total cost ") + money(costTl, "TL")));
       } else {
         host.appendChild(el("p", "poz-big", money(valTl, "TL")));
@@ -107,7 +115,8 @@
       var ul = el("ul", "poz-rows");
       rows.forEach(function (x) {
         var li = el("li");
-        li.appendChild(el("span", "poz-pl" + (x.r.plPct < 0 ? " neg" : ""), pct(x.r.plPct)));
+        var plr = x.r.spreadPct ? x.r.netPlPct : x.r.plPct;
+        li.appendChild(el("span", "poz-pl" + (plr < 0 ? " neg" : ""), pct(plr)));
         li.appendChild(el("span", null, x.line));
         ul.appendChild(li);
       });
@@ -133,12 +142,17 @@
       host.hidden = true;
       var tl = document.querySelector(".tl-link.top");
       if (tl) tl.hidden = false;
+      var ml2 = document.getElementById("macro-line");
+      if (ml2 && ml2.firstChild) { ml2.removeAttribute("data-hide"); ml2.hidden = false; }
     });
     act.appendChild(del);
     host.appendChild(act);
     host.hidden = false;
     var tlLink = document.querySelector(".tl-link.top");     // the card already links to the calculator
     if (tlLink) tlLink.hidden = true;
+    // keep the macro level away from personal positions (it is a US-data market summary, not about them)
+    var ml = document.getElementById("macro-line");
+    if (ml) { ml.setAttribute("data-hide", "1"); ml.hidden = true; }
   }
 
   fetch(DATA + "tl.json", { cache: "no-cache", credentials: "omit", referrerPolicy: "no-referrer" })

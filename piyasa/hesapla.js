@@ -301,6 +301,7 @@
     if (r.spreadPct) out.appendChild(el("p", "mute small", L(
       "Makas satırları, piyasa fiyatı yerine bozdururken eline geçecek fiyatla hesaplanır. Makası sen girdin; gerçek makas yere ve saate göre değişir.",
       "The spread rows use the price you would actually receive when selling instead of the market price. You entered the spread; real spreads vary by dealer and time.")));
+    if (r.spreadPct) out.appendChild(guide(L("Makas nasıl hesaplanır?", "How is the spread calculated?"), "altin-hesaplama.html#makas"));
     related(a, out);
 
     if (a === "bist100" || a === "diger" || a === "euro") return;
@@ -317,7 +318,8 @@
     var b2 = el("tbody");
     r.scenarios.forEach(function (sc) {
       var tr = el("tr");
-      tr.appendChild(el("th", null, num(sc.usdtry, 2) + (sc.shockPct ? (EN ? " (+" + sc.shockPct + "%)" : " (+%" + sc.shockPct + ")") : L(" (bugün)", " (today)"))));
+      var sg = sc.shockPct > 0 ? "+" : "−", ab = Math.abs(sc.shockPct);
+      tr.appendChild(el("th", null, num(sc.usdtry, 2) + (sc.shockPct ? (EN ? " (" + sg + ab + "%)" : " (" + sg + "%" + ab + ")") : L(" (bugün)", " (today)"))));
       if (showBe) tr.appendChild(el("td", null, num(r.ccy === "TL" ? sc.breakevenUsd : sc.breakevenTl, 2)));
       tr.appendChild(el("td", null, sc.valueTl == null ? "—" : num(sc.valueTl, 0)));
       b2.appendChild(tr);
@@ -335,6 +337,7 @@
         ? "Orta sütun: TL maliyetine dönmek için varlığın dolar fiyatının ne olması gerektiği" + (A.metal ? " (1 ons = 31,1035 gram)" : "") + ". Değer sütunu: dolar fiyatı bugünkü gibi kalırsa TL karşılığı."
         : "Maliyet dolar cinsinden; kur yalnız TL karşılığını değiştirir. Değer sütunu: dolar fiyatı bugünkü gibi kalırsa TL karşılığı.";
     out.appendChild(el("p", "mute small", note));
+    if (a !== "dolar") out.appendChild(guide(L("Kur ile altın fiyatı nasıl bağlı?", "How are the exchange rate and gold linked?"), "kolay-ekonomi.html#kur-altin"));
   }
 
   // ---- "Bu hafta ne oldu?": the asset's 7-day move + up to 2 items of today's digest on the same topic.
@@ -344,6 +347,10 @@
     dolar: ["Türkiye", "Merkez bankaları"], euro: ["Türkiye", "Merkez bankaları"], bist100: ["Türkiye", "Şirketler"],
     btc: ["Kripto"], eth: ["Kripto"] };
   var TL_ID = { gram_altin: "gram_altin", gram_gumus: "gram_gumus", dolar: "dolar", bist100: "bist100_usd", btc: "btc", eth: "eth" };
+  function guide(text, href) {           // contextual link from a result into the plain-language pages
+    var p = el("p", "guide-link small"), x = el("a", null, text + " →");
+    x.href = href; p.appendChild(x); return p;
+  }
   function related(a, out) {
     if (!OZET_ASKED) {
       OZET_ASKED = true;
@@ -386,6 +393,10 @@
     var ml = el("a", null, L("Günün özeti ve TL tarafı ana sayfada", "Today's digest and the lira side on the home page"));
     ml.href = "./" + (EN ? "?lang=en" : "");
     more.appendChild(ml);
+    more.appendChild(document.createTextNode(" · "));
+    var ke = el("a", null, L("Kolay ekonomi: kur, enflasyon, faiz", "Plain economics: rates, inflation, interest"));
+    ke.href = "kolay-ekonomi.html";
+    more.appendChild(ke);
     out.appendChild(more);
   }
 

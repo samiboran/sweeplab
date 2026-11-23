@@ -74,7 +74,7 @@
       r.netBreakeven = cost / k;                       // market price at which the cash received = cost
       r.netToBreakevenPct = (r.netBreakeven / cur - 1) * 100;
     }
-    [0, 10, 20].forEach(function (k) {
+    [-10, 0, 10, 20].forEach(function (k) {      // a falling-rate row too, not only rises
       var u = px.usdtry * (1 + k / 100);
       var s = { shockPct: k, usdtry: u };
       if (ccy === "TL") {
