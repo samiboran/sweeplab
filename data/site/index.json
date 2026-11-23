@@ -4,7 +4,7 @@
  "source": "Piyasa Hava Durumu",
  "site_url": "https://samiboran.github.io/sweeplab/piyasa/",
  "docs": "https://samiboran.github.io/sweeplab/piyasa/veri.html",
- "generated_at": "2026-11-23T00:38:35Z",
+ "generated_at": "2026-11-23T16:33:50Z",
  "attribution": "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0",
  "license": "karışık (alan düzeyinde; veri.html)",
  "base_url_now": "https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/",
@@ -142,7 +142,7 @@
    "update_utc": "her gün ~07:00 (ayrı görev)",
    "license": "yalnızca görüntüleme",
    "description": "Günün özeti: en çok 8 haber, kendi cümlelerimizle 2–3 cümle + kaynak bağlantısı (TR + EN).",
-   "exists": false
+   "exists": true
   },
   {
    "path": "ozet/{YYYY-MM-DD}.json",
@@ -151,10 +151,10 @@
    "update_utc": "her gün ~07:00 (ayrı görev)",
    "license": "yalnızca görüntüleme",
    "description": "Geçmiş günlerin özetleri (yalnız ekleme).",
-   "exists": false,
-   "first": null,
-   "last": null,
-   "count": 0
+   "exists": true,
+   "first": "2026-11-23",
+   "last": "2026-11-23",
+   "count": 1
   },
   {
    "path": "movers_news.json",
