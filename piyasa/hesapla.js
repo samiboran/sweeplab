@@ -8,7 +8,7 @@
   var DATA = /\.github\.io$/.test(location.hostname) ? RAW : "data/site/";
   var KEY = "phd-hesapla-v1";
   var MONTHS = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
-  var P = null;
+  var P = null, PDATE = "";
   var I = window.PHD_I18N, EN = !!(I && I.en);
   var MONTHS_EN = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   function L(tr, en) { return EN ? en : tr; }
@@ -30,6 +30,7 @@
     s = String(s || "").trim().replace(/\s/g, "");
     if (EN && /\./.test(s)) s = s.replace(/,/g, "");                // 1,234.56 -> 1234.56
     else if (/,/.test(s)) s = s.replace(/\./g, "").replace(",", ".");   // 1.234,56 -> 1234.56
+    else if (!EN && /^\d{1,3}(\.\d{3})+$/.test(s)) s = s.replace(/\./g, "");  // 5.800 -> 5800 (Turkish thousands)
     else if (EN) s = s.replace(/,/g, "");                            // 10,000 -> 10000
     var v = parseFloat(s);
     return isFinite(v) ? v : NaN;
@@ -109,6 +110,12 @@
     var tp = todayPrice(a, c);
     $("maliyet").placeholder = tp ? L("bugün: ", "today: ") + num(tp, tp >= 1000 ? 0 : 2) : L("örn. 102,50", "e.g. 102.50");
     $("miktar").placeholder = a === "bist100" ? L("örn. 10.000", "e.g. 10,000") : L("örn. 10", "e.g. 10");
+    // dealer-price examples near today's price (2% apart), so the example is never far from reality
+    if (tp && a !== "bist100") {
+      var ex = function (v) { return v >= 1000 ? String(Math.round(v)) : num(v, 2); };
+      $("makas-satis").placeholder = L("örn. ", "e.g. ") + ex(tp * 1.01);
+      $("makas-alis").placeholder = L("örn. ", "e.g. ") + ex(tp * 0.99);
+    }
     save();
     var out = $("sonuc");
     out.textContent = "";
@@ -183,6 +190,8 @@
     }
     t.appendChild(tb);
     out.appendChild(t);
+    out.appendChild(el("p", "mute small", L("Yatırım tavsiyesi değildir; yalnız girdiğin sayılarla yapılan aritmetiktir.",
+      "Not investment advice; arithmetic on the numbers you entered.")));
     if (r.spreadPct) out.appendChild(el("p", "mute small", L(
       "Makas satırları, piyasa fiyatı yerine bozdururken eline geçecek fiyatla hesaplanır. Makası sen girdin; gerçek makas yere ve saate göre değişir.",
       "The spread rows use the price you would actually receive when selling instead of the market price. You entered the spread; real spreads vary by dealer and time.")));
@@ -223,7 +232,10 @@
 
   function init(d) {
     P = d && d.prices ? d.prices : null;
-    var meta = P ? L("Dolar/TL ", "USD/TRY ") + num(+P.usdtry, 4) + L(" · fiyat tarihi ", " · price date ") + trDate(P.usdtry_asof) : L("Güncel fiyat alınamadı.", "Current prices could not be loaded.");
+    // One date for the page: gram gold's last close (the dollar can carry thin weekend quotes with a later date).
+    var ga = d && (d.assets || []).filter(function (x) { return x && x.id === "gram_altin"; })[0];
+    PDATE = (ga && ga.asof) || (P && P.usdtry_asof) || "";
+    var meta = P ? L("Dolar/TL ", "USD/TRY ") + num(+P.usdtry, 4) + L(" · fiyatlar ", " · prices: ") + trDate(PDATE) + L(" kapanışı", " close") : L("Güncel fiyat alınamadı.", "Current prices could not be loaded.");
     $("fiyat-meta").textContent = meta;
     var mr = d && d.makas_ref && d.makas_ref.usd;
     if (mr && typeof mr.pct === "number" && /^\d{4}-\d{2}-\d{2}$/.test(mr.tarih || "")) {
@@ -233,7 +245,7 @@
         : "Referans: TCMB dolar efektif alış ve satış kuru arasındaki fark %" + num(mr.pct, 2) + " (TCMB'nin " + trDate(mr.tarih) + " kuru, ~15:30'da açıklanır). Bankalar ve döviz büroları genellikle daha geniş makas uygular. Altın ve gümüş için serbest günlük makas verisi yok; kendi aldığın yerin fiyatlarına bak.";
       refEl.hidden = false;
     }
-    $("foot-meta").textContent = L("Fiyat tarihi: ", "Price date: ") + (P ? trDate(P.usdtry_asof) : "—") + L(" · Kaynak: Piyasa Hava Durumu türetilmiş verisi", " · Source: Piyasa Hava Durumu derived data");
+    $("foot-meta").textContent = L("Fiyat tarihi: ", "Price date: ") + (P ? trDate(PDATE) : "—") + L(" · Kaynak: Piyasa Hava Durumu türetilmiş verisi", " · Source: Piyasa Hava Durumu derived data");
     update();
   }
 
