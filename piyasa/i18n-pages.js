@@ -13,6 +13,16 @@
     "Varlık": "Asset", "Gram altın": "Gold (gram)", "Gram gümüş": "Silver (gram)", "Dolar": "Dollar",
     "BIST 100 (puan)": "BIST 100 (points)", "Maliyet para birimi": "Cost currency",
     "Ortalama maliyet (birim başına)": "Average cost (per unit)", "Miktar": "Amount",
+    "Diğer: çeyrek, cumhuriyet, bilezik… (fiyatı sen gir)": "Other: quarter/republic gold coins, bangles… (you enter the price)",
+    "Ne? (isteğe bağlı)": "What is it? (optional)", "örn. Çeyrek altın": "e.g. Quarter gold coin",
+    "Bugün 1 adet kaç TL? (bozdururken alacağın fiyat)": "Today's price for 1 unit in TL (what you would get when cashing out)",
+    "örn. 9800": "e.g. 9800",
+    "Çeyrek ve cumhuriyet altınının fiyatına işçilik ve piyasa farkı karışır; gram fiyatından doğru hesaplanamaz. Bu yüzden bugünkü fiyatı kuyumcundan ya da bankandan bakıp sen yazarsın.":
+      "Gold coin prices include workmanship and a market premium, so they cannot be derived correctly from the gram price. Check today's price with your dealer or bank and enter it yourself.",
+    "Farklı fiyatlardan birden çok alım mı yaptın? Ortalamayı hesapla": "Bought several times at different prices? Work out the average",
+    "Alım ekle": "Add purchase",
+    "Her satıra bir alımın miktarını ve birim fiyatını yaz; ortalama maliyet ve toplam miktar yukarıdaki alanlara yazılır.":
+      "Enter each purchase's amount and unit price; the average cost and total amount go into the fields above.",
     "Makas / komisyon (%) — isteğe bağlı": "Spread / commission (%) — optional",
     "örn. 2": "e.g. 2", "örn. 3000": "e.g. 3000", "örn. 2940": "e.g. 2940",
     "Kuyumcu, banka ya da aracı kurum alış ve satış fiyatını farklı verir; bozdururken eline geçen tutar piyasa fiyatından düşüktür. Kendi aldığın yerin makasını gir.":

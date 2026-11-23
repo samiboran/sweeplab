@@ -217,7 +217,7 @@
     // Reference day = gram gold's bar (the dollar can carry thin weekend quotes and would make Sunday look "live").
     var ref = (src.a.gram_altin && src.a.gram_altin.asof) || last;
     var when = gen && ref && ref === genDay ? " · " + gen + " itibarıyla (~15 dk gecikmeli)"
-      : (ref ? " · " + shortDate(ref) + " kapanışı" : "");
+      : (ref ? " · " + shortDate(ref) + " verisi" : "");
     var note = el("p", "band-n", "1 günlük değişim" + when +
       (toggles ? " · Altın, gümüş ve petrole dokununca görünüm değişir" : ""));
     var cmp = el("a", "band-cmp", "Grafikte karşılaştır");

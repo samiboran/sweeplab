@@ -10,7 +10,9 @@
     btc: { label: "Bitcoin (BTC)", unit: "BTC" },
     eth: { label: "Ether (ETH)", unit: "ETH" },
     dolar: { label: "Dolar", unit: "dolar", tlOnly: true },
-    bist100: { label: "BIST 100", unit: "puan", tlOnly: true }
+    bist100: { label: "BIST 100", unit: "puan", tlOnly: true },
+    // çeyrek / cumhuriyet altını, bilezik, euro…: no reliable free price, so the user types today's price
+    diger: { label: "Diğer (fiyatı sen gir)", unit: "adet", tlOnly: true, custom: true }
   };
 
   /* Current price of one unit in TL and USD from tl.json "prices". */
@@ -22,6 +24,7 @@
     else if (asset === "gram_gumus" && p.gram_gumus_tl) tl = +p.gram_gumus_tl;
     else if (asset === "dolar") tl = u;
     else if (asset === "bist100" && p.bist100_tl) tl = +p.bist100_tl;
+    else if (asset === "diger") { if (+p.custom_tl > 0) tl = +p.custom_tl; else return null; }
     else if ((asset === "btc" || asset === "eth") && p[asset + "_usd"]) usd = +p[asset + "_usd"];
     if (tl == null && usd == null) return null;
     if (tl == null) tl = usd * u;
@@ -77,7 +80,7 @@
         s.breakevenUsd = a.metal ? breakevenOunceUsd(cost, u) : cost / u;
         s.breakevenUsdUnit = a.metal ? "ons" : a.unit;
         // TL value if the USD price stays as today
-        s.valueTl = asset === "dolar" ? u * amount : (asset === "bist100" ? null : px.usd * u * amount);
+        s.valueTl = asset === "dolar" ? u * amount : (asset === "bist100" || asset === "diger" ? null : px.usd * u * amount);
         s.plPct = s.valueTl == null ? null : (s.valueTl / r.costTotal - 1) * 100;
       } else {
         s.breakevenTl = cost * u;
@@ -88,8 +91,18 @@
     return r;
   }
 
+  /* Several purchases [[amount, unitCost], …] -> total amount and weighted average cost (rows with a bad number are skipped). */
+  function averageLots(lots) {
+    var q = 0, c = 0, n = 0;
+    (lots || []).forEach(function (l) {
+      var a = +l[0], k = +l[1];
+      if (a > 0 && k > 0) { q += a; c += a * k; n++; }
+    });
+    return q > 0 ? { amount: q, cost: c / q, rows: n } : null;
+  }
+
   var api = { ASSETS: ASSETS, OZ: OZ, prices: prices, compute: compute, breakevenOunceUsd: breakevenOunceUsd,
-              spreadFromPrices: spreadFromPrices };
+              spreadFromPrices: spreadFromPrices, averageLots: averageLots };
   if (typeof module === "object" && module.exports) module.exports = api;
   else root.PHDCalc = api;
 })(this);
