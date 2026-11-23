@@ -21,6 +21,11 @@
       "Gold coin prices include workmanship and a market premium, so they cannot be derived correctly from the gram price. Check today's price with your dealer or bank and enter it yourself.",
     "Farklı fiyatlardan birden çok alım mı yaptın? Ortalamayı hesapla": "Bought several times at different prices? Work out the average",
     "Alım ekle": "Add purchase",
+    "Bu cihazdaki pozisyonların": "Your positions on this device",
+    "Yeni pozisyon ekle": "Add a position", "Bu pozisyonu sil": "Delete this position", "Dosyaya kaydet": "Save to a file",
+    "Başka cihazdan dosya yükle:": "Load a file from another device:",
+    "İşaretlersen pozisyonların yalnız bu tarayıcıda saklanır ve ana sayfada güncel fiyatla gösterilir; birden çok pozisyon ekleyebilirsin. İşareti kaldırırsan bu cihazdaki bütün kayıtlar silinir.":
+      "If ticked, your positions are kept only in this browser and shown on the home page with current prices; you can add several. Unticking deletes everything saved on this device.",
     "Her satıra bir alımın miktarını ve birim fiyatını yaz; ortalama maliyet ve toplam miktar yukarıdaki alanlara yazılır.":
       "Enter each purchase's amount and unit price; the average cost and total amount go into the fields above.",
     "Makas / komisyon (%) — isteğe bağlı": "Spread / commission (%) — optional",
