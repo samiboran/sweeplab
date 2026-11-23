@@ -366,3 +366,4 @@ hr.rule-top{border:0;border-top:1px solid var(--rule);margin:28px 0 20px}
 @media (max-width:520px){header.masthead{flex-wrap:wrap;row-gap:10px;padding-top:22px}
 .brandbox,.brand{white-space:nowrap}
 header.masthead nav{width:100%}}
+.res td{white-space:nowrap}
