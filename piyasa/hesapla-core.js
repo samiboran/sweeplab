@@ -101,8 +101,20 @@
     return q > 0 ? { amount: q, cost: c / q, rows: n } : null;
   }
 
+  /* Saved positions on this device. v1/v2 = one position object; v3 = { v: 3, list: [...], cur: i }.
+     Always returns { list, cur } with at most 10 valid positions. */
+  function normalizeStore(raw) {
+    var list = [];
+    if (raw && raw.v === 3 && Array.isArray(raw.list)) list = raw.list;
+    else if (raw && typeof raw === "object" && raw.a) list = [raw];
+    list = list.filter(function (x) { return x && typeof x === "object" && ASSETS[x.a]; }).slice(0, 10);
+    var cur = raw && raw.v === 3 ? Math.floor(+raw.cur) : 0;
+    if (!(cur >= 0 && cur < list.length)) cur = 0;
+    return { list: list, cur: cur };
+  }
+
   var api = { ASSETS: ASSETS, OZ: OZ, prices: prices, compute: compute, breakevenOunceUsd: breakevenOunceUsd,
-              spreadFromPrices: spreadFromPrices, averageLots: averageLots };
+              spreadFromPrices: spreadFromPrices, averageLots: averageLots, normalizeStore: normalizeStore };
   if (typeof module === "object" && module.exports) module.exports = api;
   else root.PHDCalc = api;
 })(this);

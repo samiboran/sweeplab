@@ -33,7 +33,7 @@ TITLES = {"L1": "Stablecoin arzı", "L2": "Fed net likiditesi", "L3": "Reel faiz
           "K1": "Kredi risk primi", "K2": "Oynaklık (VIX)", "K3": "Nasdaq Bileşik", "N1": "Altın ve dolar",
           "P1": "Petrol"}
 PAGES = [("", "daily"), ("arsiv.html", "daily"), ("hafta.html", "weekly"), ("konum.html", "daily"), ("hareket.html", "daily"), ("karsilastir.html", "daily"), ("dunya.html", "daily"), ("veri.html", "monthly"),
-         ("hesapla.html", "monthly"), ("yontem.html", "monthly")]
+         ("hesapla.html", "monthly"), ("altin-hesaplama.html", "monthly"), ("yontem.html", "monthly")]
 ISO = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 e = html.escape
 

@@ -46,27 +46,19 @@
   var saved = null;
   try { saved = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) { saved = null; }
   var host = $("pozisyon");
-  if (!host || !C || !saved || !C.ASSETS[saved.a]) return;
+  var LIST = C && C.normalizeStore ? C.normalizeStore(saved).list : (saved && C && C.ASSETS[saved.a] ? [saved] : []);
+  if (!host || !C || !LIST.length) return;
 
-  function render(d) {
-    var P = d && d.prices;
-    if (!P) return;
+  function calc(sv, P) {
     var p = {};
     Object.keys(P).forEach(function (k) { p[k] = P[k]; });
-    p.custom_tl = val(saved.cp);
-    var a = saved.a, cost = val(saved.m), qty = val(saved.q), sp = val(saved.s);
+    p.custom_tl = val(sv.cp);
+    var a = sv.a, cost = val(sv.m), qty = val(sv.q), sp = val(sv.s);
     var invested = qty;
     if (a === "bist100" && cost > 0) qty = qty / cost;
-    var r = C.compute(a, cost, saved.c === "USD" ? "USD" : "TL", qty, p, sp > 0 ? sp : 0);
-    if (!r) return;
-    var ga = (d.assets || []).filter(function (x) { return x && x.id === "gram_altin"; })[0];
-    var name = a === "diger" && saved.on ? String(saved.on).slice(0, 30) : null;
-
-    host.textContent = "";
-    host.setAttribute("data-noi18n", "");
-    host.appendChild(el("p", "label", L("Senin pozisyonun · yalnız bu cihazda", "Your position · on this device only")));
-    var big = el("p", "poz-big" + (r.plPct < 0 ? " neg" : ""), pct(r.plPct));
-    host.appendChild(big);
+    var r = C.compute(a, cost, sv.c === "USD" ? "USD" : "TL", qty, p, sp > 0 ? sp : 0);
+    if (!r) return null;
+    var name = a === "diger" && sv.on ? String(sv.on).slice(0, 30) : null;
     var amt = a === "bist100" ? num(invested, 0) : num(r.amount, Number.isInteger(r.amount) ? 0 : 2);
     var what = name ? amt + " × " + name : amt + " " + UNIT[a];
     var line = what + L(" · bugünkü değer ", " · value today ") + money(r.value, r.ccy);
@@ -76,13 +68,58 @@
     } else {
       line += L(" · maliyetine dönmek için BIST 100 ", " · breakeven BIST 100 ") + num(r.breakeven, 0) + L(" puan", " points");
     }
-    host.appendChild(el("p", "poz-line", line));
-    var entered = /^\d{4}-\d{2}-\d{2}$/.test(String(saved.t || "")) ? day(saved.t) : "";
-    var when = a === "diger" ? (entered
-        ? L("Fiyatı " + entered + " tarihinde sen girdin; değiştiyse hesaplayıcıda güncelle.", "You entered the price on " + entered + "; update it in the calculator if it changed.")
-        : L("Bugünkü fiyatı sen girdin; değiştiyse hesaplayıcıda güncelle.", "You entered today's price; update it in the calculator if it changed."))
-      : L("Fiyatlar ", "Prices: data of ") + day((ga && ga.asof) || P.usdtry_asof) + L(" verisi. Yatırım tavsiyesi değildir.", ". Not investment advice.");
-    host.appendChild(el("p", "mute small", when));
+    var entered = /^\d{4}-\d{2}-\d{2}$/.test(String(sv.t || "")) ? day(sv.t) : "";
+    return { r: r, a: a, what: what, name: name || what, line: line, entered: entered };
+  }
+
+  function render(d) {
+    var P = d && d.prices;
+    if (!P) return;
+    var rows = LIST.map(function (sv) { return calc(sv, P); }).filter(Boolean);
+    if (!rows.length) return;
+    var ga = (d.assets || []).filter(function (x) { return x && x.id === "gram_altin"; })[0];
+    var u = +P.usdtry;
+
+    host.textContent = "";
+    host.setAttribute("data-noi18n", "");
+    if (rows.length === 1) {
+      var x = rows[0];
+      host.appendChild(el("p", "label", L("Senin pozisyonun · yalnız bu cihazda", "Your position · on this device only")));
+      host.appendChild(el("p", "poz-big" + (x.r.plPct < 0 ? " neg" : ""), pct(x.r.plPct)));
+      host.appendChild(el("p", "poz-line", x.line));
+    } else {
+      host.appendChild(el("p", "label", L("Senin pozisyonların · yalnız bu cihazda", "Your positions · on this device only")));
+      // totals in TL; a total P/L only when every cost was entered in TL (no guessing past exchange rates)
+      var valTl = 0, costTl = 0, allTl = true;
+      rows.forEach(function (x) {
+        valTl += x.r.ccy === "USD" ? x.r.value * u : x.r.value;
+        if (x.r.ccy === "TL") costTl += x.r.costTotal; else allTl = false;
+      });
+      if (allTl && costTl > 0) {
+        var tp = (valTl / costTl - 1) * 100;
+        host.appendChild(el("p", "poz-big" + (tp < 0 ? " neg" : ""), pct(tp)));
+        host.appendChild(el("p", "poz-line", L("Toplam bugünkü değer ", "Total value today ") + money(valTl, "TL") + L(" · toplam maliyet ", " · total cost ") + money(costTl, "TL")));
+      } else {
+        host.appendChild(el("p", "poz-big", money(valTl, "TL")));
+        host.appendChild(el("p", "poz-line", L("Toplam bugünkü değer (dolar maliyetli pozisyonlar bugünkü kurla TL'ye çevrildi; toplam kâr/zarar gösterilmez).",
+          "Total value today (dollar-cost positions converted at today's rate; no combined profit/loss shown).")));
+      }
+      var ul = el("ul", "poz-rows");
+      rows.forEach(function (x) {
+        var li = el("li");
+        li.appendChild(el("span", "poz-pl" + (x.r.plPct < 0 ? " neg" : ""), pct(x.r.plPct)));
+        li.appendChild(el("span", null, x.line));
+        ul.appendChild(li);
+      });
+      host.appendChild(ul);
+    }
+    var custom = rows.filter(function (x) { return x.a === "diger"; });
+    var note = L("Fiyatlar ", "Prices: data of ") + day((ga && ga.asof) || P.usdtry_asof) + L(" verisi.", ".");
+    custom.forEach(function (x) {
+      note += " " + (x.entered ? L(x.name + " fiyatını " + x.entered + " tarihinde sen girdin.", "You entered the price of " + x.name + " on " + x.entered + ".")
+        : L(x.name + " fiyatını sen girdin.", "You entered the price of " + x.name + "."));
+    });
+    host.appendChild(el("p", "mute small", note + L(" Yatırım tavsiyesi değildir.", " Not investment advice.")));
     var act = el("p", "poz-act");
     var edit = el("a", null, L("Düzenle", "Edit"));
     edit.href = "hesapla.html" + (EN ? "?lang=en" : "");

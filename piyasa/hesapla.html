@@ -44,6 +44,11 @@
     <p class="meta" id="fiyat-meta">Güncel fiyatlar yükleniyor…</p>
     <p class="notice">Girdiğin bilgiler cihazından çıkmaz. Hesap tarayıcında yapılır; hiçbir yere gönderilmez, çerez kullanılmaz.</p>
     <hr class="accent">
+    <div class="poz-list" id="poz-list" hidden>
+      <p class="label">Bu cihazdaki pozisyonların</p>
+      <div class="poz-tabs" id="poz-tabs"></div>
+      <p class="poz-tools"><button type="button" id="poz-yeni">Yeni pozisyon ekle</button> · <button type="button" id="poz-sil">Bu pozisyonu sil</button> · <button type="button" id="poz-disa">Dosyaya kaydet</button></p>
+    </div>
     <form class="calc" id="calc" autocomplete="off" novalidate>
       <label for="varlik">Varlık</label>
       <select id="varlik">
@@ -91,9 +96,13 @@
       </details>
       <p class="mute small" id="makas-ref" hidden></p>
       <label class="remember"><input type="checkbox" id="hatirla"> Bu cihazda hatırla</label>
+      <p class="mute small poz-ice"><label for="poz-dosya">Başka cihazdan dosya yükle:</label> <input type="file" id="poz-dosya" accept="application/json,.json"></p>
+      <p class="mute small" id="poz-ice-not" aria-live="polite"></p>
+      <p class="mute small" id="hatirla-not">İşaretlersen pozisyonların yalnız bu tarayıcıda saklanır ve ana sayfada güncel fiyatla gösterilir; birden çok pozisyon ekleyebilirsin. İşareti kaldırırsan bu cihazdaki bütün kayıtlar silinir.</p>
       <button type="submit" class="go" id="hesapla">Hesapla</button>
     </form>
     <div class="res" id="sonuc" aria-live="polite"></div>
+    <p class="mute small guide-link"><a href="altin-hesaplama.html">Hesap nasıl yapılıyor? Örneklerle anlatım</a></p>
   </main>
   <footer>
     <p>Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır. Hesap sonuçları yalnız aritmetiktir.</p>

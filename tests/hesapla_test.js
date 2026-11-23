@@ -58,3 +58,11 @@ assert.strictEqual(cq.ccy, "TL"); close(cq.plPct, 10, 1e-9); assert.strictEqual(
 assert.strictEqual(C.compute("diger", 9000, "TL", 2, { usdtry: 50 }), null);
 console.log("hesapla lots/custom: ok");
 
+// saved positions: v2 single object -> list of one; v3 kept; junk dropped; cur clamped
+let st = C.normalizeStore({ v: 2, a: "gram_altin", m: 5000, q: 2 });
+assert.strictEqual(st.list.length, 1); assert.strictEqual(st.cur, 0);
+st = C.normalizeStore({ v: 3, list: [{ a: "dolar" }, { a: "nope" }, { a: "gram_gumus" }], cur: 7 });
+assert.deepStrictEqual(st.list.map(x => x.a), ["dolar", "gram_gumus"]); assert.strictEqual(st.cur, 0);
+assert.strictEqual(C.normalizeStore(null).list.length, 0);
+console.log("hesapla store: ok");
+

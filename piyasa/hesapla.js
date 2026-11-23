@@ -14,7 +14,7 @@
   function L(tr, en) { return EN ? en : tr; }
 
   function $(id) { return document.getElementById(id); }
-  if (EN) ["sonuc", "fiyat-meta", "foot-meta", "maliyet-label", "miktar-label", "maliyet", "miktar", "makas-ref", "lot-sum", "lot-rows"].forEach(function (id) { var e = $(id); if (e) e.setAttribute("data-noi18n", ""); });
+  if (EN) ["sonuc", "fiyat-meta", "foot-meta", "maliyet-label", "miktar-label", "maliyet", "miktar", "makas-ref", "lot-sum", "lot-rows", "poz-ice-not", "poz-tabs"].forEach(function (id) { var e = $(id); if (e) e.setAttribute("data-noi18n", ""); });
   function el(tag, cls, text) {
     var e = document.createElement(tag);
     if (cls) e.className = cls;
@@ -59,30 +59,74 @@
     if (typeof v === "number" && isFinite(v)) return EN ? String(v) : String(v).replace(".", ",");
     return String(v == null ? "" : v).slice(0, 32);           // v1 (raw text) records
   }
+  // ---- saved positions (only with "Bu cihazda hatırla"): { v: 3, list: [...], cur: i }, at most 10
+  var STORE = { list: [], cur: 0 }, LOADING = false;
+  function formObject() {
+    return { a: $("varlik").value, c: ccy(), m: nOrNull($("maliyet").value), q: nOrNull($("miktar").value),
+      s: nOrNull($("makas").value), on: $("ozel-ad").value, cp: nOrNull($("ozel-fiyat").value),
+      l: lotValues().map(function (r) { return [nOrNull(r[0]), nOrNull(r[1])]; }),
+      t: new Date().toISOString().slice(0, 10) };
+  }
+  function writeStore() {
+    try { localStorage.setItem(KEY, JSON.stringify({ v: 3, list: STORE.list, cur: STORE.cur })); } catch (e) { /* ignore */ }
+  }
   function save() {
+    if (LOADING) return;
     try {
       if ($("hatirla").checked) {
-        localStorage.setItem(KEY, JSON.stringify({ v: 2, a: $("varlik").value, c: ccy(), m: nOrNull($("maliyet").value), q: nOrNull($("miktar").value),
-          s: nOrNull($("makas").value), on: $("ozel-ad").value, cp: nOrNull($("ozel-fiyat").value),
-          l: lotValues().map(function (r) { return [nOrNull(r[0]), nOrNull(r[1])]; }),
-          t: new Date().toISOString().slice(0, 10) }));
+        if (!STORE.list.length) { STORE.list = [formObject()]; STORE.cur = 0; }
+        else STORE.list[STORE.cur] = formObject();
+        writeStore();
       } else {
+        STORE = { list: [], cur: 0 };
         localStorage.removeItem(KEY);
       }
     } catch (e) { /* storage unavailable: ignore */ }
+    renderTabs();
+  }
+  function fillForm(s) {
+    LOADING = true;
+    s = s || {};
+    $("varlik").value = C.ASSETS[s.a] ? s.a : "gram_altin";
+    Array.prototype.forEach.call(document.querySelectorAll('input[name="ccy"]'), function (r) { r.checked = r.value === (s.c === "USD" ? "USD" : "TL"); });
+    $("maliyet").value = show(s.m);
+    $("miktar").value = show(s.q);
+    $("makas").value = show(s.s);
+    $("ozel-ad").value = String(s.on || "").slice(0, 30);
+    $("ozel-fiyat").value = show(s.cp);
+    $("lot-rows").textContent = "";
+    if (Array.isArray(s.l)) s.l.slice(0, 20).forEach(function (r) { if (Array.isArray(r)) addLot(show(r[0]), show(r[1])); });
+    if (!$("lot-rows").children.length) { addLot(); addLot(); }
+    LOADING = false;
+  }
+  function tabLabel(p) {
+    var nm = p.a === "diger" && p.on ? String(p.on).slice(0, 30) : (UNIT_TR[p.a] || p.a);
+    var q = typeof p.q === "number" ? num(p.q, Number.isInteger(p.q) ? 0 : 2) + " " : "";
+    return p.a === "bist100" ? (q ? q + "TL " : "") + "BIST 100" : q + nm;
+  }
+  function renderTabs() {
+    var box = $("poz-list"), tabs = $("poz-tabs");
+    if (!box) return;
+    tabs.textContent = "";
+    box.hidden = !($("hatirla").checked && STORE.list.length);
+    if (box.hidden) return;
+    STORE.list.forEach(function (p, i) {
+      var b = el("button", "poz-tab", tabLabel(p) || L("Yeni pozisyon", "New position"));
+      b.type = "button";
+      b.setAttribute("aria-pressed", i === STORE.cur ? "true" : "false");
+      b.addEventListener("click", function () {
+        if (i === STORE.cur) return;
+        STORE.cur = i; writeStore(); fillForm(STORE.list[i]); update();
+      });
+      tabs.appendChild(b);
+    });
+    $("poz-yeni").disabled = STORE.list.length >= 10;
   }
   function load() {
     try {
-      var s = JSON.parse(localStorage.getItem(KEY) || "null");
-      if (!s) return;
-      if (C.ASSETS[s.a]) $("varlik").value = s.a;
-      Array.prototype.forEach.call(document.querySelectorAll('input[name="ccy"]'), function (r) { r.checked = r.value === s.c; });
-      $("maliyet").value = show(s.m);
-      $("miktar").value = show(s.q);
-      $("makas").value = show(s.s);
-      $("ozel-ad").value = String(s.on || "").slice(0, 30);
-      $("ozel-fiyat").value = show(s.cp);
-      if (Array.isArray(s.l)) s.l.slice(0, 20).forEach(function (r) { if (Array.isArray(r)) addLot(show(r[0]), show(r[1])); });
+      STORE = C.normalizeStore(JSON.parse(localStorage.getItem(KEY) || "null"));
+      if (!STORE.list.length) return;
+      fillForm(STORE.list[STORE.cur]);
       $("hatirla").checked = true;
     } catch (e) { /* ignore */ }
   }
@@ -334,8 +378,49 @@
       out.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   });
+  $("poz-yeni").addEventListener("click", function () {
+    if (STORE.list.length >= 10) return;
+    STORE.list.push({ a: "gram_altin", c: "TL" });
+    STORE.cur = STORE.list.length - 1;
+    writeStore(); fillForm(STORE.list[STORE.cur]); update();
+    $("maliyet").focus();
+  });
+  $("poz-sil").addEventListener("click", function () {
+    STORE.list.splice(STORE.cur, 1);
+    STORE.cur = Math.max(0, Math.min(STORE.cur, STORE.list.length - 1));
+    if (STORE.list.length) { writeStore(); fillForm(STORE.list[STORE.cur]); }
+    else { try { localStorage.removeItem(KEY); } catch (e) { /* ignore */ } $("hatirla").checked = false; fillForm({}); }
+    update();
+  });
+  // Move positions between devices with a file: nothing leaves the browser except the file the user saves.
+  $("poz-disa").addEventListener("click", function () {
+    var blob = new Blob([JSON.stringify({ v: 3, list: STORE.list, cur: STORE.cur, app: "piyasa-hava-durumu" }, null, 1)], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "pozisyonlarim-" + new Date().toISOString().slice(0, 10) + ".json";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  });
+  $("poz-dosya").addEventListener("change", function () {
+    var f = this.files && this.files[0], msg = $("poz-ice-not");
+    if (!f) return;
+    if (f.size > 100000) { msg.textContent = L("Dosya çok büyük.", "File too large."); return; }
+    var rd = new FileReader();
+    rd.onload = function () {
+      var st;
+      try { st = C.normalizeStore(JSON.parse(String(rd.result))); } catch (e) { st = { list: [] }; }
+      if (!st.list.length) { msg.textContent = L("Bu dosyada pozisyon bulunamadı.", "No positions found in this file."); return; }
+      STORE = st;
+      $("hatirla").checked = true;
+      writeStore(); fillForm(STORE.list[STORE.cur]); update();
+      msg.textContent = L(st.list.length + " pozisyon yüklendi ve bu cihaza kaydedildi.", st.list.length + " positions loaded and saved on this device.");
+    };
+    rd.readAsText(f);
+    this.value = "";
+  });
   load();
   if (!$("lot-rows").children.length) { addLot(); addLot(); }
+  renderTabs();
   fetch(DATA + "tl.json", { cache: "no-cache", credentials: "omit", referrerPolicy: "no-referrer" })
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(init)
