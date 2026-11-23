@@ -5,16 +5,16 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://raw.githubusercontent.com; base-uri 'self'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<title>Piyasa Hava Durumu — günlük makro hava, gram altın, dolar/TL</title>
-<meta name="description" content="Türk yatırımcı için sakin, günlük piyasa verisi: likidite, dolar, kredi, nakde kaçış ve petrol kurallarından derlenen makro hava seviyesi. Yatırım tavsiyesi değildir.">
+<title>Piyasa Hava Durumu — altın ve dolar pozisyon hesaplama, günlük piyasa</title>
+<meta name="description" content="Gram altın, çeyrek, dolar ve euro birikimin bugün ne durumda? Maliyetini gir, kâr/zarar ve makas dahil başa baş fiyatını gör; günlük piyasa özeti sade Türkçe. Verin cihazından çıkmaz. Yatırım tavsiyesi değildir.">
 <link rel="canonical" href="https://samiboran.github.io/sweeplab/piyasa/">
 <link rel="alternate" hreflang="tr" href="https://samiboran.github.io/sweeplab/piyasa/">
 <link rel="alternate" hreflang="en" href="https://samiboran.github.io/sweeplab/piyasa/?lang=en">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Piyasa Hava Durumu">
 <meta property="og:locale" content="tr_TR">
-<meta property="og:title" content="Piyasa Hava Durumu — günlük makro hava">
-<meta property="og:description" content="Likidite, dolar, kredi, nakde kaçış ve petrol: dokuz kuraldan derlenen günlük makro hava; gram altın, gram gümüş, dolar/TL ve BIST 100. Yatırım tavsiyesi değildir.">
+<meta property="og:title" content="Piyasa Hava Durumu — altınım, dolarım ne durumda?">
+<meta property="og:description" content="Maliyetini gir, kâr/zarar ve makas dahil başa baş fiyatını gör; gram altın, gümüş, dolar/TL, BIST 100 ve günlük piyasa özeti. Yatırım tavsiyesi değildir.">
 <meta property="og:url" content="https://samiboran.github.io/sweeplab/piyasa/">
 <meta property="og:image" content="https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/og.png">
 <meta property="og:image:width" content="1200">
@@ -22,8 +22,8 @@
 <meta property="og:image:alt" content="Günün makro hava kartı: tarih ve seviye">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/og.png">
-<meta name="twitter:title" content="Piyasa Hava Durumu — günlük makro hava">
-<meta name="twitter:description" content="Dokuz kuraldan derlenen günlük makro hava ve TL tarafı. Yatırım tavsiyesi değildir.">
+<meta name="twitter:title" content="Piyasa Hava Durumu — altınım, dolarım ne durumda?">
+<meta name="twitter:description" content="Maliyetini gir, kâr/zarar ve makas dahil başa baş fiyatını gör; günlük piyasa özeti sade Türkçe. Yatırım tavsiyesi değildir.">
 <link rel="preload" href="fonts/inter-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
@@ -97,6 +97,7 @@
     <section aria-labelledby="l-daha">
       <p class="label" id="l-daha">Daha fazlası</p>
       <ul class="more">
+        <li><a href="kolay-ekonomi.html">Kolay ekonomi</a> <span class="mute small">Kur, altın, enflasyon ve faiz; sade dille ve örneklerle.</span></li>
         <li><a href="hareket.html">Bugün piyasada neler oldu?</a> <span class="mute small">Borsa İstanbul, ABD ve kriptoda günün hareketlileri.</span></li>
         <li><a href="dunya.html">Dünyada durum ne?</a> <span class="mute small">Asya, Brezilya, emtialar ve günün başlıkları.</span></li>
         <li><a href="hafta.html" id="hafta-link">Dünyada bu hafta</a> <span class="mute small">Geçmiş yıllarda bu hafta ne oldu (pazartesi ve cuma).</span></li>

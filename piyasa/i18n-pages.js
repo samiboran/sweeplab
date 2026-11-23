@@ -20,7 +20,7 @@
     "Çeyrek ve cumhuriyet altınının fiyatına işçilik ve piyasa farkı karışır; gram fiyatından doğru hesaplanamaz. Bu yüzden bugünkü fiyatı kuyumcundan ya da bankandan bakıp sen yazarsın.":
       "Gold coin prices include workmanship and a market premium, so they cannot be derived correctly from the gram price. Check today's price with your dealer or bank and enter it yourself.",
     "Farklı fiyatlardan birden çok alım mı yaptın? Ortalamayı hesapla": "Bought several times at different prices? Work out the average",
-    "Alım ekle": "Add purchase",
+    "Alım ekle": "Add purchase", "Ağırlıklı ortalama nedir?": "What is a weighted average? (Turkish)",
     "Bu cihazdaki pozisyonların": "Your positions on this device",
     "Yeni pozisyon ekle": "Add a position", "Bu pozisyonu sil": "Delete this position", "Dosyaya kaydet": "Save to a file",
     "Başka cihazdan dosya yükle:": "Load a file from another device:",

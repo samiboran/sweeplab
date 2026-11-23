@@ -55,7 +55,7 @@
     "Dünya": "World", "Dünyada durum ne?": "How is the world doing?",
     "Japonya, Kore, Çin, Hong Kong, Tayvan, Brezilya, emtialar ve günün başlıkları. Sayfa yalnız açılınca yüklenir.":
       "Japan, Korea, China, Hong Kong, Taiwan, Brazil, commodities and the day's headlines. Loaded only when opened.",
-    "Senin pozisyonun": "Your position", "Sor": "Ask", "Sorular": "Questions", "Daha fazlası": "More",
+    "Senin pozisyonun": "Your position", "Sor": "Ask", "Sorular": "Questions", "Kolay ekonomi": "Plain economics (Turkish)", "Kur, altın, enflasyon ve faiz; sade dille ve örneklerle.": "Exchange rate, gold, inflation and interest rates, explained simply.", "Daha fazlası": "More",
     "Dünyada bu hafta": "This week in the world",
     "Benim pozisyonum ne durumda? Maliyetini gir, başa baş fiyatını gör": "How is my position doing? Enter your cost, see your breakeven price",
     "Borsa İstanbul, ABD ve kriptoda günün hareketlileri.": "Today's movers on Borsa Istanbul, in the US and in crypto.",

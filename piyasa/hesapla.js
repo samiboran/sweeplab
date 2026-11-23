@@ -131,8 +131,8 @@
     } catch (e) { /* ignore */ }
   }
 
-  var UNIT_TR = EN ? { gram_altin: "gram of gold", gram_gumus: "gram of silver", dolar: "dollar", btc: "BTC", eth: "ETH", bist100: "points", diger: "unit" }
-                   : { gram_altin: "gram altın", gram_gumus: "gram gümüş", dolar: "dolar", btc: "BTC", eth: "ETH", bist100: "puan", diger: "adet" };
+  var UNIT_TR = EN ? { gram_altin: "gram of gold", gram_gumus: "gram of silver", dolar: "dollar", euro: "euro", btc: "BTC", eth: "ETH", bist100: "points", diger: "unit" }
+                   : { gram_altin: "gram altın", gram_gumus: "gram gümüş", dolar: "dolar", euro: "euro", btc: "BTC", eth: "ETH", bist100: "puan", diger: "adet" };
 
   // today's prices + the user's own price for "Diğer" (never sent anywhere)
   function PX() {
@@ -180,6 +180,7 @@
     if (EN) {
       var curE = c === "USD" ? "dollars" : "TL";
       if (a === "dolar") return ["On average, how many TL did you pay for 1 dollar?", "How many dollars do you have?"];
+      if (a === "euro") return ["On average, how many TL did you pay for 1 euro?", "How many euros do you have?"];
       if (a === "bist100") return ["On average, where was BIST 100 (points) when you bought?", "Amount invested (TL)"];
       if (a === "diger") return ["On average, how many TL did you pay for 1 unit?", "How many units do you have?"];
       if (a === "btc" || a === "eth") return ["On average, how many " + curE + " did you pay for 1 " + UNIT_TR[a] + "?", "How many " + UNIT_TR[a] + " do you have?"];
@@ -187,6 +188,7 @@
     }
     var cur = c === "USD" ? "dolar" : "TL";
     if (a === "dolar") return ["1 doları ortalama kaç TL'ye aldın?", "Kaç doların var?"];
+    if (a === "euro") return ["1 euroyu ortalama kaç TL'ye aldın?", "Kaç euron var?"];
     if (a === "bist100") return ["Aldığında BIST 100 ortalama kaç puandı?", "Yatırdığın tutar (TL)"];
     if (a === "diger") return ["1 adet için ortalama kaç TL ödedin?", "Kaç adet var?"];
     if (a === "btc" || a === "eth") return ["1 " + UNIT_TR[a] + " için ortalama kaç " + cur + " ödedin?", "Kaç " + UNIT_TR[a] + " var?"];
@@ -299,8 +301,10 @@
     if (r.spreadPct) out.appendChild(el("p", "mute small", L(
       "Makas satırları, piyasa fiyatı yerine bozdururken eline geçecek fiyatla hesaplanır. Makası sen girdin; gerçek makas yere ve saate göre değişir.",
       "The spread rows use the price you would actually receive when selling instead of the market price. You entered the spread; real spreads vary by dealer and time.")));
+    if (r.spreadPct) out.appendChild(guide(L("Makas nasıl hesaplanır?", "How is the spread calculated?"), "altin-hesaplama.html#makas"));
+    related(a, out);
 
-    if (a === "bist100" || a === "diger") return;
+    if (a === "bist100" || a === "diger" || a === "euro") return;
     out.appendChild(el("p", "label kicker", L("Dolar/TL değişirse", "If USD/TRY changes")));
     var showBe = a !== "dolar";
     var t2 = el("table"), th = el("thead"), hr = el("tr");
@@ -314,7 +318,8 @@
     var b2 = el("tbody");
     r.scenarios.forEach(function (sc) {
       var tr = el("tr");
-      tr.appendChild(el("th", null, num(sc.usdtry, 2) + (sc.shockPct ? (EN ? " (+" + sc.shockPct + "%)" : " (+%" + sc.shockPct + ")") : L(" (bugün)", " (today)"))));
+      var sg = sc.shockPct > 0 ? "+" : "−", ab = Math.abs(sc.shockPct);
+      tr.appendChild(el("th", null, num(sc.usdtry, 2) + (sc.shockPct ? (EN ? " (" + sg + ab + "%)" : " (" + sg + "%" + ab + ")") : L(" (bugün)", " (today)"))));
       if (showBe) tr.appendChild(el("td", null, num(r.ccy === "TL" ? sc.breakevenUsd : sc.breakevenTl, 2)));
       tr.appendChild(el("td", null, sc.valueTl == null ? "—" : num(sc.valueTl, 0)));
       b2.appendChild(tr);
@@ -332,9 +337,71 @@
         ? "Orta sütun: TL maliyetine dönmek için varlığın dolar fiyatının ne olması gerektiği" + (A.metal ? " (1 ons = 31,1035 gram)" : "") + ". Değer sütunu: dolar fiyatı bugünkü gibi kalırsa TL karşılığı."
         : "Maliyet dolar cinsinden; kur yalnız TL karşılığını değiştirir. Değer sütunu: dolar fiyatı bugünkü gibi kalırsa TL karşılığı.";
     out.appendChild(el("p", "mute small", note));
+    if (a !== "dolar") out.appendChild(guide(L("Kur ile altın fiyatı nasıl bağlı?", "How are the exchange rate and gold linked?"), "kolay-ekonomi.html#kur-altin"));
+  }
+
+  // ---- "Bu hafta ne oldu?": the asset's 7-day move + up to 2 items of today's digest on the same topic.
+  // Only facts already published on the site (tl.json, ozet.json); nothing about the user is sent anywhere.
+  var TLD = null, OZET = null, OZET_ASKED = false;
+  var TOPICS = { gram_altin: ["Altın ve emtia"], gram_gumus: ["Altın ve emtia"], diger: ["Altın ve emtia"],
+    dolar: ["Türkiye", "Merkez bankaları"], euro: ["Türkiye", "Merkez bankaları"], bist100: ["Türkiye", "Şirketler"],
+    btc: ["Kripto"], eth: ["Kripto"] };
+  var TL_ID = { gram_altin: "gram_altin", gram_gumus: "gram_gumus", dolar: "dolar", bist100: "bist100_usd", btc: "btc", eth: "eth" };
+  function guide(text, href) {           // contextual link from a result into the plain-language pages
+    var p = el("p", "guide-link small"), x = el("a", null, text + " →");
+    x.href = href; p.appendChild(x); return p;
+  }
+  function related(a, out) {
+    if (!OZET_ASKED) {
+      OZET_ASKED = true;
+      fetch(DATA + "ozet.json", { cache: "no-cache", credentials: "omit", referrerPolicy: "no-referrer" })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (o) { OZET = o && Array.isArray(o.items) ? o : null; if (OZET && $("sonuc").querySelector(".big")) update(); })
+        .catch(function () { OZET = null; });
+    }
+    var box = el("div", "related");
+    var asset = TLD && (TLD.assets || []).filter(function (x) { return x && x.id === TL_ID[a]; })[0];
+    if (asset && typeof asset.chg_7g === "number") {
+      var nm = a === "bist100" ? L("BIST 100 (dolar bazında)", "BIST 100 (in dollars)") : (asset.label && !EN ? asset.label : (C.ASSETS[a] || {}).label);
+      if (!EN && a !== "bist100") nm = nm.charAt(0).toLocaleLowerCase("tr-TR") + nm.slice(1);
+      box.appendChild(el("p", "rel-line", L("Son 7 günde ", "Last 7 days: ") + nm + " " + signedPct(asset.chg_7g) +
+        (typeof asset.chg_30g === "number" ? L(", son 30 günde ", ", last 30 days ") + signedPct(asset.chg_30g) : "") + "."));
+    }
+    var fresh = OZET && /^\d{4}-\d{2}-\d{2}$/.test(String(OZET.date || "")) &&
+      (Date.now() - Date.parse(OZET.date + "T00:00:00Z")) < 3 * 864e5;
+    if (fresh) {
+      var want = TOPICS[a] || [];
+      OZET.items.filter(function (it) { return it && want.indexOf(it.konu) >= 0; }).slice(0, 2).forEach(function (it) {
+        var p = el("p", "rel-item");
+        p.appendChild(el("strong", null, (EN && it.baslik_en) || it.baslik || ""));
+        var oz = (EN && it.ozet_en) || it.ozet;
+        if (oz) p.appendChild(document.createTextNode(" " + oz));
+        var k = (it.kaynaklar || [])[0];
+        if (k && /^https:\/\//.test(String(k.url || ""))) {
+          p.appendChild(document.createTextNode(" "));
+          var ka = el("a", null, k.ad || L("Kaynak", "Source"));
+          ka.href = k.url; ka.rel = "noopener noreferrer"; ka.target = "_blank";
+          p.appendChild(ka);
+        }
+        box.appendChild(p);
+      });
+    }
+    if (!box.firstChild) return;
+    out.appendChild(el("p", "label kicker", L("Bu hafta ne oldu?", "What happened this week?")));
+    out.appendChild(box);
+    var more = el("p", "mute small");
+    var ml = el("a", null, L("Günün özeti ve TL tarafı ana sayfada", "Today's digest and the lira side on the home page"));
+    ml.href = "./" + (EN ? "?lang=en" : "");
+    more.appendChild(ml);
+    more.appendChild(document.createTextNode(" · "));
+    var ke = el("a", null, L("Kolay ekonomi: kur, enflasyon, faiz", "Plain economics: rates, inflation, interest"));
+    ke.href = "kolay-ekonomi.html";
+    more.appendChild(ke);
+    out.appendChild(more);
   }
 
   function init(d) {
+    TLD = d || null;
     P = d && d.prices ? d.prices : null;
     // One date for the page: gram gold's last close (the dollar can carry thin weekend quotes with a later date).
     var ga = d && (d.assets || []).filter(function (x) { return x && x.id === "gram_altin"; })[0];

@@ -92,7 +92,7 @@
 
     // One line under the band so the level is visible on the first screen (the full block is further down).
     var ml = $("macro-line");
-    if (ml && lvl && !archived) {
+    if (ml && lvl && !archived && !ml.hasAttribute("data-hide")) {
       ml.textContent = "";
       ml.setAttribute("data-noi18n", "");
       var LV_EN = { YESIL: "GREEN", SARI: "YELLOW", KIRMIZI: "RED" };
