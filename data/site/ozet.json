@@ -1,0 +1,75 @@
+{
+  "schema": "phd.ozet/1",
+  "schema_version": 1,
+  "source": "Piyasa Hava Durumu",
+  "site_url": "https://samiboran.github.io/sweeplab/piyasa/",
+  "generated_at": "2026-11-23T06:50:00Z",
+  "date": "2026-11-23",
+  "attribution": "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — özetler kendi cümlelerimizle; haberlerin hakları kaynaklarına aittir",
+  "method": "Resmî kaynaklar ve herkese açık haber sayfaları tarandı; olgusal özet, yorum ve tavsiye yok.",
+  "items": [
+    {
+      "konu": "Dünya ekonomisi",
+      "baslik": "ABD borsaları cuma günü sert düştü; Nasdaq haftada yüzde 10 geriledi",
+      "ozet": "ABC News'un aktardığına göre 20 Kasım cuma günü S&P 500 yüzde 3,7, Dow Jones yüzde 1,9, Nasdaq yüzde 5,3 değer kaybetti. Aynı yayında yer alan Reuters verisine göre Nasdaq hafta genelinde yüzde 10 düştü.",
+      "baslik_en": "US stocks fell sharply on Friday; Nasdaq lost 10% over the week",
+      "ozet_en": "According to ABC News, on Friday 20 November the S&P 500 fell 3.7%, the Dow Jones 1.9% and the Nasdaq 5.3%. Reuters figures cited in the same coverage show the Nasdaq down 10% over the week.",
+      "kaynaklar": [
+        {"ad": "ABC News", "url": "https://www.abc.net.au/news/2026-11-23/asx-markets-business-live-news-november-23/107414602", "zaman": "2026-11-22T19:43:19Z"}
+      ]
+    },
+    {
+      "konu": "Merkez bankaları",
+      "baslik": "Fed Guvernörü Cook ve Başkan Yardımcısı Jefferson enflasyona vurgu yaptı",
+      "ozet": "Fed'in yayımladığı metne göre Guvernör Lisa Cook 20 Kasım'da Santiago'daki konuşmasında, politika faizinin eylülde yüzde 3,75–4 aralığına çıkarılmasını desteklediğini ve gerektiğinde harekete geçmeyi beklemenin bir maliyeti olduğunu söyledi. Başkan Yardımcısı Philip Jefferson ise 19 Kasım'da, enflasyon beklentilerinin çıpasını kaybetme riski varsa enflasyona daha güçlü tepki verilmesi gerektiğini belirtti.",
+      "baslik_en": "Fed Governor Cook and Vice Chair Jefferson focus on inflation",
+      "ozet_en": "According to the Fed's published text, Governor Lisa Cook said in Santiago on 20 November that she supported September's increase of the target range to 3.75–4% and that waiting to act when an adjustment is required has a cost. Vice Chair Philip Jefferson said on 19 November that a stronger reaction to inflation is warranted if expectations risk becoming unanchored.",
+      "kaynaklar": [
+        {"ad": "Federal Reserve — Cook", "url": "https://www.federalreserve.gov/newsevents/speech/cook20261120a.htm"},
+        {"ad": "Federal Reserve — Jefferson", "url": "https://www.federalreserve.gov/newsevents/speech/jefferson20261119a.htm"}
+      ]
+    },
+    {
+      "konu": "Altın ve emtia",
+      "baslik": "Altın 14 ayın en düşüğünü gördü, sekiz ayın en kötü haftasına yöneldi",
+      "ozet": "Reuters'ın Kitco'da yayımlanan haberine göre spot altın 20 Kasım'da 3.513,54 dolara inerek 4 Eylül 2025'ten bu yana en düşük seviyeyi gördü ve hafta içinde yaklaşık yüzde 8 geriledi. Habere göre CME FedWatch aralıkta 25 baz puanlık artış olasılığını yüzde 99 gösteriyordu; aynı gün gümüş 42,58 dolardan işlem gördü.",
+      "baslik_en": "Gold hits 14-month low, heads for worst week in eight months",
+      "ozet_en": "According to a Reuters report published by Kitco, spot gold touched $3,513.54 on 20 November, its lowest since 4 September 2025, and was down about 8% for the week. The report said CME FedWatch showed a 99% probability of a 25-basis-point hike in December; silver traded at $42.58 that day.",
+      "kaynaklar": [
+        {"ad": "Kitco / Reuters", "url": "https://www.kitco.com/news/off-the-wire/2026-11-20/gold-slides-toward-worst-week-eight-months-hawkish-fed-outlook", "zaman": "2026-11-20T14:25:35Z"}
+      ]
+    },
+    {
+      "konu": "Türkiye",
+      "baslik": "BIST 100 cuma gününü yüzde 2,36 düşüşle 11.131 puandan kapattı",
+      "ozet": "Anadolu Ajansı'na göre BIST 100 endeksi 20 Kasım'da 268,7 puan kayıpla 11.131,32 puana indi; bankacılık endeksi yüzde 1,94, holding endeksi yüzde 2,52 geriledi. AA, küresel piyasalardaki olumsuzluğu Fed'in sıkılaşmayı hızlandırabileceği endişesine ve yapay zekâ büyümesinin sorgulanmasına bağladı.",
+      "baslik_en": "BIST 100 closed Friday down 2.36% at 11,131 points",
+      "ozet_en": "According to Anadolu Agency, the BIST 100 fell 268.7 points to 11,131.32 on 20 November; the banking index lost 1.94% and the holding index 2.52%. AA linked the negative global mood to concerns that the Fed could speed up tightening and to questions over AI-driven growth.",
+      "kaynaklar": [
+        {"ad": "Anadolu Ajansı", "url": "https://www.aa.com.tr/tr/ekonomi/borsa-gunu-dususle-tamamladi/4132381"},
+        {"ad": "CNBC-e", "url": "https://www.cnbce.com/borsa/borsa-istanbul-canli-bist-100-bist-30-ve-viopta-canli-piyasa-takibi-20-kasim-2026-h42245", "zaman": "2026-11-20T15:18:00Z"}
+      ]
+    },
+    {
+      "konu": "Asya",
+      "baslik": "Asya borsalarında düşüş: KOSPI pazartesi yüzde 4'ün üzerinde geriledi",
+      "ozet": "Saxo'nun Asya notuna göre Japonya'da Nikkei 225 cuma günü yüzde 5,1, Tayvan'da Taiex yüzde 6,2 düştü; Taiex'in haftalık kaybı yaklaşık yüzde 18 oldu. SBS'nin haberine göre Güney Kore'de KOSPI pazartesi yüzde 4'ün üzerinde düşerek 4.600'lü seviyelere indi, KOSDAQ gün içinde yılın en düşüğünü gördü.",
+      "baslik_en": "Asian stocks slide: KOSPI down more than 4% on Monday",
+      "ozet_en": "According to Saxo's Asia note, Japan's Nikkei 225 fell 5.1% and Taiwan's Taiex 6.2% on Friday, leaving the Taiex down about 18% for the week. SBS reported that South Korea's KOSPI dropped more than 4% on Monday into the 4,600 range, while the KOSDAQ hit a yearly low intraday.",
+      "kaynaklar": [
+        {"ad": "Saxo", "url": "https://www.home.saxo/en-sg/content/articles/macro/asia-market-quick-take--23-november-2026-23112026"},
+        {"ad": "SBS News", "url": "https://news.sbs.co.kr/english/article.do?news_id=N1008858889", "zaman": "2026-11-23T03:02:00Z"}
+      ]
+    },
+    {
+      "konu": "Kripto",
+      "baslik": "Bitcoin hafta sonu 55 bin dolar civarını gördükten sonra 61 bin dolara döndü",
+      "ozet": "KuCoin'in günlük raporuna göre Bitcoin hafta sonu yaklaşık 55.100 dolara kadar indi ve 23 Kasım 00:00 UTC itibarıyla 61.272,9 dolardan işlem gördü. Rapora göre ABD'deki spot Bitcoin ETF'lerinden kasım ayında yaklaşık 3,47 milyar dolar net çıkış oldu.",
+      "baslik_en": "Bitcoin back at $61,000 after touching about $55,000 over the weekend",
+      "ozet_en": "According to KuCoin's daily report, Bitcoin fell to about $55,100 over the weekend and traded at $61,272.9 as of 00:00 UTC on 23 November. The report said US spot Bitcoin ETFs have seen net outflows of about $3.47 billion in November.",
+      "kaynaklar": [
+        {"ad": "KuCoin News", "url": "https://kucoin.com/news/articles/crypto-daily-market-report-november-23-2026"}
+      ]
+    }
+  ]
+}
