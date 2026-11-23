@@ -10,6 +10,7 @@
     btc: { label: "Bitcoin (BTC)", unit: "BTC" },
     eth: { label: "Ether (ETH)", unit: "ETH" },
     dolar: { label: "Dolar", unit: "dolar", tlOnly: true },
+    euro: { label: "Euro", unit: "euro", tlOnly: true },
     bist100: { label: "BIST 100", unit: "puan", tlOnly: true },
     // çeyrek / cumhuriyet altını, bilezik, euro…: no reliable free price, so the user types today's price
     diger: { label: "Diğer (fiyatı sen gir)", unit: "adet", tlOnly: true, custom: true }
@@ -23,6 +24,7 @@
     if (asset === "gram_altin" && p.gram_altin_tl) tl = +p.gram_altin_tl;
     else if (asset === "gram_gumus" && p.gram_gumus_tl) tl = +p.gram_gumus_tl;
     else if (asset === "dolar") tl = u;
+    else if (asset === "euro" && +p.eurtry > 0) tl = +p.eurtry;
     else if (asset === "bist100" && p.bist100_tl) tl = +p.bist100_tl;
     else if (asset === "diger") { if (+p.custom_tl > 0) tl = +p.custom_tl; else return null; }
     else if ((asset === "btc" || asset === "eth") && p[asset + "_usd"]) usd = +p[asset + "_usd"];
@@ -80,7 +82,7 @@
         s.breakevenUsd = a.metal ? breakevenOunceUsd(cost, u) : cost / u;
         s.breakevenUsdUnit = a.metal ? "ons" : a.unit;
         // TL value if the USD price stays as today
-        s.valueTl = asset === "dolar" ? u * amount : (asset === "bist100" || asset === "diger" ? null : px.usd * u * amount);
+        s.valueTl = asset === "dolar" ? u * amount : (asset === "bist100" || asset === "diger" || asset === "euro" ? null : px.usd * u * amount);
         s.plPct = s.valueTl == null ? null : (s.valueTl / r.costTotal - 1) * 100;
       } else {
         s.breakevenTl = cost * u;

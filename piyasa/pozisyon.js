@@ -10,10 +10,10 @@
   var I = window.PHD_I18N, EN = !!(I && I.en);
   var MONTHS = EN ? ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
                   : ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
-  var UNIT = EN ? { gram_altin: "g of gold", gram_gumus: "g of silver", dolar: "dollars", btc: "BTC", eth: "ETH", bist100: "TL in BIST 100", diger: "units" }
-                : { gram_altin: "gram altın", gram_gumus: "gram gümüş", dolar: "dolar", btc: "BTC", eth: "ETH", bist100: "TL BIST 100", diger: "adet" };
-  var ONE = EN ? { gram_altin: "1 gram", gram_gumus: "1 gram", dolar: "1 dollar", btc: "1 BTC", eth: "1 ETH", diger: "1 unit" }
-               : { gram_altin: "1 gram", gram_gumus: "1 gram", dolar: "1 dolar", btc: "1 BTC", eth: "1 ETH", diger: "1 adet" };
+  var UNIT = EN ? { gram_altin: "g of gold", gram_gumus: "g of silver", dolar: "dollars", euro: "euros", btc: "BTC", eth: "ETH", bist100: "TL in BIST 100", diger: "units" }
+                : { gram_altin: "gram altın", gram_gumus: "gram gümüş", dolar: "dolar", euro: "euro", btc: "BTC", eth: "ETH", bist100: "TL BIST 100", diger: "adet" };
+  var ONE = EN ? { gram_altin: "1 gram", gram_gumus: "1 gram", dolar: "1 dollar", euro: "1 euro", btc: "1 BTC", eth: "1 ETH", diger: "1 unit" }
+               : { gram_altin: "1 gram", gram_gumus: "1 gram", dolar: "1 dolar", euro: "1 euro", btc: "1 BTC", eth: "1 ETH", diger: "1 adet" };
   function L(tr, en) { return EN ? en : tr; }
   function $(id) { return document.getElementById(id); }
   function el(tag, cls, text) {

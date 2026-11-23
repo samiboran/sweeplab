@@ -26,7 +26,7 @@ NOTEBOOK = os.environ.get("NOTEBOOK", "data/derivs/notebook_daily.json")
 OZ_GRAM = 31.1035
 SERIES_DAYS = 400          # calendar days of derived series kept for small charts (> 1 year)
 UA = {"User-Agent": "Mozilla/5.0 (piyasa-hava-durumu; github actions)"}
-SYMBOLS = {"USDTRY": "TRY=X", "GOLD_USD": "GC=F", "SILVER_USD": "SI=F", "XU100": "XU100.IS",
+SYMBOLS = {"USDTRY": "TRY=X", "EURTRY": "EURTRY=X", "GOLD_USD": "GC=F", "SILVER_USD": "SI=F", "XU100": "XU100.IS",
            "BTC_USD": "BTC-USD", "ETH_USD": "ETH-USD",
            # long history for 'Dünyada bu Pazartesi/Cuma' (fund prices, not licensed index levels)
            "SPY": "SPY", "QQQ": "QQQ",
@@ -248,6 +248,10 @@ def derive(data, today, crypto=None):
     if su:
         prices["usdtry"] = round(su["last"], 4)
         prices["usdtry_asof"] = su["asof"]
+    se = stats(data.get("EURTRY") or {})
+    if se:                                          # calculator only (no card, no band)
+        prices["eurtry"] = round(se["last"], 4)
+        prices["eurtry_asof"] = se["asof"]
     if sg:
         prices["gram_altin_tl"] = round(sg["last"], 2)
     if ss:
