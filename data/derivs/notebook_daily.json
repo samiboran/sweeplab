@@ -1,9 +1,9 @@
 {
- "built_utc": "2026-11-23T16:32:41+00:00",
+ "built_utc": "2026-11-23T20:43:48+00:00",
  "status": {
   "WALCL": "OK 20 (2026-07-08..2026-11-18)",
   "WTREGEN": "OK 20 (2026-07-08..2026-11-18)",
-  "RRPONTSYD": "OK 97 (2026-07-06..2026-11-20)",
+  "RRPONTSYD": "OK 98 (2026-07-06..2026-11-23)",
   "DFII10": "OK 96 (2026-07-06..2026-11-19)",
   "DTWEXBGS": "OK 92 (2026-07-06..2026-11-13)",
   "SP500": "OK 99 (2026-07-06..2026-11-20)",
@@ -12843,9 +12843,9 @@
     "dxy_asof": "2026-11-20",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.386804,
-    "stables_usd": 283440823804.0,
+    "stables_usd": 283431758483.0,
     "stables_asof": "2026-11-20",
-    "stables_7d_pct": -1.505083,
+    "stables_7d_pct": -1.508233,
     "trend_btc": {
      "state": "gecis",
      "close": 58919.5,
@@ -13059,9 +13059,9 @@
     "dxy_asof": "2026-11-20",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.386804,
-    "stables_usd": 282511685366.0,
+    "stables_usd": 282502620045.0,
     "stables_asof": "2026-11-21",
-    "stables_7d_pct": -1.581619,
+    "stables_7d_pct": -1.584777,
     "trend_btc": {
      "state": "gecis",
      "close": 60183.2,
@@ -13275,9 +13275,9 @@
     "dxy_asof": "2026-11-20",
     "dxy_src": "DXY (ICE)",
     "dxy_7d_pct": 0.386804,
-    "stables_usd": 282495001552.0,
+    "stables_usd": 282485936231.0,
     "stables_asof": "2026-11-22",
-    "stables_7d_pct": -1.602279,
+    "stables_7d_pct": -1.605437,
     "trend_btc": {
      "state": "gecis",
      "close": 61240.0,
