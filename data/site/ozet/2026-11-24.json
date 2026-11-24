@@ -1,0 +1,137 @@
+{
+  "schema": "phd.ozet/1",
+  "schema_version": 1,
+  "source": "Piyasa Hava Durumu",
+  "site_url": "https://samiboran.github.io/sweeplab/piyasa/",
+  "generated_at": "2026-11-24T06:51:38Z",
+  "date": "2026-11-24",
+  "attribution": "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — özetler kendi cümlelerimizle; haberlerin hakları kaynaklarına aittir",
+  "method": "Resmî kaynaklar ve herkese açık haber sayfaları tarandı; olgusal özet, yorum ve tavsiye yok.",
+  "items": [
+    {
+      "konu": "Şirketler",
+      "baslik": "Nvidia, Jensen Huang'ı yeniden CEO yaptı; hisse yüzde 31'in üzerinde yükseldi",
+      "ozet": "Nvidia'nın SEC'e sunduğu açıklamaya göre yönetim kurulu Jensen Huang'ı oybirliğiyle ve derhal geçerli olmak üzere yeniden CEO ve yönetim kurulu üyesi yaptı; dış istihbarat girişimine ilişkin iç soruşturma sürecek. Fox Business'a göre Nvidia hissesi pazartesi yüzde 31'in üzerinde yükselirken S&P 500 yüzde 4,73, Nasdaq yüzde 6,51, Dow Jones yüzde 3,01 kazandı.",
+      "baslik_en": "Nvidia reinstates Jensen Huang as CEO; shares jump more than 31% as US indexes rebound",
+      "ozet_en": "According to Nvidia's filing with the SEC, the board unanimously reinstated Jensen Huang as CEO and board member, effective immediately, while its investigation into a foreign intelligence effort continues. Fox Business reported Nvidia shares rose more than 31% on Monday, as the S&P 500 gained 4.73%, the Nasdaq 6.51% and the Dow 3.01%.",
+      "kaynaklar": [
+        {
+          "ad": "NVIDIA (SEC 8-K basın bülteni)",
+          "url": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000090/nov23pressrelease.htm"
+        },
+        {
+          "ad": "Fox Business",
+          "url": "https://www.foxbusiness.com/markets/stocks-november-23-2026",
+          "zaman": "2026-11-23T21:11:00Z"
+        }
+      ]
+    },
+    {
+      "konu": "Merkez bankaları",
+      "baslik": "New York Fed Başkanı Williams: Enflasyon fazla yüksek",
+      "ozet": "New York Fed'in yayımladığı metne göre Williams, PCE enflasyonunun yaklaşık yüzde 3,5 ile yüzde 2 hedefinin belirgin üzerinde olduğunu söyledi. Williams, fiyat istikrarına yönelik riskin arttığını, istihdama yönelik riskin azaldığını belirtti; enflasyonun gelecek yıl yüzde 2'nin biraz üzerine, 2028'de yüzde 2'ye inmesini beklediğini aktardı. Konuşmada faiz kararı yer almadı.",
+      "baslik_en": "New York Fed President Williams says inflation is too high",
+      "ozet_en": "According to the New York Fed's published text, Williams said PCE inflation of about 3.5% is well above the 2% goal. He said the risk to price stability has risen while the risk to maximum employment has eased, and that he expects inflation to slow to just above 2% next year and reach 2% in 2028. The speech contained no rate decision.",
+      "kaynaklar": [
+        {
+          "ad": "Federal Reserve Bank of New York",
+          "url": "https://www.newyorkfed.org/newsevents/speeches/2026/wil261123"
+        },
+        {
+          "ad": "New York Fed — Teller Window",
+          "url": "https://tellerwindow.newyorkfed.org/2026/11/23/key-takeaways-from-president-williamss-speech-on-the-economic-outlook-and-monetary-policy-28/",
+          "zaman": "2026-11-23T21:01:16Z"
+        }
+      ]
+    },
+    {
+      "konu": "Türkiye",
+      "baslik": "BIST 100 günü yüzde 0,24 düşüşle 11.104,38 puandan kapattı",
+      "ozet": "CNBC-e'nin aktardığına göre BIST 100 endeksi pazartesi 26,94 puan düşüşle 11.104,38 puandan kapandı; işlem hacmi 113,6 milyar lira oldu. Bankacılık endeksi yüzde 0,65 yükselirken holding endeksi yüzde 0,31 geriledi. Sektörlerde en çok madencilik yüzde 1,34 artış, en çok finansal kiralama-faktoring yüzde 3,11 düşüş gösterdi.",
+      "baslik_en": "BIST 100 closes down 0.24% at 11,104.38",
+      "ozet_en": "According to CNBC-e, the BIST 100 index closed Monday down 26.94 points at 11,104.38, with turnover of 113.6 billion lira. The banking index rose 0.65% while the holding index fell 0.31%. Mining led sector gains at 1.34%, while financial leasing and factoring fell the most at 3.11%.",
+      "kaynaklar": [
+        {
+          "ad": "CNBC-e",
+          "url": "https://www.cnbce.com/borsa/borsa-gunu-dususle-kapadi-23-kasim-2026-h42386",
+          "zaman": "2026-11-23T15:13:00Z"
+        }
+      ]
+    },
+    {
+      "konu": "Türkiye",
+      "baslik": "TCMB hanehalkı anketi: 12 ay sonrası enflasyon beklentisi yüzde 43,24'e geriledi",
+      "ozet": "Cumhuriyet'in aktardığı TCMB Kasım 2026 Hanehalkı Beklenti Anketi'ne göre 12 ay sonrası yıllık enflasyon beklentisi 0,51 puan düşüşle yüzde 43,24 oldu. 12 ay sonrası dolar/TL beklentisi 1,32 lira artışla 58,18 liraya çıktı. Yatırım tercihinde altın yüzde 41,8 ile ilk sırada yer aldı.",
+      "baslik_en": "CBRT household survey: 12-month-ahead inflation expectation eases to 43.24%",
+      "ozet_en": "According to the CBRT's November 2026 Household Expectations Survey as reported by Cumhuriyet, the 12-month-ahead annual inflation expectation fell 0.51 points to 43.24%. The 12-month-ahead USD/TRY expectation rose by 1.32 lira to 58.18. Gold ranked first among investment preferences at 41.8%.",
+      "kaynaklar": [
+        {
+          "ad": "Cumhuriyet",
+          "url": "https://www.cumhuriyet.com.tr/ekonomi/tcmb-anketinde-dikkat-ceken-sonuc-yurttasin-enflasyon-beklentisi-dustu-dolar-tahmini-yukseldi-2558569",
+          "zaman": "2026-11-23T08:52:00Z"
+        }
+      ]
+    },
+    {
+      "konu": "Türkiye",
+      "baslik": "Hesaplamaya göre TCMB brüt rezervleri bir haftada yaklaşık 17 milyar dolar azaldı",
+      "ozet": "CNBC-e'nin aktardığı, Matriks Haber'in TCMB analitik bilanço verilerinden yaptığı hesaplamaya göre brüt rezervler 20 Kasım haftasında 159 milyar dolardan 142 milyar dolara geriledi. Bu, Haziran 2023'ten bu yana ikinci en büyük haftalık düşüş olacak. TCMB resmî rezerv verisini 26 Kasım perşembe günü yayımlayacak.",
+      "baslik_en": "Estimate: CBRT gross reserves fell about $17 billion in a week",
+      "ozet_en": "According to a Matriks Haber calculation from CBRT analytical balance sheet data, reported by CNBC-e, gross reserves fell from $159 billion to $142 billion in the week to 20 November. That would be the second-largest weekly drop since June 2023. The CBRT is due to publish official reserve data on Thursday, 26 November.",
+      "kaynaklar": [
+        {
+          "ad": "CNBC-e",
+          "url": "https://www.cnbce.com/haberler/tcmb-rezervlerinde-hizli-dusus-bekleniyor-2023ten-sonra-ilk-kez-olacak-h42432",
+          "zaman": "2026-11-23T11:55:00Z"
+        }
+      ]
+    },
+    {
+      "konu": "Altın ve emtia",
+      "baslik": "Altın 14 ayın dibinden toparlandı: ons yüzde 2,51 artışla 3.634 dolar",
+      "ozet": "USAGOLD'un raporuna göre spot altın pazartesi 88,82 dolar (yüzde 2,51) artışla ons başına 3.634,42 dolara, gümüş yüzde 3,60 artışla 43,14 dolara çıktı. Rapor, altının cuma günü 3.502 dolar civarında 14 ayın en düşüğünü gördüğünü, piyasanın Aralık'ta 50 baz puanlık Fed artışı ihtimalini fiyatlamadan çıkardığını aktardı.",
+      "baslik_en": "Gold rebounds from 14-month low, up 2.51% to $3,634 an ounce",
+      "ozet_en": "According to USAGOLD's report, spot gold rose $88.82 (2.51%) on Monday to $3,634.42 an ounce and silver gained 3.60% to $43.14. The report said gold had touched a 14-month low near $3,502 on Friday and that traders had priced out a 50 basis point Fed hike in December.",
+      "kaynaklar": [
+        {
+          "ad": "USAGOLD",
+          "url": "https://www.usagold.com/daily-precious-metals-market-report-november-23-2026/",
+          "zaman": "2026-11-23T13:45:35Z"
+        }
+      ]
+    },
+    {
+      "konu": "Altın ve emtia",
+      "baslik": "Brent petrol Körfez'deki saldırı haberlerine rağmen düştü",
+      "ozet": "AP'nin haberine göre Brent pazartesi yüzde 3,6 düşüşle varil başına 86,68 dolara geriledi. Cornerstone Futures, hafta sonu Körfez ve Hürmüz Boğazı yakınında gemilere saldırılar bildirildiğini, Husilerin bir Suudi rafinerisine saldırı iddiasının doğrulanmadığını aktardı. Aynı kaynağa göre Atlantik havzası ham petrol navlunu Ekim zirvesinden yüzde 60–70 düştü.",
+      "baslik_en": "Brent crude falls despite reports of attacks in the Gulf",
+      "ozet_en": "According to the AP, Brent fell 3.6% on Monday to $86.68 a barrel. Cornerstone Futures reported weekend attacks on shipping in the Gulf and near the Strait of Hormuz, and said a Houthi claim of an attack on a Saudi refinery was unconfirmed. The same source said Atlantic basin crude freight was down 60% to 70% from its October peak.",
+      "kaynaklar": [
+        {
+          "ad": "AP (Yahoo Finance üzerinden)",
+          "url": "https://ca.finance.yahoo.com/news/asian-stocks-rally-wall-street-033537276.html",
+          "zaman": "2026-11-24T03:35:00Z"
+        },
+        {
+          "ad": "Cornerstone Futures",
+          "url": "https://www.cornerstonefuturesllc.com/post/morning-highlights-oil-falls-despite-weekend-attacks-on-shipping-a-saudi-refinery-and-bahrain-as-f",
+          "zaman": "2026-11-23T11:52:15Z"
+        }
+      ]
+    },
+    {
+      "konu": "Asya",
+      "baslik": "Asya borsaları salı sabahı yükseldi: Taiex yüzde 9'un, KOSPI yüzde 6,5'in üzerinde",
+      "ozet": "AP'nin salı sabahki haberine göre Tayvan'da Taiex yüzde 9'un üzerinde, Güney Kore'de KOSPI yüzde 6,5 artışla 5.014,41'e, Japonya'da Nikkei 225 yüzde 3,9 artışla 58.654,40'a yükseldi. AP, yükselişi Wall Street'teki teknoloji hisseleri toparlanmasına ve Huang'ın Nvidia'ya dönüşüne bağladı. Hang Seng yüzde 0,2, Şanghay Bileşik yüzde 0,7 arttı.",
+      "baslik_en": "Asian stocks rise Tuesday: Taiex up more than 9%, Kospi up 6.5%",
+      "ozet_en": "According to the AP's Tuesday morning report, Taiwan's Taiex climbed more than 9%, South Korea's Kospi rose 6.5% to 5,014.41 and Japan's Nikkei 225 gained 3.9% to 58,654.40. The AP linked the gains to the overnight Wall Street tech rebound and Huang's return to Nvidia. The Hang Seng rose 0.2% and the Shanghai Composite 0.7%.",
+      "kaynaklar": [
+        {
+          "ad": "AP (Yahoo Finance üzerinden)",
+          "url": "https://ca.finance.yahoo.com/news/asian-stocks-rally-wall-street-033537276.html",
+          "zaman": "2026-11-24T03:35:00Z"
+        }
+      ]
+    }
+  ]
+}
