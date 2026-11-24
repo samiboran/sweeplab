@@ -1,6 +1,7 @@
 /* Piyasa Hava Durumu — "Günün özeti" (daily news digest, prepared each morning; no live AI).
    Reads data/site/ozet.json (schema: docs/OZET_SCHEMA.md). Data -> textContent / DOM APIs only;
-   links only https:// with rel="noopener noreferrer". Hidden when missing or older than 2 days. */
+   links only https:// with rel="noopener noreferrer". Hidden when missing or older than 2 days.
+   With saved "Kişisel ayar" (kisisel.js) items are ordered by the visitor's topics; hidden topics fold into a <details>. */
 (function () {
   "use strict";
   var RAW = "https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/";
@@ -30,7 +31,11 @@
       if (!d || !Array.isArray(d.items) || !d.items.length || !fresh(d.date)) return;
       var box = document.getElementById("ozet");
       box.textContent = "";
-      d.items.slice(0, 8).forEach(function (it) {
+      // B5: visitor's topic priority (kisisel.js, this browser only); default = published order
+      var K = window.PHD_KISISEL, pref = K && K.load();
+      var items = d.items.slice(0, 8), hiddenItems = [];
+      if (pref && !K.isDefault(pref)) { var srt = K.sortItems(items, pref); items = srt.shown; hiddenItems = srt.hidden; }
+      function render(it, into) {
         var art = el("article", "oz");
         art.appendChild(el("p", "oz-k", it.konu));
         var h = el("h3", null, EN && it.baslik_en ? it.baslik_en : it.baslik);
@@ -48,8 +53,18 @@
           src.appendChild(a);
         });
         if (src.childNodes.length) art.appendChild(src);
-        box.appendChild(art);
-      });
+        into.appendChild(art);
+      }
+      items.forEach(function (it) { render(it, box); });
+      if (hiddenItems.length) {
+        var det = el("details", "detail oz-gizli");
+        var sum = el("summary", null, EN ? "From topics you hid: " + hiddenItems.length : "Gizlediğin konulardan " + hiddenItems.length + " haber");
+        if (EN) sum.setAttribute("data-noi18n", "");
+        det.appendChild(sum);
+        hiddenItems.forEach(function (it) { render(it, det); });
+        box.appendChild(det);
+      }
+      if (!items.length && !hiddenItems.length) return;
       document.getElementById("ozet-meta").textContent = trDate(d.date) +
         " sabahı hazırlandı · Olgusal özet, kendi cümlelerimizle; haberlerin hakları kaynaklarına aittir.";
       sec.hidden = false;

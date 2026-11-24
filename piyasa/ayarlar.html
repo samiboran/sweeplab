@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="robots" content="noindex">
+<title>Kişisel ayar — Piyasa Hava Durumu</title>
+<meta name="description" content="Ana sayfadaki bölümlerin ve haber konularının sırasını sen seç. Üyelik yok; ayarın yalnız bu cihazda saklanır.">
+<link rel="canonical" href="https://samiboran.github.io/sweeplab/piyasa/ayarlar.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<script src="i18n.js"></script>
+<script src="i18n-pages.js"></script>
+<script src="config.js" defer></script>
+<script src="kisisel.js" defer></script>
+<script src="ayarlar.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div class="brandbox"><a class="brand" href="./">Piyasa Hava Durumu</a></div>
+    <nav aria-label="Site"><a href="./">Bugün</a><a href="hesapla.html">Hesapla</a><a href="arsiv.html">Arşiv</a><a href="yontem.html">Yöntem</a><a href="ayarlar.html" aria-current="page">Ayarlar</a></nav>
+  </header>
+  <main class="kis">
+    <p class="label kicker">Kişisel ayar</p>
+    <h1>Sayfanı düzenle</h1>
+    <p class="notice">Üyelik yok. Seçimlerin yalnız bu tarayıcıda saklanır; hiçbir yere gönderilmez, çerez kullanılmaz. Değişiklikler hemen kaydedilir.</p>
+    <noscript><p class="notice">Kişisel ayar için JavaScript gerekir.</p></noscript>
+
+    <section aria-labelledby="l-bolum">
+      <p class="label" id="l-bolum">Ana sayfa bölümleri</p>
+      <p class="mute small">Yukarı ve aşağı oklarla sırala. Gizlediğin bölümler ana sayfanın sonunda kapalı bir kutuda durur.</p>
+      <ol class="kis-list" id="kis-bolum"></ol>
+    </section>
+
+    <section aria-labelledby="l-konu">
+      <p class="label" id="l-konu">Günün özeti: haber konuları</p>
+      <p class="mute small">Önde: o konunun haberleri en üstte, bu listedeki sırayla. Normal: ardından gelir. Gizle: haber listesinin sonunda kapalı kutuda durur.</p>
+      <ol class="kis-list" id="kis-konu"></ol>
+    </section>
+
+    <section aria-labelledby="l-kod">
+      <p class="label" id="l-kod">Ayar kodu</p>
+      <p class="mute small">Ayarlarını başka bir cihaza taşımak için kodu ya da bağlantıyı orada aç. Kod yalnız sıralamayı taşır; kişisel bilgi içermez.</p>
+      <div class="kis-kod">
+        <input type="text" id="kod" readonly aria-label="Bu cihazın ayar kodu">
+        <button type="button" class="kis-btn" id="kopyala">Bağlantıyı kopyala</button>
+      </div>
+      <div class="kis-kod">
+        <input type="text" id="kod-gir" placeholder="Başka cihazdan kod yapıştır" aria-label="Ayar kodu gir" autocomplete="off" spellcheck="false">
+        <button type="button" class="kis-btn" id="uygula">Uygula</button>
+      </div>
+      <p class="small" id="durum" aria-live="polite"></p>
+      <p><button type="button" class="kis-btn" id="sifirla">Varsayılana dön</button></p>
+    </section>
+  </main>
+  <footer>
+    <p>Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.</p>
+    <p>© Piyasa Hava Durumu — türetilmiş veriler kaynak gösterilerek kullanılabilir (CC BY 4.0)</p>
+  </footer>
+</div>
+</body>
+</html>

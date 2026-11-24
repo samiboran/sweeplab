@@ -21,7 +21,9 @@
       "The level summarises how many of nine market indicators show stress; it does not say what to do, and not every RED day was followed by a fall (",
     "Sicil": "Track record",
     "). Makro veriler ABD kaynaklıdır ve bir iş günü gecikmeli gelir.": "). Macro inputs come from US sources and arrive one business day late.",
-    "Site": "Site", "Hesapla": "Calculator", "Arşiv": "Archive", "Yöntem": "Method", "Bugün": "Today",
+    "Site": "Site", "Ayarlar": "Settings", "Sayfanı düzenle": "Edit your page",
+    "Bölümlerin ve haber konularının sırasını sen seç; ayarın yalnız bu cihazda kalır.": "Choose the order of sections and news topics; the setting stays on this device only.",
+    "Hesapla": "Calculator", "Arşiv": "Archive", "Yöntem": "Method", "Bugün": "Today",
     "Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.": "Not investment advice. Data for information only.",
     "© Piyasa Hava Durumu — türetilmiş veriler kaynak gösterilerek kullanılabilir (CC BY 4.0)":
       "© Piyasa Hava Durumu (Market Weather) — derived data may be reused with attribution (CC BY 4.0)",

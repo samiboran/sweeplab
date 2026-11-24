@@ -5,6 +5,23 @@
   var I = window.PHD_I18N;
   if (!I || !I.en) return;
   I.add({
+    // ayarlar.html (B5)
+    "Kişisel ayar": "Personal settings", "Sayfanı düzenle": "Edit your page",
+    "Üyelik yok. Seçimlerin yalnız bu tarayıcıda saklanır; hiçbir yere gönderilmez, çerez kullanılmaz. Değişiklikler hemen kaydedilir.":
+      "No account needed. Your choices are stored only in this browser; nothing is sent anywhere and no cookies are used. Changes are saved at once.",
+    "Kişisel ayar için JavaScript gerekir.": "Personal settings need JavaScript.",
+    "Ana sayfa bölümleri": "Home page sections",
+    "Yukarı ve aşağı oklarla sırala. Gizlediğin bölümler ana sayfanın sonunda kapalı bir kutuda durur.":
+      "Order with the up and down arrows. Sections you hide stay folded in a box at the end of the home page.",
+    "Günün özeti: haber konuları": "Today's digest: news topics",
+    "Önde: o konunun haberleri en üstte, bu listedeki sırayla. Normal: ardından gelir. Gizle: haber listesinin sonunda kapalı kutuda durur.":
+      "First: that topic's stories come on top, in this list's order. Normal: they follow. Hide: folded in a box at the end of the news list.",
+    "Ayar kodu": "Settings code",
+    "Ayarlarını başka bir cihaza taşımak için kodu ya da bağlantıyı orada aç. Kod yalnız sıralamayı taşır; kişisel bilgi içermez.":
+      "To move your settings to another device, open the code or link there. The code carries only the order; no personal information.",
+    "Bu cihazın ayar kodu": "This device's settings code", "Bağlantıyı kopyala": "Copy link",
+    "Başka cihazdan kod yapıştır": "Paste a code from another device", "Ayar kodu gir": "Enter a settings code",
+    "Uygula": "Apply", "Varsayılana dön": "Reset to default",
     // hesapla.html
     "Benim pozisyonum ne durumda?": "How is my position doing?",
     "Güncel fiyatlar yükleniyor…": "Loading current prices…",
