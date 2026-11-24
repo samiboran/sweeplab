@@ -36,6 +36,7 @@
 <script src="hesapla-core.js" defer></script>
 <script src="pozisyon.js" defer></script>
 <script src="tl.js" defer></script>
+<script src="kisisel.js" defer></script>
 <script src="ozet.js" defer></script>
 <script src="charts.js" defer></script>
 <script src="dunya-side.js" defer></script>
@@ -44,13 +45,13 @@
 <div class="wrap">
   <header class="masthead">
     <div class="brandbox"><a class="brand" href="./">Piyasa Hava Durumu</a></div>
-    <nav aria-label="Site"><a href="hesapla.html">Hesapla</a><a href="arsiv.html">Arşiv</a><a href="yontem.html">Yöntem</a></nav>
+    <nav aria-label="Site"><a href="hesapla.html">Hesapla</a><a href="arsiv.html">Arşiv</a><a href="yontem.html">Yöntem</a><a href="ayarlar.html">Ayarlar</a></nav>
   </header>
   <div class="band" id="band" aria-label="Piyasa bandı: 1 günlük değişim" role="region" hidden></div>
   <main id="main">
     <section class="pozisyon" id="pozisyon" aria-label="Senin pozisyonun" hidden></section>
     <p class="macro-line" id="macro-line" hidden></p>
-    <section aria-labelledby="l-tl">
+    <section id="s-tl" aria-labelledby="l-tl">
       <p class="label" id="l-tl">TL tarafı</p>
       <p class="tl-link top"><a href="hesapla.html">Benim pozisyonum ne durumda? Maliyetini gir, başa baş fiyatını gör</a></p>
       <div id="tl" class="tl"><p class="mute small">TL verisi yükleniyor…</p></div>
@@ -62,6 +63,7 @@
       <p class="mute small" id="ozet-meta"></p>
     </section>
 
+    <div id="s-makro">
     <hr class="rule-top">
     <p class="label" id="kicker">Makro hava</p>
     <h1 id="headline"><span class="dot" aria-hidden="true"></span><span id="headline-text"><!--S:headline-->Veri yükleniyor…<!--/S--></span></h1>
@@ -86,15 +88,16 @@
         <div id="detail-body"></div>
       </details>
     </section>
+    </div>
 
-    <section aria-labelledby="l-sor">
+    <section id="s-sor" aria-labelledby="l-sor">
       <p class="label" id="l-sor">Sorular</p>
       <div class="questions" id="questions"></div>
       <div class="answer" id="answer" aria-live="polite"></div>
       <p class="mute small">Cevaplar her sabah verilerle birlikte hazırlanır; sayılar doğrudan veriden gelir.</p>
     </section>
 
-    <section aria-labelledby="l-daha">
+    <section id="s-daha" aria-labelledby="l-daha">
       <p class="label" id="l-daha">Daha fazlası</p>
       <ul class="more">
         <li><a href="kolay-ekonomi.html">Kolay ekonomi</a> <span class="mute small">Kur, altın, enflasyon ve faiz; sade dille ve örneklerle.</span></li>
@@ -103,6 +106,7 @@
         <li><a href="hafta.html" id="hafta-link">Dünyada bu hafta</a> <span class="mute small">Geçmiş yıllarda bu hafta ne oldu (pazartesi ve cuma).</span></li>
         <li><a href="konum.html">Fiyatlar ortalamalarına göre nerede?</a> <span class="mute small">20, 50 ve 200 günlük ortalamaya göre konum.</span></li>
         <li><a href="karsilastir.html">Grafikte karşılaştır</a> <span class="mute small">2–3 varlık aynı grafikte ya da oran olarak.</span></li>
+        <li><a href="ayarlar.html">Sayfanı düzenle</a> <span class="mute small">Bölümlerin ve haber konularının sırasını sen seç; ayarın yalnız bu cihazda kalır.</span></li>
       </ul>
     </section>
   </main>

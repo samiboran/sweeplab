@@ -405,3 +405,26 @@ ul.poz-rows .poz-pl.neg{color:var(--red)}
 .macro-line a{white-space:nowrap}
 .guide-link{margin:6px 0}
 .guide-link a{color:var(--ink)}
+/* B5 Kişisel ayar */
+.kis-list{list-style:none;margin:8px 0 0;padding:0;border-top:1px solid var(--rule)}
+.kis-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:12px 0;border-bottom:1px solid var(--rule)}
+.kis-row .kis-n{flex:1 1 6em;min-width:0;font-weight:600}
+.kis-row.off .kis-n,.kis-row.m-gizle .kis-n{color:var(--mute);font-weight:400;text-decoration:line-through;text-decoration-color:var(--rule)}
+.kis-row.m-on .kis-n::before{content:"";display:inline-block;width:.5em;height:.5em;border-radius:50%;background:var(--red);margin-right:.45em;vertical-align:.1em}
+.kis-chk{display:inline-flex;align-items:center;gap:6px;font-size:14px;cursor:pointer}
+.kis-chk input{accent-color:var(--red);width:18px;height:18px}
+.kis-sel{font:inherit;font-size:15px;padding:4px 0;border:0;border-bottom:1px solid var(--ink);border-radius:0;background:var(--bg);color:var(--ink)}
+.kis-sel:focus{outline:none;border-bottom-color:var(--red)}
+.kis-ok{display:inline-flex;gap:6px;order:-1}
+.kis-btn{font:inherit;font-size:14px;color:var(--ink);background:none;border:1px solid var(--ink);border-radius:0;padding:6px 12px;cursor:pointer}
+.kis-btn.kis-sm{min-width:40px;min-height:40px;padding:0;font-size:17px}
+.kis-btn:hover,.kis-btn:focus-visible{color:var(--red);border-color:var(--red);outline:none}
+.kis-btn:disabled{color:var(--rule);border-color:var(--rule);cursor:default}
+.kis-kod{display:flex;gap:8px;margin:12px 0 0}
+.kis-kod input{flex:1;min-width:0;font:inherit;font-size:15px;padding:6px 0;border:0;border-bottom:1px solid var(--ink);border-radius:0;background:var(--bg);color:var(--ink);font-variant-numeric:tabular-nums}
+.kis-kod input:focus{outline:none;border-bottom-color:var(--red)}
+#durum:not(:empty){border-left:2px solid var(--red);padding-left:10px}
+.kis-bar{margin:0 0 6px}
+details.kis-gizli{border-top:1px solid var(--rule);padding:20px 0}
+details.kis-gizli>section,details.kis-gizli>div{opacity:.85}
+details.oz-gizli{margin-top:14px}
