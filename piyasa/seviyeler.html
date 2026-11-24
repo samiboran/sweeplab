@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://raw.githubusercontent.com; base-uri 'self'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Destek ve direnç: altın, gümüş, petrol, dolar, bitcoin — Piyasa Hava Durumu</title>
+<meta name="description" content="Gram altın, ons altın, gümüş, Brent petrol, dolar/TL, Bitcoin ve Ethereum için fiyatın geçmişte döndüğü destek ve direnç bölgeleri; petrolden bitcoine 'Zincir'. Her gün güncellenir. Yatırım tavsiyesi değildir.">
+<link rel="canonical" href="https://samiboran.github.io/sweeplab/piyasa/seviyeler.html">
+<link rel="alternate" hreflang="tr" href="https://samiboran.github.io/sweeplab/piyasa/seviyeler.html">
+<link rel="alternate" hreflang="en" href="https://samiboran.github.io/sweeplab/piyasa/seviyeler.html?lang=en">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Piyasa Hava Durumu">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:title" content="Destek ve direnç — Piyasa Hava Durumu">
+<meta property="og:description" content="Altın, gümüş, petrol, dolar/TL ve kripto için fiyatın geçmişte döndüğü bölgeler ve petrolden bitcoine Zincir. Yatırım tavsiyesi değildir.">
+<meta property="og:url" content="https://samiboran.github.io/sweeplab/piyasa/seviyeler.html">
+<meta property="og:image" content="https://samiboran.github.io/sweeplab/piyasa/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<script src="i18n.js"></script>
+<script src="i18n-pages.js"></script>
+<script src="config.js" defer></script>
+<script src="zincir.js" defer></script>
+<script src="seviyeler.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div class="brandbox"><a class="brand" href="./">Piyasa Hava Durumu</a></div>
+    <nav aria-label="Site"><a href="./">Bugün</a><a href="hesapla.html">Hesapla</a><a href="arsiv.html">Arşiv</a><a href="yontem.html">Yöntem</a><a href="ayarlar.html">Ayarlar</a></nav>
+  </header>
+  <main>
+    <p class="label kicker">Destek ve direnç</p>
+    <h1>Fiyat geçmişte nerede döndü?</h1>
+    <p class="meta" id="sv-meta">Veri yükleniyor…</p>
+    <p class="frame">Destek ve direnç, son iki yılda günlük kapanışın en az iki kez döndüğü fiyat bölgeleridir. Geçmişi anlatır; bölgenin yine çalışacağını söylemez. Ayrıntı: <a href="yontem.html#seviyeler">Yöntem</a>.</p>
+
+    <section aria-labelledby="l-zincir">
+      <p class="label" id="l-zincir">Zincir</p>
+      <p class="mute small">Halkalar birlikte okunur: petrolden başlayıp bitcoine kadar, son 20 günün yönü ve en yakın bölge.</p>
+      <div id="zincir"></div>
+    </section>
+
+    <section aria-labelledby="l-varlik">
+      <p class="label" id="l-varlik">Varlık seç</p>
+      <div class="sv-chips" id="sv-chips" role="group" aria-label="Varlık"></div>
+      <div id="sv-detay" aria-live="polite"></div>
+    </section>
+
+    <section aria-labelledby="l-tablo">
+      <p class="label" id="l-tablo">Hepsi bir arada</p>
+      <div class="tbl-wrap"><table class="sv-tbl" id="sv-tbl"></table></div>
+    </section>
+  </main>
+  <footer>
+    <p>Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.</p>
+    <p><a href="veri.html">Veri uçları (JSON/CSV)</a></p>
+    <p>© Piyasa Hava Durumu — türetilmiş veriler kaynak gösterilerek kullanılabilir (CC BY 4.0)</p>
+  </footer>
+</div>
+</body>
+</html>

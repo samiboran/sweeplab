@@ -49,6 +49,11 @@ jobs:
           SITE_OUT: feed/data/site
           NOTEBOOK: feed/data/derivs/notebook_daily.json
         run: python3 tools/fetch_tl.py || echo "tl layer failed"
+      - name: Destek ve direnç + Zincir (derived zones -> data/site/seviyeler.json; FRED DGS10 stored in tl_1d, non-fatal)
+        env:
+          SITE_OUT: feed/data/site
+          TL_RAW_DIR: feed/data/research/tl_1d
+        run: python3 tools/build_levels.py || echo "levels failed"
       - name: Dünyada bu Pazartesi / Cuma (derived -> data/site/hafta.json, Mon/Fri, non-fatal)
         env:
           TL_RAW_DIR: feed/data/research/tl_1d

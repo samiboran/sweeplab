@@ -428,3 +428,36 @@ ul.poz-rows .poz-pl.neg{color:var(--red)}
 details.kis-gizli{border-top:1px solid var(--rule);padding:20px 0}
 details.kis-gizli>section,details.kis-gizli>div{opacity:.85}
 details.oz-gizli{margin-top:14px}
+/* B6 Zincir + Destek ve direnç */
+ol.zincir{list-style:none;margin:6px 0 0;padding:0;counter-reset:z}
+ol.zincir li{position:relative;padding:10px 0 10px 26px;border-bottom:1px solid var(--rule)}
+ol.zincir li::before{counter-increment:z;content:counter(z);position:absolute;left:0;top:11px;font-size:11px;font-weight:600;color:var(--mute)}
+ol.zincir li+li::after{content:"";position:absolute;left:4px;top:-6px;height:12px;border-left:1px solid var(--rule)}
+.z-head{display:flex;justify-content:space-between;gap:12px;margin:0;font-weight:600}
+.z-link.down .z-chg{color:var(--red)}
+.z-chg{font-variant-numeric:tabular-nums}
+.z-t{margin:2px 0 0;font-size:15px}
+.z-ev{margin:2px 0 0}
+.z-note{margin-top:10px}
+.sv-chips{display:flex;flex-wrap:wrap;gap:10px 16px;margin:4px 0 18px}
+.sv-chip{font-size:15px}
+.sv-h{font-size:22px;margin:6px 0 4px}
+.sv-chart{margin:14px 0 6px;min-height:260px}
+ol.sv-ladder{list-style:none;margin:12px 0 0;padding:0}
+.sv-z{display:grid;grid-template-columns:6.5em 1fr;gap:0 12px;padding:9px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.sv-z .sv-k{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.sv-z.direnc .sv-k{color:var(--red)}
+.sv-z .sv-p{font-weight:600;font-variant-numeric:tabular-nums}
+.sv-z .sv-m{grid-column:2}
+.sv-z.now{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+.sv-z.now .sv-k{color:var(--ink)}
+.sv-evl{margin-top:22px}
+ul.sv-ev{margin:0;padding-left:18px}
+ul.sv-ev li{margin:4px 0;font-size:15px}
+table.sv-tbl{width:100%;border-collapse:collapse;font-size:14px}
+table.sv-tbl th{text-align:left;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);padding:6px 8px 6px 0;border-bottom:1px solid var(--rule)}
+table.sv-tbl td{padding:8px 8px 8px 0;border-bottom:1px solid var(--rule);vertical-align:top;font-variant-numeric:tabular-nums}
+.sv-link{appearance:none;background:none;border:0;padding:0;font:inherit;font-weight:600;color:var(--ink);cursor:pointer;text-align:left;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:var(--rule)}
+.sv-link:hover,.sv-link:focus-visible{color:var(--red);text-decoration-color:var(--red);outline:none}
+@media (max-width:600px){table.sv-tbl td:nth-child(4),table.sv-tbl th:nth-child(4){display:none}}
+.tbl-wrap{overflow-x:auto}

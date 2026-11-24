@@ -31,7 +31,9 @@ SYMBOLS = {"USDTRY": "TRY=X", "EURTRY": "EURTRY=X", "GOLD_USD": "GC=F", "SILVER_
            # long history for 'Dünyada bu Pazartesi/Cuma' (fund prices, not licensed index levels)
            "SPY": "SPY", "QQQ": "QQQ",
            # top band alternates (ons altın/gümüş come from GOLD_USD/SILVER_USD)
-           "BRENT_USD": "BZ=F", "WTI_USD": "CL=F"}
+           "BRENT_USD": "BZ=F", "WTI_USD": "CL=F",
+           # B6 'Zincir' dollar link: fund price (not the licensed ICE index level); levels -> % only
+           "UUP": "UUP"}
 SOURCE = "Piyasa Hava Durumu"
 SITE_URL = "https://samiboran.github.io/sweeplab/piyasa/"
 ATTRIBUTION = "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0"

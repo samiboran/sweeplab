@@ -3,21 +3,23 @@ const assert = require("assert");
 const K = require("../piyasa/kisisel.js");
 const d = K.defaults();
 assert.ok(K.isDefault(d));
-assert.strictEqual(K.encode(d), "1-01234-0n1n2n3n4n5n6n7n");
+assert.strictEqual(K.encode(d), "1-051234-0n1n2n3n4n5n6n7n");
 // round trip
 const p = K.normalize({ sections: [{ id: "ozet" }, { id: "tl" }, { id: "daha", hide: true }],
   topics: [{ k: "Kripto", m: "on" }, { k: "Altın ve emtia", m: "on" }, { k: "Asya", m: "gizle" }] });
-assert.deepStrictEqual(p.sections.map(s => s.id), ["ozet", "tl", "daha", "makro", "sorular"]);
+assert.deepStrictEqual(p.sections.map(s => s.id), ["ozet", "tl", "daha", "zincir", "makro", "sorular"]);
 assert.strictEqual(p.topics.length, 8);
 const code = K.encode(p);
-assert.strictEqual(code, "1-104h23-4o3o6g0n1n2n5n7n");
+assert.strictEqual(code, "1-104h523-4o3o6g0n1n2n5n7n");
+// codes saved before the chain section existed still decode (zincir appended)
+assert.deepStrictEqual(K.decode("1-104h23-4o3o6g0n1n2n5n7n").sections.map(s => s.id), ["ozet", "tl", "daha", "makro", "sorular", "zincir"]);
 assert.deepStrictEqual(K.decode(code), p);
 assert.ok(!K.isDefault(p));
 // junk is rejected or cleaned
 assert.strictEqual(K.decode("x"), null);
 assert.strictEqual(K.decode("1-<script>-0o"), null);
 const n = K.normalize({ sections: [{ id: "yok" }, { id: "tl" }, { id: "tl" }], topics: [{ k: "Kripto", m: "bilinmez" }] });
-assert.deepStrictEqual(n.sections.map(s => s.id), ["tl", "ozet", "makro", "sorular", "daha"]);
+assert.deepStrictEqual(n.sections.map(s => s.id), ["tl", "zincir", "ozet", "makro", "sorular", "daha"]);
 assert.strictEqual(n.topics[0].m, "normal");
 // at least one section always visible
 const all = K.normalize({ sections: K.SECTIONS.map(s => ({ id: s.id, hide: true })) });

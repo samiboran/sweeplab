@@ -21,7 +21,11 @@
       "The level summarises how many of nine market indicators show stress; it does not say what to do, and not every RED day was followed by a fall (",
     "Sicil": "Track record",
     "). Makro veriler ABD kaynaklıdır ve bir iş günü gecikmeli gelir.": "). Macro inputs come from US sources and arrive one business day late.",
-    "Site": "Site", "Ayarlar": "Settings", "Sayfanı düzenle": "Edit your page",
+    "Site": "Site", "Zincir": "The chain", "Destek ve direnç": "Support and resistance",
+    "Petrolden bitcoine: halkalar birlikte okunur. Son 20 günün yönü ve en yakın destek/direnç bölgesi.": "From oil to bitcoin: read the links together. Each link's 20-day direction and nearest support/resistance zone.",
+    "Altın, gümüş, petrol, dolar ve kripto için bütün destek ve direnç bölgeleri": "All support and resistance zones for gold, silver, oil, the dollar and crypto",
+    "Fiyatın geçmişte döndüğü bölgeler: altın, gümüş, petrol, dolar, kripto.": "Zones where price turned in the past: gold, silver, oil, the dollar, crypto.",
+    "Ayarlar": "Settings", "Sayfanı düzenle": "Edit your page",
     "Bölümlerin ve haber konularının sırasını sen seç; ayarın yalnız bu cihazda kalır.": "Choose the order of sections and news topics; the setting stays on this device only.",
     "Hesapla": "Calculator", "Arşiv": "Archive", "Yöntem": "Method", "Bugün": "Today",
     "Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.": "Not investment advice. Data for information only.",
@@ -376,7 +380,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   "use strict";
   var I = window.PHD_I18N;
-  var full = /(^|\/)(index|konum|hareket|karsilastir|hesapla|arsiv|hafta|dunya|yontem)\.html$|\/$/.test(location.pathname) || !/\.html$/.test(location.pathname);
+  var full = /(^|\/)(index|konum|hareket|karsilastir|hesapla|arsiv|hafta|dunya|yontem|ayarlar|seviyeler)\.html$|\/$/.test(location.pathname) || !/\.html$/.test(location.pathname);
   var nav = document.querySelector("header.masthead nav");
   if (nav) {
     var a = document.createElement("a");

@@ -69,6 +69,8 @@
         <tr><td><code>dunya.json</code></td><td>phd.dunya/1</td><td>her gün ~06:00</td><td>yalnızca görüntüleme</td><td>Bölge endeksleri, büyük şirketler, emtialar, başlıklar.</td></tr>
         <tr><td><code>ozet.json</code></td><td>phd.ozet/1</td><td>her gün ~07:00</td><td>yalnızca görüntüleme</td><td>Günün özeti: en çok 8 haber, kendi cümlelerimizle + kaynak bağlantısı.</td></tr>
         <tr><td><code>ozet/{YYYY-MM-DD}.json</code></td><td>phd.ozet/1</td><td>her gün ~07:00</td><td>yalnızca görüntüleme</td><td>Geçmiş günlerin özetleri.</td></tr>
+        <tr><td><code>seviyeler.json</code></td><td>phd.seviyeler/1</td><td>her gün ~06:00</td><td>yalnızca görüntüleme</td><td>Destek ve direnç bölgeleri, son 10 günün olayları, Zincir. Fon/endeksler yalnız % uzaklık.</td></tr>
+        <tr><td><code>zincir.json</code></td><td>phd.zincir/1</td><td>her gün ~06:00</td><td>yalnızca görüntüleme</td><td>Yalnız Zincir (ana sayfa için küçük dosya).</td></tr>
         <tr><td><code>movers.json</code></td><td>phd.movers/1</td><td>her gün ~06:00; hafta içi ayrıca ~15:30 (BIST kapanışı) ve ~22:30 (ABD kapanışı)</td><td>yalnızca görüntüleme</td><td>Günün hareketlileri (BIST, ABD, kripto) ve anomaliler.</td></tr>
         <tr><td><code>movers_news.json</code></td><td>phd.movers_news/1</td><td>ayrı görev</td><td>yalnızca görüntüleme</td><td>Hareketlilere eşleşen başlıklar (yakında).</td></tr>
         </tbody>
@@ -117,6 +119,11 @@
       <h2 id="dunya">dunya.json</h2>
       <p><code>markets[]</code>: <code>id, baslik, endeksler[], sirketler[]</code>. Endeks/fon satırı: <code>id, ad, tur</code> (endeks | fon), <code>asof, seviye</code> (yuvarlanmış son kapanış), <code>chg_1g, chg_7g, chg_30g, chg_ytd</code> (% , 1 ondalık), <code>ust20, ust50, ust200</code> (0/1/null), <code>fark200, eski</code>. Şirket satırı aynı alanlar, <code>seviye</code> yok, <code>kod</code> borsa kodu; alfabetik.</p>
       <p><code>emtia[]</code>: <code>grup, satirlar[]</code> (endeks satırı + <code>birim</code>). <code>referans_metaller[]</code>: <code>ad, aciklama, durum</code> ("günlük serbest veri yok"; fiyat yok). <code>basliklar</code>: <code>konular[].basliklar[]</code> = <code>baslik, kaynak, url, zaman, dil</code> (UTC; <code>dil</code> başlığın dili: en/pt/tr) — haber metni yok; <code>kaynaklar[]</code> (akış ve son durum), <code>bekleyen[]</code>.</p>
+    </section>
+
+    <section>
+      <h2 id="seviyeler">seviyeler.json ve zincir.json</h2>
+      <p><code>seviyeler.json → assets[]</code>: <code>id, label, label_en, unit, abs, nd, asof, eski, chg1d_pct, chg20d_pct, close*, hi52*, lo52*, hi52_dist_pct, lo52_dist_pct, tol_pct</code>; <code>direnc[] / destek[]</code> (en yakından uzağa en çok 3): <code>p*, dist_pct, touches, last, text, text_en</code>; <code>bolgede</code> (fiyat bir bölgenin içindeyse); <code>events[]</code>: <code>date, kind</code> (<code>direnc_oldu, destek_oldu, ustune_cikti, altina_indi</code>), <code>text, text_en</code>; <code>series</code> (~1 yıl <code>[tarih, değer]</code>; <code>abs=false</code> ise ilk gün = 100). * yalnız <code>abs=true</code> varlıklarda. <code>chain[]</code>: <code>id, ad, ad_en, chg20d_pct, yon, text, text_en, son_olay, son_olay_en</code>. Yöntem: <a href="yontem.html#seviyeler">Yöntem</a>.</p>
     </section>
 
     <section>
