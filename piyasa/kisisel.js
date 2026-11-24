@@ -7,13 +7,16 @@
   "use strict";
   var KEY = "phd-kisisel-v1";
   // home-page sections the visitor can order or hide (ids of the wrappers in index.html)
+  // listed in the page's default order; n = fixed digit in the ayar kodu (never reuse or renumber)
   var SECTIONS = [
-    { id: "tl", el: "s-tl", tr: "TL tarafı", en: "The lira side" },
-    { id: "ozet", el: "s-ozet", tr: "Günün özeti", en: "Today's digest" },
-    { id: "makro", el: "s-makro", tr: "Makro hava ve kurallar", en: "Macro weather and rules" },
-    { id: "sorular", el: "s-sor", tr: "Sorular", en: "Questions" },
-    { id: "daha", el: "s-daha", tr: "Daha fazlası", en: "More" }
+    { id: "tl", n: 0, el: "s-tl", tr: "TL tarafı", en: "The lira side" },
+    { id: "zincir", n: 5, el: "s-zincir", tr: "Zincir (petrolden bitcoine)", en: "The chain (oil to bitcoin)" },
+    { id: "ozet", n: 1, el: "s-ozet", tr: "Günün özeti", en: "Today's digest" },
+    { id: "makro", n: 2, el: "s-makro", tr: "Makro hava ve kurallar", en: "Macro weather and rules" },
+    { id: "sorular", n: 3, el: "s-sor", tr: "Sorular", en: "Questions" },
+    { id: "daha", n: 4, el: "s-daha", tr: "Daha fazlası", en: "More" }
   ];
+  function secByN(n) { return SECTIONS.filter(function (x) { return x.n === n; })[0]; }
   // fixed digest topics (docs/OZET_SCHEMA.md)
   var TOPICS = [
     { k: "Türkiye", en: "Türkiye" },
@@ -60,8 +63,8 @@
   function encode(p) {
     p = normalize(p);
     var s = p.sections.map(function (x) {
-      var i = SECTIONS.map(function (y) { return y.id; }).indexOf(x.id);
-      return i + (x.hide ? "h" : "");
+      var n = SECTIONS.filter(function (y) { return y.id === x.id; })[0].n;
+      return n + (x.hide ? "h" : "");
     }).join("");
     var t = p.topics.map(function (x) {
       var i = TOPICS.map(function (y) { return y.k; }).indexOf(x.k);
@@ -74,7 +77,8 @@
     if (!m) return null;
     var sections = [], topics = [];
     m[1].replace(/([0-9])(h?)/g, function (_, i, h) {
-      if (SECTIONS[+i]) sections.push({ id: SECTIONS[+i].id, hide: h === "h" });
+      var sec = secByN(+i);
+      if (sec) sections.push({ id: sec.id, hide: h === "h" });
       return "";
     });
     m[2].replace(/([0-9])([ong])/g, function (_, i, c) {

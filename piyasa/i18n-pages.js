@@ -5,6 +5,13 @@
   var I = window.PHD_I18N;
   if (!I || !I.en) return;
   I.add({
+    // seviyeler.html (B6)
+    "Fiyat geçmişte nerede döndü?": "Where did price turn in the past?",
+    "Destek ve direnç, son iki yılda günlük kapanışın en az iki kez döndüğü fiyat bölgeleridir. Geçmişi anlatır; bölgenin yine çalışacağını söylemez. Ayrıntı:":
+      "Support and resistance are price zones where the daily close turned at least twice in the last two years. They describe the past; they do not say a zone will hold again. Details:",
+    "Halkalar birlikte okunur: petrolden başlayıp bitcoine kadar, son 20 günün yönü ve en yakın bölge.":
+      "Read the links together: from oil to bitcoin, each link's 20-day direction and nearest zone.",
+    "Varlık seç": "Pick an asset", "Hepsi bir arada": "All together", "Varlık": "Asset",
     // ayarlar.html (B5)
     "Kişisel ayar": "Personal settings", "Sayfanı düzenle": "Edit your page",
     "Üyelik yok. Seçimlerin yalnız bu tarayıcıda saklanır; hiçbir yere gönderilmez, çerez kullanılmaz. Değişiklikler hemen kaydedilir.":
