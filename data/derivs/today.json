@@ -1,6 +1,6 @@
 {
- "date": "2026-11-22",
- "built_utc": "2026-11-23T20:44:44+00:00",
+ "date": "2026-11-23",
+ "built_utc": "2026-11-24T16:32:19+00:00",
  "layers": {
   "regime": {
    "name": "Rejim",
@@ -10,49 +10,64 @@
   "risk": {
    "name": "Risk iştahı",
    "status": "red",
-   "alarms": 3
+   "alarms": 2
   },
   "pos": {
    "name": "Pozisyon",
    "status": "red",
-   "alarms": 1
+   "alarms": 2
   },
   "macro": {
    "name": "Altın & Makro",
-   "status": "red",
-   "alarms": 1
+   "status": "green",
+   "alarms": 0
   },
   "corr": {
    "name": "Korelasyonlar",
-   "status": "green",
-   "alarms": 0
+   "status": "red",
+   "alarms": 4
   }
  },
  "alarms": [
   {
-   "layer": "macro",
+   "layer": "risk",
    "rule": "z",
-   "text": "Altın 30 günlük ortalamasından 2.3 std düşük (3,515)"
+   "text": "S&P 500 30 günlük ortalamasından 2.1 std düşük (6,910)"
   },
   {
    "layer": "risk",
    "rule": "z",
-   "text": "S&P 500 30 günlük ortalamasından 2.4 std düşük (6,910)"
+   "text": "HY spread 30 günlük ortalamasından 2.1 std yüksek (%3.76)"
   },
   {
-   "layer": "risk",
+   "layer": "corr",
    "rule": "z",
-   "text": "VIX 30 günlük ortalamasından 2.4 std yüksek (35.89)"
+   "text": "BTC–DXY 30 günlük ortalamasından 2.1 std yüksek (0.03)"
   },
   {
-   "layer": "risk",
+   "layer": "corr",
    "rule": "z",
-   "text": "HY spread 30 günlük ortalamasından 2.3 std yüksek (%3.76)"
+   "text": "BTC–Altın 30 günlük ortalamasından 2.6 std yüksek (0.58)"
+  },
+  {
+   "layer": "corr",
+   "rule": "z",
+   "text": "ETH–Altın 30 günlük ortalamasından 2.8 std yüksek (0.52)"
   },
   {
    "layer": "pos",
-   "rule": "oi24",
-   "text": "BTC açık pozisyon son 24 saat coin bazında %7.6 düştü"
+   "rule": "ls",
+   "text": "BTC long/short hesap oranı 2.62 (>2.5): kalabalık long'da"
+  },
+  {
+   "layer": "pos",
+   "rule": "ls",
+   "text": "ETH long/short hesap oranı 2.98 (>2.5): kalabalık long'da"
+  },
+  {
+   "layer": "corr",
+   "rule": "corr",
+   "text": "BTC–DXY korelasyonu kırıldı: 7 gün +0.53, 30 gün +0.03"
   },
   {
    "layer": "regime",
@@ -73,34 +88,34 @@
   "real10y": {
    "layer": "regime",
    "label": "Reel faiz (10y)",
-   "value": 2.88,
-   "display": "%2.88",
-   "z": 1.13,
-   "asof": "2026-11-19"
+   "value": 2.77,
+   "display": "%2.77",
+   "z": 0.34,
+   "asof": "2026-11-20"
   },
   "dxy": {
    "layer": "regime",
    "label": "DXY",
-   "value": 103.809998,
-   "display": "103.81",
-   "z": 1.45,
-   "asof": "2026-11-20"
+   "value": 104.32,
+   "display": "104.32",
+   "z": 1.86,
+   "asof": "2026-11-23"
   },
   "stables": {
    "layer": "regime",
    "label": "Stablecoin arzı",
-   "value": 282485936231.0,
-   "display": "282.5 B$",
-   "z": -1.66,
-   "asof": "2026-11-22"
+   "value": 282734538286.0,
+   "display": "282.7 B$",
+   "z": -1.51,
+   "asof": "2026-11-23"
   },
   "gold": {
    "layer": "macro",
    "label": "Altın",
-   "value": 3515.399902,
-   "display": "3,515",
-   "z": -2.34,
-   "asof": "2026-11-20"
+   "value": 3651.399902,
+   "display": "3,651",
+   "z": -1.44,
+   "asof": "2026-11-23"
   },
   "gold_cot": {
    "layer": "macro",
@@ -121,25 +136,25 @@
   "wti": {
    "layer": "macro",
    "label": "WTI",
-   "value": 83.980003,
-   "display": "83.98",
-   "z": -1.11,
-   "asof": "2026-11-20"
+   "value": 80.169998,
+   "display": "80.17",
+   "z": -1.5,
+   "asof": "2026-11-23"
   },
   "brent": {
    "layer": "macro",
    "label": "Brent",
-   "value": 92.57,
-   "display": "92.57",
-   "z": -0.89,
-   "asof": "2026-11-20"
+   "value": 89.370003,
+   "display": "89.37",
+   "z": -1.13,
+   "asof": "2026-11-23"
   },
   "spx": {
    "layer": "risk",
    "label": "S&P 500",
    "value": 6910.39,
    "display": "6,910",
-   "z": -2.4,
+   "z": -2.13,
    "asof": "2026-11-20"
   },
   "ndx": {
@@ -147,78 +162,78 @@
    "label": "Nasdaq",
    "value": 23879.2,
    "display": "23,879",
-   "z": -1.58,
+   "z": -1.46,
    "asof": "2026-11-19"
   },
   "vix": {
    "layer": "risk",
    "label": "VIX",
-   "value": 35.89,
-   "display": "35.89",
-   "z": 2.38,
-   "asof": "2026-11-20"
+   "value": 26.62,
+   "display": "26.62",
+   "z": 0.7,
+   "asof": "2026-11-23"
   },
   "hy": {
    "layer": "risk",
    "label": "HY spread",
    "value": 3.76,
    "display": "%3.76",
-   "z": 2.33,
+   "z": 2.07,
    "asof": "2026-11-20"
   },
   "btc_oi": {
    "layer": "pos",
    "label": "BTC açık poz. (coin)",
-   "value": 31821.1981,
-   "display": "31.8K",
-   "z": -0.72,
-   "asof": "2026-11-22",
-   "chg24": -7.57,
-   "chg24_usd": -7.13,
-   "usd": 1946063555.243229
+   "value": 29469.034,
+   "display": "29.5K",
+   "z": -1.99,
+   "asof": "2026-11-23",
+   "chg24": 2.54,
+   "chg24_usd": -1.36,
+   "usd": 1804698376.677006
   },
   "eth_oi": {
    "layer": "pos",
    "label": "ETH açık poz. (coin)",
-   "value": 674846.978,
-   "display": "674.8K",
-   "z": 0.69,
-   "asof": "2026-11-22",
-   "chg24": -3.25,
-   "chg24_usd": -2.89,
-   "usd": 1162072999.176441
+   "value": 664471.864,
+   "display": "664.5K",
+   "z": 0.23,
+   "asof": "2026-11-23",
+   "chg24": 2.29,
+   "chg24_usd": -3.1,
+   "usd": 1136074124.755362
   },
   "btc_fund": {
    "layer": "pos",
    "label": "BTC funding",
-   "value": 0.007199,
-   "display": "%0.007",
-   "z": -0.68,
-   "asof": "2026-11-22"
+   "value": 0.008144,
+   "display": "%0.008",
+   "z": -0.59,
+   "asof": "2026-11-23"
   },
   "eth_fund": {
    "layer": "pos",
    "label": "ETH funding",
-   "value": -0.007829,
-   "display": "%-0.008",
-   "z": -0.84,
-   "asof": "2026-11-22"
+   "value": -0.008743,
+   "display": "%-0.009",
+   "z": -0.85,
+   "asof": "2026-11-23"
   },
   "btc_ls": {
    "layer": "pos",
    "label": "BTC L/S",
-   "value": 2.039409,
-   "display": "2.04",
-   "z": -1.04,
-   "asof": "2026-11-22"
+   "value": 2.621169,
+   "display": "2.62",
+   "z": 0.21,
+   "asof": "2026-11-23"
   },
   "eth_ls": {
    "layer": "pos",
    "label": "ETH L/S",
-   "value": 2.138001,
-   "display": "2.14",
-   "z": -1.15,
-   "asof": "2026-11-22"
+   "value": 2.984676,
+   "display": "2.98",
+   "z": 0.28,
+   "asof": "2026-11-23"
   },
   "btc_cot": {
    "layer": "pos",
@@ -231,60 +246,60 @@
   "btc_spx": {
    "layer": "corr",
    "label": "BTC–S&P",
-   "value": 0.680677,
-   "display": "0.68",
-   "z": 0.31,
-   "asof": "2026-11-22",
+   "value": 0.685857,
+   "display": "0.69",
+   "z": 0.37,
+   "asof": "2026-11-23",
    "corr7": 0.54
   },
   "btc_ndx": {
    "layer": "corr",
    "label": "BTC–Nasdaq",
-   "value": 0.657164,
+   "value": 0.65827,
    "display": "0.66",
-   "z": -0.59,
-   "asof": "2026-11-22",
+   "z": -0.55,
+   "asof": "2026-11-23",
    "corr7": 0.35
   },
   "btc_dxy": {
    "layer": "corr",
    "label": "BTC–DXY",
-   "value": -0.089713,
-   "display": "-0.09",
-   "z": 0.59,
-   "asof": "2026-11-22",
-   "corr7": -0.15
+   "value": 0.025656,
+   "display": "0.03",
+   "z": 2.11,
+   "asof": "2026-11-23",
+   "corr7": 0.53
   },
   "btc_eth": {
    "layer": "corr",
    "label": "BTC–ETH",
-   "value": 0.944777,
+   "value": 0.943265,
    "display": "0.94",
-   "z": 0.35,
-   "asof": "2026-11-22",
-   "corr7": 0.98
+   "z": 0.18,
+   "asof": "2026-11-23",
+   "corr7": 0.97
   },
   "btc_gold": {
    "layer": "corr",
    "label": "BTC–Altın",
-   "value": 0.455791,
-   "display": "0.46",
-   "z": 0.86,
-   "asof": "2026-11-22",
-   "corr7": 0.6
+   "value": 0.575951,
+   "display": "0.58",
+   "z": 2.56,
+   "asof": "2026-11-23",
+   "corr7": 0.86
   },
   "eth_gold": {
    "layer": "corr",
    "label": "ETH–Altın",
-   "value": 0.393095,
-   "display": "0.39",
-   "z": 1.17,
-   "asof": "2026-11-22",
-   "corr7": 0.68
+   "value": 0.520258,
+   "display": "0.52",
+   "z": 2.77,
+   "asof": "2026-11-23",
+   "corr7": 0.87
   }
  },
  "macro_ctx": {
-  "gold_from_high_pct": -25.169227,
+  "gold_from_high_pct": -22.274255,
   "gold_high120_date": "2026-08-24",
   "gold_src": "Altın vadeli (COMEX, GC=F)",
   "cot_gold_mm_net_wk_chg": -9399.0,
@@ -294,133 +309,131 @@
   "btc": {
    "trend": "gecis",
    "trend_text": "Geçiş",
-   "dist200_pct": -15.36,
-   "ma50": 76724.17,
-   "ma200": 72351.65,
-   "close": 61240.0,
-   "flow": "kaldiracli_yukselis",
-   "flow_text": "Kaldıraçlı yükseliş (fiyat↑ OI↑)",
-   "crowded_long": false,
+   "dist200_pct": -15.24,
+   "ma50": 76219.4,
+   "ma200": 72257.98,
+   "close": 61246.1,
+   "flow": "yatay",
+   "flow_text": "Yatay / sakin",
+   "crowded_long": true,
    "crowded_short": false,
-   "reading": "pozisyonlanma dengeli"
+   "reading": "long kalabalığı → kırılgan zemin, sert hareket riski"
   },
   "eth": {
    "trend": "gecis",
    "trend_text": "Geçiş",
-   "dist200_pct": -18.82,
-   "ma50": 2247.54,
-   "ma200": 2122.93,
-   "close": 1723.44,
-   "flow": "kaldiracli_yukselis",
-   "flow_text": "Kaldıraçlı yükseliş (fiyat↑ OI↑)",
-   "crowded_long": false,
+   "dist200_pct": -19.35,
+   "ma50": 2227.22,
+   "ma200": 2120.03,
+   "close": 1709.85,
+   "flow": "temizlik",
+   "flow_text": "Temizlik (fiyat↓ OI↓)",
+   "crowded_long": true,
    "crowded_short": false,
-   "reading": "pozisyonlanma dengeli"
+   "reading": "long kalabalığı → kırılgan zemin, sert hareket riski"
   }
  },
  "watch": {
   "sol": {
-   "close": 70.68,
-   "chg_pct": 0.59778,
-   "oi_coin": 3023134.06,
-   "oi_usd": 206726820.1331999,
-   "oi_z": -1.55,
-   "oi24": -7.02,
-   "oi24_usd": -3.47,
-   "oi_mcap_pct": 0.48,
-   "funding": 0.004889,
-   "ls": 2.376929,
-   "flow": "oi_sabit",
-   "flow_text": "OI sabit (fiyat oynadı, pozisyon değişmedi)",
-   "alarms": []
+   "close": 71.97,
+   "chg_pct": 1.825127,
+   "oi_coin": 2875397.78,
+   "oi_usd": 199727174.8468,
+   "oi_z": -2.1,
+   "oi24": 0.88,
+   "oi24_usd": -6.07,
+   "oi_mcap_pct": 0.49,
+   "funding": -0.013525,
+   "ls": 2.670994,
+   "flow": "short_squeeze",
+   "flow_text": "Short squeeze (fiyat↑ OI↓)",
+   "alarms": [
+    "SOL long/short hesap oranı 2.67"
+   ]
   },
   "xrp": {
-   "close": 0.9283,
-   "chg_pct": -0.354229,
-   "oi_coin": 66418974.0,
-   "oi_usd": 58883935.894200034,
-   "oi_z": -1.56,
-   "oi24": -5.49,
-   "oi24_usd": -4.33,
+   "close": 0.94,
+   "chg_pct": 1.260368,
+   "oi_coin": 62610442.0,
+   "oi_usd": 60315124.3695,
+   "oi_z": -2.08,
+   "oi24": 3.38,
+   "oi24_usd": -2.59,
    "oi_mcap_pct": 0.1,
-   "funding": 0.012567,
-   "ls": 1.921275,
-   "flow": "yatay",
-   "flow_text": "Yatay / sakin",
+   "funding": -0.004061,
+   "ls": 1.957886,
+   "flow": "short_squeeze",
+   "flow_text": "Short squeeze (fiyat↑ OI↓)",
    "alarms": []
   },
   "doge": {
-   "close": 0.05532,
-   "chg_pct": 0.126697,
-   "oi_coin": 1034125680.0,
-   "oi_usd": 56428107.04849999,
-   "oi_z": -1.82,
-   "oi24": -4.33,
-   "oi24_usd": -1.89,
-   "oi_mcap_pct": 0.64,
-   "funding": 0.002607,
-   "ls": 3.500717,
-   "flow": "yatay",
-   "flow_text": "Yatay / sakin",
+   "close": 0.05636,
+   "chg_pct": 1.879971,
+   "oi_coin": 998667860.0,
+   "oi_usd": 58514464.33819998,
+   "oi_z": -2.01,
+   "oi24": 5.9,
+   "oi24_usd": -0.06,
+   "oi_mcap_pct": 0.68,
+   "funding": 0.002031,
+   "ls": 3.82366,
+   "flow": "short_squeeze",
+   "flow_text": "Short squeeze (fiyat↑ OI↓)",
    "alarms": [
-    "DOGE long/short hesap oranı 3.50"
+    "DOGE long/short hesap oranı 3.82"
    ]
   },
   "pump": {
-   "close": 0.002601,
-   "chg_pct": 10.680851,
-   "oi_coin": 7197218000.0,
-   "oi_usd": 16493870.724,
-   "oi_z": 2.32,
-   "oi24": -10.85,
-   "oi24_usd": -11.44,
-   "oi_mcap_pct": 1.83,
-   "funding": 0.00294,
-   "ls": 1.207557,
-   "flow": "oi_sabit",
-   "flow_text": "OI sabit (fiyat oynadı, pozisyon değişmedi)",
-   "alarms": [
-    "PUMP squeeze riski: açık pozisyon şişkin (z 2.3).",
-    "PUMP açık pozisyon 24 saatte coin bazında %11 düştü"
-   ]
+   "close": 0.002532,
+   "chg_pct": -2.652826,
+   "oi_coin": 6486494000.0,
+   "oi_usd": 15194955.92,
+   "oi_z": 1.0,
+   "oi24": -3.2,
+   "oi24_usd": -12.59,
+   "oi_mcap_pct": 1.8,
+   "funding": 0.004862,
+   "ls": 1.821806,
+   "flow": "temizlik",
+   "flow_text": "Temizlik (fiyat↓ OI↓)",
+   "alarms": []
   }
  },
  "watch_alarms": [
-  "DOGE long/short hesap oranı 3.50",
-  "PUMP squeeze riski: açık pozisyon şişkin (z 2.3).",
-  "PUMP açık pozisyon 24 saatte coin bazında %11 düştü"
+  "SOL long/short hesap oranı 2.67",
+  "DOGE long/short hesap oranı 3.82"
  ],
  "levels": {
   "btc": {
-   "close": 61240.0,
-   "ma50": 76724.17,
-   "ma200": 72351.65,
-   "d50_pct": -20.18,
+   "close": 61246.1,
+   "ma50": 76219.4,
+   "ma200": 72257.98,
+   "d50_pct": -19.64,
    "hi20": 81199.9,
    "lo20": 55100.0,
-   "atr": 3280.83,
-   "atr_pct": 5.36,
-   "long_stop": 53459.59,
-   "short_stop": 82840.31,
-   "long_stop_pct": 12.7,
-   "short_stop_pct": 35.27,
+   "atr": 3450.65,
+   "atr_pct": 5.63,
+   "long_stop": 53374.68,
+   "short_stop": 82925.22,
+   "long_stop_pct": 12.85,
+   "short_stop_pct": 35.4,
    "max_lev_long": 6,
    "max_lev_short": 2,
    "below_ma50_days": 10
   },
   "eth": {
-   "close": 1723.44,
-   "ma50": 2247.54,
-   "ma200": 2122.93,
-   "d50_pct": -23.32,
+   "close": 1709.85,
+   "ma50": 2227.22,
+   "ma200": 2120.03,
+   "d50_pct": -23.23,
    "hi20": 2451.13,
    "lo20": 1536.28,
-   "atr": 117.23,
-   "atr_pct": 6.8,
-   "long_stop": 1477.66,
-   "short_stop": 2509.75,
-   "long_stop_pct": 14.26,
-   "short_stop_pct": 45.62,
+   "atr": 122.34,
+   "atr_pct": 7.15,
+   "long_stop": 1475.11,
+   "short_stop": 2512.3,
+   "long_stop_pct": 13.73,
+   "short_stop_pct": 46.93,
    "max_lev_long": 5,
    "max_lev_short": 1,
    "below_ma50_days": 10
@@ -429,31 +442,31 @@
  "stocks": {
   "SPCX": {
    "name": "SpaceX",
-   "date": "2026-11-23",
-   "close": 134.0,
-   "high": 141.86,
-   "low": 133.33,
-   "chg_pct": 4.86,
-   "ma20": 138.53,
+   "date": "2026-11-24",
+   "close": 125.19,
+   "high": 132.5,
+   "low": 123.53,
+   "chg_pct": -6.12,
+   "ma20": 137.33,
    "hi3m": 176.42,
    "lo3m": 120.39,
    "levels": [
     {
      "kind": "dip",
      "price": 150,
-     "dist_pct": 11.9,
+     "dist_pct": 19.8,
      "hit": true
     },
     {
      "kind": "dip",
      "price": 135,
-     "dist_pct": 0.7,
+     "dist_pct": 7.8,
      "hit": true
     },
     {
      "kind": "breakout",
      "price": 180,
-     "dist_pct": 34.3,
+     "dist_pct": 43.8,
      "hit": false
     }
    ],
@@ -461,25 +474,25 @@
   },
   "PLUG": {
    "name": "Plug Power",
-   "date": "2026-11-23",
-   "close": 0.99,
-   "high": 1.07,
-   "low": 0.96,
-   "chg_pct": 2.66,
-   "ma20": 1.27,
+   "date": "2026-11-24",
+   "close": 0.93,
+   "high": 0.98,
+   "low": 0.93,
+   "chg_pct": -6.04,
+   "ma20": 1.24,
    "hi3m": 2.33,
-   "lo3m": 0.95,
+   "lo3m": 0.93,
    "levels": [],
    "notes": "Spekülatif (hidrojen). Bilanço kasım başı (tarih teyit edilecek). Seviyeler henüz belirlenmedi."
   },
   "EOSE": {
    "name": "Eos Energy",
-   "date": "2026-11-23",
-   "close": 1.26,
-   "high": 1.39,
-   "low": 1.25,
-   "chg_pct": 5.88,
-   "ma20": 1.74,
+   "date": "2026-11-24",
+   "close": 1.23,
+   "high": 1.27,
+   "low": 1.19,
+   "chg_pct": -3.54,
+   "ma20": 1.71,
    "hi3m": 4.59,
    "lo3m": 1.16,
    "levels": [],
@@ -487,12 +500,12 @@
   },
   "MRNA": {
    "name": "Moderna",
-   "date": "2026-11-23",
-   "close": 211.6,
-   "high": 212.66,
-   "low": 202.29,
-   "chg_pct": 8.51,
-   "ma20": 225.9,
+   "date": "2026-11-24",
+   "close": 224.5,
+   "high": 227.22,
+   "low": 212.08,
+   "chg_pct": 5.86,
+   "ma20": 226.75,
    "hi3m": 280.8,
    "lo3m": 130.0,
    "levels": [],
@@ -500,12 +513,12 @@
   },
   "SHOP": {
    "name": "Shopify",
-   "date": "2026-11-23",
-   "close": 134.66,
-   "high": 136.89,
-   "low": 131.31,
-   "chg_pct": 8.84,
-   "ma20": 148.21,
+   "date": "2026-11-24",
+   "close": 133.97,
+   "high": 137.65,
+   "low": 132.24,
+   "chg_pct": -0.25,
+   "ma20": 146.6,
    "hi3m": 180.88,
    "lo3m": 122.83,
    "levels": [],
@@ -513,12 +526,12 @@
   },
   "PLTR": {
    "name": "Palantir",
-   "date": "2026-11-23",
-   "close": 159.67,
-   "high": 161.17,
-   "low": 154.57,
-   "chg_pct": 11.28,
-   "ma20": 169.87,
+   "date": "2026-11-24",
+   "close": 160.36,
+   "high": 163.0,
+   "low": 157.8,
+   "chg_pct": 0.63,
+   "ma20": 167.93,
    "hi3m": 212.94,
    "lo3m": 142.28,
    "levels": [],
@@ -526,19 +539,19 @@
   },
   "ZS": {
    "name": "Zscaler",
-   "date": "2026-11-23",
-   "close": 229.08,
-   "high": 247.9,
-   "low": 218.88,
-   "chg_pct": 17.59,
-   "ma20": 212.67,
+   "date": "2026-11-24",
+   "close": 230.95,
+   "high": 236.95,
+   "low": 228.58,
+   "chg_pct": 0.74,
+   "ma20": 211.22,
    "hi3m": 267.87,
    "lo3m": 159.2,
    "levels": [
     {
      "kind": "dip",
      "price": 218,
-     "dist_pct": -4.8,
+     "dist_pct": -5.6,
      "hit": false
     }
    ],
@@ -547,230 +560,230 @@
   }
  },
  "stock_alarms": [
-  "SpaceX (SPCX) alım seviyesine indi: 150 (gün dibi 133.33, kapanış 134.00). Planlı ekleme zamanı; tek seferde değil, parça parça.",
-  "SpaceX (SPCX) alım seviyesine indi: 135 (gün dibi 133.33, kapanış 134.00). Planlı ekleme zamanı; tek seferde değil, parça parça."
+  "SpaceX (SPCX) alım seviyesine indi: 150 (gün dibi 123.53, kapanış 125.19). Planlı ekleme zamanı; tek seferde değil, parça parça.",
+  "SpaceX (SPCX) alım seviyesine indi: 135 (gün dibi 123.53, kapanış 125.19). Planlı ekleme zamanı; tek seferde değil, parça parça."
  ],
  "band_sweeps": [
   {
    "coin": "btc",
    "side": "long",
-   "price": 58862.84,
-   "lev": 25,
+   "price": 60467.29,
+   "lev": 50,
    "reclaimed": true,
-   "close": 61240.0
+   "close": 61246.1
   },
   {
-   "coin": "eth",
+   "coin": "sol",
    "side": "long",
-   "price": 1653.04,
+   "price": 70.47,
    "lev": 25,
    "reclaimed": true,
-   "close": 1723.44
+   "close": 71.97
   }
  ],
  "liq_map": {
-  "built_utc": "2026-11-23T20:43:36+00:00",
+  "built_utc": "2026-11-24T16:31:02+00:00",
   "coins": {
    "btc": {
-    "price": 61232.7,
+    "price": 59523.3,
     "long_bands": [
      {
-      "price": 60467.29,
-      "from": 60314.21,
-      "to": 60620.37,
-      "amt": 18.836,
-      "usd": 1153379,
-      "share_pct": 14.3,
-      "dist_pct": -1.25,
+      "price": 59076.88,
+      "from": 58928.07,
+      "to": 59225.68,
+      "amt": 67.58,
+      "usd": 4022585,
+      "share_pct": 7.4,
+      "dist_pct": -0.75,
       "lev": 50
      },
      {
-      "price": 59089.56,
-      "from": 58936.47,
-      "to": 59242.64,
-      "amt": 41.28,
-      "usd": 2527686,
-      "share_pct": 31.4,
-      "dist_pct": -3.5,
+      "price": 58332.83,
+      "from": 58184.03,
+      "to": 58481.64,
+      "amt": 310.358,
+      "usd": 18473532,
+      "share_pct": 33.9,
+      "dist_pct": -2.0,
       "lev": 25
      },
      {
-      "price": 55415.59,
-      "from": 55262.51,
-      "to": 55568.68,
-      "amt": 48.162,
-      "usd": 2949089,
-      "share_pct": 36.6,
-      "dist_pct": -9.5,
+      "price": 54612.63,
+      "from": 54463.82,
+      "to": 54761.44,
+      "amt": 355.304,
+      "usd": 21148867,
+      "share_pct": 38.8,
+      "dist_pct": -8.25,
       "lev": 10
      }
     ],
     "short_bands": [
      {
-      "price": 65212.83,
-      "from": 65059.74,
-      "to": 65365.91,
-      "amt": 43.494,
-      "usd": 2663255,
-      "share_pct": 34.6,
-      "dist_pct": 6.5,
+      "price": 61309.0,
+      "from": 61160.19,
+      "to": 61457.81,
+      "amt": 136.23,
+      "usd": 8108859,
+      "share_pct": 13.6,
+      "dist_pct": 3.0,
+      "lev": 50
+     },
+     {
+      "price": 62499.47,
+      "from": 62350.66,
+      "to": 62648.27,
+      "amt": 304.547,
+      "usd": 18127642,
+      "share_pct": 30.4,
+      "dist_pct": 5.0,
       "lev": 25
      },
      {
-      "price": 67049.81,
-      "from": 66896.72,
-      "to": 67202.89,
-      "amt": 53.692,
-      "usd": 3287706,
-      "share_pct": 42.8,
-      "dist_pct": 9.5,
-      "lev": 10
-     },
-     {
-      "price": 67815.22,
-      "from": 67662.13,
-      "to": 67968.3,
-      "amt": 17.708,
-      "usd": 1084309,
-      "share_pct": 14.1,
-      "dist_pct": 10.75,
+      "price": 66070.86,
+      "from": 65922.05,
+      "to": 66219.67,
+      "amt": 359.49,
+      "usd": 21398031,
+      "share_pct": 35.8,
+      "dist_pct": 11.0,
       "lev": 10
      }
     ],
     "error": null
    },
    "eth": {
-    "price": 1725.21,
+    "price": 1671.38,
     "long_bands": [
      {
-      "price": 1695.02,
-      "from": 1690.71,
-      "to": 1699.33,
-      "amt": 4228.853,
-      "usd": 7295659,
-      "share_pct": 17.5,
-      "dist_pct": -1.75,
-      "lev": 50
-     },
-     {
-      "price": 1660.51,
-      "from": 1656.2,
-      "to": 1664.83,
-      "amt": 6457.161,
-      "usd": 11139959,
-      "share_pct": 26.7,
-      "dist_pct": -3.75,
+      "price": 1654.67,
+      "from": 1650.49,
+      "to": 1658.84,
+      "amt": 10783.814,
+      "usd": 18023851,
+      "share_pct": 21.0,
+      "dist_pct": -1.0,
       "lev": 25
      },
      {
-      "price": 1557.0,
-      "from": 1552.69,
-      "to": 1561.32,
-      "amt": 7533.355,
-      "usd": 12996619,
-      "share_pct": 31.2,
-      "dist_pct": -9.75,
+      "price": 1637.95,
+      "from": 1633.77,
+      "to": 1642.13,
+      "amt": 7102.901,
+      "usd": 11871647,
+      "share_pct": 13.8,
+      "dist_pct": -2.0,
+      "lev": 25
+     },
+     {
+      "price": 1541.85,
+      "from": 1537.67,
+      "to": 1546.03,
+      "amt": 7647.338,
+      "usd": 12781608,
+      "share_pct": 14.9,
+      "dist_pct": -7.75,
       "lev": 10
      }
     ],
     "short_bands": [
      {
-      "price": 1863.23,
-      "from": 1858.91,
-      "to": 1867.54,
-      "amt": 4731.498,
-      "usd": 8162828,
-      "share_pct": 25.2,
-      "dist_pct": 8.0,
+      "price": 1734.06,
+      "from": 1729.88,
+      "to": 1738.24,
+      "amt": 4716.035,
+      "usd": 7882287,
+      "share_pct": 14.6,
+      "dist_pct": 3.75,
+      "lev": 50
+     },
+     {
+      "price": 1754.95,
+      "from": 1750.77,
+      "to": 1759.13,
+      "amt": 4733.15,
+      "usd": 7910892,
+      "share_pct": 14.7,
+      "dist_pct": 5.0,
       "lev": 25
      },
      {
-      "price": 1871.85,
-      "from": 1867.54,
-      "to": 1876.17,
-      "amt": 5358.257,
-      "usd": 9244119,
-      "share_pct": 28.5,
-      "dist_pct": 8.5,
-      "lev": 25
-     },
-     {
-      "price": 1880.48,
-      "from": 1876.17,
-      "to": 1884.79,
-      "amt": 8367.626,
-      "usd": 14435912,
-      "share_pct": 44.6,
-      "dist_pct": 9.0,
+      "price": 1859.41,
+      "from": 1855.23,
+      "to": 1863.59,
+      "amt": 8150.146,
+      "usd": 13621991,
+      "share_pct": 25.3,
+      "dist_pct": 11.25,
       "lev": 10
      }
     ],
     "error": null
    },
    "sol": {
-    "price": 72.84,
+    "price": 69.01,
     "long_bands": [
      {
-      "price": 70.47,
-      "from": 70.29,
-      "to": 70.65,
-      "amt": 1164.073,
-      "usd": 84791,
-      "share_pct": 15.8,
-      "dist_pct": -3.25,
+      "price": 68.32,
+      "from": 68.15,
+      "to": 68.49,
+      "amt": 5667.269,
+      "usd": 391098,
+      "share_pct": 21.3,
+      "dist_pct": -1.0,
       "lev": 25
      },
      {
-      "price": 66.1,
-      "from": 65.92,
-      "to": 66.28,
-      "amt": 1358.085,
-      "usd": 98923,
-      "share_pct": 18.4,
-      "dist_pct": -9.25,
+      "price": 64.52,
+      "from": 64.35,
+      "to": 64.7,
+      "amt": 5308.577,
+      "usd": 366345,
+      "share_pct": 20.0,
+      "dist_pct": -6.51,
       "lev": 10
      },
      {
-      "price": 65.19,
-      "from": 65.01,
-      "to": 65.37,
-      "amt": 910.138,
-      "usd": 66294,
-      "share_pct": 12.3,
-      "dist_pct": -10.5,
+      "price": 62.8,
+      "from": 62.63,
+      "to": 62.97,
+      "amt": 2262.682,
+      "usd": 156148,
+      "share_pct": 8.5,
+      "dist_pct": -9.0,
       "lev": 10
      }
     ],
     "short_bands": [
      {
-      "price": 78.49,
-      "from": 78.3,
-      "to": 78.67,
-      "amt": 638.641,
-      "usd": 46519,
-      "share_pct": 18.2,
-      "dist_pct": 7.76,
-      "lev": 10
+      "price": 71.94,
+      "from": 71.77,
+      "to": 72.12,
+      "amt": 3517.001,
+      "usd": 242708,
+      "share_pct": 21.0,
+      "dist_pct": 4.25,
+      "lev": 50
      },
      {
-      "price": 78.85,
-      "from": 78.67,
-      "to": 79.03,
-      "amt": 910.138,
-      "usd": 66294,
-      "share_pct": 26.0,
-      "dist_pct": 8.25,
-      "lev": 10
+      "price": 73.32,
+      "from": 73.15,
+      "to": 73.5,
+      "amt": 4374.308,
+      "usd": 301871,
+      "share_pct": 26.1,
+      "dist_pct": 6.25,
+      "lev": 25
      },
      {
-      "price": 79.76,
-      "from": 79.58,
-      "to": 79.94,
-      "amt": 1617.773,
-      "usd": 117839,
-      "share_pct": 46.2,
-      "dist_pct": 9.5,
-      "lev": 10
+      "price": 74.01,
+      "from": 73.84,
+      "to": 74.19,
+      "amt": 4478.446,
+      "usd": 309058,
+      "share_pct": 26.7,
+      "dist_pct": 7.25,
+      "lev": 25
      }
     ],
     "error": null
@@ -779,18 +792,18 @@
  },
  "ratios": {
   "eth_btc": {
-   "value": 0.028142,
+   "value": 0.027918,
    "hi30": 0.030117,
    "lo30": 0.027529,
-   "chg30_pct": -3.48,
-   "ma20": 0.028442
+   "chg30_pct": -3.95,
+   "ma20": 0.028369
   },
   "sol_btc": {
-   "value": 0.001154,
+   "value": 0.001175,
    "hi30": 0.001265,
    "lo30": 0.001095,
-   "chg30_pct": -8.79,
-   "ma20": 0.001154
+   "chg30_pct": -7.1,
+   "ma20": 0.001153
   }
  },
  "upcoming": [
@@ -800,6 +813,6 @@
   }
  ],
  "today_events": [],
- "report_day": "2026-11-23",
- "message": "<b>Kaldıraç Gözlem Defteri · 23.11.2026</b>\n\n🔴 <b>Rejim</b>\n   BTC trend: Geçiş, 200g ort. -15.4%\n   ETH trend: Geçiş, 200g ort. -18.8%\n🔴 <b>Risk iştahı</b>\n🔴 <b>Pozisyon</b>\n   BTC: Kaldıraçlı yükseliş (fiyat↑ OI↑) · pozisyonlanma dengeli\n   ETH: Kaldıraçlı yükseliş (fiyat↑ OI↑) · pozisyonlanma dengeli\n🔴 <b>Altın & Makro</b>\n🟢 <b>Korelasyonlar</b>\n\nBTC OI 31.8K BTC (24s coin -7.6%, $ -7.1%) · L/S 2.04 · funding %0.007\nETH OI 674.8K ETH (24s coin -3.2%, $ -2.9%) · L/S 2.14 · funding %-0.008\nAltın 3,515 (120g zirveden -25.2%) · WTI 83.98 · Brent 92.57\nVIX 35.89 · HY %3.76 · DXY 103.81 · Reel faiz %2.88\n\n<b>Seviyeler · likidite olmayalım</b>\nBTC 61,240 · MA50 76,724 (-20.2%) · 20g 55,100–81,200 · ATR %5.4\n   Long: stop &lt;53,460 (−%12.7) → tavan 6x · Short: stop &gt;82,840 (+%35.3) → tavan 2x\nETH 1,723 · MA50 2,248 (-23.3%) · 20g 1,536–2,451 · ATR %6.8\n   Long: stop &lt;1,478 (−%14.3) → tavan 5x · Short: stop &gt;2,510 (+%45.6) → tavan 1x\n   BTC tahmini likidasyon: long ↓ 60,467 (50x), 59,090 (25x), 55,416 (10x) · short ↑ 65,213 (25x), 67,050 (10x), 67,815 (10x)\n   ETH tahmini likidasyon: long ↓ 1,695 (50x), 1,661 (25x), 1,557 (10x) · short ↑ 1,863 (25x), 1,872 (25x), 1,880 (10x)\n   Dün süpürülen bantlar: BTC long 58,863 (25x) → geri alındı · ETH long 1,653 (25x) → geri alındı\n   ETH/BTC 0.0281 (30g -3.5%, aralık 0.0275–0.0301)\n   <i>Tavan: bunun üstünde stoptan önce likide olursun. Boyutu kaldıraç değil risk belirler: işlem başı hesabın en fazla %1'i.</i>\n\n<b>Hisse planı</b>\nSpaceX 134.00 (+4.9%) · al 150 (+11.9%) · al 135 (+0.7%) · ekle↑ 180 (+34.3%)\nPlug Power 0.99 (+2.7%) · \nEos Energy 1.26 (+5.9%) · \nModerna 211.60 (+8.5%) · \nShopify 134.66 (+8.8%) · \nPalantir 159.67 (+11.3%) · \nZscaler 229.08 (+17.6%) · al 218 (-4.8%)\n⚠️ SpaceX (SPCX) alım seviyesine indi: 150 (gün dibi 133.33, kapanış 134.00). Planlı ekleme zamanı; tek seferde değil, parça parça.\n⚠️ SpaceX (SPCX) alım seviyesine indi: 135 (gün dibi 133.33, kapanış 134.00). Planlı ekleme zamanı; tek seferde değil, parça parça.\n\n<b>Alarmlar</b>\n• Altın 30 günlük ortalamasından 2.3 std düşük (3,515)\n• S&amp;P 500 30 günlük ortalamasından 2.4 std düşük (6,910)\n• VIX 30 günlük ortalamasından 2.4 std yüksek (35.89)\n• HY spread 30 günlük ortalamasından 2.3 std yüksek (%3.76)\n• BTC açık pozisyon son 24 saat coin bazında %7.6 düştü\n• Net likidite yön değiştirdi: bu hafta düşüşe geçti (-20 B$, 2026-11-18)\n\n<b>Altcoin izleme</b>\n• DOGE long/short hesap oranı 3.50\n• PUMP squeeze riski: açık pozisyon şişkin (z 2.3).\n• PUMP açık pozisyon 24 saatte coin bazında %11 düştü\n\nYaklaşan: NFP 04.12"
+ "report_day": "2026-11-24",
+ "message": "<b>Kaldıraç Gözlem Defteri · 24.11.2026</b>\n\n🔴 <b>Rejim</b>\n   BTC trend: Geçiş, 200g ort. -15.2%\n   ETH trend: Geçiş, 200g ort. -19.4%\n🔴 <b>Risk iştahı</b>\n🔴 <b>Pozisyon</b>\n   BTC: Yatay / sakin · long kalabalığı → kırılgan zemin, sert hareket riski\n   ETH: Temizlik (fiyat↓ OI↓) · long kalabalığı → kırılgan zemin, sert hareket riski\n🟢 <b>Altın & Makro</b>\n🔴 <b>Korelasyonlar</b>\n\nBTC OI 29.5K BTC (24s coin +2.5%, $ -1.4%) · L/S 2.62 · funding %0.008\nETH OI 664.5K ETH (24s coin +2.3%, $ -3.1%) · L/S 2.98 · funding %-0.009\nAltın 3,651 (120g zirveden -22.3%) · WTI 80.17 · Brent 89.37\nVIX 26.62 · HY %3.76 · DXY 104.32 · Reel faiz %2.77\n\n<b>Seviyeler · likidite olmayalım</b>\nBTC 61,246 · MA50 76,219 (-19.6%) · 20g 55,100–81,200 · ATR %5.6\n   Long: stop &lt;53,375 (−%12.8) → tavan 6x · Short: stop &gt;82,925 (+%35.4) → tavan 2x\nETH 1,710 · MA50 2,227 (-23.2%) · 20g 1,536–2,451 · ATR %7.2\n   Long: stop &lt;1,475 (−%13.7) → tavan 5x · Short: stop &gt;2,512 (+%46.9) → tavan 1x\n   BTC tahmini likidasyon: long ↓ 59,077 (50x), 58,333 (25x), 54,613 (10x) · short ↑ 61,309 (50x), 62,499 (25x), 66,071 (10x)\n   ETH tahmini likidasyon: long ↓ 1,655 (25x), 1,638 (25x), 1,542 (10x) · short ↑ 1,734 (50x), 1,755 (25x), 1,859 (10x)\n   Dün süpürülen bantlar: BTC long 60,467 (50x) → geri alındı · SOL long 70.47 (25x) → geri alındı\n   ETH/BTC 0.0279 (30g -4.0%, aralık 0.0275–0.0301)\n   <i>Tavan: bunun üstünde stoptan önce likide olursun. Boyutu kaldıraç değil risk belirler: işlem başı hesabın en fazla %1'i.</i>\n\n<b>Hisse planı</b>\nSpaceX 125.19 (-6.1%) · al 150 (+19.8%) · al 135 (+7.8%) · ekle↑ 180 (+43.8%)\nPlug Power 0.93 (-6.0%) · \nEos Energy 1.23 (-3.5%) · \nModerna 224.50 (+5.9%) · \nShopify 133.97 (-0.2%) · \nPalantir 160.36 (+0.6%) · \nZscaler 230.95 (+0.7%) · al 218 (-5.6%)\n⚠️ SpaceX (SPCX) alım seviyesine indi: 150 (gün dibi 123.53, kapanış 125.19). Planlı ekleme zamanı; tek seferde değil, parça parça.\n⚠️ SpaceX (SPCX) alım seviyesine indi: 135 (gün dibi 123.53, kapanış 125.19). Planlı ekleme zamanı; tek seferde değil, parça parça.\n\n<b>Alarmlar</b>\n• S&amp;P 500 30 günlük ortalamasından 2.1 std düşük (6,910)\n• HY spread 30 günlük ortalamasından 2.1 std yüksek (%3.76)\n• BTC–DXY 30 günlük ortalamasından 2.1 std yüksek (0.03)\n• BTC–Altın 30 günlük ortalamasından 2.6 std yüksek (0.58)\n• ETH–Altın 30 günlük ortalamasından 2.8 std yüksek (0.52)\n• BTC long/short hesap oranı 2.62 (&gt;2.5): kalabalık long&#x27;da\n• ETH long/short hesap oranı 2.98 (&gt;2.5): kalabalık long&#x27;da\n• BTC–DXY korelasyonu kırıldı: 7 gün +0.53, 30 gün +0.03\n• Net likidite yön değiştirdi: bu hafta düşüşe geçti (-20 B$, 2026-11-18)\n\n<b>Altcoin izleme</b>\n• SOL long/short hesap oranı 2.67\n• DOGE long/short hesap oranı 3.82\n\nYaklaşan: NFP 04.12"
 }

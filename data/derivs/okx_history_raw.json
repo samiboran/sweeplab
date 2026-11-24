@@ -5,15 +5,26 @@
    "url": "https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=1Dutc&limit=100",
    "data": [
     [
+     "1795478400000",
+     "61246.1",
+     "61663.1",
+     "59366",
+     "59468.1",
+     "11330047.52",
+     "113300.4752",
+     "6819677605.6141",
+     "0"
+    ],
+    [
      "1795392000000",
      "61240",
      "64570",
      "60339.6",
-     "61205.8",
-     "17276556.12",
-     "172765.5612",
-     "10743393732.56308",
-     "0"
+     "61246.1",
+     "18048768.86",
+     "180487.6886",
+     "11216561300.14968",
+     "1"
     ],
     [
      "1795305600000",
@@ -4392,17 +4403,6 @@
      "132294.6766",
      "14571887166.29572",
      "1"
-    ],
-    [
-     "1760918400000",
-     "108588.5",
-     "111694",
-     "107383",
-     "110487.8",
-     "7800879.88",
-     "78008.7988",
-     "8608072527.18102",
-     "1"
     ]
    ]
   },
@@ -4411,10 +4411,16 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/open-interest-history?instId=BTC-USDT-SWAP&period=1Dutc&limit=100",
    "data": [
     [
+     "1795478400000",
+     "3050347.13000001227",
+     "30503.4713000001227",
+     "1825150802.45846734165634"
+    ],
+    [
      "1795392000000",
-     "2934191.24000000836",
-     "29341.9124000000836",
-     "1794698071.946005113394"
+     "2946903.40000000896",
+     "29469.0340000000896",
+     "1804698376.6770054871488"
     ],
     [
      "1795305600000",
@@ -5003,12 +5009,6 @@
      "3222239.92000001696",
      "32222.3992000001696",
      "2079472532.372010945136"
-    ],
-    [
-     "1786838400000",
-     "3375386.86000001983",
-     "33753.8686000001983",
-     "2121768180.196012465138"
     ]
    ]
   },
@@ -5017,8 +5017,12 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/long-short-account-ratio-contract?instId=BTC-USDT-SWAP&period=1Dutc&limit=100",
    "data": [
     [
+     "1795478400000",
+     "2.4729442864581247"
+    ],
+    [
      "1795392000000",
-     "2.5051658747111905"
+     "2.6211693014218847"
     ],
     [
      "1795305600000",
@@ -5411,10 +5415,6 @@
     [
      "1786924800000",
      "1.5903264542433466"
-    ],
-    [
-     "1786838400000",
-     "2.3689531699782349"
     ]
    ]
   },
@@ -5423,9 +5423,14 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/taker-volume-contract?instId=BTC-USDT-SWAP&period=1Dutc&unit=2&limit=100",
    "data": [
     [
+     "1795478400000",
+     "3401980369.95278004591",
+     "3402142033.86790008478"
+    ],
+    [
      "1795392000000",
-     "5257655033.95816012044",
-     "5475594559.15146009497"
+     "5486049623.52700012692",
+     "5730511676.62268010289"
     ],
     [
      "1795305600000",
@@ -5916,11 +5921,6 @@
      "1786924800000",
      "2242691713.2896500728",
      "2404108246.7613000155"
-    ],
-    [
-     "1786838400000",
-     "618393861.63058002778",
-     "573937886.72754001714"
     ]
    ]
   },
@@ -5928,6 +5928,33 @@
    "ok": true,
    "url": "https://www.okx.com/api/v5/public/funding-rate-history?instId=BTC-USDT-SWAP&limit=100",
    "data": [
+    {
+     "formulaType": "withRate",
+     "fundingRate": "0.0000250961202131",
+     "fundingTime": "1795536000000",
+     "instId": "BTC-USDT-SWAP",
+     "instType": "SWAP",
+     "method": "current_period",
+     "realizedRate": "0.0000250961202131"
+    },
+    {
+     "formulaType": "withRate",
+     "fundingRate": "0.0000221870316848",
+     "fundingTime": "1795507200000",
+     "instId": "BTC-USDT-SWAP",
+     "instType": "SWAP",
+     "method": "current_period",
+     "realizedRate": "0.0000221870316848"
+    },
+    {
+     "formulaType": "withRate",
+     "fundingRate": "0.0000538666241708",
+     "fundingTime": "1795478400000",
+     "instId": "BTC-USDT-SWAP",
+     "instType": "SWAP",
+     "method": "current_period",
+     "realizedRate": "0.0000538666241708"
+    },
     {
      "formulaType": "withRate",
      "fundingRate": "0.0000325240759041",
@@ -8393,141 +8420,6 @@
      "instType": "SWAP",
      "method": "current_period",
      "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787558400000",
-     "instId": "BTC-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787529600000",
-     "instId": "BTC-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787500800000",
-     "instId": "BTC-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787472000000",
-     "instId": "BTC-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787443200000",
-     "instId": "BTC-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787414400000",
-     "instId": "BTC-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787385600000",
-     "instId": "BTC-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787356800000",
-     "instId": "BTC-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787328000000",
-     "instId": "BTC-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0000807091890159",
-     "fundingTime": "1787299200000",
-     "instId": "BTC-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0000807091890159"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0000115687813457",
-     "fundingTime": "1787270400000",
-     "instId": "BTC-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0000115687813457"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.000058895290316",
-     "fundingTime": "1787241600000",
-     "instId": "BTC-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.000058895290316"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787212800000",
-     "instId": "BTC-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787184000000",
-     "instId": "BTC-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0000467644705158",
-     "fundingTime": "1787155200000",
-     "instId": "BTC-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0000467644705158"
     }
    ]
   },
@@ -8535,6 +8427,11 @@
    "ok": true,
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/open-interest-volume?ccy=BTC&period=1D",
    "data": [
+    [
+     "1795536000000",
+     "2688666680.9729",
+     "9932542504.1243"
+    ],
     [
      "1795449600000",
      "2799667382.9601",
@@ -9429,11 +9326,6 @@
      "1780070400000",
      "3322873495.7137",
      "6636086825.3425"
-    ],
-    [
-     "1779984000000",
-     "3486008116.207",
-     "8755557568.4017"
     ]
    ]
   },
@@ -9442,8 +9334,12 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/long-short-account-ratio?ccy=BTC&period=1D",
    "data": [
     [
+     "1795536000000",
+     "2.57"
+    ],
+    [
      "1795449600000",
-     "2.65"
+     "2.57"
     ],
     [
      "1795363200000",
@@ -10156,10 +10052,6 @@
     [
      "1780070400000",
      "1.67"
-    ],
-    [
-     "1779984000000",
-     "1.94"
     ]
    ]
   },
@@ -10536,15 +10428,26 @@
    "url": "https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=1Dutc&limit=100",
    "data": [
     [
+     "1795478400000",
+     "1709.85",
+     "1721.32",
+     "1666.39",
+     "1668.67",
+     "29797572.29",
+     "2979757.229",
+     "5039737547.98188",
+     "0"
+    ],
+    [
      "1795392000000",
      "1723.45",
      "1844.99",
      "1695.45",
-     "1724.27",
-     "42480934.85",
-     "4248093.485",
-     "7473612834.6903",
-     "0"
+     "1709.85",
+     "46016648.15",
+     "4601664.815",
+     "8080026790.213",
+     "1"
     ],
     [
      "1795305600000",
@@ -14923,17 +14826,6 @@
      "4942367.693",
      "19540346153.18951",
      "1"
-    ],
-    [
-     "1760918400000",
-     "3980.79",
-     "4083.26",
-     "3905.71",
-     "3977.47",
-     "30455703.7",
-     "3045570.37",
-     "12175457156.77893",
-     "1"
     ]
    ]
   },
@@ -14942,10 +14834,16 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/open-interest-history?instId=ETH-USDT-SWAP&period=1Dutc&limit=100",
    "data": [
     [
+     "1795478400000",
+     "6887529.36000001424",
+     "688752.936000001424",
+     "1157304670.83144239273296"
+    ],
+    [
      "1795392000000",
-     "6515873.14000001539",
-     "651587.314000001539",
-     "1125069751.59124265732974"
+     "6644718.6400000132",
+     "664471.86400000132",
+     "1136074124.7553622568568"
     ],
     [
      "1795305600000",
@@ -15534,12 +15432,6 @@
      "6924533.7800000288",
      "692453.37800000288",
      "1324649463.0464455093824"
-    ],
-    [
-     "1786838400000",
-     "7168297.0500000377",
-     "716829.70500000377",
-     "1344406943.4304570705973"
     ]
    ]
   },
@@ -15548,8 +15440,12 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/long-short-account-ratio-contract?instId=ETH-USDT-SWAP&period=1Dutc&limit=100",
    "data": [
     [
+     "1795478400000",
+     "2.8519006588950836"
+    ],
+    [
      "1795392000000",
-     "2.7640867875647668"
+     "2.984675615212528"
     ],
     [
      "1795305600000",
@@ -15942,10 +15838,6 @@
     [
      "1786924800000",
      "1.4322781232334652"
-    ],
-    [
-     "1786838400000",
-     "1.9779437671763794"
     ]
    ]
   },
@@ -15954,9 +15846,14 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/taker-volume-contract?instId=ETH-USDT-SWAP&period=1Dutc&unit=2&limit=100",
    "data": [
     [
+     "1795478400000",
+     "2588130035.80633012336",
+     "2440565744.89549014283"
+    ],
+    [
      "1795392000000",
-     "3724253934.186270182045",
-     "3737590962.5649202126078"
+     "4059135603.38242020098",
+     "4020891186.83058022777"
     ],
     [
      "1795305600000",
@@ -16447,11 +16344,6 @@
      "1786924800000",
      "1992132118.711820106",
      "2035664017.8077900873"
-    ],
-    [
-     "1786838400000",
-     "627079200.14264002793",
-     "607205145.42076002424"
     ]
    ]
   },
@@ -16459,6 +16351,33 @@
    "ok": true,
    "url": "https://www.okx.com/api/v5/public/funding-rate-history?instId=ETH-USDT-SWAP&limit=100",
    "data": [
+    {
+     "formulaType": "withRate",
+     "fundingRate": "0.0000045872058862",
+     "fundingTime": "1795536000000",
+     "instId": "ETH-USDT-SWAP",
+     "instType": "SWAP",
+     "method": "current_period",
+     "realizedRate": "0.0000045872058862"
+    },
+    {
+     "formulaType": "withRate",
+     "fundingRate": "0.0000008892955017",
+     "fundingTime": "1795507200000",
+     "instId": "ETH-USDT-SWAP",
+     "instType": "SWAP",
+     "method": "current_period",
+     "realizedRate": "0.0000008892955017"
+    },
+    {
+     "formulaType": "withRate",
+     "fundingRate": "-0.000069320541967",
+     "fundingTime": "1795478400000",
+     "instId": "ETH-USDT-SWAP",
+     "instType": "SWAP",
+     "method": "current_period",
+     "realizedRate": "-0.000069320541967"
+    },
     {
      "formulaType": "withRate",
      "fundingRate": "0.0000203132916696",
@@ -18924,141 +18843,6 @@
      "instType": "SWAP",
      "method": "current_period",
      "realizedRate": "0.0000993104214074"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787558400000",
-     "instId": "ETH-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787529600000",
-     "instId": "ETH-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787500800000",
-     "instId": "ETH-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787472000000",
-     "instId": "ETH-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787443200000",
-     "instId": "ETH-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787414400000",
-     "instId": "ETH-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787385600000",
-     "instId": "ETH-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787356800000",
-     "instId": "ETH-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787328000000",
-     "instId": "ETH-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787299200000",
-     "instId": "ETH-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0000780352542507",
-     "fundingTime": "1787270400000",
-     "instId": "ETH-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0000780352542507"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787241600000",
-     "instId": "ETH-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787212800000",
-     "instId": "ETH-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787184000000",
-     "instId": "ETH-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0000649603093738",
-     "fundingTime": "1787155200000",
-     "instId": "ETH-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0000649603093738"
     }
    ]
   },
@@ -19066,6 +18850,11 @@
    "ok": true,
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/open-interest-volume?ccy=ETH&period=1D",
    "data": [
+    [
+     "1795536000000",
+     "1459437369.4809",
+     "7184070149.4006"
+    ],
     [
      "1795449600000",
      "1498318738.6541",
@@ -19960,11 +19749,6 @@
      "1780070400000",
      "1913680934.0324",
      "7766873132.1676"
-    ],
-    [
-     "1779984000000",
-     "2035187091.7637",
-     "9438454254.251"
     ]
    ]
   },
@@ -19973,8 +19757,12 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/long-short-account-ratio?ccy=ETH&period=1D",
    "data": [
     [
+     "1795536000000",
+     "2.92"
+    ],
+    [
      "1795449600000",
-     "2.88"
+     "2.92"
     ],
     [
      "1795363200000",
@@ -20687,10 +20475,6 @@
     [
      "1780070400000",
      "2.53"
-    ],
-    [
-     "1779984000000",
-     "3.29"
     ]
    ]
   },
@@ -21067,15 +20851,26 @@
    "url": "https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=1Dutc&limit=100",
    "data": [
     [
+     "1795478400000",
+     "71.97",
+     "72.65",
+     "68.53",
+     "68.89",
+     "9658610.31",
+     "9658610.31",
+     "681808515.5211",
+     "0"
+    ],
+    [
      "1795392000000",
      "70.69",
      "78.46",
      "69.83",
-     "72.82",
-     "14600287.73",
-     "14600287.73",
-     "1081541817.6305",
-     "0"
+     "71.97",
+     "16180084.93",
+     "16180084.93",
+     "1195653489.3789",
+     "1"
     ],
     [
      "1795305600000",
@@ -25454,17 +25249,6 @@
      "14536184.61",
      "2755987439.8198",
      "1"
-    ],
-    [
-     "1760918400000",
-     "187.77",
-     "194.43",
-     "183.69",
-     "189.65",
-     "9620049.68",
-     "9620049.68",
-     "1825099786.1095",
-     "1"
     ]
    ]
   },
@@ -25473,10 +25257,16 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/open-interest-history?instId=SOL-USDT-SWAP&period=1Dutc&limit=100",
    "data": [
     [
+     "1795478400000",
+     "2883394.12999999985",
+     "2881234.48999999996",
+     "199727174.8467999972272"
+    ],
+    [
      "1795392000000",
-     "2838094.72999999861",
-     "2838094.72999999861",
-     "206726820.1331998987524"
+     "2875397.77999999973",
+     "2875397.77999999973",
+     "207086148.1155999805546"
     ],
     [
      "1795305600000",
@@ -26065,12 +25855,6 @@
      "2916871.12000000066",
      "2916871.12000000066",
      "221653036.4088000501534"
-    ],
-    [
-     "1786838400000",
-     "2960218.9400000001",
-     "2960218.9400000001",
-     "220654719.787600007454"
     ]
    ]
   },
@@ -26079,8 +25863,12 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/long-short-account-ratio-contract?instId=SOL-USDT-SWAP&period=1Dutc&limit=100",
    "data": [
     [
+     "1795478400000",
+     "2.6477754237288136"
+    ],
+    [
      "1795392000000",
-     "2.5207636566332219"
+     "2.6709937977787394"
     ],
     [
      "1795305600000",
@@ -26473,10 +26261,6 @@
     [
      "1786924800000",
      "2.3297927461139896"
-    ],
-    [
-     "1786838400000",
-     "2.5598727876106195"
     ]
    ]
   },
@@ -26485,9 +26269,14 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/taker-volume-contract?instId=SOL-USDT-SWAP&period=1Dutc&unit=2&limit=100",
    "data": [
     [
+     "1795478400000",
+     "0",
+     "337284378.626199997368"
+    ],
+    [
      "1795392000000",
-     "531344891.942300002623",
-     "548961614.3843000018249"
+     "588606721.720400002651",
+     "607046767.658500002042"
     ],
     [
      "1795305600000",
@@ -26978,11 +26767,6 @@
      "1786924800000",
      "172133911.9541000032",
      "174549458.32220000169"
-    ],
-    [
-     "1786838400000",
-     "118524629.954000001748",
-     "106275682.798900000509"
     ]
    ]
   },
@@ -26990,6 +26774,33 @@
    "ok": true,
    "url": "https://www.okx.com/api/v5/public/funding-rate-history?instId=SOL-USDT-SWAP&limit=100",
    "data": [
+    {
+     "formulaType": "withRate",
+     "fundingRate": "0.000005162596562",
+     "fundingTime": "1795536000000",
+     "instId": "SOL-USDT-SWAP",
+     "instType": "SWAP",
+     "method": "current_period",
+     "realizedRate": "0.000005162596562"
+    },
+    {
+     "formulaType": "withRate",
+     "fundingRate": "0.0000552072828716",
+     "fundingTime": "1795507200000",
+     "instId": "SOL-USDT-SWAP",
+     "instType": "SWAP",
+     "method": "current_period",
+     "realizedRate": "0.0000552072828716"
+    },
+    {
+     "formulaType": "withRate",
+     "fundingRate": "-0.00008114822197",
+     "fundingTime": "1795478400000",
+     "instId": "SOL-USDT-SWAP",
+     "instType": "SWAP",
+     "method": "current_period",
+     "realizedRate": "-0.00008114822197"
+    },
     {
      "formulaType": "withRate",
      "fundingRate": "0.0000080718949029",
@@ -29455,141 +29266,6 @@
      "instType": "SWAP",
      "method": "current_period",
      "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787558400000",
-     "instId": "SOL-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787529600000",
-     "instId": "SOL-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787500800000",
-     "instId": "SOL-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787472000000",
-     "instId": "SOL-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787443200000",
-     "instId": "SOL-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787414400000",
-     "instId": "SOL-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787385600000",
-     "instId": "SOL-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787356800000",
-     "instId": "SOL-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787328000000",
-     "instId": "SOL-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787299200000",
-     "instId": "SOL-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787270400000",
-     "instId": "SOL-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787241600000",
-     "instId": "SOL-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787212800000",
-     "instId": "SOL-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787184000000",
-     "instId": "SOL-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0000089315818707",
-     "fundingTime": "1787155200000",
-     "instId": "SOL-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0000089315818707"
     }
    ]
   },
@@ -30491,11 +30167,6 @@
      "1780070400000",
      "259630416.7862",
      "460153207.7736"
-    ],
-    [
-     "1779984000000",
-     "263819663.0614",
-     "682516462.0694"
     ]
    ]
   },
@@ -30504,8 +30175,12 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/long-short-account-ratio?ccy=SOL&period=1D",
    "data": [
     [
+     "1795536000000",
+     "2.81"
+    ],
+    [
      "1795449600000",
-     "2.73"
+     "2.82"
     ],
     [
      "1795363200000",
@@ -31218,10 +30893,6 @@
     [
      "1780070400000",
      "3.26"
-    ],
-    [
-     "1779984000000",
-     "3.48"
     ]
    ]
   },
@@ -31598,15 +31269,26 @@
    "url": "https://www.okx.com/api/v5/market/history-candles?instId=XRP-USDT-SWAP&bar=1Dutc&limit=100",
    "data": [
     [
+     "1795478400000",
+     "0.9399",
+     "0.9609",
+     "0.9091",
+     "0.912",
+     "2287748.93",
+     "228774893",
+     "213635772.3126",
+     "0"
+    ],
+    [
      "1795392000000",
      "0.9283",
      "1.0257",
      "0.9125",
-     "0.9384",
-     "3267920.12",
-     "326792012",
-     "315620411.1413",
-     "0"
+     "0.94",
+     "3522841.29",
+     "352284129",
+     "339531431.4937",
+     "1"
     ],
     [
      "1795305600000",
@@ -35985,17 +35667,6 @@
      "231403900",
      "569537524.6245",
      "1"
-    ],
-    [
-     "1760918400000",
-     "2.3892",
-     "2.552",
-     "2.3533",
-     "2.4934",
-     "1870885.61",
-     "187088561",
-     "459804881.0662",
-     "1"
     ]
    ]
   },
@@ -36004,10 +35675,16 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/open-interest-history?instId=XRP-USDT-SWAP&period=1Dutc&limit=100",
    "data": [
     [
+     "1795478400000",
+     "658102.829999999947",
+     "65810282.9999999947",
+     "60315124.36949999514255"
+    ],
+    [
      "1795392000000",
-     "628384.40000000029",
-     "62838440.000000029",
-     "58917321.3440000271904"
+     "626104.420000000375",
+     "62610442.0000000375",
+     "58872598.61260003526125"
     ],
     [
      "1795305600000",
@@ -36596,12 +36273,6 @@
      "866150.319999999815",
      "86615031.9999999815",
      "86857554.0895999814482"
-    ],
-    [
-     "1786838400000",
-     "880545.01000000004",
-     "88054501.000000004",
-     "87376481.3423000039692"
     ]
    ]
   },
@@ -36610,8 +36281,12 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/long-short-account-ratio-contract?instId=XRP-USDT-SWAP&period=1Dutc&limit=100",
    "data": [
     [
+     "1795478400000",
+     "1.7521175884404584"
+    ],
+    [
      "1795392000000",
-     "1.959841628959276"
+     "1.9578858111927643"
     ],
     [
      "1795305600000",
@@ -37004,10 +36679,6 @@
     [
      "1786924800000",
      "3.6497418244406196"
-    ],
-    [
-     "1786838400000",
-     "3.6125260960334029"
     ]
    ]
   },
@@ -37016,9 +36687,14 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/taker-volume-contract?instId=XRP-USDT-SWAP&period=1Dutc&unit=2&limit=100",
    "data": [
     [
+     "1795478400000",
+     "107309212.1447000004577",
+     "106141199.46440000058481"
+    ],
+    [
      "1795392000000",
-     "155389034.8023000003877",
-     "159670904.13420000053419"
+     "167293391.2930000005249",
+     "172238040.2007000005747"
     ],
     [
      "1795305600000",
@@ -37509,11 +37185,6 @@
      "1786924800000",
      "56504800.469899999916",
      "57473887.135700000793"
-    ],
-    [
-     "1786838400000",
-     "39840946.71480000018",
-     "34061738.050699999155"
     ]
    ]
   },
@@ -37521,6 +37192,33 @@
    "ok": true,
    "url": "https://www.okx.com/api/v5/public/funding-rate-history?instId=XRP-USDT-SWAP&limit=100",
    "data": [
+    {
+     "formulaType": "withRate",
+     "fundingRate": "-0.0000487132857341",
+     "fundingTime": "1795536000000",
+     "instId": "XRP-USDT-SWAP",
+     "instType": "SWAP",
+     "method": "current_period",
+     "realizedRate": "-0.0000487132857341"
+    },
+    {
+     "formulaType": "withRate",
+     "fundingRate": "-0.0000444681330005",
+     "fundingTime": "1795507200000",
+     "instId": "XRP-USDT-SWAP",
+     "instType": "SWAP",
+     "method": "current_period",
+     "realizedRate": "-0.0000444681330005"
+    },
+    {
+     "formulaType": "withRate",
+     "fundingRate": "-0.0000893387450757",
+     "fundingTime": "1795478400000",
+     "instId": "XRP-USDT-SWAP",
+     "instType": "SWAP",
+     "method": "current_period",
+     "realizedRate": "-0.0000893387450757"
+    },
     {
      "formulaType": "withRate",
      "fundingRate": "0.0000369903771441",
@@ -39986,141 +39684,6 @@
      "instType": "SWAP",
      "method": "current_period",
      "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787558400000",
-     "instId": "XRP-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787529600000",
-     "instId": "XRP-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787500800000",
-     "instId": "XRP-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787472000000",
-     "instId": "XRP-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787443200000",
-     "instId": "XRP-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787414400000",
-     "instId": "XRP-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787385600000",
-     "instId": "XRP-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787356800000",
-     "instId": "XRP-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787328000000",
-     "instId": "XRP-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787299200000",
-     "instId": "XRP-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787270400000",
-     "instId": "XRP-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787241600000",
-     "instId": "XRP-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787212800000",
-     "instId": "XRP-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787184000000",
-     "instId": "XRP-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787155200000",
-     "instId": "XRP-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
     }
    ]
   },
@@ -40128,6 +39691,11 @@
    "ok": true,
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/open-interest-volume?ccy=XRP&period=1D",
    "data": [
+    [
+     "1795536000000",
+     "77069886.6181",
+     "309334325.6093"
+    ],
     [
      "1795449600000",
      "81768640.148",
@@ -41022,11 +40590,6 @@
      "1780070400000",
      "107428221.6544",
      "183810067.234"
-    ],
-    [
-     "1779984000000",
-     "108283462.1875",
-     "254960878.524"
     ]
    ]
   },
@@ -41035,8 +40598,12 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/long-short-account-ratio?ccy=XRP&period=1D",
    "data": [
     [
+     "1795536000000",
+     "2.07"
+    ],
+    [
      "1795449600000",
-     "2.32"
+     "2.11"
     ],
     [
      "1795363200000",
@@ -41749,10 +41316,6 @@
     [
      "1780070400000",
      "2.77"
-    ],
-    [
-     "1779984000000",
-     "2.76"
     ]
    ]
   },
@@ -41760,6 +41323,11 @@
    "ok": true,
    "url": "https://www.okx.com/api/v5/rubik/stat/taker-volume?ccy=XRP&instType=CONTRACTS&period=1D",
    "data": [
+    [
+     "1795536000000",
+     "154704815.9949",
+     "151974577.5048"
+    ],
     [
      "1795449600000",
      "140201434.0963",
@@ -42114,11 +41682,6 @@
      "1789401600000",
      "205652790.0602",
      "199266508.8382"
-    ],
-    [
-     "1789315200000",
-     "80556969.6612",
-     "77793544.775"
     ]
    ]
   }
@@ -42129,15 +41692,26 @@
    "url": "https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=1Dutc&limit=100",
    "data": [
     [
+     "1795478400000",
+     "0.05635",
+     "0.05716",
+     "0.05437",
+     "0.05466",
+     "3195535.5",
+     "3195535500",
+     "178074323.605",
+     "0"
+    ],
+    [
      "1795392000000",
      "0.05533",
      "0.06022",
      "0.05432",
-     "0.05665",
-     "3976187.16",
-     "3976187160",
-     "227370037.693",
-     "0"
+     "0.05636",
+     "4348241.48",
+     "4348241480",
+     "248329429.1688",
+     "1"
     ],
     [
      "1795305600000",
@@ -46516,17 +46090,6 @@
      "8083723150",
      "1598599649.3137",
      "1"
-    ],
-    [
-     "1760918400000",
-     "0.19527",
-     "0.20239",
-     "0.19155",
-     "0.19993",
-     "5448507.79",
-     "5448507790",
-     "1081851339.2755",
-     "1"
     ]
    ]
   },
@@ -46535,10 +46098,16 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/open-interest-history?instId=DOGE-USDT-SWAP&period=1Dutc&limit=100",
    "data": [
     [
+     "1795478400000",
+     "1066614.36999999968",
+     "1066614369.99999968",
+     "58514464.3381999824448"
+    ],
+    [
      "1795392000000",
-     "996507.68999999978",
-     "996507689.99999978",
-     "56402335.253999987548"
+     "998667.859999999704",
+     "998667859.999999704",
+     "56284920.58959998331744"
     ],
     [
      "1795305600000",
@@ -47127,12 +46696,6 @@
      "1217754.11999999906",
      "1217754119.99999906",
      "85693357.4243999338522"
-    ],
-    [
-     "1786838400000",
-     "1228496.98999999877",
-     "1228496989.99999877",
-     "85405110.7447999144904"
     ]
    ]
   },
@@ -47141,8 +46704,12 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/long-short-account-ratio-contract?instId=DOGE-USDT-SWAP&period=1Dutc&limit=100",
    "data": [
     [
+     "1795478400000",
+     "3.9837579617834395"
+    ],
+    [
      "1795392000000",
-     "3.6577490774907749"
+     "3.8236600063431652"
     ],
     [
      "1795305600000",
@@ -47535,10 +47102,6 @@
     [
      "1786924800000",
      "4.9842615012106538"
-    ],
-    [
-     "1786838400000",
-     "5.5188067444876783"
     ]
    ]
   },
@@ -47547,9 +47110,14 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/taker-volume-contract?instId=DOGE-USDT-SWAP&period=1Dutc&unit=2&limit=100",
    "data": [
     [
+     "1795478400000",
+     "86840533.0425999994929",
+     "91012709.43359999970705"
+    ],
+    [
      "1795392000000",
-     "112283229.35159999826113",
-     "114781488.3045000009216959"
+     "123503800.3504999983146",
+     "124825628.8183000008966"
     ],
     [
      "1795305600000",
@@ -48040,11 +47608,6 @@
      "1786924800000",
      "52637188.754700000867",
      "49874072.119599999738"
-    ],
-    [
-     "1786838400000",
-     "36135229.743600000468",
-     "29860774.041700000295"
     ]
    ]
   },
@@ -48052,6 +47615,33 @@
    "ok": true,
    "url": "https://www.okx.com/api/v5/public/funding-rate-history?instId=DOGE-USDT-SWAP&limit=100",
    "data": [
+    {
+     "formulaType": "withRate",
+     "fundingRate": "-0.0000300786421843",
+     "fundingTime": "1795536000000",
+     "instId": "DOGE-USDT-SWAP",
+     "instType": "SWAP",
+     "method": "current_period",
+     "realizedRate": "-0.0000300786421843"
+    },
+    {
+     "formulaType": "withRate",
+     "fundingRate": "0.0001",
+     "fundingTime": "1795507200000",
+     "instId": "DOGE-USDT-SWAP",
+     "instType": "SWAP",
+     "method": "current_period",
+     "realizedRate": "0.0001"
+    },
+    {
+     "formulaType": "withRate",
+     "fundingRate": "-0.0000524306598983",
+     "fundingTime": "1795478400000",
+     "instId": "DOGE-USDT-SWAP",
+     "instType": "SWAP",
+     "method": "current_period",
+     "realizedRate": "-0.0000524306598983"
+    },
     {
      "formulaType": "withRate",
      "fundingRate": "0.0000322150675607",
@@ -50517,141 +50107,6 @@
      "instType": "SWAP",
      "method": "current_period",
      "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787558400000",
-     "instId": "DOGE-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787529600000",
-     "instId": "DOGE-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787500800000",
-     "instId": "DOGE-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787472000000",
-     "instId": "DOGE-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787443200000",
-     "instId": "DOGE-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787414400000",
-     "instId": "DOGE-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787385600000",
-     "instId": "DOGE-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787356800000",
-     "instId": "DOGE-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787328000000",
-     "instId": "DOGE-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787299200000",
-     "instId": "DOGE-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787270400000",
-     "instId": "DOGE-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787241600000",
-     "instId": "DOGE-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787212800000",
-     "instId": "DOGE-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787184000000",
-     "instId": "DOGE-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.0001",
-     "fundingTime": "1787155200000",
-     "instId": "DOGE-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.0001"
     }
    ]
   },
@@ -51553,11 +51008,6 @@
      "1780070400000",
      "125991449.5078",
      "299690947.4129"
-    ],
-    [
-     "1779984000000",
-     "128688264.9728",
-     "426767116.7174"
     ]
    ]
   },
@@ -51566,8 +51016,12 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/long-short-account-ratio?ccy=DOGE&period=1D",
    "data": [
     [
+     "1795536000000",
+     "4.04"
+    ],
+    [
      "1795449600000",
-     "3.74"
+     "4.09"
     ],
     [
      "1795363200000",
@@ -52280,10 +51734,6 @@
     [
      "1780070400000",
      "3.69"
-    ],
-    [
-     "1779984000000",
-     "4.06"
     ]
    ]
   },
@@ -52291,6 +51741,11 @@
    "ok": true,
    "url": "https://www.okx.com/api/v5/rubik/stat/taker-volume?ccy=DOGE&instType=CONTRACTS&period=1D",
    "data": [
+    [
+     "1795536000000",
+     "122461501.2821",
+     "122132973.066"
+    ],
     [
      "1795449600000",
      "101299104.7405",
@@ -52645,11 +52100,6 @@
      "1789401600000",
      "119764396.209",
      "120428830.5536"
-    ],
-    [
-     "1789315200000",
-     "67046170.2541",
-     "62613189.205"
     ]
    ]
   }
@@ -52660,15 +52110,26 @@
    "url": "https://www.okx.com/api/v5/market/history-candles?instId=PUMP-USDT-SWAP&bar=1Dutc&limit=100",
    "data": [
     [
+     "1795478400000",
+     "0.002531",
+     "0.002574",
+     "0.002369",
+     "0.002388",
+     "19276172",
+     "19276172000",
+     "47575420.868",
+     "0"
+    ],
+    [
      "1795392000000",
      "0.002602",
      "0.002821",
-     "0.002496",
-     "0.002558",
-     "27388893",
-     "27388893000",
-     "71753074.227",
-     "0"
+     "0.002494",
+     "0.002532",
+     "29398956",
+     "29398956000",
+     "76829658.282",
+     "1"
     ],
     [
      "1795305600000",
@@ -57047,17 +56508,6 @@
      "73971048000",
      "289088178.438",
      "1"
-    ],
-    [
-     "1760918400000",
-     "0.003915",
-     "0.004205",
-     "0.003759",
-     "0.003871",
-     "69231306",
-     "69231306000",
-     "275651566.788",
-     "1"
     ]
    ]
   },
@@ -57066,10 +56516,16 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/open-interest-history?instId=PUMP-USDT-SWAP&period=1Dutc&limit=100",
    "data": [
     [
+     "1795478400000",
+     "6332053",
+     "6332053000",
+     "15114610.511"
+    ],
+    [
      "1795392000000",
-     "6441928",
-     "6441928000",
-     "16459126.04"
+     "6486494",
+     "6486494000",
+     "16417316.314"
     ],
     [
      "1795305600000",
@@ -57658,12 +57114,6 @@
      "6213923",
      "6213923000",
      "17044790.789"
-    ],
-    [
-     "1786838400000",
-     "6272453",
-     "6272453000",
-     "16697269.886"
     ]
    ]
   },
@@ -57672,8 +57122,12 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/long-short-account-ratio-contract?instId=PUMP-USDT-SWAP&period=1Dutc&limit=100",
    "data": [
     [
+     "1795478400000",
+     "1.7470355731225296"
+    ],
+    [
      "1795392000000",
-     "1.7379421221864952"
+     "1.821806346623271"
     ],
     [
      "1795305600000",
@@ -58066,10 +57520,6 @@
     [
      "1786924800000",
      "1.7259423503325942"
-    ],
-    [
-     "1786838400000",
-     "1.8182669789227166"
     ]
    ]
   },
@@ -58078,9 +57528,14 @@
    "url": "https://www.okx.com/api/v5/rubik/stat/taker-volume-contract?instId=PUMP-USDT-SWAP&period=1Dutc&unit=2&limit=100",
    "data": [
     [
+     "1795478400000",
+     "24134258.461999999909",
+     "0"
+    ],
+    [
      "1795392000000",
-     "35998506.84700000027213",
-     "35712156.25900000034869"
+     "38809399.59200000034293",
+     "38020258.69000000038739"
     ],
     [
      "1795305600000",
@@ -58571,11 +58026,6 @@
      "1786924800000",
      "57282617.710000000308",
      "57209582.31800000022"
-    ],
-    [
-     "1786838400000",
-     "23226049.524999999446",
-     "21442151.598000000229"
     ]
    ]
   },
@@ -58583,6 +58033,33 @@
    "ok": true,
    "url": "https://www.okx.com/api/v5/public/funding-rate-history?instId=PUMP-USDT-SWAP&limit=100",
    "data": [
+    {
+     "formulaType": "withRate",
+     "fundingRate": "0.0000321901047088",
+     "fundingTime": "1795536000000",
+     "instId": "PUMP-USDT-SWAP",
+     "instType": "SWAP",
+     "method": "current_period",
+     "realizedRate": "0.0000321901047088"
+    },
+    {
+     "formulaType": "withRate",
+     "fundingRate": "0.0001",
+     "fundingTime": "1795507200000",
+     "instId": "PUMP-USDT-SWAP",
+     "instType": "SWAP",
+     "method": "current_period",
+     "realizedRate": "0.0001"
+    },
+    {
+     "formulaType": "withRate",
+     "fundingRate": "0.0000420154021869",
+     "fundingTime": "1795478400000",
+     "instId": "PUMP-USDT-SWAP",
+     "instType": "SWAP",
+     "method": "current_period",
+     "realizedRate": "0.0000420154021869"
+    },
     {
      "formulaType": "withRate",
      "fundingRate": "0.0000082922261211",
@@ -62155,33 +61632,6 @@
      "instType": "SWAP",
      "method": "current_period",
      "realizedRate": "0.0000399810165176"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "-0.0000326370306843",
-     "fundingTime": "1788177600000",
-     "instId": "PUMP-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "-0.0000326370306843"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "-0.0001387497627624",
-     "fundingTime": "1788163200000",
-     "instId": "PUMP-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "-0.0001387497627624"
-    },
-    {
-     "formulaType": "withRate",
-     "fundingRate": "0.00005",
-     "fundingTime": "1788148800000",
-     "instId": "PUMP-USDT-SWAP",
-     "instType": "SWAP",
-     "method": "current_period",
-     "realizedRate": "0.00005"
     }
    ]
   },
@@ -62189,6 +61639,11 @@
    "ok": true,
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/open-interest-volume?ccy=PUMP&period=1D",
    "data": [
+    [
+     "1795536000000",
+     "16390031.449",
+     "61890421.975"
+    ],
     [
      "1795449600000",
      "18740864.194",
@@ -63083,11 +62538,6 @@
      "1780070400000",
      "10388572.266",
      "30148856.148"
-    ],
-    [
-     "1779984000000",
-     "10548867.006",
-     "41220928.382"
     ]
    ]
   },
@@ -63095,6 +62545,10 @@
    "ok": true,
    "url": "https://www.okx.com/api/v5/rubik/stat/contracts/long-short-account-ratio?ccy=PUMP&period=1D",
    "data": [
+    [
+     "1795536000000",
+     "1.86"
+    ],
     [
      "1795449600000",
      "1.88"
@@ -63810,10 +63264,6 @@
     [
      "1780070400000",
      "2.93"
-    ],
-    [
-     "1779984000000",
-     "3.27"
     ]
    ]
   },
@@ -63821,6 +63271,11 @@
    "ok": true,
    "url": "https://www.okx.com/api/v5/rubik/stat/taker-volume?ccy=PUMP&instType=CONTRACTS&period=1D",
    "data": [
+    [
+     "1795536000000",
+     "31989274.025",
+     "29286793.41"
+    ],
     [
      "1795449600000",
      "38617587.504",
@@ -64175,11 +63630,6 @@
      "1789401600000",
      "44278927.987",
      "41979292.718"
-    ],
-    [
-     "1789315200000",
-     "66237985.708",
-     "62453680.628"
     ]
    ]
   }

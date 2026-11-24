@@ -4,7 +4,7 @@
  "source": "Piyasa Hava Durumu",
  "site_url": "https://samiboran.github.io/sweeplab/piyasa/",
  "docs": "https://samiboran.github.io/sweeplab/piyasa/veri.html",
- "generated_at": "2026-11-24T06:06:26Z",
+ "generated_at": "2026-11-24T16:32:19Z",
  "attribution": "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0",
  "license": "karışık (alan düzeyinde; veri.html)",
  "base_url_now": "https://raw.githubusercontent.com/samiboran/sweeplab/data-feed/data/site/",
@@ -153,8 +153,8 @@
    "description": "Geçmiş günlerin özetleri (yalnız ekleme).",
    "exists": true,
    "first": "2026-11-23",
-   "last": "2026-11-23",
-   "count": 1
+   "last": "2026-11-24",
+   "count": 2
   },
   {
    "path": "movers_news.json",
