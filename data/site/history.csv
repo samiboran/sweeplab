@@ -81,3 +81,7 @@ date,rules_version,mode,raw_score,raw_level,level,level_held,L1,L2,L3,D1,K1,K2,K
 2026-11-17,v1,retro,8,KIRMIZI,KIRMIZI,0,1,0,1,1,1,1,1,1,1,talep zayıflığı,2026-11-21T09:46:37Z
 2026-11-18,v1,retro,7,KIRMIZI,KIRMIZI,0,1,0,1,1,0,1,1,1,1,talep zayıflığı,2026-11-21T09:46:37Z
 2026-11-19,v1,retro,7,KIRMIZI,KIRMIZI,0,1,0,1,1,0,1,1,1,1,talep zayıflığı,2026-11-21T09:46:37Z
+2026-11-20,v1,retro,8,KIRMIZI,KIRMIZI,0,1,0,1,1,1,1,1,1,1,talep zayıflığı,2026-11-25T16:10:38Z
+2026-11-21,v1,retro,8,KIRMIZI,KIRMIZI,0,1,0,1,1,1,1,1,1,1,talep zayıflığı,2026-11-25T16:10:38Z
+2026-11-22,v1,retro,7,KIRMIZI,KIRMIZI,0,1,0,1,1,1,1,1,1,0,,2026-11-25T16:10:38Z
+2026-11-23,v1,live,6,KIRMIZI,KIRMIZI,0,1,0,0,1,0,1,1,1,1,talep zayıflığı,2026-11-25T16:10:38Z

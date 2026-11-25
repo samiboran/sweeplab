@@ -1,0 +1,288 @@
+{
+ "source": "Piyasa Hava Durumu",
+ "site_url": "https://samiboran.github.io/sweeplab/piyasa/",
+ "rules_version": "v1",
+ "generated_at": "2026-11-25T16:10:38Z",
+ "license": "CC BY 4.0 (yalnızca kamu kaynaklı türetilmiş alanlar)",
+ "attribution": "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0",
+ "schema_version": 1,
+ "schema": "phd.today/1",
+ "license_note": "Yalnızca görüntüleme: K1, K2, K3, D1 ve N1 kurallarının işaret/yön/değer alanları (lisanslı girdiler: ICE BofA, Nasdaq, ICE, Cboe) ve Yahoo kaynaklı altın/petrol yüzdeleri. Ayrıntı: veri.html",
+ "status": "güncel",
+ "mode": "retro",
+ "data_date": "2026-11-22",
+ "publish_date": "2026-11-22",
+ "compare_date": "2026-11-02",
+ "last_good_date": "2026-11-22",
+ "level": "KIRMIZI",
+ "level_word": "KIRMIZI",
+ "raw_score": 7,
+ "max_score": 9,
+ "raw_level": "KIRMIZI",
+ "level_held": false,
+ "held_note": null,
+ "headline": "22 Kasım 2026 — Makro hava: KIRMIZI",
+ "level_en": "RED",
+ "held_note_en": null,
+ "headline_en": "22 November 2026 — Macro weather: RED",
+ "groups": {
+  "Likidite": {
+   "points": 2,
+   "max": 3
+  },
+  "Dolar": {
+   "points": 1,
+   "max": 1
+  },
+  "Kredi / risk": {
+   "points": 3,
+   "max": 3
+  },
+  "Nakde kaçış": {
+   "points": 1,
+   "max": 1
+  },
+  "Petrol": {
+   "points": 0,
+   "max": 1
+  }
+ },
+ "rules": [
+  {
+   "code": "L1",
+   "group": "Likidite",
+   "title": "Stablecoin arzı",
+   "flag": 1,
+   "sentence": "Stablecoin arzı son 7 günde %1,6 azaldı; 20 günde %4,5 azaldı.",
+   "title_en": "Stablecoin supply",
+   "group_en": "Liquidity",
+   "sentence_en": "Stablecoin supply fell 1.6% over 7 days; fell 4.5% over 20 days."
+  },
+  {
+   "code": "L2",
+   "group": "Likidite",
+   "title": "Fed net likiditesi",
+   "flag": 0,
+   "sentence": "Fed net likiditesi 20 günde %1,37 arttı.",
+   "title_en": "Fed net liquidity",
+   "group_en": "Liquidity",
+   "sentence_en": "Fed net liquidity rose 1.37% over 20 days."
+  },
+  {
+   "code": "L3",
+   "group": "Likidite",
+   "title": "Reel faiz",
+   "flag": 1,
+   "sentence": "10 yıllık reel faiz %2,77; 20 günde 15 baz puan yükseldi (15 baz puan eşiğinin üzerinde).",
+   "title_en": "Real yield",
+   "group_en": "Liquidity",
+   "sentence_en": "10-year real yield 2.77%; it rose 15 bp over 20 days (above the 15 bp threshold)."
+  },
+  {
+   "code": "D1",
+   "group": "Dolar",
+   "title": "Dolar endeksi",
+   "flag": 1,
+   "sentence": "Dolar endeksi 20 günde %1'den fazla yükseldi.",
+   "title_en": "Dollar index",
+   "group_en": "Dollar",
+   "sentence_en": "The dollar index rose more than 1% over 20 days."
+  },
+  {
+   "code": "K1",
+   "group": "Kredi / risk",
+   "title": "Kredi risk primi",
+   "flag": 1,
+   "sentence": "Yüksek getirili tahvil risk primi 20 günde 0,25 puandan fazla açıldı: kredi tarafında gerginlik.",
+   "title_en": "Credit spread",
+   "group_en": "Credit / risk",
+   "sentence_en": "The high-yield credit spread widened more than 0.25 points over 20 days: stress on the credit side."
+  },
+  {
+   "code": "K2",
+   "group": "Kredi / risk",
+   "title": "Oynaklık (VIX)",
+   "flag": 1,
+   "sentence": "VIX oynaklık endeksi 35,9: 18'in üzerinde, piyasada gerginlik var.",
+   "title_en": "Volatility (VIX)",
+   "group_en": "Credit / risk",
+   "sentence_en": "VIX volatility index 35.9: above 18, the market is tense."
+  },
+  {
+   "code": "K3",
+   "group": "Kredi / risk",
+   "title": "Nasdaq Bileşik",
+   "flag": 1,
+   "sentence": "Nasdaq Bileşik endeksi 20 günde %3'ten fazla düştü.",
+   "title_en": "Nasdaq Composite",
+   "group_en": "Credit / risk",
+   "sentence_en": "The Nasdaq Composite fell more than 3% over 20 days."
+  },
+  {
+   "code": "N1",
+   "group": "Nakde kaçış",
+   "title": "Altın ve dolar",
+   "flag": 1,
+   "sentence": "Altın 20 günde %11,4 geriledi, dolar endeksi yükseldi: ikisinin birlikte olması nakde kaçış işareti sayılır.",
+   "title_en": "Gold and dollar",
+   "group_en": "Dash for cash",
+   "sentence_en": "Gold fell 11.4% over 20 days, the dollar index rose: the two together count as a dash-for-cash sign."
+  },
+  {
+   "code": "P1",
+   "group": "Petrol",
+   "title": "Petrol",
+   "flag": 0,
+   "sentence": "Ham petrol (WTI) 20 günde %12,9 geriledi.",
+   "title_en": "Oil",
+   "group_en": "Oil",
+   "sentence_en": "Crude oil (WTI) fell 12.9% over 20 days."
+  }
+ ],
+ "values": {
+  "stables_7d_pct": -1.6,
+  "netliq_20g_pct": 1.37,
+  "real10y": 2.77,
+  "real10y_20g_bp": 15,
+  "dxy_20g_yon": "yükseldi",
+  "hy_oas_20g_yon": "açıldı",
+  "vix": 35.9,
+  "ndx_20g_yon": "düştü",
+  "gold_20g_pct": -11.4,
+  "wti_20g_pct": -12.9,
+  "stables_20g_pct": -4.5,
+  "wti_60g_pct": -9.1,
+  "wti_60g_days": 57,
+  "wti_base_near_peak": false
+ },
+ "trend": {
+  "btc": {
+   "state": "gecis",
+   "close": 61240.0,
+   "ma50": 76724.17,
+   "ma200": 72351.65,
+   "dist200_pct": -15.36,
+   "dist50_pct": -20.18
+  },
+  "eth": {
+   "state": "gecis",
+   "close": 1723.44,
+   "ma50": 2247.54,
+   "ma200": 2122.93,
+   "dist200_pct": -18.82,
+   "dist50_pct": -23.32
+  }
+ },
+ "inputs_asof": {
+  "stables": "2026-11-22",
+  "netliq": "2026-11-18",
+  "real10y": "2026-11-20",
+  "dxy": "2026-11-20",
+  "hy_oas": "2026-11-20",
+  "vix": "2026-11-20",
+  "ndx": "2026-11-20",
+  "gold": "2026-11-20",
+  "wti": "2026-11-20"
+ },
+ "disclaimer": "Yatırım tavsiyesi değildir. Veriler bilgi amaçlıdır.",
+ "answers": [
+  {
+   "id": "hava",
+   "q": "Bugün makro hava nasıl?",
+   "a": [
+    "22 Kasım 2026 itibarıyla makro hava: KIRMIZI.",
+    "Dokuz kuraldan 7 tanesi işaret veriyor (ham skor 7/9).",
+    "Veriler 22 Kasım 2026 kapanışına ait."
+   ]
+  },
+  {
+   "id": "isaretler",
+   "q": "Hangi kurallar işaret veriyor?",
+   "a": [
+    "Stablecoin arzı son 7 günde %1,6 azaldı; 20 günde %4,5 azaldı.",
+    "10 yıllık reel faiz %2,77; 20 günde 15 baz puan yükseldi (15 baz puan eşiğinin üzerinde).",
+    "Dolar endeksi 20 günde %1'den fazla yükseldi.",
+    "Yüksek getirili tahvil risk primi 20 günde 0,25 puandan fazla açıldı: kredi tarafında gerginlik.",
+    "VIX oynaklık endeksi 35,9: 18'in üzerinde, piyasada gerginlik var.",
+    "Nasdaq Bileşik endeksi 20 günde %3'ten fazla düştü.",
+    "Altın 20 günde %11,4 geriledi, dolar endeksi yükseldi: ikisinin birlikte olması nakde kaçış işareti sayılır."
+   ]
+  },
+  {
+   "id": "degisim",
+   "q": "Dünden bu yana ne değişti?",
+   "a": [
+    "Ham skor 8 → 7.",
+    "Petrol: işareti söndü."
+   ]
+  },
+  {
+   "id": "kripto",
+   "q": "BTC ve ETH ortalamalara göre nerede?",
+   "a": [
+    "BTC günlük kapanışı 61.240 $; 200 günlük ortalamanın %15,4 altında, 50 günlük ortalamanın %20,2 altında.",
+    "ETH günlük kapanışı 1.723 $; 200 günlük ortalamanın %18,8 altında, 50 günlük ortalamanın %23,3 altında."
+   ]
+  },
+  {
+   "id": "yontem",
+   "q": "Bu ölçüm nasıl yapılıyor?",
+   "a": [
+    "Skor, likidite, dolar, kredi/risk, nakde kaçış ve petrol başlıklarındaki dokuz kuraldan oluşur; her kural 1 puan.",
+    "0–2 YEŞİL, 3–4 SARI, 5 ve üzeri KIRMIZI. Seviye, ikinci gün onayı olmadan değişmez.",
+    "Kurallar sabittir ve sürümlenir; yayımlanan skorlar sonradan değiştirilmez."
+   ],
+   "link": "yontem.html"
+  }
+ ],
+ "answers_en": [
+  {
+   "id": "hava",
+   "q": "What is the macro weather today?",
+   "a": [
+    "Macro weather as of 22 November 2026: RED.",
+    "7 of the nine rules give a signal (raw score 7/9).",
+    "Data as of the 22 November 2026 close."
+   ]
+  },
+  {
+   "id": "isaretler",
+   "q": "Which rules are signalling?",
+   "a": [
+    "Stablecoin supply fell 1.6% over 7 days; fell 4.5% over 20 days.",
+    "10-year real yield 2.77%; it rose 15 bp over 20 days (above the 15 bp threshold).",
+    "The dollar index rose more than 1% over 20 days.",
+    "The high-yield credit spread widened more than 0.25 points over 20 days: stress on the credit side.",
+    "VIX volatility index 35.9: above 18, the market is tense.",
+    "The Nasdaq Composite fell more than 3% over 20 days.",
+    "Gold fell 11.4% over 20 days, the dollar index rose: the two together count as a dash-for-cash sign."
+   ]
+  },
+  {
+   "id": "degisim",
+   "q": "What changed since yesterday?",
+   "a": [
+    "Raw score 8 → 7.",
+    "Oil: signal went off."
+   ]
+  },
+  {
+   "id": "kripto",
+   "q": "Where are BTC and ETH versus their averages?",
+   "a": [
+    "BTC daily close $61,240; 15.4% below its 200-day average, 20.2% below its 50-day average.",
+    "ETH daily close $1,723; 18.8% below its 200-day average, 23.3% below its 50-day average."
+   ]
+  },
+  {
+   "id": "yontem",
+   "q": "How is this measured?",
+   "a": [
+    "The score is built from nine rules on liquidity, the dollar, credit/risk, dash for cash and oil; each rule is 1 point.",
+    "0–2 GREEN, 3–4 YELLOW, 5 or more RED. The level does not change without a second-day confirmation.",
+    "The rules are fixed and versioned; published scores are never changed afterwards."
+   ],
+   "link": "yontem.html"
+  }
+ ]
+}
