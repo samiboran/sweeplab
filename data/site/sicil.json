@@ -2,7 +2,7 @@
  "source": "Piyasa Hava Durumu",
  "site_url": "https://samiboran.github.io/sweeplab/piyasa/",
  "rules_version": "v1",
- "generated_at": "2026-11-25T16:11:33Z",
+ "generated_at": "2026-11-26T15:51:40Z",
  "license": "CC BY 4.0 (yalnızca kamu kaynaklı türetilmiş alanlar)",
  "attribution": "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — türetilmiş veri, CC BY 4.0",
  "schema_version": 1,
@@ -10,7 +10,7 @@
  "license_note": "Yalnızca görüntüleme: K1, K2, K3, D1 ve N1 kurallarının işaret/yön/değer alanları (lisanslı girdiler: ICE BofA, Nasdaq, ICE, Cboe) ve Yahoo kaynaklı altın/petrol yüzdeleri. Ayrıntı: veri.html",
  "freeze_date": "2026-11-21",
  "show_from": "2026-10-01",
- "data_until": "2026-11-23",
+ "data_until": "2026-11-24",
  "check": {
   "window_days": 20,
   "confirm_drop_pct": -5.0,
