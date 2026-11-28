@@ -1,0 +1,122 @@
+{
+  "schema": "phd.ozet/1",
+  "schema_version": 1,
+  "source": "Piyasa Hava Durumu",
+  "site_url": "https://samiboran.github.io/sweeplab/piyasa/",
+  "generated_at": "2026-11-28T06:50:25Z",
+  "date": "2026-11-28",
+  "attribution": "Kaynak: Piyasa Hava Durumu (samiboran.github.io/sweeplab/piyasa) — özetler kendi cümlelerimizle; haberlerin hakları kaynaklarına aittir",
+  "method": "Resmî kaynaklar ve herkese açık haber kaynakları tarandı; olgusal özet, yorum ve tavsiye yok.",
+  "items": [
+    {
+      "konu": "Merkez bankaları",
+      "baslik": "TCMB bir hafta vadeli repo ihalelerine ara verdi, zorunlu karşılık faiz oranını yükseltti",
+      "ozet": "CNBC-e'nin aktardığına göre TCMB, 26 Kasım'daki iki basın duyurusuyla açık piyasa işlemleri kapsamındaki bir hafta vadeli repo ihalelerine geçici olarak ara verdi. TL zorunlu karşılıklara ödenen faiz, ağırlıklı ortalama fonlama maliyetinin yüzde 86'sından yüzde 90'ına çıkarıldı. TCMB bu adımı makrofinansal istikrar ve parasal aktarım mekanizmasını desteklemeyle ilişkilendirdi.",
+      "baslik_en": "CBRT pauses one-week repo auctions and raises remuneration on lira reserve requirements",
+      "ozet_en": "According to CNBC-e, the CBRT announced in two press releases on 26 November that it has temporarily suspended one-week repo auctions held under open market operations. The rate paid on lira reserve requirements was raised from 86% to 90% of the bank's weighted average funding cost. The CBRT linked the step to supporting macro-financial stability and monetary transmission.",
+      "kaynaklar": [
+        {
+          "ad": "CNBC-e",
+          "url": "https://www.cnbce.com/piyasalar/tcmbden-iki-kritik-karar-repo-ihalelerine-ara-verildi-zorunlu-karsilik-faizi-artirildi-h42727",
+          "zaman": "2026-11-26T19:17:00Z"
+        }
+      ]
+    },
+    {
+      "konu": "Türkiye",
+      "baslik": "TCMB Finansal İstikrar Raporu: kredi büyümesi yavaşladı, takipteki alacak oranı yükseldi",
+      "ozet": "Forbes Türkiye'nin aktardığına göre TCMB'nin 27 Kasım'da yayımlanan Finansal İstikrar Raporu'nda yıllık nominal kredi büyümesi yıl başındaki yüzde 44'ten yüzde 34'e indi. Toplam takipteki alacak oranı mart ayındaki yüzde 2,65'ten eylülde yüzde 3,09'a çıktı. Rapora göre eylülden bu yana menkul kıymet fonlarından getiri etkisi hariç 1,2 trilyon liralık net çıkış oldu.",
+      "baslik_en": "CBRT Financial Stability Report: loan growth slows, non-performing loan ratio rises",
+      "ozet_en": "According to Forbes Türkiye, the CBRT's Financial Stability Report published on 27 November shows annual nominal loan growth easing from 44% at the start of the year to 34%. The total non-performing loan ratio rose from 2.65% in March to 3.09% in September. The report says securities funds have seen net outflows of 1.2 trillion lira since September, excluding return effects.",
+      "kaynaklar": [
+        {
+          "ad": "Forbes Türkiye",
+          "url": "https://www.forbes.com.tr/para-yatirim/tcmb-finansal-istikrar-raporu-yayimlandi-kredi-buyumesi-yavasladi-fon-cikislari-tl-mevduata-yoneldi"
+        }
+      ]
+    },
+    {
+      "konu": "Türkiye",
+      "baslik": "BIST 100 haftanın son gününü yüzde 2,18 yükselişle 10.977,01 puanda kapattı",
+      "ozet": "CNBC-e'ye göre BIST 100 endeksi cuma günü 233,9 puan (yüzde 2,18) artışla 10.977,01 puana yükseldi. Gün içinde madencilik ve teknoloji endeksleri öne çıkarken bankacılık endeksi geriledi. Aynı habere göre VakıfBank hissesi sabah saatlerinde yüzde 5,2 düştü.",
+      "baslik_en": "BIST 100 ends the week up 2.18% at 10,977.01",
+      "ozet_en": "According to CNBC-e, the BIST 100 index rose 233.9 points (2.18%) on Friday to close at 10,977.01. Mining and technology indexes led during the session, while the banking index declined. The same report said VakıfBank shares fell 5.2% in the morning.",
+      "kaynaklar": [
+        {
+          "ad": "CNBC-e",
+          "url": "https://www.cnbce.com/borsa/borsa-haftayi-yukselisle-kapadi-27-kasim-2026-h42755",
+          "zaman": "2026-11-27T15:14:00Z"
+        }
+      ]
+    },
+    {
+      "konu": "Türkiye",
+      "baslik": "TÜİK: Ekonomik güven endeksi kasımda yüzde 1,1 artışla 98,4'e çıktı",
+      "ozet": "TÜİK verilerini aktaran Forbes Türkiye'ye göre ekonomik güven endeksi ekimdeki 97,3'ten kasımda 98,4'e yükseldi. Tüketici güveni 84,8'den 86,8'e çıkarak en büyük artışı gösterdi. İnşaat sektörü güven endeksi ise 83,3'ten 80,2'ye inerek düşen tek alt endeks oldu.",
+      "baslik_en": "TurkStat: Economic confidence index rises 1.1% to 98.4 in November",
+      "ozet_en": "According to Forbes Türkiye, citing TurkStat, the economic confidence index rose from 97.3 in October to 98.4 in November. Consumer confidence posted the largest gain, rising from 84.8 to 86.8. Construction confidence fell from 83.3 to 80.2, the only sub-index to decline.",
+      "kaynaklar": [
+        {
+          "ad": "Forbes Türkiye",
+          "url": "https://www.forbes.com.tr/ekonomi/ekonomik-guven-endeksi-kasimda-yuzde-1-1-artisla-98-4-e-yukseldi"
+        }
+      ]
+    },
+    {
+      "konu": "Şirketler",
+      "baslik": "ABD borsaları kısaltılmış seansta yükseldi; Micron yüzde 7,60, SanDisk yüzde 15,96 arttı",
+      "ozet": "StockTitan'a göre ABD'de Şükran Günü sonrası saat 13.00'te (ET) kapanan kısa seansta S&P 500 fonu SPY yüzde 1,62, Nasdaq 100 fonu QQQ yüzde 2,69 yükseldi. Bellek ve depolama şirketlerinden Micron yüzde 7,60, SanDisk yüzde 15,96 değer kazandı. Nvidia hissesi yüzde 0,80 artışla 150,49 dolardan kapandı.",
+      "baslik_en": "US stocks rise in shortened session; Micron up 7.60%, SanDisk up 15.96%",
+      "ozet_en": "According to StockTitan, in the post-Thanksgiving session that closed at 1:00 p.m. ET, the S&P 500 fund SPY rose 1.62% and the Nasdaq 100 fund QQQ gained 2.69%. Memory and storage makers Micron and SanDisk rose 7.60% and 15.96%. Nvidia shares closed 0.80% higher at $150.49.",
+      "kaynaklar": [
+        {
+          "ad": "StockTitan",
+          "url": "https://www.stocktitan.net/articles/stock-market-today-live-november-27-2026",
+          "zaman": "2026-11-27T12:01:00Z"
+        }
+      ]
+    },
+    {
+      "konu": "Altın ve emtia",
+      "baslik": "Gümüş yüzde 5,66, altın yüzde 1,49 yükseldi; altın/gümüş oranı 83,27'ye indi",
+      "ozet": "USAGOLD'un günlük raporuna göre spot altın ons başına 53,47 dolar (yüzde 1,49) artışla 3.643,03 dolara çıktı. Spot gümüş 2,34 dolar (yüzde 5,66) yükselişle 43,75 dolar oldu. Platin yüzde 2,90, paladyum yüzde 3,10 değer kazanırken altın/gümüş oranı 83,27'ye geriledi.",
+      "baslik_en": "Silver rises 5.66%, gold 1.49%; gold/silver ratio falls to 83.27",
+      "ozet_en": "According to USAGOLD's daily report, spot gold rose $53.47 (1.49%) to $3,643.03 an ounce. Spot silver gained $2.34 (5.66%) to $43.75. Platinum rose 2.90% and palladium 3.10%, while the gold/silver ratio fell to 83.27.",
+      "kaynaklar": [
+        {
+          "ad": "USAGOLD",
+          "url": "https://www.usagold.com/daily-precious-metals-market-report-november-27-2026/",
+          "zaman": "2026-11-27T13:43:59Z"
+        }
+      ]
+    },
+    {
+      "konu": "Altın ve emtia",
+      "baslik": "Brent haftalık yaklaşık yüzde 4 artışa yöneldi; OPEC+ pazar günü toplanıyor",
+      "ozet": "FinanceFeeds'e göre ocak vadeli Brent petrol cuma 13.00 GMT itibarıyla 96,30 dolardan işlem gördü ve hafta başına göre yaklaşık yüzde 4 yukarıdaydı; WTI 85,05 dolardı. Habere göre haftalık artışta Körfez'deki arz riskleri etkili oldu. OPEC+ 29 Kasım'da toplanacak; Reuters kaynaklarına göre grup ilk çeyrekte üretim hedeflerini değiştirmemeyi prensipte kabul etti.",
+      "baslik_en": "Brent heads for a weekly gain of about 4%; OPEC+ meets on Sunday",
+      "ozet_en": "According to FinanceFeeds, January Brent traded at $96.30 at 13:00 GMT on Friday, about 4% higher on the week, while WTI was at $85.05. The report attributes the weekly gain to Gulf supply risks. OPEC+ meets on 29 November; Reuters sources say the group has agreed in principle to keep first-quarter output targets unchanged.",
+      "kaynaklar": [
+        {
+          "ad": "FinanceFeeds",
+          "url": "https://financefeeds.com/brent-crude-oil-price-96-30-friday-opec-plus-set-to-hold-q1-output-sunday-bull-100-bear-92-57/",
+          "zaman": "2026-11-27T13:17:08Z"
+        }
+      ]
+    },
+    {
+      "konu": "Merkez bankaları",
+      "baslik": "ECB anketi: Euro bölgesinde 12 aylık enflasyon beklentisi yüzde 3,5'e yükseldi",
+      "ozet": "Reuters'ın aktardığı ECB Tüketici Beklentileri Anketi'ne göre euro bölgesinde tüketicilerin 12 ay sonrası için enflasyon beklentisi ekimde yüzde 3,1'den yüzde 3,5'e çıktı. Üç yıllık beklenti yüzde 2,9'dan yüzde 3'e yükselirken beş yıllık beklenti yüzde 2,5'te sabit kaldı. Son 12 ayda algılanan enflasyon yüzde 3,6'dan yüzde 4,1'e çıktı.",
+      "baslik_en": "ECB survey: euro zone 12-month inflation expectations rise to 3.5%",
+      "ozet_en": "According to the ECB Consumer Expectations Survey, as reported by Reuters, euro zone consumers' inflation expectations for the next 12 months rose from 3.1% to 3.5% in October. The three-year expectation rose from 2.9% to 3%, while the five-year expectation held at 2.5%. Perceived inflation over the past 12 months rose from 3.6% to 4.1%.",
+      "kaynaklar": [
+        {
+          "ad": "Global Banking & Finance Review (Reuters)",
+          "url": "https://www.globalbankingandfinance.com/euro-zone-consumers-sharply-increase-inflation-expectation/",
+          "zaman": "2026-11-27T09:02:30Z"
+        }
+      ]
+    }
+  ]
+}
